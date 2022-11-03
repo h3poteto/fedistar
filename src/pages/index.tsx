@@ -1,18 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import reactLogo from "../assets/react.svg";
 import tauriLogo from "../assets/tauri.svg";
 import nextLogo from "../assets/next.svg";
+import { Account } from "../entities/account";
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
+  const [accounts, setAccounts] = useState<Array<Account>>([]);
+  const router = useRouter();
 
   async function greet() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
     setGreetMsg(await invoke("greet", { name }));
   }
+
+  useEffect(() => {
+    invoke<Array<Account>>("list_accounts").then(res => {
+      if (res.length === 0) {
+        console.debug("There is no account")
+        router.push("/authorize/new");
+      }
+      setAccounts(res)
+    })
+
+  })
 
   return (
     <div className="container">
