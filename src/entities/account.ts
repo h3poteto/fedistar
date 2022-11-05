@@ -1,7 +1,5 @@
 export type Account = {
   id: number;
-  domain: string;
-  base_url: string;
   username: string;
   account_id: string;
   avatar: string | null;

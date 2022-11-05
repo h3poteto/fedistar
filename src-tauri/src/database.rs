@@ -28,10 +28,61 @@ pub(crate) async fn migrate_database(pool: &SqlitePool) -> DBResult<()> {
     Ok(())
 }
 
-pub(crate) async fn list_accounts(pool: &SqlitePool) -> DBResult<Vec<entities::Account>> {
-    let users = query_as::<_, entities::Account>("select * from accounts")
+pub(crate) async fn list_servers(pool: &SqlitePool) -> DBResult<Vec<entities::Server>> {
+    let servers = query_as::<_, entities::Server>("select * from servers")
         .fetch_all(pool)
         .await?;
 
-    Ok(users)
+    Ok(servers)
+}
+
+pub(crate) async fn add_server(
+    pool: &SqlitePool,
+    server: entities::Server,
+) -> DBResult<entities::Server> {
+    let mut tx = pool.begin().await?;
+    let mut created = server.clone();
+
+    let res = sqlx::query("INSERT INTO servers (domain, base_url, thumbnail) VALUES (?, ?, ?)")
+        .bind(server.domain)
+        .bind(server.base_url)
+        .bind(server.thumbnail)
+        .execute(&mut tx)
+        .await?;
+
+    tx.commit().await?;
+    let id = res.last_insert_rowid();
+    created.id = id;
+    Ok(created)
+}
+
+pub(crate) async fn add_account(
+    pool: &SqlitePool,
+    server: entities::Server,
+    account: entities::Account,
+) -> DBResult<entities::Account> {
+    let mut tx = pool.begin().await?;
+    let mut created = account.clone();
+
+    let res = sqlx::query("INSERT INTO accounts (username, account_id, avatar, client_id, client_secret, access_token, refresh_token) VALUES (?, ?, ?, ?, ?, ?, ?)")
+        .bind(account.username)
+        .bind(account.account_id)
+        .bind(account.avatar)
+        .bind(account.client_id)
+        .bind(account.client_secret)
+        .bind(account.access_token)
+        .bind(account.refresh_token)
+        .execute(&mut tx)
+        .await?;
+    let id = res.last_insert_rowid();
+    created.id = id;
+
+    sqlx::query("UPDATE servers SET account_id = ? WHERE id = ?")
+        .bind(id)
+        .bind(server.id)
+        .execute(&mut tx)
+        .await?;
+
+    tx.commit().await?;
+    Ok(created)
 }

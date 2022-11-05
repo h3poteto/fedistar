@@ -1,27 +1,23 @@
 use serde::{Deserialize, Serialize};
 use sqlx::FromRow;
 
-#[derive(Debug, Serialize, Deserialize, FromRow)]
+#[derive(Debug, Serialize, Deserialize, FromRow, Clone)]
 pub struct Account {
-    id: i64,
-    domain: String,
-    base_url: String,
-    username: String,
-    account_id: String,
-    avatar: Option<String>,
+    pub id: i64,
+    pub username: String,
+    pub account_id: String,
+    pub avatar: Option<String>,
     // Misskey does not provide client_id.
-    client_id: Option<String>,
-    client_secret: String,
-    access_token: String,
+    pub client_id: Option<String>,
+    pub client_secret: String,
+    pub access_token: String,
     // Mastodon and Misskey does not provide refresh_token.
-    refresh_token: Option<String>,
+    pub refresh_token: Option<String>,
 }
 
 impl Account {
     pub fn new(
         id: i64,
-        domain: String,
-        base_url: String,
         username: String,
         account_id: String,
         avatar: Option<String>,
@@ -32,8 +28,6 @@ impl Account {
     ) -> Self {
         Self {
             id,
-            domain,
-            base_url,
             username,
             account_id,
             avatar,

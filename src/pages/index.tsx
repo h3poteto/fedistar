@@ -1,90 +1,52 @@
 import { useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import reactLogo from "../assets/react.svg";
-import tauriLogo from "../assets/tauri.svg";
-import nextLogo from "../assets/next.svg";
-import { Account } from "../entities/account";
+import Image from "next/image";
+import { Container, Content, Message, useToaster, Placeholder, Sidebar, Sidenav, Nav } from "rsuite"
+import { Icon } from "@rsuite/icons";
+import { AiOutlineEdit } from "react-icons/ai";
+import { Server } from "../entities/server";
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
-  const [accounts, setAccounts] = useState<Array<Account>>([]);
+  const [servers, setServers] = useState<Array<Server>>([]);
   const router = useRouter();
+  const toaster = useToaster();
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke("greet", { name }));
-  }
+  const message = (
+    <Message showIcon type="info">
+      There is no server, so please add it at first.
+    </Message>
+  )
 
   useEffect(() => {
-    invoke<Array<Account>>("list_accounts").then(res => {
+    invoke<Array<Server>>("list_servers").then(res => {
       if (res.length === 0) {
-        console.debug("There is no account")
-        router.push("/authorize/new");
+        console.debug("There is no server");
+        toaster.push(message, { placement: "topCenter" });
+        router.push("/server/new");
       }
-      setAccounts(res)
+      setServers(res)
     })
-
-  })
+  }, [])
 
   return (
-    <div className="container">
-      <h1>Welcome to Tauri!</h1>
-
-      <div className="row">
-        <span className="logos">
-          <a href="https://nextjs.org" target="_blank">
-            <Image
-              width={144}
-              height={144}
-              src={nextLogo}
-              className="logo next"
-              alt="Next logo"
-            />
-          </a>
-        </span>
-        <span className="logos">
-          <a href="https://tauri.app" target="_blank">
-            <Image
-              width={144}
-              height={144}
-              src={tauriLogo}
-              className="logo tauri"
-              alt="Tauri logo"
-            />
-          </a>
-        </span>
-        <span className="logos">
-          <a href="https://reactjs.org" target="_blank">
-            <Image
-              width={144}
-              height={144}
-              src={reactLogo}
-              className="logo react"
-              alt="React logo"
-            />
-          </a>
-        </span>
-      </div>
-
-      <p>Click on the Tauri, Next, and React logos to learn more.</p>
-
-      <div className="row">
-        <div>
-          <input
-            id="greet-input"
-            onChange={(e) => setName(e.currentTarget.value)}
-            placeholder="Enter a name..."
-          />
-          <button type="button" onClick={() => greet()}>
-            Greet
-          </button>
-        </div>
-      </div>
-
-      <p>{greetMsg}</p>
+    <div className="container index">
+      <Container>
+        <Sidebar style={{ display: 'flex', flexDirection: 'column' }} width="56" collapsible>
+          <Sidenav expanded={false}>
+            <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              {servers.map((server) =>
+                <div style={{ padding: '8px' }}>
+                  <Image width={48} height={48} src={server.base_url + "/favicon.ico"} className="server-icon" alt={server.domain} key={server.id} />
+                </div>
+              )}
+            </Sidenav.Body>
+          </Sidenav>
+        </Sidebar>
+        <Content>
+          <Placeholder.Grid rows={5} columns={6} active />
+        </Content>
+      </Container>
     </div>
   );
 }
