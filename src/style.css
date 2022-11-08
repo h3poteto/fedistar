@@ -24,3 +24,11 @@ body {
 .login-page {
   padding-top: 70px;
 }
+
+#__next {
+  height: 100%;
+}
+
+.index {
+  height: 100%;
+}
