@@ -3,16 +3,11 @@
     windows_subsystem = "windows"
 )]
 use megalodon::{self, oauth};
-use tauri::{Manager, State};
+use serde::Serialize;
+use tauri::{async_runtime::Mutex, AppHandle, Manager, State};
 
 pub mod database;
 pub mod entities;
-
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
 
 #[tauri::command]
 async fn list_servers(
@@ -139,6 +134,55 @@ async fn authorize_code(
     Ok(())
 }
 
+#[derive(Clone, Serialize)]
+struct UpdatedTimelinePayload {
+    timelines: Vec<(entities::Timeline, entities::Server)>,
+}
+
+#[tauri::command]
+async fn add_timeline(
+    app_handle: AppHandle,
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+    server: entities::Server,
+    timeline: &str,
+) -> Result<(), String> {
+    database::add_timeline(&sqlite_pool, server, timeline)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    let timelines = database::list_timelines(&sqlite_pool)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    app_handle
+        .emit_all("updated-timelines", UpdatedTimelinePayload { timelines })
+        .unwrap();
+    Ok(())
+}
+
+#[tauri::command]
+async fn list_timelines(
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+) -> Result<Vec<(entities::Timeline, entities::Server)>, String> {
+    let timelines = database::list_timelines(&sqlite_pool)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    Ok(timelines)
+}
+
+#[tauri::command]
+async fn get_account(
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+    id: i64,
+) -> Result<entities::Account, String> {
+    let account = database::get_account(&sqlite_pool, id)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    Ok(account)
+}
+
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use tauri::async_runtime::block_on;
 
@@ -168,14 +212,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
-            greet,
             list_servers,
             add_server,
             add_application,
-            authorize_code
+            authorize_code,
+            add_timeline,
+            list_timelines,
+            get_account,
         ])
         .setup(|app| {
             app.manage(sqlite_pool);
+            let handle = app.handle();
+            app.manage(Mutex::new(handle));
 
             #[cfg(debug_assertions)]
             {

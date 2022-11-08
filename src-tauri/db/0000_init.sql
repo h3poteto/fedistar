@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS servers(
   domain TEXT NOT NULL,
   base_url TEXT NOT NULL,
   thumbnail TEXT DEFAULT NULL,
-  account_id INTEGER DEFAULT NULL,
+  account_id INTEGER UNIQUE DEFAULT NULL,
   FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
 );
 
@@ -16,4 +16,12 @@ CREATE TABLE IF NOT EXISTS accounts(
   client_secret TEXT NOT NULL,
   access_token TEXT NOT NULL,
   refresh_token TEXT DEFAULT NULL
+);
+
+CREATE TABLE IF NOT EXISTS timelines(
+  id INTEGER PRIMARY KEY,
+  server_id INTEGER NOT NULL,
+  timeline TEXT NOT NULL,
+  sort INTEGER UNIQUE NOT NULL,
+  FOREIGN KEY (server_id) REFERENCES servers(id) ON DELETE CASCADE
 );
