@@ -106,6 +106,18 @@
   dependencies:
     tslib "^2.4.0"
 
+"@tanstack/react-virtual@^3.0.0-beta.22":
+  version "3.0.0-beta.22"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-virtual/-/react-virtual-3.0.0-beta.22.tgz#bd772d08162e9aa77ed46329dace348fcfaac225"
+  integrity sha512-OPgnjp6+F/8twCToWq1bglbxaNoOIKac/K6zhljhGIVq5lp1VXpkw47lWvLTU7RFfcFl03E61zZkqGbSFTk9uA==
+  dependencies:
+    "@tanstack/virtual-core" "3.0.0-beta.22"
+
+"@tanstack/virtual-core@3.0.0-beta.22":
+  version "3.0.0-beta.22"
+  resolved "https://registry.yarnpkg.com/@tanstack/virtual-core/-/virtual-core-3.0.0-beta.22.tgz#1c3c4723fa67492af6a35100b4c8818d6c4d7c58"
+  integrity sha512-kMpEeXXxHXP3mmXmMwKJvCzsiGGRDK745EsOYCiBP9hER04kyPk89rOQIvXhIFBkSj+TjSNCovIIhEzqkpIDNw==
+
 "@tauri-apps/api@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@tauri-apps/api/-/api-1.1.0.tgz#2c5756f6aeecd36f7683183eaba021690711bedf"
