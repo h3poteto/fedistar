@@ -51,7 +51,7 @@ const Status: React.FC<Props> = props => {
           </div>
         </FlexboxGrid.Item>
         {/** status **/}
-        <FlexboxGrid.Item colspan={20}>
+        <FlexboxGrid.Item colspan={20} style={{ paddingRight: '8px' }}>
           <div className="metadata">
             <FlexboxGrid>
               {/** account name **/}
@@ -59,14 +59,14 @@ const Status: React.FC<Props> = props => {
                 {status.account.display_name}@{status.account.acct}
               </FlexboxGrid.Item>
               {/** timestamp **/}
-              <FlexboxGrid.Item colspan={6}>
+              <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right' }}>
                 <time dateTime={moment(status.created_at).format('YYYY-MM-DD HH:mm:ss')} title={moment(status.created_at).format('LLLL')}>
                   {parseDatetime(status.created_at)}
                 </time>
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </div>
-          <div className="body" dangerouslySetInnerHTML={{ __html: status.content }}></div>
+          <div className="body" style={{ wordWrap: 'break-word' }} dangerouslySetInnerHTML={{ __html: status.content }}></div>
           <div className="toolbox"></div>
         </FlexboxGrid.Item>
       </FlexboxGrid>

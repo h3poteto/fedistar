@@ -1,9 +1,10 @@
 import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity, detector, MegalodonInterface } from 'megalodon'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Avatar, Container, Content, FlexboxGrid, Header, List } from 'rsuite'
 import { AiOutlineHome, AiOutlineQuestion } from 'react-icons/ai'
+import { useVirtualizer } from '@tanstack/react-virtual'
 import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
@@ -19,6 +20,8 @@ const Show: React.FC<Props> = props => {
   const [account, setAccount] = useState<Account>()
   const [client, setClient] = useState<MegalodonInterface>()
 
+  const parentRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     const f = async () => {
       const account = await invoke<Account>('get_account', { id: props.server.account_id })
@@ -31,6 +34,8 @@ const Show: React.FC<Props> = props => {
     }
     f()
   }, [])
+
+  const rowVirtualizer = useVirtualizer({ count: statuses.length, estimateSize: () => 125, getScrollElement: () => parentRef.current })
 
   const loadTimeline = async (name: string, client: MegalodonInterface): Promise<Array<Entity.Status>> => {
     switch (name) {
@@ -63,7 +68,10 @@ const Show: React.FC<Props> = props => {
                   {timelineIcon(props.timeline.timeline)}
                 </FlexboxGrid.Item>
                 {/** name **/}
-                <FlexboxGrid.Item style={{ lineHeight: '48px', fontSize: '18px' }}>{props.timeline.timeline}</FlexboxGrid.Item>
+                <FlexboxGrid.Item style={{ lineHeight: '48px', fontSize: '18px', verticalAlign: 'middle' }}>
+                  {props.timeline.timeline}
+                  <span style={{ fontSize: '14px' }}>@{props.server.domain}</span>
+                </FlexboxGrid.Item>
               </FlexboxGrid>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item>
@@ -76,11 +84,41 @@ const Show: React.FC<Props> = props => {
           </FlexboxGrid>
         </Header>
 
-        <Content>
-          <List hover>
-            {statuses.map(status => (
-              <Status status={status} key={status.id + status.uri} />
-            ))}
+        <Content style={{ height: 'calc(100% - 54px)' }}>
+          <List
+            hover
+            ref={parentRef}
+            style={{
+              height: '100%',
+              width: '340px',
+              overflow: 'auto'
+            }}
+          >
+            <div
+              style={{
+                height: rowVirtualizer.getTotalSize(),
+                width: '100%',
+                position: 'relative'
+              }}
+            >
+              {rowVirtualizer.getVirtualItems().map(virtualRow => (
+                <div
+                  key={virtualRow.key}
+                  data-index={virtualRow.index}
+                  ref={rowVirtualizer.measureElement}
+                  className={virtualRow.index % 2 ? 'ListItemOdd' : 'ListItemEven'}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    transform: `translateY(${virtualRow.start}px)`
+                  }}
+                >
+                  <Status status={statuses[virtualRow.index]} />
+                </div>
+              ))}
+            </div>
           </List>
         </Content>
       </Container>
