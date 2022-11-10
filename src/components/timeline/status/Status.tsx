@@ -1,7 +1,7 @@
 import { Entity } from 'megalodon'
 import { FlexboxGrid, List, Avatar } from 'rsuite'
 import { Icon } from '@rsuite/icons'
-import { AiOutlineRetweet } from 'react-icons/ai'
+import { BsArrowRepeat } from 'react-icons/bs'
 import moment from 'moment'
 
 type Props = {
@@ -26,7 +26,7 @@ const rebloggedHeader = (status: Entity.Status) => {
       <div>
         <FlexboxGrid align="middle">
           <FlexboxGrid.Item style={{ paddingRight: '8px', textAlign: 'right' }} colspan={4}>
-            <Icon as={AiOutlineRetweet} style={{ color: 'green' }} />
+            <Icon as={BsArrowRepeat} style={{ color: 'green' }} />
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={20}>{status.account.display_name}</FlexboxGrid.Item>
         </FlexboxGrid>
