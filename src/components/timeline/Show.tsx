@@ -1,9 +1,9 @@
 import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity, detector, MegalodonInterface } from 'megalodon'
-import { useEffect, useRef, useState } from 'react'
-import { Avatar, Container, Content, FlexboxGrid, Header, List } from 'rsuite'
-import { BsHouseDoor, BsPeople, BsQuestion, BsGlobe2 } from 'react-icons/bs'
+import { useEffect, useRef, useState, forwardRef } from 'react'
+import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button } from 'rsuite'
+import { BsHouseDoor, BsPeople, BsQuestion, BsGlobe2, BsSliders, BsX, BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
@@ -14,6 +14,35 @@ type Props = {
   timeline: Timeline
   server: Server
 }
+
+const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline }>((props, ref) => {
+  const removeTimeline = async (timeline: Timeline) => {
+    await invoke<{}>('remove_timeline', { id: timeline.id })
+  }
+
+  return (
+    <Popover ref={ref} style={{ opacity: 1 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', width: '200px' }}>
+        <FlexboxGrid justify="space-between">
+          <FlexboxGrid.Item>
+            <Button appearance="link" size="xs" onClick={() => removeTimeline(props.timeline)}>
+              <Icon as={BsX} size="1.4em" style={{ paddingBottom: '2px' }} />
+              <span>Unpin</span>
+            </Button>
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item>
+            <Button appearance="link" size="xs">
+              <Icon as={BsChevronLeft} />
+            </Button>
+            <Button appearance="link" size="xs">
+              <Icon as={BsChevronRight} />
+            </Button>
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+      </div>
+    </Popover>
+  )
+})
 
 const Show: React.FC<Props> = props => {
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
@@ -91,6 +120,18 @@ const Show: React.FC<Props> = props => {
             </FlexboxGrid.Item>
             <FlexboxGrid.Item>
               <FlexboxGrid align="middle" justify="end">
+                <FlexboxGrid.Item style={{ paddingRight: '8px' }}>
+                  <Whisper
+                    trigger="click"
+                    placement="bottomEnd"
+                    controlId="option-popover"
+                    speaker={<OptionPopover timeline={props.timeline} />}
+                  >
+                    <Button appearance="link">
+                      <Icon as={BsSliders} />
+                    </Button>
+                  </Whisper>
+                </FlexboxGrid.Item>
                 <FlexboxGrid.Item style={{ paddingRight: '8px' }}>
                   <Avatar circle src={account ? account.avatar : ''} size="xs" />
                 </FlexboxGrid.Item>
