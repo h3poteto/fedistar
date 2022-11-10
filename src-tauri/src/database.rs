@@ -147,6 +147,18 @@ pub(crate) async fn add_timeline(
     Ok(created)
 }
 
+pub(crate) async fn remove_timeline(pool: &SqlitePool, id: i64) -> DBResult<()> {
+    let mut tx = pool.begin().await?;
+
+    sqlx::query("DELETE FROM timelines WHERE id = ?")
+        .bind(id)
+        .execute(&mut tx)
+        .await?;
+    tx.commit().await?;
+
+    Ok(())
+}
+
 pub(crate) async fn get_account(pool: &SqlitePool, id: i64) -> DBResult<entities::Account> {
     let account = query_as::<_, entities::Account>("SELECT * FROM accounts WHERE id = ?")
         .bind(id)

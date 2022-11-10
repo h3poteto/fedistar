@@ -134,6 +134,8 @@ async fn authorize_code(
     Ok(())
 }
 
+// Can we delete this?
+// Client side does not use updated-timelines event payload.
 #[derive(Clone, Serialize)]
 struct UpdatedTimelinePayload {
     timelines: Vec<(entities::Timeline, entities::Server)>,
@@ -169,6 +171,20 @@ async fn list_timelines(
         .map_err(|e| e.to_string())?;
 
     Ok(timelines)
+}
+
+#[tauri::command]
+async fn remove_timeline(
+    app_handle: AppHandle,
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+    id: i64,
+) -> Result<(), String> {
+    database::remove_timeline(&sqlite_pool, id)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    app_handle.emit_all("updated-timelines", ()).unwrap();
+    Ok(())
 }
 
 #[tauri::command]
@@ -218,6 +234,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             authorize_code,
             add_timeline,
             list_timelines,
+            remove_timeline,
             get_account,
         ])
         .setup(|app| {
