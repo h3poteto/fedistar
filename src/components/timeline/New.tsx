@@ -1,6 +1,6 @@
 import { Popover, Dropdown, ButtonToolbar, Whisper, IconButton, List, FlexboxGrid } from 'rsuite'
 import { Icon } from '@rsuite/icons'
-import { BsPlus, BsHouseDoor, BsBell, BsPeople } from 'react-icons/bs'
+import { BsPlus, BsHouseDoor, BsBell, BsPeople, BsGlobe2 } from 'react-icons/bs'
 import { Server } from '../../entities/server'
 import { useState } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
@@ -79,6 +79,16 @@ const New: React.FC<Props> = props => {
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={20}>
               <div>Local</div>
+            </FlexboxGrid.Item>
+          </FlexboxGrid>
+        </List.Item>
+        <List.Item index={3} onClick={() => select('public')}>
+          <FlexboxGrid align="middle">
+            <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <Icon as={BsGlobe2} />
+            </FlexboxGrid.Item>
+            <FlexboxGrid.Item colspan={20}>
+              <div>Federated</div>
             </FlexboxGrid.Item>
           </FlexboxGrid>
         </List.Item>
