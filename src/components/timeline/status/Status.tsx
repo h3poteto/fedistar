@@ -2,14 +2,10 @@ import { Entity } from 'megalodon'
 import { FlexboxGrid, List, Avatar } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsArrowRepeat } from 'react-icons/bs'
-import moment from 'moment'
+import Time from 'src/components/utils/Time'
 
 type Props = {
   status: Entity.Status
-}
-
-const parseDatetime = (timestamp: string) => {
-  return moment(timestamp).fromNow(true)
 }
 
 const originalStatus = (status: Entity.Status) => {
@@ -60,9 +56,7 @@ const Status: React.FC<Props> = props => {
               </FlexboxGrid.Item>
               {/** timestamp **/}
               <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right' }}>
-                <time dateTime={moment(status.created_at).format('YYYY-MM-DD HH:mm:ss')} title={moment(status.created_at).format('LLLL')}>
-                  {parseDatetime(status.created_at)}
-                </time>
+                <Time time={status.created_at} />
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </div>
