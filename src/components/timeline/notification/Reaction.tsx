@@ -1,14 +1,57 @@
 import { Entity } from 'megalodon'
 import { Avatar, FlexboxGrid } from 'rsuite'
 import { Icon } from '@rsuite/icons'
-import { BsStar } from 'react-icons/bs'
+import { BsStar, BsArrowRepeat, BsMenuUp, BsHouseDoor } from 'react-icons/bs'
 import Time from 'src/components/utils/Time'
 
 type Props = {
   notification: Entity.Notification
 }
 
-const Favourite: React.FC<Props> = props => {
+const actionIcon = (notificationType: string) => {
+  switch (notificationType) {
+    case 'favourite':
+      return <Icon as={BsStar} />
+    case 'reblog':
+    case 'quote':
+      return <Icon as={BsArrowRepeat} />
+    case 'poll_expired':
+    case 'poll_vote':
+      return <Icon as={BsMenuUp} />
+    case 'status':
+      return <Icon as={BsHouseDoor} />
+    case 'emoji_reaction':
+      {
+        /** TODO **/
+      }
+      return null
+    default:
+      return null
+  }
+}
+
+const actionText = (notification: Entity.Notification) => {
+  switch (notification.type) {
+    case 'favourite':
+      return <span>{notification.account.display_name} favourited your post</span>
+    case 'reblog':
+      return <span>{notification.account.display_name} reblogged your post</span>
+    case 'poll_expired':
+      return <span>{notification.account.display_name}'s poll is expired</span>
+    case 'poll_vote':
+      return <span>{notification.account.display_name} voted your poll</span>
+    case 'quote':
+      return <span>{notification.account.display_name} quoted your post</span>
+    case 'status':
+      return <span>{notification.account.display_name} just posted</span>
+    case 'emoji_reaction':
+      return <span>{notification.account.display_name} reacted your post</span>
+    default:
+      return null
+  }
+}
+
+const Reaction: React.FC<Props> = props => {
   const status = props.notification.status
 
   return (
@@ -17,10 +60,10 @@ const Favourite: React.FC<Props> = props => {
       <FlexboxGrid style={{ paddingRight: '8px' }}>
         {/** icon **/}
         <FlexboxGrid.Item style={{ paddingRight: '8px', textAlign: 'right' }} colspan={4}>
-          <Icon as={BsStar} />
+          {actionIcon(props.notification.type)}
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={14} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-          {props.notification.account.display_name} favourited your post
+          {actionText(props.notification)}
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right' }}>
           <Time time={props.notification.created_at} />
@@ -56,4 +99,4 @@ const Favourite: React.FC<Props> = props => {
   )
 }
 
-export default Favourite
+export default Reaction

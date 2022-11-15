@@ -8,6 +8,17 @@ type Props = {
   notification: Entity.Notification
 }
 
+const actionText = (notification: Entity.Notification) => {
+  switch (notification.type) {
+    case 'follow':
+      return <span> {notification.account.display_name} followed you</span>
+    case 'follow_request':
+      return <span>{notification.account.display_name} requested to follow you</span>
+    default:
+      return null
+  }
+}
+
 const Follow: React.FC<Props> = props => {
   return (
     <div>
@@ -18,7 +29,7 @@ const Follow: React.FC<Props> = props => {
           <Icon as={BsPersonPlus} />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={14} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-          {props.notification.account.display_name} followed you
+          {actionText(props.notification)}
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right' }}>
           <Time time={props.notification.created_at} />

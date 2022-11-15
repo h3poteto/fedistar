@@ -1,7 +1,8 @@
 import { Entity } from 'megalodon'
 import { List } from 'rsuite'
 import Follow from './Follow'
-import Favourite from './Favourite'
+import Reaction from './Reaction'
+import Status from '../status/Status'
 
 type Props = {
   notification: Entity.Notification
@@ -10,11 +11,20 @@ type Props = {
 const notification = (noti: Entity.Notification) => {
   switch (noti.type) {
     case 'follow':
+    case 'follow_request':
       return <Follow notification={noti} />
     case 'favourite':
-      return <Favourite notification={noti} />
+    case 'reblog':
+    case 'poll_expired':
+    case 'poll_vote':
+    case 'quote':
+    case 'status':
+    case 'emoji_reaction':
+      return <Reaction notification={noti} />
+    case 'mention':
+      return <Status status={noti.status} />
     default:
-      return <div>{noti.id}</div>
+      return null
   }
 }
 
