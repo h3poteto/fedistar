@@ -1,44 +1,32 @@
 import { Entity } from 'megalodon'
-import { FlexboxGrid, List, Avatar } from 'rsuite'
+import { Avatar, FlexboxGrid } from 'rsuite'
 import { Icon } from '@rsuite/icons'
-import { BsArrowRepeat } from 'react-icons/bs'
+import { BsStar } from 'react-icons/bs'
 import Time from 'src/components/utils/Time'
 
 type Props = {
-  status: Entity.Status
+  notification: Entity.Notification
 }
 
-const originalStatus = (status: Entity.Status) => {
-  if (status.reblog && !status.quote) {
-    return status.reblog
-  } else {
-    return status
-  }
-}
-
-const rebloggedHeader = (status: Entity.Status) => {
-  if (status.reblog && !status.quote) {
-    return (
-      <div>
-        <FlexboxGrid align="middle">
-          <FlexboxGrid.Item style={{ paddingRight: '8px', textAlign: 'right' }} colspan={4}>
-            <Icon as={BsArrowRepeat} style={{ color: 'green' }} />
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={20}>{status.account.display_name}</FlexboxGrid.Item>
-        </FlexboxGrid>
-      </div>
-    )
-  } else {
-    return null
-  }
-}
-
-const Status: React.FC<Props> = props => {
-  const status = originalStatus(props.status)
+const Favourite: React.FC<Props> = props => {
+  const status = props.notification.status
 
   return (
-    <List.Item style={{ paddingTop: '2px', paddingBottom: '2px' }}>
-      {rebloggedHeader(props.status)}
+    <div>
+      {/** action **/}
+      <FlexboxGrid style={{ paddingRight: '8px' }}>
+        {/** icon **/}
+        <FlexboxGrid.Item style={{ paddingRight: '8px', textAlign: 'right' }} colspan={4}>
+          <Icon as={BsStar} />
+        </FlexboxGrid.Item>
+        <FlexboxGrid.Item colspan={14} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {props.notification.account.display_name} favourited your post
+        </FlexboxGrid.Item>
+        <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right' }}>
+          <Time time={props.notification.created_at} />
+        </FlexboxGrid.Item>
+      </FlexboxGrid>
+      {/** body **/}
       <FlexboxGrid>
         {/** icon **/}
         <FlexboxGrid.Item colspan={4}>
@@ -64,8 +52,8 @@ const Status: React.FC<Props> = props => {
           <div className="toolbox"></div>
         </FlexboxGrid.Item>
       </FlexboxGrid>
-    </List.Item>
+    </div>
   )
 }
 
-export default Status
+export default Favourite

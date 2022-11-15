@@ -2,14 +2,10 @@ import { Entity } from 'megalodon'
 import { Avatar, FlexboxGrid } from 'rsuite'
 import { BsPersonPlus } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
-import moment from 'moment'
+import Time from 'src/components/utils/Time'
 
 type Props = {
   notification: Entity.Notification
-}
-
-const parseDatetime = (timestamp: string) => {
-  return moment(timestamp).fromNow(true)
 }
 
 const Follow: React.FC<Props> = props => {
@@ -25,12 +21,7 @@ const Follow: React.FC<Props> = props => {
           {props.notification.account.display_name} followed you
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right' }}>
-          <time
-            dateTime={moment(props.notification.created_at).format('YYYY-MM-DD HH:mm:ss')}
-            title={moment(props.notification.created_at).format('LLLL')}
-          >
-            {parseDatetime(props.notification.created_at)}
-          </time>
+          <Time time={props.notification.created_at} />
         </FlexboxGrid.Item>
       </FlexboxGrid>
       {/** body **/}
