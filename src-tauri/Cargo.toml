@@ -24,6 +24,8 @@ directories = "4.0"
 # megalodon = "0.2.0"
 megalodon = { path = "../../megalodon-rs" }
 open = "3.0"
+log = "0.4"
+env_logger = "0.8"
 
 [features]
 # by default Tauri runs in production mode

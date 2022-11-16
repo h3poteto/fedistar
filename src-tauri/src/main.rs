@@ -2,12 +2,15 @@
     all(not(debug_assertions), target_os = "windows"),
     windows_subsystem = "windows"
 )]
+use std::sync::Arc;
+
 use megalodon::{self, oauth};
 use serde::Serialize;
 use tauri::{async_runtime::Mutex, AppHandle, Manager, State};
 
 pub mod database;
 pub mod entities;
+pub mod streaming;
 
 #[tauri::command]
 async fn list_servers(
@@ -199,8 +202,37 @@ async fn get_account(
     Ok(account)
 }
 
+async fn start_user_streamings(
+    app_handle: AppHandle,
+    sqlite_pool: &sqlx::SqlitePool,
+) -> Result<(), String> {
+    let accounts = database::list_account(&sqlite_pool)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    let handle = Arc::new(app_handle);
+
+    for (account, server) in accounts.into_iter() {
+        let cloned_handle = Arc::clone(&handle);
+        tauri::async_runtime::spawn(async move {
+            match streaming::start(cloned_handle, &server, &account, "user").await {
+                Ok(()) => log::info!(
+                    "user streaming is finished for {}@{}",
+                    account.username,
+                    server.domain
+                ),
+                Err(err) => log::error!("{}", err),
+            }
+        });
+    }
+
+    Ok(())
+}
+
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use tauri::async_runtime::block_on;
+
+    env_logger::init();
 
     const DATABASE_DIR: &str = ".fedistar";
     const DATABASE_FILE: &str = "fedistar.db";
@@ -238,6 +270,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             get_account,
         ])
         .setup(|app| {
+            let app_handle = app.handle();
+            let cloned_pool = sqlite_pool.clone();
+            tauri::async_runtime::spawn(async move {
+                match start_user_streamings(app_handle, &cloned_pool).await {
+                    Ok(()) => log::info!("user streamings are kicked for all accounts"),
+                    Err(e) => log::error!("{}", e.to_string()),
+                }
+            });
+
             app.manage(sqlite_pool);
             let handle = app.handle();
             app.manage(Mutex::new(handle));
