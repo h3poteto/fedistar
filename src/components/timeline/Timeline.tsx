@@ -9,10 +9,16 @@ import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
 import Status from './status/Status'
+import { listen } from '@tauri-apps/api/event'
 
 type Props = {
   timeline: Timeline
   server: Server
+}
+
+type ReceiveHomeStatusPayload = {
+  server_id: number
+  status: Entity.Status
 }
 
 const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline }>((props, ref) => {
@@ -62,6 +68,21 @@ const Timeline: React.FC<Props> = props => {
       setStatuses(res)
     }
     f()
+
+    if (props.timeline.timeline === 'home') {
+      listen<ReceiveHomeStatusPayload>('receive-home-status', ev => {
+        if (ev.payload.server_id !== props.server.id) {
+          return
+        }
+
+        setStatuses(last => {
+          if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
+            return last
+          }
+          return [ev.payload.status].concat(last)
+        })
+      })
+    }
   }, [])
 
   const rowVirtualizer = useVirtualizer({ count: statuses.length, estimateSize: () => 125, getScrollElement: () => parentRef.current })

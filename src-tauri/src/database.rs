@@ -167,3 +167,37 @@ pub(crate) async fn get_account(pool: &SqlitePool, id: i64) -> DBResult<entities
 
     Ok(account)
 }
+
+pub(crate) async fn list_account(
+    pool: &SqlitePool,
+) -> DBResult<Vec<(entities::Account, entities::Server)>> {
+    let accounts = sqlx::query(
+        r#"
+SELECT accounts.id, accounts.username, accounts.account_id, accounts.avatar, accounts.client_id, accounts.client_secret,
+       accounts.access_token, accounts.refresh_token, servers.id, servers.domain, servers.base_url, servers.thumbnail, servers.account_id
+FROM accounts INNER JOIN servers ON accounts.id = servers.account_id"#
+        ).map(|row: SqliteRow| {
+            (
+                entities::Account {
+                    id: row.get(0),
+                    username: row.get(1),
+                    account_id: row.get(2),
+                    avatar: row.get(3),
+                    client_id: row.get(4),
+                    client_secret: row.get(5),
+                    access_token: row.get(6),
+                    refresh_token: row.get(7),
+                },
+                entities::Server {
+                    id: row.get(8),
+                    domain: row.get(9),
+                    base_url: row.get(10),
+                    thumbnail: row.get(11),
+                    account_id: row.get(12),
+                },
+            )
+        }).fetch_all(pool)
+        .await?;
+
+    Ok(accounts)
+}

@@ -9,10 +9,16 @@ import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
 import Notification from './notification/Notification'
+import { listen } from '@tauri-apps/api/event'
 
 type Props = {
   timeline: Timeline
   server: Server
+}
+
+type ReceiveNotificationPayload = {
+  server_id: number
+  notification: Entity.Notification
 }
 
 const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline }>((props, ref) => {
@@ -62,6 +68,19 @@ const Notifications: React.FC<Props> = props => {
       setNotifications(res)
     }
     f()
+
+    listen<ReceiveNotificationPayload>('receive-notification', ev => {
+      if (ev.payload.server_id !== props.server.id) {
+        return
+      }
+
+      setNotifications(last => {
+        if (last.find(n => n.id === ev.payload.notification.id)) {
+          return last
+        }
+        return [ev.payload.notification].concat(last)
+      })
+    })
   }, [])
 
   const rowVirtualizer = useVirtualizer({ count: notifications.length, estimateSize: () => 125, getScrollElement: () => parentRef.current })

@@ -21,9 +21,10 @@ sqlx  = { version = "0.6", features = ["runtime-tokio-rustls", "sqlite", "migrat
 tokio = { version = "1.21", features = ["full"] }
 futures = "0.3"
 directories = "4.0"
-# megalodon = "0.2.0"
-megalodon = { path = "../../megalodon-rs" }
+megalodon = "0.2.1"
 open = "3.0"
+log = "0.4"
+env_logger = "0.8"
 
 [features]
 # by default Tauri runs in production mode
