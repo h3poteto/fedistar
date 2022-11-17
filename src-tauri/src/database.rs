@@ -58,20 +58,20 @@ pub(crate) async fn add_server(
 
 pub(crate) async fn add_account(
     pool: &SqlitePool,
-    server: entities::Server,
-    account: entities::Account,
+    server: &entities::Server,
+    account: &entities::Account,
 ) -> DBResult<entities::Account> {
     let mut tx = pool.begin().await?;
     let mut created = account.clone();
 
     let res = sqlx::query("INSERT INTO accounts (username, account_id, avatar, client_id, client_secret, access_token, refresh_token) VALUES (?, ?, ?, ?, ?, ?, ?)")
-        .bind(account.username)
-        .bind(account.account_id)
-        .bind(account.avatar)
-        .bind(account.client_id)
-        .bind(account.client_secret)
-        .bind(account.access_token)
-        .bind(account.refresh_token)
+        .bind(account.username.clone())
+        .bind(account.account_id.clone())
+        .bind(account.avatar.clone())
+        .bind(account.client_id.clone())
+        .bind(account.client_secret.clone())
+        .bind(account.access_token.clone())
+        .bind(account.refresh_token.clone())
         .execute(&mut tx)
         .await?;
     let id = res.last_insert_rowid();
@@ -79,7 +79,7 @@ pub(crate) async fn add_account(
 
     sqlx::query("UPDATE servers SET account_id = ? WHERE id = ?")
         .bind(id)
-        .bind(server.id)
+        .bind(server.id.clone())
         .execute(&mut tx)
         .await?;
 
@@ -121,7 +121,7 @@ FROM timelines INNER JOIN servers ON servers.id = timelines.server_id ORDER BY t
 
 pub(crate) async fn add_timeline(
     pool: &SqlitePool,
-    server: entities::Server,
+    server: &entities::Server,
     name: &str,
 ) -> DBResult<entities::Timeline> {
     let mut tx = pool.begin().await?;

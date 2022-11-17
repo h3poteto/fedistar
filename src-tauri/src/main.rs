@@ -80,6 +80,7 @@ async fn add_application(
 
 #[tauri::command]
 async fn authorize_code(
+    app_handle: AppHandle,
     sqlite_pool: State<'_, sqlx::SqlitePool>,
     server: entities::Server,
     app: oauth::AppData,
@@ -131,9 +132,13 @@ async fn authorize_code(
         token_data.refresh_token,
     );
 
-    database::add_account(&sqlite_pool, server, account)
+    database::add_account(&sqlite_pool, &server, &account)
         .await
         .map_err(|e| e.to_string())?;
+
+    let cloned_handle = Arc::new(app_handle);
+    start_user_streaming(cloned_handle, server, account).await?;
+
     Ok(())
 }
 
@@ -151,7 +156,7 @@ async fn add_timeline(
     server: entities::Server,
     timeline: &str,
 ) -> Result<(), String> {
-    database::add_timeline(&sqlite_pool, server, timeline)
+    let timeline = database::add_timeline(&sqlite_pool, &server, timeline)
         .await
         .map_err(|e| e.to_string())?;
 
@@ -162,6 +167,9 @@ async fn add_timeline(
     app_handle
         .emit_all("updated-timelines", UpdatedTimelinePayload { timelines })
         .unwrap();
+
+    let cloned_handle = Arc::new(app_handle);
+    start_timeline_streaming(cloned_handle, &sqlite_pool, server, timeline).await?;
     Ok(())
 }
 
@@ -202,7 +210,57 @@ async fn get_account(
     Ok(account)
 }
 
-async fn start_user_streamings(
+async fn start_timeline_streaming(
+    app_handle: Arc<AppHandle>,
+    sqlite_pool: &sqlx::SqlitePool,
+    server: entities::Server,
+    timeline: entities::Timeline,
+) -> Result<(), String> {
+    if timeline.timeline == "home" || timeline.timeline == "notifications" {
+        return Ok(());
+    }
+    let mut account: Option<entities::Account> = None;
+    if let Some(account_id) = server.account_id {
+        let a = database::get_account(&sqlite_pool, account_id)
+            .await
+            .map_err(|e| e.to_string())?;
+        account = Some(a);
+    }
+
+    tauri::async_runtime::spawn(async move {
+        match streaming::start(app_handle, &server, &timeline, account).await {
+            Ok(()) => log::info!(
+                "{} streaming is finished for @{}",
+                timeline.timeline,
+                server.domain
+            ),
+            Err(err) => log::error!("{}", err),
+        }
+    });
+
+    Ok(())
+}
+
+async fn start_user_streaming(
+    app_handle: Arc<AppHandle>,
+    server: entities::Server,
+    account: entities::Account,
+) -> Result<(), String> {
+    tauri::async_runtime::spawn(async move {
+        match streaming::start_user(app_handle, &server, &account).await {
+            Ok(()) => log::info!(
+                "user streaming is finished for {}@{}",
+                account.username,
+                server.domain
+            ),
+            Err(err) => log::error!("{}", err),
+        }
+    });
+
+    Ok(())
+}
+
+async fn start_streamings(
     app_handle: AppHandle,
     sqlite_pool: &sqlx::SqlitePool,
 ) -> Result<(), String> {
@@ -210,20 +268,21 @@ async fn start_user_streamings(
         .await
         .map_err(|e| e.to_string())?;
 
-    let handle = Arc::new(app_handle);
+    let user_handle = Arc::new(app_handle);
+    let timeline_handle = Arc::clone(&user_handle);
 
     for (account, server) in accounts.into_iter() {
-        let cloned_handle = Arc::clone(&handle);
-        tauri::async_runtime::spawn(async move {
-            match streaming::start(cloned_handle, &server, &account, "user").await {
-                Ok(()) => log::info!(
-                    "user streaming is finished for {}@{}",
-                    account.username,
-                    server.domain
-                ),
-                Err(err) => log::error!("{}", err),
-            }
-        });
+        let cloned_handle = Arc::clone(&user_handle);
+        start_user_streaming(cloned_handle, server, account).await?;
+    }
+
+    let timelines = database::list_timelines(&sqlite_pool)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    for (timeline, server) in timelines.into_iter() {
+        let cloned_handle = Arc::clone(&timeline_handle);
+        start_timeline_streaming(cloned_handle, &sqlite_pool, server, timeline).await?;
     }
 
     Ok(())
@@ -273,7 +332,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             let app_handle = app.handle();
             let cloned_pool = sqlite_pool.clone();
             tauri::async_runtime::spawn(async move {
-                match start_user_streamings(app_handle, &cloned_pool).await {
+                match start_streamings(app_handle, &cloned_pool).await {
                     Ok(()) => log::info!("user streamings are kicked for all accounts"),
                     Err(e) => log::error!("{}", e.to_string()),
                 }
