@@ -7,12 +7,14 @@ use tauri::{AppHandle, Manager};
 use crate::entities;
 
 #[derive(Clone, Serialize)]
-pub struct UpdateStatusPayload {
+pub struct ReceiveHomeStatusPayload {
+    server_id: i64,
     status: megalodon::entities::Status,
 }
 
 #[derive(Clone, Serialize)]
-pub struct UpdateNotificationPayload {
+pub struct ReceiveNotificationPayload {
+    server_id: i64,
     notification: megalodon::entities::Notification,
 }
 
@@ -59,19 +61,30 @@ pub async fn start(
         server.domain
     );
 
+    let server_id = server.id;
+
     streaming.listen(Box::new(move |message| match message {
         Message::Update(mes) => {
             log::debug!("receive update");
             app_handle
-                .emit_all("update-status", UpdateStatusPayload { status: mes })
+                .emit_all(
+                    "receive-home-status",
+                    ReceiveHomeStatusPayload {
+                        server_id,
+                        status: mes,
+                    },
+                )
                 .unwrap();
         }
         Message::Notification(mes) => {
             log::debug!("receive notification");
             app_handle
                 .emit_all(
-                    "update-notification",
-                    UpdateNotificationPayload { notification: mes },
+                    "receive-notification",
+                    ReceiveNotificationPayload {
+                        server_id,
+                        notification: mes,
+                    },
                 )
                 .unwrap();
         }
