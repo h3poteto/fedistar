@@ -121,7 +121,7 @@ FROM timelines INNER JOIN servers ON servers.id = timelines.server_id ORDER BY t
 
 pub(crate) async fn add_timeline(
     pool: &SqlitePool,
-    server: entities::Server,
+    server: &entities::Server,
     name: &str,
 ) -> DBResult<entities::Timeline> {
     let mut tx = pool.begin().await?;
