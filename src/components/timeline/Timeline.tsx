@@ -21,6 +21,11 @@ type ReceiveHomeStatusPayload = {
   status: Entity.Status
 }
 
+type ReceiveTimelineStatusPayload = {
+  timeline_id: number
+  status: Entity.Status
+}
+
 const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline }>((props, ref) => {
   const removeTimeline = async (timeline: Timeline) => {
     await invoke<{}>('remove_timeline', { id: timeline.id })
@@ -72,6 +77,19 @@ const Timeline: React.FC<Props> = props => {
     if (props.timeline.timeline === 'home') {
       listen<ReceiveHomeStatusPayload>('receive-home-status', ev => {
         if (ev.payload.server_id !== props.server.id) {
+          return
+        }
+
+        setStatuses(last => {
+          if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
+            return last
+          }
+          return [ev.payload.status].concat(last)
+        })
+      })
+    } else {
+      listen<ReceiveTimelineStatusPayload>('receive-timeline-status', ev => {
+        if (ev.payload.timeline_id !== props.timeline.id) {
           return
         }
 
