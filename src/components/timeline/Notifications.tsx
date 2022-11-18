@@ -21,9 +21,19 @@ type ReceiveNotificationPayload = {
   notification: Entity.Notification
 }
 
-const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline }>((props, ref) => {
+const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
   const removeTimeline = async (timeline: Timeline) => {
     await invoke<{}>('remove_timeline', { id: timeline.id })
+  }
+
+  const switchLeftTimeline = async (timeline: Timeline) => {
+    await invoke<{}>('switch_left_timeline', { id: timeline.id })
+    props.close()
+  }
+
+  const switchRightTimeline = async (timeline: Timeline) => {
+    await invoke<{}>('switch_right_timeline', { id: timeline.id })
+    props.close()
   }
 
   return (
@@ -37,10 +47,10 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline }>((props,
             </Button>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item>
-            <Button appearance="link" size="xs">
+            <Button appearance="link" size="xs" onClick={() => switchLeftTimeline(props.timeline)}>
               <Icon as={BsChevronLeft} />
             </Button>
-            <Button appearance="link" size="xs">
+            <Button appearance="link" size="xs" onClick={() => switchRightTimeline(props.timeline)}>
               <Icon as={BsChevronRight} />
             </Button>
           </FlexboxGrid.Item>
@@ -56,6 +66,7 @@ const Notifications: React.FC<Props> = props => {
   const [notifications, setNotifications] = useState<Array<Entity.Notification>>([])
 
   const parentRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef(null)
 
   useEffect(() => {
     const f = async () => {
@@ -90,6 +101,8 @@ const Notifications: React.FC<Props> = props => {
     return res.data
   }
 
+  const closeOptionPopover = () => triggerRef?.current.close()
+
   return (
     <div style={{ width: '340px' }}>
       <Container style={{ height: '100%', overflowY: 'scroll' }}>
@@ -117,7 +130,8 @@ const Notifications: React.FC<Props> = props => {
                     trigger="click"
                     placement="bottomEnd"
                     controlId="option-popover"
-                    speaker={<OptionPopover timeline={props.timeline} />}
+                    ref={triggerRef}
+                    speaker={<OptionPopover timeline={props.timeline} close={closeOptionPopover} />}
                   >
                     <Button appearance="link">
                       <Icon as={BsSliders} />

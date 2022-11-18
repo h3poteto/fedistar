@@ -159,6 +159,78 @@ pub(crate) async fn remove_timeline(pool: &SqlitePool, id: i64) -> DBResult<()> 
     Ok(())
 }
 
+pub(crate) async fn switch_left_timeline(pool: &SqlitePool, id: i64) -> DBResult<()> {
+    let mut tx = pool.begin().await?;
+
+    let exists = query_as::<_, entities::Timeline>("SELECT * FROM timelines ORDER BY sort")
+        .fetch_all(&mut tx)
+        .await?;
+
+    let find = exists.iter().position(|e| e.id == id);
+    if let Some(index) = find {
+        if index <= 0 {
+            return Ok(());
+        }
+        let target = &exists[index - 1];
+        let base = &exists[index];
+
+        sqlx::query("UPDATE timelines SET sort = ? WHERE id = ?")
+            .bind(-100)
+            .bind(base.id)
+            .execute(&mut tx)
+            .await?;
+        sqlx::query("UPDATE timelines SET sort = ? WHERE id = ?")
+            .bind(base.sort)
+            .bind(target.id)
+            .execute(&mut tx)
+            .await?;
+        sqlx::query("UPDATE timelines SET sort = ? WHERE id = ?")
+            .bind(target.sort)
+            .bind(base.id)
+            .execute(&mut tx)
+            .await?;
+    }
+    tx.commit().await?;
+
+    Ok(())
+}
+
+pub(crate) async fn switch_right_timeline(pool: &SqlitePool, id: i64) -> DBResult<()> {
+    let mut tx = pool.begin().await?;
+
+    let exists = query_as::<_, entities::Timeline>("SELECT * FROM timelines ORDER BY sort")
+        .fetch_all(&mut tx)
+        .await?;
+
+    let find = exists.iter().position(|e| e.id == id);
+    if let Some(index) = find {
+        if index >= exists.len() - 1 {
+            return Ok(());
+        }
+        let target = &exists[index + 1];
+        let base = &exists[index];
+
+        sqlx::query("UPDATE timelines SET sort = ? WHERE id = ?")
+            .bind(-100)
+            .bind(base.id)
+            .execute(&mut tx)
+            .await?;
+        sqlx::query("UPDATE timelines SET sort = ? WHERE id = ?")
+            .bind(base.sort)
+            .bind(target.id)
+            .execute(&mut tx)
+            .await?;
+        sqlx::query("UPDATE timelines SET sort = ? WHERE id = ?")
+            .bind(target.sort)
+            .bind(base.id)
+            .execute(&mut tx)
+            .await?;
+    }
+    tx.commit().await?;
+
+    Ok(())
+}
+
 pub(crate) async fn get_account(pool: &SqlitePool, id: i64) -> DBResult<entities::Account> {
     let account = query_as::<_, entities::Account>("SELECT * FROM accounts WHERE id = ?")
         .bind(id)

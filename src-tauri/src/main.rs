@@ -210,6 +210,48 @@ async fn get_account(
     Ok(account)
 }
 
+#[tauri::command]
+async fn switch_left_timeline(
+    app_handle: AppHandle,
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+    id: i64,
+) -> Result<(), String> {
+    database::switch_left_timeline(&sqlite_pool, id)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    let timelines = database::list_timelines(&sqlite_pool)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    app_handle
+        .emit_all("updated-timelines", UpdatedTimelinePayload { timelines })
+        .unwrap();
+
+    Ok(())
+}
+
+#[tauri::command]
+async fn switch_right_timeline(
+    app_handle: AppHandle,
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+    id: i64,
+) -> Result<(), String> {
+    database::switch_right_timeline(&sqlite_pool, id)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    let timelines = database::list_timelines(&sqlite_pool)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    app_handle
+        .emit_all("updated-timelines", UpdatedTimelinePayload { timelines })
+        .unwrap();
+
+    Ok(())
+}
+
 async fn start_timeline_streaming(
     app_handle: Arc<AppHandle>,
     sqlite_pool: &sqlx::SqlitePool,
@@ -327,6 +369,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             list_timelines,
             remove_timeline,
             get_account,
+            switch_left_timeline,
+            switch_right_timeline,
         ])
         .setup(|app| {
             let app_handle = app.handle();
