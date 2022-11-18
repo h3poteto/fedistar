@@ -1,4 +1,4 @@
-import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader } from 'rsuite'
+import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, useToaster, Message } from 'rsuite'
 import { BsBell, BsSliders, BsX, BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
@@ -60,6 +60,12 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
   )
 })
 
+const alert = (type: string, message: string) => (
+  <Message showIcon type={type}>
+    {message}
+  </Message>
+)
+
 const Notifications: React.FC<Props> = props => {
   const [account, setAccount] = useState<Account>()
   const [client, setClient] = useState<MegalodonInterface>()
@@ -68,6 +74,7 @@ const Notifications: React.FC<Props> = props => {
 
   const parentRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef(null)
+  const toast = useToaster()
 
   useEffect(() => {
     const f = async () => {
@@ -80,6 +87,8 @@ const Notifications: React.FC<Props> = props => {
       try {
         const res = await loadNotifications(client)
         setNotifications(res)
+      } catch {
+        toast.push(alert('error', 'Failed to load notifications'), { placement: 'topStart' })
       } finally {
         setLoading(false)
       }

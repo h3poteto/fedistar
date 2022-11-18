@@ -2,7 +2,7 @@ import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity, detector, MegalodonInterface } from 'megalodon'
 import { useEffect, useRef, useState, forwardRef } from 'react'
-import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader } from 'rsuite'
+import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, Message, useToaster } from 'rsuite'
 import { BsHouseDoor, BsPeople, BsQuestion, BsGlobe2, BsSliders, BsX, BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { Account } from 'src/entities/account'
@@ -65,6 +65,12 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
   )
 })
 
+const alert = (type: string, message: string) => (
+  <Message showIcon type={type} duration={5000}>
+    {message}
+  </Message>
+)
+
 const Timeline: React.FC<Props> = props => {
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [account, setAccount] = useState<Account>()
@@ -73,6 +79,7 @@ const Timeline: React.FC<Props> = props => {
 
   const parentRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef(null)
+  const toast = useToaster()
 
   useEffect(() => {
     const f = async () => {
@@ -85,6 +92,8 @@ const Timeline: React.FC<Props> = props => {
       try {
         const res = await loadTimeline(props.timeline.timeline, client)
         setStatuses(res)
+      } catch {
+        toast.push(alert('error', `Failed to load ${props.timeline.timeline} timeline`), { placement: 'topStart' })
       } finally {
         setLoading(false)
       }
