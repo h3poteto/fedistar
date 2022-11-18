@@ -2,7 +2,7 @@ import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity, detector, MegalodonInterface } from 'megalodon'
 import { useEffect, useRef, useState, forwardRef } from 'react'
-import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button } from 'rsuite'
+import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, Message, useToaster } from 'rsuite'
 import { BsHouseDoor, BsPeople, BsQuestion, BsGlobe2, BsSliders, BsX, BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { Account } from 'src/entities/account'
@@ -65,23 +65,38 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
   )
 })
 
+const alert = (type: string, message: string) => (
+  <Message showIcon type={type} duration={5000}>
+    {message}
+  </Message>
+)
+
 const Timeline: React.FC<Props> = props => {
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [account, setAccount] = useState<Account>()
   const [client, setClient] = useState<MegalodonInterface>()
+  const [loading, setLoading] = useState<boolean>(false)
 
   const parentRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef(null)
+  const toast = useToaster()
 
   useEffect(() => {
     const f = async () => {
+      setLoading(true)
       const account = await invoke<Account>('get_account', { id: props.server.account_id })
       setAccount(account)
       const sns = await detector(props.server.base_url)
       const client = generator(sns, props.server.base_url, account.access_token, 'Fedistar')
       setClient(client)
-      const res = await loadTimeline(props.timeline.timeline, client)
-      setStatuses(res)
+      try {
+        const res = await loadTimeline(props.timeline.timeline, client)
+        setStatuses(res)
+      } catch {
+        toast.push(alert('error', `Failed to load ${props.timeline.timeline} timeline`), { placement: 'topStart' })
+      } finally {
+        setLoading(false)
+      }
     }
     f()
 
@@ -193,43 +208,47 @@ const Timeline: React.FC<Props> = props => {
           </FlexboxGrid>
         </Header>
 
-        <Content style={{ height: 'calc(100% - 54px)' }}>
-          <List
-            hover
-            ref={parentRef}
-            style={{
-              height: '100%',
-              width: '340px',
-              overflow: 'auto'
-            }}
-          >
-            <div
+        {loading ? (
+          <Loader style={{ margin: '10rem auto' }} />
+        ) : (
+          <Content style={{ height: 'calc(100% - 54px)' }}>
+            <List
+              hover
+              ref={parentRef}
               style={{
-                height: rowVirtualizer.getTotalSize(),
-                width: '100%',
-                position: 'relative'
+                height: '100%',
+                width: '340px',
+                overflow: 'auto'
               }}
             >
-              {rowVirtualizer.getVirtualItems().map(virtualRow => (
-                <div
-                  key={virtualRow.key}
-                  data-index={virtualRow.index}
-                  ref={rowVirtualizer.measureElement}
-                  className={virtualRow.index % 2 ? 'ListItemOdd' : 'ListItemEven'}
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    transform: `translateY(${virtualRow.start}px)`
-                  }}
-                >
-                  <Status status={statuses[virtualRow.index]} />
-                </div>
-              ))}
-            </div>
-          </List>
-        </Content>
+              <div
+                style={{
+                  height: rowVirtualizer.getTotalSize(),
+                  width: '100%',
+                  position: 'relative'
+                }}
+              >
+                {rowVirtualizer.getVirtualItems().map(virtualRow => (
+                  <div
+                    key={virtualRow.key}
+                    data-index={virtualRow.index}
+                    ref={rowVirtualizer.measureElement}
+                    className={virtualRow.index % 2 ? 'ListItemOdd' : 'ListItemEven'}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      transform: `translateY(${virtualRow.start}px)`
+                    }}
+                  >
+                    <Status status={statuses[virtualRow.index]} />
+                  </div>
+                ))}
+              </div>
+            </List>
+          </Content>
+        )}
       </Container>
     </div>
   )
