@@ -73,7 +73,7 @@ const alert = (type: string, message: string) => (
 
 const Timeline: React.FC<Props> = props => {
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
-  const [account, setAccount] = useState<Account>()
+  const [account, setAccount] = useState<Account | null>(null)
   const [client, setClient] = useState<MegalodonInterface>()
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -84,11 +84,17 @@ const Timeline: React.FC<Props> = props => {
   useEffect(() => {
     const f = async () => {
       setLoading(true)
-      const account = await invoke<Account>('get_account', { id: props.server.account_id })
-      setAccount(account)
       const sns = await detector(props.server.base_url)
-      const client = generator(sns, props.server.base_url, account.access_token, 'Fedistar')
-      setClient(client)
+      let client: MegalodonInterface
+      if (props.server.account_id) {
+        const account = await invoke<Account>('get_account', { id: props.server.account_id })
+        setAccount(account)
+        client = generator(sns, props.server.base_url, account.access_token, 'Fedistar')
+        setClient(client)
+      } else {
+        client = generator(sns, props.server.base_url, undefined, 'Fedistar')
+        setClient(client)
+      }
       try {
         const res = await loadTimeline(props.timeline.timeline, client)
         setStatuses(res)
