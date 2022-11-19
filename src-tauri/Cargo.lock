@@ -1820,13 +1820,12 @@ checksum = "a3e378b66a060d48947b590737b30a1be76706c8dd7b8ba0f2fe3989c68a853f"
 
 [[package]]
 name = "megalodon"
-version = "0.2.1"
+version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "50fb63f4f5cec33f32985985a5fd856c8f2a12bb408892cb0b9a6725e92db9ec"
+checksum = "871931533366b18d651140881670b02a44a84fd3eaedbf96879eff9114087fed"
 dependencies = [
  "async-trait",
  "chrono",
- "env_logger",
  "hex",
  "log",
  "oauth2",
@@ -1834,6 +1833,7 @@ dependencies = [
  "serde",
  "serde_json",
  "sha1",
+ "thiserror",
  "tokio",
  "tokio-util",
  "tungstenite",

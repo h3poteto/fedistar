@@ -1,18 +1,20 @@
 import { useState, useEffect } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
-import { useRouter } from 'next/router'
 import Image from 'next/image'
-import { Container, Content, Message, useToaster, Sidebar, Sidenav } from 'rsuite'
+import { Icon } from '@rsuite/icons'
+import { Container, Content, Message, useToaster, Sidebar, Sidenav, Button } from 'rsuite'
+import { BsPlus } from 'react-icons/bs'
 import { Server } from '../entities/server'
 import { Timeline } from '../entities/timeline'
-import NewTimeline from 'src/components/timeline/New'
-import ShowTimeline from 'src/components/timeline/Show'
+import NewTimeline from 'src/components/timelines/New'
+import ShowTimeline from 'src/components/timelines/Show'
+import NewServer from 'src/components/servers/New'
 
 function App() {
   const [servers, setServers] = useState<Array<Server>>([])
   const [timelines, setTimelines] = useState<Array<[Timeline, Server]>>([])
-  const router = useRouter()
+  const [newServer, setNewServer] = useState<boolean>(false)
   const toaster = useToaster()
 
   const loadTimelines = async () => {
@@ -30,8 +32,8 @@ function App() {
     invoke<Array<Server>>('list_servers').then(res => {
       if (res.length === 0) {
         console.debug('There is no server')
+        setNewServer(true)
         toaster.push(message, { placement: 'topCenter' })
-        router.push('/server/new')
       } else {
         setServers(res)
       }
@@ -42,10 +44,15 @@ function App() {
     listen('updated-timelines', () => {
       loadTimelines()
     })
+    listen('updated-servers', async () => {
+      const res = await invoke<Array<Server>>('list_servers')
+      setServers(res)
+    })
   }, [])
 
   return (
     <div className="container index">
+      <NewServer open={newServer} onClose={() => setNewServer(false)} />
       <Container style={{ height: '100%' }}>
         <Sidebar style={{ display: 'flex', flexDirection: 'column' }} width="56" collapsible>
           <Sidenav expanded={false}>
@@ -62,6 +69,9 @@ function App() {
                   />
                 </div>
               ))}
+              <Button appearance="link" size="lg" onClick={() => setNewServer(true)}>
+                <Icon as={BsPlus} size="1.4em" />
+              </Button>
             </Sidenav.Body>
           </Sidenav>
         </Sidebar>

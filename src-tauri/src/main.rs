@@ -25,6 +25,7 @@ async fn list_servers(
 
 #[tauri::command]
 async fn add_server(
+    app_handle: AppHandle,
     sqlite_pool: State<'_, sqlx::SqlitePool>,
     domain: &str,
 ) -> Result<entities::Server, String> {
@@ -40,6 +41,8 @@ async fn add_server(
     let created = database::add_server(&sqlite_pool, server)
         .await
         .map_err(|e| e.to_string())?;
+
+    app_handle.emit_all("updated-servers", ()).unwrap();
     Ok(created)
 }
 
