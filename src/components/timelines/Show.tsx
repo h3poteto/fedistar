@@ -1,7 +1,7 @@
 import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
-import ShowTimeline from 'src/components/timeline/Timeline'
-import ShowNotifications from 'src/components/timeline/Notifications'
+import ShowTimeline from 'src/components/timelines/Timeline'
+import ShowNotifications from 'src/components/timelines/Notifications'
 
 type Props = {
   timeline: Timeline
