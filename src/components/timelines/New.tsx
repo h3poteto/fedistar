@@ -49,30 +49,35 @@ const New: React.FC<Props> = props => {
     setServer(undefined)
   }
 
+  const authorizedTimelines = () => (
+    <div>
+      <List.Item index={3} onClick={() => select('home')}>
+        <FlexboxGrid align="middle">
+          <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Icon as={BsHouseDoor} />
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={20}>
+            <div>Home</div>
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+      </List.Item>
+      <List.Item index={4} onClick={() => select('notifications')}>
+        <FlexboxGrid align="middle">
+          <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Icon as={BsBell} />
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={20}>
+            <div>Notifications</div>
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+      </List.Item>{' '}
+    </div>
+  )
+
   const selectTimeline = () => (
     <div className="add-timeline" style={{ width: '240px', display: 'flex', flexDirection: 'column', backgroundColor: '#242424' }}>
       <List hover>
-        <List.Item index={1} onClick={() => select('home')}>
-          <FlexboxGrid align="middle">
-            <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <Icon as={BsHouseDoor} />
-            </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={20}>
-              <div>Home</div>
-            </FlexboxGrid.Item>
-          </FlexboxGrid>
-        </List.Item>
-        <List.Item index={2} onClick={() => select('notifications')}>
-          <FlexboxGrid align="middle">
-            <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <Icon as={BsBell} />
-            </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={20}>
-              <div>Notifications</div>
-            </FlexboxGrid.Item>
-          </FlexboxGrid>
-        </List.Item>
-        <List.Item index={3} onClick={() => select('local')}>
+        <List.Item index={1} onClick={() => select('local')}>
           <FlexboxGrid align="middle">
             <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <Icon as={BsPeople} />
@@ -82,7 +87,7 @@ const New: React.FC<Props> = props => {
             </FlexboxGrid.Item>
           </FlexboxGrid>
         </List.Item>
-        <List.Item index={3} onClick={() => select('public')}>
+        <List.Item index={2} onClick={() => select('public')}>
           <FlexboxGrid align="middle">
             <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <Icon as={BsGlobe2} />
@@ -92,6 +97,7 @@ const New: React.FC<Props> = props => {
             </FlexboxGrid.Item>
           </FlexboxGrid>
         </List.Item>
+        {server.account_id && authorizedTimelines()}
       </List>
     </div>
   )

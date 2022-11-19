@@ -78,7 +78,10 @@ const New: React.FC<Props> = props => {
         {server !== undefined && app === undefined && (
           <Form fluid>
             <Form.Group>
-              <Input value={domain} disabled />
+              <p>You can also quit without signing in. If that case, you can see only Federated and Local timelines.</p>
+            </Form.Group>
+            <Form.Group>
+              <Input value={domain} readOnly />
             </Form.Group>
             <Form.Group>
               <ButtonToolbar>
@@ -86,7 +89,7 @@ const New: React.FC<Props> = props => {
                   Sign In
                 </Button>
                 <Button appearance="link" onClick={() => close()}>
-                  Cancel
+                  Finish
                 </Button>
               </ButtonToolbar>
             </Form.Group>
