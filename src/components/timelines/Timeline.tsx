@@ -5,11 +5,13 @@ import { useEffect, useRef, useState, forwardRef } from 'react'
 import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, Message, useToaster } from 'rsuite'
 import { BsHouseDoor, BsPeople, BsQuestion, BsGlobe2, BsSliders, BsX, BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { useVirtualizer } from '@tanstack/react-virtual'
+import { listen } from '@tauri-apps/api/event'
+
 import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
 import Status from './status/Status'
-import { listen } from '@tauri-apps/api/event'
+import FailoverImg from 'src/components/utils/failoverImg'
 
 type Props = {
   timeline: Timeline
@@ -207,7 +209,7 @@ const Timeline: React.FC<Props> = props => {
                   </Whisper>
                 </FlexboxGrid.Item>
                 <FlexboxGrid.Item style={{ paddingRight: '8px' }}>
-                  <Avatar circle src={account ? account.avatar : ''} size="xs" />
+                  <Avatar circle src={FailoverImg(account ? account.avatar : null)} size="xs" />
                 </FlexboxGrid.Item>
               </FlexboxGrid>
             </FlexboxGrid.Item>

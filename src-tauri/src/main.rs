@@ -10,6 +10,7 @@ use tauri::{async_runtime::Mutex, AppHandle, Manager, State};
 
 pub mod database;
 pub mod entities;
+pub mod favicon;
 pub mod streaming;
 
 #[tauri::command]
@@ -30,14 +31,10 @@ async fn add_server(
     domain: &str,
 ) -> Result<entities::Server, String> {
     let url = format!("https://{}", domain);
-    let sns = megalodon::detector(url.as_str())
-        .await
-        .map_err(|e| e.to_string())?;
 
-    let client = megalodon::generator(sns, url.clone(), None, Some(String::from("fedistar")));
-    let res = client.get_instance().await.map_err(|e| e.to_string())?;
+    let icon = favicon::get_favicon_url(&url).await;
 
-    let server = entities::Server::new(0, domain.to_string(), url, res.json.thumbnail);
+    let server = entities::Server::new(0, domain.to_string(), url, icon);
     let created = database::add_server(&sqlite_pool, server)
         .await
         .map_err(|e| e.to_string())?;
@@ -138,6 +135,8 @@ async fn authorize_code(
     database::add_account(&sqlite_pool, &server, &account)
         .await
         .map_err(|e| e.to_string())?;
+
+    app_handle.emit_all("updated-servers", ()).unwrap();
 
     let cloned_handle = Arc::new(app_handle);
     start_user_streaming(cloned_handle, server, account).await?;
