@@ -250,7 +250,7 @@ const Timeline: React.FC<Props> = props => {
                       transform: `translateY(${virtualRow.start}px)`
                     }}
                   >
-                    <Status status={statuses[virtualRow.index]} />
+                    <Status status={statuses[virtualRow.index]} client={client} />
                   </div>
                 ))}
               </div>
