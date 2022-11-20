@@ -1,5 +1,5 @@
-import { Modal, FlexboxGrid, Form, ButtonToolbar, Button, Input, Loader } from 'rsuite'
-import { useState } from 'react'
+import { Modal, Form, ButtonToolbar, Button, Input, Loader } from 'rsuite'
+import { useEffect, useState } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
 import { Server } from 'src/entities/server'
 import { OAuth } from 'megalodon'
@@ -7,6 +7,7 @@ import { OAuth } from 'megalodon'
 type Props = {
   open: boolean
   onClose: () => void
+  initialServer: Server | null
 }
 
 const New: React.FC<Props> = props => {
@@ -15,6 +16,13 @@ const New: React.FC<Props> = props => {
   const [loading, setLoading] = useState<boolean>(false)
   const [domain, setDomain] = useState('')
   const [code, setCode] = useState('')
+
+  useEffect(() => {
+    if (props.initialServer) {
+      setServer(props.initialServer)
+      setDomain(props.initialServer.domain)
+    }
+  }, [props.initialServer])
 
   async function addServer() {
     setLoading(true)

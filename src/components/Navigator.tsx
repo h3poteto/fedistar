@@ -10,23 +10,29 @@ import FailoverImg from 'src/components/utils/failoverImg'
 type NavigatorProps = {
   servers: Array<Server>
   setNewServer: (value: SetStateAction<boolean>) => void
+  setInitialServer: (value: SetStateAction<Server>) => void
+}
+
+type ServerMenuProps = {
+  className: string
+  left?: number
+  top?: number
+  onClose: (delay?: number) => NodeJS.Timeout | void
+  server: Server
+  setNewServer: (value: SetStateAction<boolean>) => void
+  setInitialServer: (value: SetStateAction<Server>) => void
 }
 
 const serverMenu = (
-  {
-    className,
-    left,
-    top,
-    onClose,
-    server
-  }: { className: string; left?: number; top?: number; onClose: (delay?: number) => NodeJS.Timeout | void; server: Server },
+  { className, left, top, onClose, server, setNewServer, setInitialServer }: ServerMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
   const handleSelect = (eventKey: string) => {
     onClose()
     switch (eventKey) {
       case '0':
-        console.log('auth')
+        setNewServer(true)
+        setInitialServer(server)
         break
       case '1':
         invoke('remove_server', { id: server.id })
@@ -44,7 +50,7 @@ const serverMenu = (
 }
 
 const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
-  const { servers, setNewServer } = props
+  const { servers, setNewServer, setInitialServer } = props
 
   return (
     <Sidebar style={{ display: 'flex', flexDirection: 'column' }} width="56" collapsible>
@@ -56,7 +62,9 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
                 placement="right"
                 controlId="control-id-context-menu"
                 trigger="contextMenu"
-                speaker={({ className, left, top, onClose }, ref) => serverMenu({ className, left, top, onClose, server }, ref)}
+                speaker={({ className, left, top, onClose }, ref) =>
+                  serverMenu({ className, left, top, onClose, server, setNewServer, setInitialServer }, ref)
+                }
               >
                 <Button appearance="link" size="xs">
                   <Image

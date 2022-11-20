@@ -13,6 +13,7 @@ function App() {
   const [servers, setServers] = useState<Array<Server>>([])
   const [timelines, setTimelines] = useState<Array<[Timeline, Server]>>([])
   const [newServer, setNewServer] = useState<boolean>(false)
+  const [initialServer, setInitialServer] = useState<Server | null>(null)
   const toaster = useToaster()
 
   const loadTimelines = async () => {
@@ -50,9 +51,9 @@ function App() {
 
   return (
     <div className="container index">
-      <NewServer open={newServer} onClose={() => setNewServer(false)} />
+      <NewServer open={newServer} onClose={() => setNewServer(false)} initialServer={initialServer} />
       <Container style={{ height: '100%' }}>
-        <Navigator servers={servers} setNewServer={setNewServer} />
+        <Navigator servers={servers} setNewServer={setNewServer} setInitialServer={setInitialServer} />
         <Content style={{ display: 'flex' }}>
           {timelines.map(timeline => (
             <ShowTimeline timeline={timeline[0]} server={timeline[1]} key={timeline[0].id} />
