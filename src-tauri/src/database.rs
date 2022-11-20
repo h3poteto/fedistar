@@ -56,6 +56,18 @@ pub(crate) async fn add_server(
     Ok(created)
 }
 
+pub(crate) async fn remove_server(pool: &SqlitePool, id: i64) -> DBResult<()> {
+    let mut tx = pool.begin().await?;
+
+    sqlx::query("DELETE FROM servers WHERE id = ?")
+        .bind(id)
+        .execute(&mut tx)
+        .await?;
+    tx.commit().await?;
+
+    Ok(())
+}
+
 pub(crate) async fn add_account(
     pool: &SqlitePool,
     server: &entities::Server,

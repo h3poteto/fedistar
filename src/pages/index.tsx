@@ -1,16 +1,13 @@
 import { useState, useEffect } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
-import Image from 'next/image'
-import { Icon } from '@rsuite/icons'
-import { Container, Content, Message, useToaster, Sidebar, Sidenav, Button } from 'rsuite'
-import { BsPlus } from 'react-icons/bs'
+import { Container, Content, Message, useToaster } from 'rsuite'
 import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
 import NewTimeline from 'src/components/timelines/New'
 import ShowTimeline from 'src/components/timelines/Show'
 import NewServer from 'src/components/servers/New'
-import FailoverImg from 'src/components/utils/failoverImg'
+import Navigator from 'src/components/Navigator'
 
 function App() {
   const [servers, setServers] = useState<Array<Server>>([])
@@ -55,27 +52,7 @@ function App() {
     <div className="container index">
       <NewServer open={newServer} onClose={() => setNewServer(false)} />
       <Container style={{ height: '100%' }}>
-        <Sidebar style={{ display: 'flex', flexDirection: 'column' }} width="56" collapsible>
-          <Sidenav expanded={false}>
-            <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              {servers.map(server => (
-                <div style={{ padding: '8px' }} key={server.id}>
-                  <Image
-                    width={48}
-                    height={48}
-                    src={FailoverImg(server.favicon)}
-                    className="server-icon"
-                    alt={server.domain}
-                    key={server.id}
-                  />
-                </div>
-              ))}
-              <Button appearance="link" size="lg" onClick={() => setNewServer(true)}>
-                <Icon as={BsPlus} size="1.4em" />
-              </Button>
-            </Sidenav.Body>
-          </Sidenav>
-        </Sidebar>
+        <Navigator servers={servers} setNewServer={setNewServer} />
         <Content style={{ display: 'flex' }}>
           {timelines.map(timeline => (
             <ShowTimeline timeline={timeline[0]} server={timeline[1]} key={timeline[0].id} />
