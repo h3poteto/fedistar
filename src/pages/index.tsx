@@ -5,11 +5,12 @@ import Image from 'next/image'
 import { Icon } from '@rsuite/icons'
 import { Container, Content, Message, useToaster, Sidebar, Sidenav, Button } from 'rsuite'
 import { BsPlus } from 'react-icons/bs'
-import { Server } from '../entities/server'
-import { Timeline } from '../entities/timeline'
+import { Server } from 'src/entities/server'
+import { Timeline } from 'src/entities/timeline'
 import NewTimeline from 'src/components/timelines/New'
 import ShowTimeline from 'src/components/timelines/Show'
 import NewServer from 'src/components/servers/New'
+import FailoverImg from 'src/components/utils/failoverImg'
 
 function App() {
   const [servers, setServers] = useState<Array<Server>>([])
@@ -62,7 +63,7 @@ function App() {
                   <Image
                     width={48}
                     height={48}
-                    src={server.base_url + '/favicon.ico'}
+                    src={FailoverImg(server.favicon)}
                     className="server-icon"
                     alt={server.domain}
                     key={server.id}

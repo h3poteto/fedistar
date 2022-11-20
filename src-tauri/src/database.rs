@@ -43,10 +43,10 @@ pub(crate) async fn add_server(
     let mut tx = pool.begin().await?;
     let mut created = server.clone();
 
-    let res = sqlx::query("INSERT INTO servers (domain, base_url, thumbnail) VALUES (?, ?, ?)")
+    let res = sqlx::query("INSERT INTO servers (domain, base_url, favicon) VALUES (?, ?, ?)")
         .bind(server.domain)
         .bind(server.base_url)
-        .bind(server.thumbnail)
+        .bind(server.favicon)
         .execute(&mut tx)
         .await?;
 
@@ -93,7 +93,7 @@ pub(crate) async fn list_timelines(
     let timelines = sqlx::query(
         r#"
 SELECT timelines.id, timelines.server_id, timelines.timeline, timelines.sort,
-       servers.id, servers.domain, servers.base_url, servers.thumbnail, servers.account_id
+       servers.id, servers.domain, servers.base_url, servers.favicon, servers.account_id
 FROM timelines INNER JOIN servers ON servers.id = timelines.server_id ORDER BY timelines.sort"#,
     )
     .map(|row: SqliteRow| {
@@ -108,7 +108,7 @@ FROM timelines INNER JOIN servers ON servers.id = timelines.server_id ORDER BY t
                 id: row.get(4),
                 domain: row.get(5),
                 base_url: row.get(6),
-                thumbnail: row.get(7),
+                favicon: row.get(7),
                 account_id: row.get(8),
             },
         )
@@ -246,7 +246,7 @@ pub(crate) async fn list_account(
     let accounts = sqlx::query(
         r#"
 SELECT accounts.id, accounts.username, accounts.account_id, accounts.avatar, accounts.client_id, accounts.client_secret,
-       accounts.access_token, accounts.refresh_token, servers.id, servers.domain, servers.base_url, servers.thumbnail, servers.account_id
+       accounts.access_token, accounts.refresh_token, servers.id, servers.domain, servers.base_url, servers.favicon, servers.account_id
 FROM accounts INNER JOIN servers ON accounts.id = servers.account_id"#
         ).map(|row: SqliteRow| {
             (
@@ -264,7 +264,7 @@ FROM accounts INNER JOIN servers ON accounts.id = servers.account_id"#
                     id: row.get(8),
                     domain: row.get(9),
                     base_url: row.get(10),
-                    thumbnail: row.get(11),
+                    favicon: row.get(11),
                     account_id: row.get(12),
                 },
             )
