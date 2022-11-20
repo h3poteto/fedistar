@@ -44,6 +44,21 @@ async fn add_server(
 }
 
 #[tauri::command]
+async fn remove_server(
+    app_handle: AppHandle,
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+    id: i64,
+) -> Result<(), String> {
+    database::remove_server(&sqlite_pool, id)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    app_handle.emit_all("updated-servers", ()).unwrap();
+    app_handle.emit_all("updated-timelines", ()).unwrap();
+    Ok(())
+}
+
+#[tauri::command]
 async fn add_application(
     _sqlite_pool: State<'_, sqlx::SqlitePool>,
     url: &str,
@@ -365,12 +380,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .invoke_handler(tauri::generate_handler![
             list_servers,
             add_server,
+            remove_server,
             add_application,
             authorize_code,
+            get_account,
             add_timeline,
             list_timelines,
             remove_timeline,
-            get_account,
             switch_left_timeline,
             switch_right_timeline,
         ])

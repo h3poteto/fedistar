@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ReactElement } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
 import Image from 'next/image'
 import { Icon } from '@rsuite/icons'
-import { Container, Content, Message, useToaster, Sidebar, Sidenav, Button } from 'rsuite'
+import { Container, Content, Message, useToaster, Sidebar, Sidenav, Button, Whisper, Popover, Dropdown } from 'rsuite'
 import { BsPlus } from 'react-icons/bs'
 import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
@@ -12,6 +12,36 @@ import ShowTimeline from 'src/components/timelines/Show'
 import NewServer from 'src/components/servers/New'
 import FailoverImg from 'src/components/utils/failoverImg'
 
+const serverMenu = (
+  {
+    className,
+    left,
+    top,
+    onClose,
+    server
+  }: { className: string; left?: number; top?: number; onClose: (delay?: number) => NodeJS.Timeout | void; server: Server },
+  ref: React.RefCallback<HTMLElement>
+): ReactElement => {
+  const handleSelect = (eventKey: string) => {
+    onClose()
+    switch (eventKey) {
+      case '0':
+        console.log('auth')
+        break
+      case '1':
+        invoke('remove_server', { id: server.id })
+        break
+    }
+  }
+  return (
+    <Popover ref={ref} className={className} style={{ left, top, padding: 0 }}>
+      <Dropdown.Menu onSelect={handleSelect}>
+        {server.account_id === null && <Dropdown.Item eventKey="0">Authorize</Dropdown.Item>}
+        <Dropdown.Item eventKey="1">Remove</Dropdown.Item>
+      </Dropdown.Menu>
+    </Popover>
+  )
+}
 function App() {
   const [servers, setServers] = useState<Array<Server>>([])
   const [timelines, setTimelines] = useState<Array<[Timeline, Server]>>([])
@@ -60,14 +90,23 @@ function App() {
             <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               {servers.map(server => (
                 <div style={{ padding: '8px' }} key={server.id}>
-                  <Image
-                    width={48}
-                    height={48}
-                    src={FailoverImg(server.favicon)}
-                    className="server-icon"
-                    alt={server.domain}
-                    key={server.id}
-                  />
+                  <Whisper
+                    placement="right"
+                    controlId="control-id-context-menu"
+                    trigger="contextMenu"
+                    speaker={({ className, left, top, onClose }, ref) => serverMenu({ className, left, top, onClose, server }, ref)}
+                  >
+                    <Button appearance="link" size="xs">
+                      <Image
+                        width={48}
+                        height={48}
+                        src={FailoverImg(server.favicon)}
+                        className="server-icon"
+                        alt={server.domain}
+                        key={server.id}
+                      />
+                    </Button>
+                  </Whisper>
                 </div>
               ))}
               <Button appearance="link" size="lg" onClick={() => setNewServer(true)}>
