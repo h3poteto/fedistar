@@ -1,4 +1,4 @@
-import { Entity, MegalodonInterface } from 'megalodon'
+import { Entity, MegalodonInterface, Response } from 'megalodon'
 import { FlexboxGrid, List, Avatar, IconButton } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsArrowRepeat, BsChat, BsStar, BsStarFill, BsBookmark, BsFillBookmarkFill, BsEmojiSmile, BsThreeDots } from 'react-icons/bs'
@@ -65,17 +65,32 @@ const Status: React.FC<Props> = props => {
   const status = originalStatus(props.status)
 
   const reblog = async () => {
-    const res = await client.reblogStatus(status.id)
+    let res: Response<Entity.Status>
+    if (status.reblogged) {
+      res = await client.unreblogStatus(status.id)
+    } else {
+      res = await client.reblogStatus(status.id)
+    }
     props.updateStatus(res.data)
   }
 
   const favourite = async () => {
-    const res = await client.favouriteStatus(status.id)
+    let res: Response<Entity.Status>
+    if (status.favourited) {
+      res = await client.unfavouriteStatus(status.id)
+    } else {
+      res = await client.favouriteStatus(status.id)
+    }
     props.updateStatus(res.data)
   }
 
   const bookmark = async () => {
-    const res = await client.bookmarkStatus(status.id)
+    let res: Response<Entity.Status>
+    if (status.bookmarked) {
+      res = await client.unbookmarkStatus(status.id)
+    } else {
+      res = await client.bookmarkStatus(status.id)
+    }
     props.updateStatus(res.data)
   }
 
