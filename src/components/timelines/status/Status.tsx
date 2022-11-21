@@ -1,11 +1,14 @@
-import { Entity } from 'megalodon'
-import { FlexboxGrid, List, Avatar } from 'rsuite'
+import { Entity, MegalodonInterface } from 'megalodon'
+import { FlexboxGrid, List, Avatar, IconButton } from 'rsuite'
 import { Icon } from '@rsuite/icons'
-import { BsArrowRepeat } from 'react-icons/bs'
+import { BsArrowRepeat, BsChat, BsStar, BsStarFill, BsBookmark, BsFillBookmarkFill, BsEmojiSmile, BsThreeDots } from 'react-icons/bs'
 import Time from 'src/components/utils/Time'
+import { ReactElement } from 'react'
 
 type Props = {
   status: Entity.Status
+  client: MegalodonInterface
+  updateStatus: (status: Entity.Status) => void
 }
 
 const originalStatus = (status: Entity.Status) => {
@@ -33,8 +36,48 @@ const rebloggedHeader = (status: Entity.Status) => {
   }
 }
 
+const reblogIcon = (status: Entity.Status): ReactElement => {
+  if (status.reblogged) {
+    return <Icon as={BsArrowRepeat} color="green" />
+  } else {
+    return <Icon as={BsArrowRepeat} />
+  }
+}
+
+const favouriteIcon = (status: Entity.Status): ReactElement => {
+  if (status.favourited) {
+    return <Icon as={BsStarFill} color="orange" />
+  } else {
+    return <Icon as={BsStar} />
+  }
+}
+
+const bookmarkIcon = (status: Entity.Status): ReactElement => {
+  if (status.bookmarked) {
+    return <Icon as={BsFillBookmarkFill} color="green" />
+  } else {
+    return <Icon as={BsBookmark} />
+  }
+}
+
 const Status: React.FC<Props> = props => {
+  const { client } = props
   const status = originalStatus(props.status)
+
+  const reblog = async () => {
+    const res = await client.reblogStatus(status.id)
+    props.updateStatus(res.data)
+  }
+
+  const favourite = async () => {
+    const res = await client.favouriteStatus(status.id)
+    props.updateStatus(res.data)
+  }
+
+  const bookmark = async () => {
+    const res = await client.bookmarkStatus(status.id)
+    props.updateStatus(res.data)
+  }
 
   return (
     <List.Item style={{ paddingTop: '2px', paddingBottom: '2px' }}>
@@ -61,7 +104,28 @@ const Status: React.FC<Props> = props => {
             </FlexboxGrid>
           </div>
           <div className="body" style={{ wordWrap: 'break-word' }} dangerouslySetInnerHTML={{ __html: status.content }}></div>
-          <div className="toolbox"></div>
+          <div className="toolbox">
+            <FlexboxGrid>
+              <FlexboxGrid.Item>
+                <IconButton appearance="link" icon={<Icon as={BsChat} />} disabled />
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item>
+                <IconButton appearance="link" icon={reblogIcon(status)} onClick={reblog} />
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item>
+                <IconButton appearance="link" icon={favouriteIcon(status)} onClick={favourite} />
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item>
+                <IconButton appearance="link" icon={bookmarkIcon(status)} onClick={bookmark} />
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item>
+                <IconButton appearance="link" icon={<Icon as={BsEmojiSmile} />} disabled />
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item>
+                <IconButton appearance="link" icon={<Icon as={BsThreeDots} />} disabled />
+              </FlexboxGrid.Item>
+            </FlexboxGrid>
+          </div>
         </FlexboxGrid.Item>
       </FlexboxGrid>
     </List.Item>
