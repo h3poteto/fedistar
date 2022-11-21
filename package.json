@@ -1,11 +1,13 @@
 {
   "name": "fedistar",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "dev": "next dev -p 1420",
     "build": "next build && next export -o dist",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "lint": "eslint src --ext ts,tsx",
+    "typecheck": "tsc -p . --noEmit"
   },
   "dependencies": {
     "@rsuite/icons": "^1.0.2",
@@ -24,6 +26,11 @@
     "@types/node": "^18.7.11",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "@typescript-eslint/parser": "^5.43.0",
+    "eslint": "^8.28.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-react": "^7.31.11",
     "typescript": "^4.7.4"
   }
 }

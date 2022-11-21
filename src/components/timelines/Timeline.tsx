@@ -30,16 +30,16 @@ type ReceiveTimelineStatusPayload = {
 
 const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
   const removeTimeline = async (timeline: Timeline) => {
-    await invoke<{}>('remove_timeline', { id: timeline.id })
+    await invoke('remove_timeline', { id: timeline.id })
   }
 
   const switchLeftTimeline = async (timeline: Timeline) => {
-    await invoke<{}>('switch_left_timeline', { id: timeline.id })
+    await invoke('switch_left_timeline', { id: timeline.id })
     props.close()
   }
 
   const switchRightTimeline = async (timeline: Timeline) => {
-    await invoke<{}>('switch_right_timeline', { id: timeline.id })
+    await invoke('switch_right_timeline', { id: timeline.id })
     props.close()
   }
 

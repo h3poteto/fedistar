@@ -23,16 +23,16 @@ type ReceiveNotificationPayload = {
 
 const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
   const removeTimeline = async (timeline: Timeline) => {
-    await invoke<{}>('remove_timeline', { id: timeline.id })
+    await invoke('remove_timeline', { id: timeline.id })
   }
 
   const switchLeftTimeline = async (timeline: Timeline) => {
-    await invoke<{}>('switch_left_timeline', { id: timeline.id })
+    await invoke('switch_left_timeline', { id: timeline.id })
     props.close()
   }
 
   const switchRightTimeline = async (timeline: Timeline) => {
-    await invoke<{}>('switch_right_timeline', { id: timeline.id })
+    await invoke('switch_right_timeline', { id: timeline.id })
     props.close()
   }
 
@@ -68,7 +68,7 @@ const alert = (type: string, message: string) => (
 
 const Notifications: React.FC<Props> = props => {
   const [account, setAccount] = useState<Account>()
-  const [client, setClient] = useState<MegalodonInterface>()
+  const [_client, setClient] = useState<MegalodonInterface>()
   const [notifications, setNotifications] = useState<Array<Entity.Notification>>([])
   const [loading, setLoading] = useState<boolean>(false)
 
