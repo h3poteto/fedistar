@@ -80,7 +80,7 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
             </div>
           ))}
           <Button appearance="link" size="lg" onClick={() => setNewServer(true)}>
-            <Icon as={BsPlus} size="1.4em" />
+            <Icon as={BsPlus} style={{ fontSize: '1.4em' }} />
           </Button>
         </Sidenav.Body>
       </Sidenav>
