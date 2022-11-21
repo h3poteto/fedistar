@@ -37,7 +37,7 @@ const actionText = (notification: Entity.Notification) => {
     case 'reblog':
       return <span>{notification.account.display_name} reblogged your post</span>
     case 'poll_expired':
-      return <span>{notification.account.display_name}'s poll is expired</span>
+      return <span>{notification.account.display_name}&apos;s poll is expired</span>
     case 'poll_vote':
       return <span>{notification.account.display_name} voted your poll</span>
     case 'quote':

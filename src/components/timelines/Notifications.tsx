@@ -23,16 +23,16 @@ type ReceiveNotificationPayload = {
 
 const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
   const removeTimeline = async (timeline: Timeline) => {
-    await invoke<{}>('remove_timeline', { id: timeline.id })
+    await invoke('remove_timeline', { id: timeline.id })
   }
 
   const switchLeftTimeline = async (timeline: Timeline) => {
-    await invoke<{}>('switch_left_timeline', { id: timeline.id })
+    await invoke('switch_left_timeline', { id: timeline.id })
     props.close()
   }
 
   const switchRightTimeline = async (timeline: Timeline) => {
-    await invoke<{}>('switch_right_timeline', { id: timeline.id })
+    await invoke('switch_right_timeline', { id: timeline.id })
     props.close()
   }
 
@@ -42,7 +42,7 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item>
             <Button appearance="link" size="xs" onClick={() => removeTimeline(props.timeline)}>
-              <Icon as={BsX} size="1.4em" style={{ paddingBottom: '2px' }} />
+              <Icon as={BsX} style={{ paddingBottom: '2px', fontSize: '1.4em' }} />
               <span>Unpin</span>
             </Button>
           </FlexboxGrid.Item>
@@ -60,7 +60,7 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
   )
 })
 
-const alert = (type: string, message: string) => (
+const alert = (type: 'info' | 'success' | 'warning' | 'error', message: string) => (
   <Message showIcon type={type}>
     {message}
   </Message>
@@ -117,6 +117,22 @@ const Notifications: React.FC<Props> = props => {
   }
 
   const closeOptionPopover = () => triggerRef?.current.close()
+
+  const updateStatus = (status: Entity.Status) => {
+    const renew = notifications.map(n => {
+      if (n.status === undefined || n.status === null) {
+        return n
+      }
+      if (n.status.id === status.id) {
+        return Object.assign({}, n, { status })
+      } else if (n.status.reblog && n.status.reblog.id === status.id) {
+        const s = Object.assign({}, n.status, { reblog: status })
+        return Object.assign({}, n, { status: s })
+      }
+      return n
+    })
+    setNotifications(renew)
+  }
 
   return (
     <div style={{ width: '340px' }}>
@@ -181,7 +197,7 @@ const Notifications: React.FC<Props> = props => {
                     transform: `translateY(${virtualRow.start}px)`
                   }}
                 >
-                  <Notification notification={notifications[virtualRow.index]} />
+                  <Notification notification={notifications[virtualRow.index]} client={client} updateStatus={updateStatus} />
                 </div>
               ))}
             </List>

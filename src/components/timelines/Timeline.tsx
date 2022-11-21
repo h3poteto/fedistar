@@ -30,16 +30,16 @@ type ReceiveTimelineStatusPayload = {
 
 const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
   const removeTimeline = async (timeline: Timeline) => {
-    await invoke<{}>('remove_timeline', { id: timeline.id })
+    await invoke('remove_timeline', { id: timeline.id })
   }
 
   const switchLeftTimeline = async (timeline: Timeline) => {
-    await invoke<{}>('switch_left_timeline', { id: timeline.id })
+    await invoke('switch_left_timeline', { id: timeline.id })
     props.close()
   }
 
   const switchRightTimeline = async (timeline: Timeline) => {
-    await invoke<{}>('switch_right_timeline', { id: timeline.id })
+    await invoke('switch_right_timeline', { id: timeline.id })
     props.close()
   }
 
@@ -49,7 +49,7 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item>
             <Button appearance="link" size="xs" onClick={() => removeTimeline(props.timeline)}>
-              <Icon as={BsX} size="1.4em" style={{ paddingBottom: '2px' }} />
+              <Icon as={BsX} style={{ paddingBottom: '2px', fontSize: '1.4em' }} />
               <span>Unpin</span>
             </Button>
           </FlexboxGrid.Item>
@@ -67,7 +67,7 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
   )
 })
 
-const alert = (type: string, message: string) => (
+const alert = (type: 'info' | 'success' | 'warning' | 'error', message: string) => (
   <Message showIcon type={type} duration={5000}>
     {message}
   </Message>
