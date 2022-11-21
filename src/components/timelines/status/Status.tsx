@@ -8,6 +8,7 @@ import { ReactElement } from 'react'
 type Props = {
   status: Entity.Status
   client: MegalodonInterface
+  updateStatus: (status: Entity.Status) => void
 }
 
 const originalStatus = (status: Entity.Status) => {
@@ -64,15 +65,18 @@ const Status: React.FC<Props> = props => {
   const status = originalStatus(props.status)
 
   const reblog = async () => {
-    await client.reblogStatus(status.id)
+    const res = await client.reblogStatus(status.id)
+    props.updateStatus(res.data)
   }
 
   const favourite = async () => {
-    await client.favouriteStatus(status.id)
+    const res = await client.favouriteStatus(status.id)
+    props.updateStatus(res.data)
   }
 
   const bookmark = async () => {
-    await client.bookmarkStatus(status.id)
+    const res = await client.bookmarkStatus(status.id)
+    props.updateStatus(res.data)
   }
 
   return (

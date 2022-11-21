@@ -173,6 +173,19 @@ const Timeline: React.FC<Props> = props => {
 
   const closeOptionPopover = () => triggerRef?.current.close()
 
+  const updateStatus = (status: Entity.Status) => {
+    const renew = statuses.map(s => {
+      if (s.id === status.id) {
+        return status
+      } else if (s.reblog && s.reblog.id === status.id) {
+        return Object.assign({}, s, { reblog: status })
+      } else {
+        return s
+      }
+    })
+    setStatuses(renew)
+  }
+
   return (
     <div style={{ width: '340px' }}>
       <Container style={{ height: '100%', overflowY: 'scroll' }}>
@@ -250,7 +263,7 @@ const Timeline: React.FC<Props> = props => {
                       transform: `translateY(${virtualRow.start}px)`
                     }}
                   >
-                    <Status status={statuses[virtualRow.index]} client={client} />
+                    <Status status={statuses[virtualRow.index]} client={client} updateStatus={updateStatus} />
                   </div>
                 ))}
               </div>
