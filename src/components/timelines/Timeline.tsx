@@ -3,7 +3,7 @@ import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity, detector, MegalodonInterface } from 'megalodon'
 import { useEffect, useRef, useState, forwardRef } from 'react'
 import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, Message, useToaster } from 'rsuite'
-import { BsHouseDoor, BsPeople, BsQuestion, BsGlobe2, BsSliders, BsX, BsChevronLeft, BsChevronRight } from 'react-icons/bs'
+import { BsHouseDoor, BsPeople, BsQuestion, BsGlobe2, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsStar } from 'react-icons/bs'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { listen } from '@tauri-apps/api/event'
 
@@ -153,6 +153,10 @@ const Timeline: React.FC<Props> = props => {
         const res = await client.getPublicTimeline({ limit: 40 })
         return res.data
       }
+      case 'favourite': {
+        const res = await client.getFavourites({ limit: 40 })
+        return res.data
+      }
       default:
         return []
     }
@@ -166,6 +170,8 @@ const Timeline: React.FC<Props> = props => {
         return <Icon as={BsPeople} />
       case 'public':
         return <Icon as={BsGlobe2} />
+      case 'favourite':
+        return <Icon as={BsStar} />
       default:
         return <Icon as={BsQuestion} />
     }

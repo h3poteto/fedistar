@@ -1,6 +1,6 @@
 import { Popover, Dropdown, ButtonToolbar, Whisper, IconButton, List, FlexboxGrid } from 'rsuite'
 import { Icon } from '@rsuite/icons'
-import { BsPlus, BsHouseDoor, BsBell, BsPeople, BsGlobe2 } from 'react-icons/bs'
+import { BsPlus, BsHouseDoor, BsBell, BsPeople, BsGlobe2, BsStar } from 'react-icons/bs'
 import { Server } from '../../entities/server'
 import { useState } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
@@ -70,7 +70,17 @@ const New: React.FC<Props> = props => {
             <div>Notifications</div>
           </FlexboxGrid.Item>
         </FlexboxGrid>
-      </List.Item>{' '}
+      </List.Item>
+      <List.Item index={5} onClick={() => select('favourite')}>
+        <FlexboxGrid align="middle">
+          <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Icon as={BsStar} />
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={20}>
+            <div>Favourite</div>
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+      </List.Item>
     </div>
   )
 

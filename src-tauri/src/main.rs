@@ -275,7 +275,10 @@ async fn start_timeline_streaming(
     server: entities::Server,
     timeline: entities::Timeline,
 ) -> Result<(), String> {
-    if timeline.timeline == "home" || timeline.timeline == "notifications" {
+    if timeline.timeline == "home"
+        || timeline.timeline == "notifications"
+        || timeline.timeline == "favourite"
+    {
         return Ok(());
     }
     let mut account: Option<entities::Account> = None;
