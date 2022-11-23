@@ -1,14 +1,14 @@
 import { invoke } from '@tauri-apps/api/tauri'
 import { ReactElement, SetStateAction } from 'react'
-import Image from 'next/image'
 import { Icon } from '@rsuite/icons'
-import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button } from 'rsuite'
+import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge } from 'rsuite'
 import { BsPlus } from 'react-icons/bs'
 import { Server } from 'src/entities/server'
-import FailoverImg from 'src/components/utils/failoverImg'
+import FailoverImg from 'src/utils/failoverImg'
 
 type NavigatorProps = {
   servers: Array<Server>
+  unreads: Map<number, number>
   setNewServer: (value: SetStateAction<boolean>) => void
   setInitialServer: (value: SetStateAction<Server>) => void
 }
@@ -50,7 +50,7 @@ const serverMenu = (
 }
 
 const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
-  const { servers, setNewServer, setInitialServer } = props
+  const { servers, setNewServer, setInitialServer, unreads } = props
 
   return (
     <Sidebar style={{ display: 'flex', flexDirection: 'column' }} width="56" collapsible>
@@ -66,15 +66,10 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
                   serverMenu({ className, left, top, onClose, server, setNewServer, setInitialServer }, ref)
                 }
               >
-                <Button appearance="link" size="xs">
-                  <Image
-                    width={48}
-                    height={48}
-                    src={FailoverImg(server.favicon)}
-                    className="server-icon"
-                    alt={server.domain}
-                    key={server.id}
-                  />
+                <Button appearance="link" size="xs" style={{ padding: '4px 8px' }}>
+                  <Badge content={unreads.get(server.id) ? true : false}>
+                    <Avatar size="sm" src={FailoverImg(server.favicon)} className="server-icon" alt={server.domain} key={server.id} />
+                  </Badge>
                 </Button>
               </Whisper>
             </div>

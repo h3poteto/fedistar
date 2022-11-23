@@ -17,6 +17,7 @@ function App() {
   const [timelines, setTimelines] = useState<Array<[Timeline, Server]>>([])
   const [newServer, setNewServer] = useState<boolean>(false)
   const [initialServer, setInitialServer] = useState<Server | null>(null)
+  const [unreads, setUnreads] = useState<Map<number, number>>(new Map())
   const toaster = useToaster()
 
   const loadTimelines = async () => {
@@ -52,6 +53,14 @@ function App() {
     })
 
     listen<ReceiveNotificationPayload>('receive-notification', async ev => {
+      const server_id = ev.payload.server_id
+      if (unreads.get(server_id)) {
+        const current = unreads.get(server_id)
+        setUnreads(unreads.set(server_id, current + 1))
+      } else {
+        setUnreads(unreads.set(server_id, 1))
+      }
+
       let permissionGranted = await isPermissionGranted()
       if (!permissionGranted) {
         const permission = await requestPermission()
@@ -70,7 +79,7 @@ function App() {
     <div className="container index">
       <NewServer open={newServer} onClose={() => setNewServer(false)} initialServer={initialServer} />
       <Container style={{ height: '100%' }}>
-        <Navigator servers={servers} setNewServer={setNewServer} setInitialServer={setInitialServer} />
+        <Navigator servers={servers} setNewServer={setNewServer} setInitialServer={setInitialServer} unreads={unreads} />
         <Content style={{ display: 'flex' }}>
           {timelines.map(timeline => (
             <ShowTimeline timeline={timeline[0]} server={timeline[1]} key={timeline[0].id} />

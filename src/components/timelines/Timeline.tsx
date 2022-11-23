@@ -11,7 +11,7 @@ import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
 import Status from './status/Status'
-import FailoverImg from 'src/components/utils/failoverImg'
+import FailoverImg from 'src/utils/failoverImg'
 import { ReceiveHomeStatusPayload, ReceiveTimelineStatusPayload } from 'src/payload'
 
 type Props = {
