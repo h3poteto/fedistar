@@ -12,20 +12,11 @@ import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
 import Status from './status/Status'
 import FailoverImg from 'src/components/utils/failoverImg'
+import { ReceiveHomeStatusPayload, ReceiveTimelineStatusPayload } from 'src/payload'
 
 type Props = {
   timeline: Timeline
   server: Server
-}
-
-type ReceiveHomeStatusPayload = {
-  server_id: number
-  status: Entity.Status
-}
-
-type ReceiveTimelineStatusPayload = {
-  timeline_id: number
-  status: Entity.Status
 }
 
 const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {

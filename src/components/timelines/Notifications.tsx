@@ -2,6 +2,7 @@ import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover
 import { BsBell, BsSliders, BsX, BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
+import { listen } from '@tauri-apps/api/event'
 import { useEffect, useState, forwardRef, useRef } from 'react'
 import generator, { detector, MegalodonInterface } from 'megalodon'
 import { useVirtualizer } from '@tanstack/react-virtual'
@@ -9,16 +10,12 @@ import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
 import Notification from './notification/Notification'
-import { listen } from '@tauri-apps/api/event'
+
+import { ReceiveNotificationPayload } from 'src/payload'
 
 type Props = {
   timeline: Timeline
   server: Server
-}
-
-type ReceiveNotificationPayload = {
-  server_id: number
-  notification: Entity.Notification
 }
 
 const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
