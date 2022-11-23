@@ -2,7 +2,7 @@ import { invoke } from '@tauri-apps/api/tauri'
 import { ReactElement, SetStateAction } from 'react'
 import { Icon } from '@rsuite/icons'
 import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge } from 'rsuite'
-import { BsPlus } from 'react-icons/bs'
+import { BsPlus, BsGear, BsPencilSquare } from 'react-icons/bs'
 import { Server } from 'src/entities/server'
 import FailoverImg from 'src/utils/failoverImg'
 
@@ -53,11 +53,25 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
   const { servers, setNewServer, setInitialServer, unreads } = props
 
   return (
-    <Sidebar style={{ display: 'flex', flexDirection: 'column' }} width="56" collapsible>
+    <Sidebar
+      style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', backgroundColor: 'var(--rs-sidenav-default-bg)' }}
+      width="56"
+      collapsible
+    >
       <Sidenav expanded={false}>
-        <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Button appearance="link" size="lg">
+            <Icon as={BsPencilSquare} style={{ fontSize: '1.4em' }} />
+          </Button>
+        </Sidenav.Body>
+      </Sidenav>
+      <Sidenav expanded={false}>
+        <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Button appearance="link" size="lg" onClick={() => setNewServer(true)}>
+            <Icon as={BsPlus} style={{ fontSize: '1.4em' }} />
+          </Button>
           {servers.map(server => (
-            <div style={{ padding: '8px' }} key={server.id}>
+            <div key={server.id}>
               <Whisper
                 placement="right"
                 controlId="control-id-context-menu"
@@ -74,8 +88,8 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
               </Whisper>
             </div>
           ))}
-          <Button appearance="link" size="lg" onClick={() => setNewServer(true)}>
-            <Icon as={BsPlus} style={{ fontSize: '1.4em' }} />
+          <Button appearance="link" size="lg" disabled>
+            <Icon as={BsGear} style={{ fontSize: '1.4em' }} />
           </Button>
         </Sidenav.Body>
       </Sidenav>
