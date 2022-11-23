@@ -11,6 +11,7 @@ type NavigatorProps = {
   unreads: Map<number, number>
   setNewServer: (value: SetStateAction<boolean>) => void
   setInitialServer: (value: SetStateAction<Server>) => void
+  openCompose: () => void
 }
 
 type ServerMenuProps = {
@@ -60,7 +61,7 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
     >
       <Sidenav expanded={false}>
         <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Button appearance="link" size="lg">
+          <Button appearance="link" size="lg" onClick={props.openCompose}>
             <Icon as={BsPencilSquare} style={{ fontSize: '1.4em' }} />
           </Button>
         </Sidenav.Body>
