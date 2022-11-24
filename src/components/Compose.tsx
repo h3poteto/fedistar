@@ -122,6 +122,7 @@ const Compose: React.FC<Props> = props => {
         <div style={{ fontSize: '1.2em', padding: '12px 0' }}>Status</div>
         <Form fluid model={model} ref={formRef} onChange={setFormValue} formValue={formValue}>
           <Form.Group controlId="status">
+            {/** @ts-ignore **/}
             <Form.Control rows={5} name="status" accepter={Textarea} />
           </Form.Group>
           <Form.Group>
