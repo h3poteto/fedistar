@@ -1,3 +1,55 @@
 .server-icon {
   background-color: transparent;
 }
+
+@keyframes slideIn {
+  from {
+    width: 0;
+  }
+
+  50% {
+    width: 200px;
+  }
+
+  to {
+    width: 320px;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    width: 320px;
+  }
+
+  50% {
+    width: 100px;
+  }
+
+  to {
+    width: 0;
+  }
+}
+
+.compose-exiting,
+.compose-entering {
+  animation: .3s linear;
+  animation-fill-mode: forwards;
+}
+
+
+.compose-exiting {
+  animation-name: slideOut;
+}
+
+.compose-entering {
+  animation-name: slideIn;
+}
+
+
+.compose-entered {
+  width: 320px;
+}
+
+.compose-exited {
+  width: 0;
+}

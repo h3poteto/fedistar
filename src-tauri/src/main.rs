@@ -191,6 +191,17 @@ async fn add_timeline(
 }
 
 #[tauri::command]
+async fn list_accounts(
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+) -> Result<Vec<(entities::Account, entities::Server)>, String> {
+    let accounts = database::list_account(&sqlite_pool)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    Ok(accounts)
+}
+
+#[tauri::command]
 async fn list_timelines(
     sqlite_pool: State<'_, sqlx::SqlitePool>,
 ) -> Result<Vec<(entities::Timeline, entities::Server)>, String> {
@@ -387,6 +398,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             add_application,
             authorize_code,
             get_account,
+            list_accounts,
             add_timeline,
             list_timelines,
             remove_timeline,
