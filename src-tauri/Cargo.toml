@@ -21,7 +21,7 @@ sqlx  = { version = "0.6", features = ["runtime-tokio-rustls", "sqlite", "migrat
 tokio = { version = "1.21", features = ["full"] }
 futures = "0.3"
 directories = "4.0"
-megalodon = "0.2.3"
+megalodon = "0.2.4"
 open = "3.0"
 log = "0.4"
 env_logger = "0.8"
