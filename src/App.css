@@ -53,3 +53,8 @@
 .compose-exited {
   width: 0;
 }
+
+.emojione {
+  width: 1rem;
+  height: 1rem;
+}

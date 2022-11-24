@@ -1,9 +1,10 @@
+import { ReactElement } from 'react'
 import { Entity, MegalodonInterface, Response } from 'megalodon'
 import { FlexboxGrid, List, Avatar, IconButton } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsArrowRepeat, BsChat, BsStar, BsStarFill, BsBookmark, BsFillBookmarkFill, BsEmojiSmile, BsThreeDots } from 'react-icons/bs'
 import Time from 'src/components/utils/Time'
-import { ReactElement } from 'react'
+import emojify from 'src/utils/emojify'
 
 type Props = {
   status: Entity.Status
@@ -22,12 +23,14 @@ const originalStatus = (status: Entity.Status) => {
 const rebloggedHeader = (status: Entity.Status) => {
   if (status.reblog && !status.quote) {
     return (
-      <div>
+      <div style={{ color: 'var(--rs-text-tertiary)' }}>
         <FlexboxGrid align="middle">
           <FlexboxGrid.Item style={{ paddingRight: '8px', textAlign: 'right' }} colspan={4}>
             <Icon as={BsArrowRepeat} style={{ color: 'green' }} />
           </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={20}>{status.account.display_name}</FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={20}>
+            <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
+          </FlexboxGrid.Item>
         </FlexboxGrid>
       </div>
     )
@@ -110,15 +113,20 @@ const Status: React.FC<Props> = props => {
             <FlexboxGrid>
               {/** account name **/}
               <FlexboxGrid.Item colspan={18} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                {status.account.display_name}@{status.account.acct}
+                <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
+                <span style={{ color: 'var(--rs-text-tertiary)' }}>@{status.account.acct}</span>
               </FlexboxGrid.Item>
               {/** timestamp **/}
-              <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right' }}>
+              <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', color: 'var(--rs-text-tertiary)' }}>
                 <Time time={status.created_at} />
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </div>
-          <div className="body" style={{ wordWrap: 'break-word' }} dangerouslySetInnerHTML={{ __html: status.content }}></div>
+          <div
+            className="body"
+            style={{ wordWrap: 'break-word' }}
+            dangerouslySetInnerHTML={{ __html: emojify(status.content, status.emojis) }}
+          ></div>
           <div className="toolbox">
             <FlexboxGrid>
               <FlexboxGrid.Item>
