@@ -176,6 +176,10 @@ const Timeline: React.FC<Props> = props => {
         return status
       } else if (s.reblog && s.reblog.id === status.id) {
         return Object.assign({}, s, { reblog: status })
+      } else if (status.reblog && s.id === status.reblog.id) {
+        return status.reblog
+      } else if (status.reblog && s.reblog && s.reblog.id === status.reblog.id) {
+        return Object.assign({}, s, { reblog: status.reblog })
       } else {
         return s
       }
