@@ -3,7 +3,7 @@ import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity, detector, MegalodonInterface } from 'megalodon'
 import { useEffect, useRef, useState, forwardRef } from 'react'
 import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, Message, useToaster } from 'rsuite'
-import { BsHouseDoor, BsPeople, BsQuestion, BsGlobe2, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsStar } from 'react-icons/bs'
+import { BsHouseDoor, BsPeople, BsGlobe2, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsStar, BsListUl } from 'react-icons/bs'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { listen } from '@tauri-apps/api/event'
 
@@ -89,7 +89,7 @@ const Timeline: React.FC<Props> = props => {
         setClient(client)
       }
       try {
-        const res = await loadTimeline(props.timeline.timeline, client)
+        const res = await loadTimeline(props.timeline, client)
         setStatuses(res)
       } catch {
         toast.push(alert('error', `Failed to load ${props.timeline.timeline} timeline`), { placement: 'topStart' })
@@ -130,8 +130,8 @@ const Timeline: React.FC<Props> = props => {
 
   const rowVirtualizer = useVirtualizer({ count: statuses.length, estimateSize: () => 125, getScrollElement: () => parentRef.current })
 
-  const loadTimeline = async (name: string, client: MegalodonInterface): Promise<Array<Entity.Status>> => {
-    switch (name) {
+  const loadTimeline = async (tl: Timeline, client: MegalodonInterface): Promise<Array<Entity.Status>> => {
+    switch (tl.timeline) {
       case 'home': {
         const res = await client.getHomeTimeline({ limit: 40 })
         return res.data
@@ -149,6 +149,10 @@ const Timeline: React.FC<Props> = props => {
         return res.data
       }
       default:
+        if (tl.list_id) {
+          const res = await client.getListTimeline(tl.list_id, { limit: 40 })
+          return res.data
+        }
         return []
     }
   }
@@ -164,7 +168,7 @@ const Timeline: React.FC<Props> = props => {
       case 'favourite':
         return <Icon as={BsStar} />
       default:
-        return <Icon as={BsQuestion} />
+        return <Icon as={BsListUl} />
     }
   }
 

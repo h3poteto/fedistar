@@ -23,5 +23,6 @@ CREATE TABLE IF NOT EXISTS timelines(
   server_id INTEGER NOT NULL,
   timeline TEXT NOT NULL,
   sort INTEGER UNIQUE NOT NULL,
+  list_id TEXT DEFAULT NULL,
   FOREIGN KEY (server_id) REFERENCES servers(id) ON DELETE CASCADE
 );

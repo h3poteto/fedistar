@@ -7,6 +7,7 @@ pub struct Timeline {
     pub server_id: i64,
     pub timeline: String,
     pub sort: i64,
+    pub list_id: Option<String>,
 }
 
 impl Timeline {
@@ -16,6 +17,7 @@ impl Timeline {
             server_id,
             timeline,
             sort,
+            list_id: None,
         }
     }
 }

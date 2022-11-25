@@ -104,7 +104,7 @@ pub(crate) async fn list_timelines(
 ) -> DBResult<Vec<(entities::Timeline, entities::Server)>> {
     let timelines = sqlx::query(
         r#"
-SELECT timelines.id, timelines.server_id, timelines.timeline, timelines.sort,
+SELECT timelines.id, timelines.server_id, timelines.timeline, timelines.sort, timelines.list_id,
        servers.id, servers.domain, servers.base_url, servers.favicon, servers.account_id
 FROM timelines INNER JOIN servers ON servers.id = timelines.server_id ORDER BY timelines.sort"#,
     )
@@ -115,13 +115,14 @@ FROM timelines INNER JOIN servers ON servers.id = timelines.server_id ORDER BY t
                 server_id: row.get(1),
                 timeline: row.get(2),
                 sort: row.get(3),
+                list_id: row.get(4),
             },
             entities::Server {
-                id: row.get(4),
-                domain: row.get(5),
-                base_url: row.get(6),
-                favicon: row.get(7),
-                account_id: row.get(8),
+                id: row.get(5),
+                domain: row.get(6),
+                base_url: row.get(7),
+                favicon: row.get(8),
+                account_id: row.get(9),
             },
         )
     })
@@ -135,6 +136,7 @@ pub(crate) async fn add_timeline(
     pool: &SqlitePool,
     server: &entities::Server,
     name: &str,
+    list_id: Option<&str>,
 ) -> DBResult<entities::Timeline> {
     let mut tx = pool.begin().await?;
 
@@ -146,12 +148,15 @@ pub(crate) async fn add_timeline(
     if exists.len() > 0 {
         sort = exists[0].sort + 1;
     }
-    let res = sqlx::query("INSERT INTO timelines (server_id, timeline, sort) VALUES (?, ?, ?)")
-        .bind(server.id)
-        .bind(name)
-        .bind::<i64>(sort)
-        .execute(&mut tx)
-        .await?;
+    let res = sqlx::query(
+        "INSERT INTO timelines (server_id, timeline, sort, list_id) VALUES (?, ?, ?, ?)",
+    )
+    .bind(server.id)
+    .bind(name)
+    .bind::<i64>(sort)
+    .bind(list_id)
+    .execute(&mut tx)
+    .await?;
     let id = res.last_insert_rowid();
     tx.commit().await?;
 

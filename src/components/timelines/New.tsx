@@ -22,7 +22,7 @@ import { Account } from 'src/entities/account'
 
 type AuthorizedProps = {
   server: Server
-  select: (timeline: string) => void
+  select: (timeline: string, list_id: string | null) => void
 }
 
 const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
@@ -48,7 +48,7 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
 
   return (
     <div>
-      <List.Item index={3} onClick={() => select('home')}>
+      <List.Item index={3} onClick={() => select('home', null)}>
         <FlexboxGrid align="middle">
           <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Icon as={BsHouseDoor} />
@@ -58,7 +58,7 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </List.Item>
-      <List.Item index={4} onClick={() => select('notifications')}>
+      <List.Item index={4} onClick={() => select('notifications', null)}>
         <FlexboxGrid align="middle">
           <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Icon as={BsBell} />
@@ -68,7 +68,7 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </List.Item>
-      <List.Item index={5} onClick={() => select('favourite')}>
+      <List.Item index={5} onClick={() => select('favourite', null)}>
         <FlexboxGrid align="middle">
           <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Icon as={BsStar} />
@@ -84,7 +84,7 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
         </List.Item>
       )}
       {lists.map((list, index) => (
-        <List.Item key={index} index={6 + index} onClick={() => select(`+${list.id}`)}>
+        <List.Item key={index} index={6 + index} onClick={() => select(list.title, list.id)}>
           <FlexboxGrid align="middle">
             <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <Icon as={BsListUl} />
@@ -133,7 +133,7 @@ const New: React.FC<Props> = props => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'var(--rs-sidenav-default-bg)'
+        backgroundColor: 'var(--rs-bg-overlay)'
       }}
     >
       <ButtonToolbar>
@@ -144,8 +144,8 @@ const New: React.FC<Props> = props => {
     </div>
   )
 
-  const select = async (tl: string) => {
-    await invoke('add_timeline', { server: server, timeline: tl })
+  const select = async (tl: string, list_id: string | null) => {
+    await invoke('add_timeline', { server: server, timeline: tl, listId: list_id })
     setServer(null)
   }
 
@@ -156,7 +156,7 @@ const New: React.FC<Props> = props => {
   const selectTimeline = () => (
     <div
       className="add-timeline"
-      style={{ width: '240px', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--rs-sidenav-default-bg)' }}
+      style={{ width: '240px', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--rs-bg-overlay)' }}
     >
       <Container>
         <Header>
@@ -172,7 +172,7 @@ const New: React.FC<Props> = props => {
         </Header>
         <Content>
           <List hover>
-            <List.Item index={1} onClick={() => select('local')}>
+            <List.Item index={1} onClick={() => select('local', null)}>
               <FlexboxGrid align="middle">
                 <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                   <Icon as={BsPeople} />
@@ -182,7 +182,7 @@ const New: React.FC<Props> = props => {
                 </FlexboxGrid.Item>
               </FlexboxGrid>
             </List.Item>
-            <List.Item index={2} onClick={() => select('public')}>
+            <List.Item index={2} onClick={() => select('public', null)}>
               <FlexboxGrid align="middle">
                 <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                   <Icon as={BsGlobe2} />

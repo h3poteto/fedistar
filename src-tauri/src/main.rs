@@ -172,8 +172,9 @@ async fn add_timeline(
     sqlite_pool: State<'_, sqlx::SqlitePool>,
     server: entities::Server,
     timeline: &str,
+    list_id: Option<&str>,
 ) -> Result<(), String> {
-    let timeline = database::add_timeline(&sqlite_pool, &server, timeline)
+    let timeline = database::add_timeline(&sqlite_pool, &server, timeline, list_id)
         .await
         .map_err(|e| e.to_string())?;
 
