@@ -9,7 +9,7 @@ import { Account } from 'src/entities/account'
 import failoverImg from 'src/utils/failoverImg'
 import generator, { detector } from 'megalodon'
 
-const renderAccountIcon = (props, ref, account: [Account, Server] | undefined) => {
+const renderAccountIcon = (props: any, ref: any, account: [Account, Server] | undefined) => {
   if (account && account.length > 0) {
     return (
       <FlexboxGrid {...props} ref={ref} align="middle">
@@ -56,6 +56,8 @@ const Compose: React.FC<Props> = props => {
   const [formValue, setFormValue] = useState<FormValue>({
     status: ''
   })
+  const [loading, setLoading] = useState<boolean>(false)
+
   const formRef = useRef<any>()
 
   const model = Schema.Model({
@@ -77,14 +79,19 @@ const Compose: React.FC<Props> = props => {
   }
 
   const handleSubmit = async () => {
+    if (loading) {
+      return
+    }
     if (formRef === undefined || formRef.current === undefined) {
       return
     } else if (!formRef.current.check()) {
       console.error('Validation Error')
       return
     } else {
+      setLoading(true)
       await post(fromAccount[0], fromAccount[1], formValue)
       clear()
+      setLoading(false)
     }
   }
 
@@ -127,7 +134,7 @@ const Compose: React.FC<Props> = props => {
           </Form.Group>
           <Form.Group>
             <ButtonToolbar style={{ textAlign: 'right' }}>
-              <Button appearance="primary" type="submit" onClick={handleSubmit}>
+              <Button appearance="primary" type="submit" onClick={handleSubmit} loading={loading}>
                 Post
               </Button>
             </ButtonToolbar>
