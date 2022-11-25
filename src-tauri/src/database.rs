@@ -160,7 +160,13 @@ pub(crate) async fn add_timeline(
     let id = res.last_insert_rowid();
     tx.commit().await?;
 
-    let created = entities::Timeline::new(id, server.id, name.to_string(), 1);
+    let created = entities::Timeline::new(
+        id,
+        server.id,
+        name.to_string(),
+        1,
+        list_id.map(|i| i.to_string()),
+    );
     Ok(created)
 }
 

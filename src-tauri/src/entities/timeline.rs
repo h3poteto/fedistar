@@ -11,13 +11,19 @@ pub struct Timeline {
 }
 
 impl Timeline {
-    pub fn new(id: i64, server_id: i64, timeline: String, sort: i64) -> Self {
+    pub fn new(
+        id: i64,
+        server_id: i64,
+        timeline: String,
+        sort: i64,
+        list_id: Option<String>,
+    ) -> Self {
         Self {
             id,
             server_id,
             timeline,
             sort,
-            list_id: None,
+            list_id,
         }
     }
 }

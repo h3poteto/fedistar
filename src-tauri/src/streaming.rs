@@ -111,7 +111,12 @@ pub async fn start(
         "local" => {
             streaming = client.local_streaming(streaming_url);
         }
-        other => return Err(format!("{} is not supported timeline", other)),
+        other => match &timeline.list_id {
+            None => return Err(format!("{} is not supported timeline", other)),
+            Some(list_id) => {
+                streaming = client.list_streaming(streaming_url, list_id.to_string());
+            }
+        },
     }
 
     if let Some(account) = account {
