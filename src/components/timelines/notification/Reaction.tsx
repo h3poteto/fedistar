@@ -9,23 +9,20 @@ type Props = {
   notification: Entity.Notification
 }
 
-const actionIcon = (notificationType: string) => {
-  switch (notificationType) {
+const actionIcon = (notification: Entity.Notification) => {
+  switch (notification.type) {
     case 'favourite':
-      return <Icon as={BsStar} />
+      return <Icon as={BsStar} color="orange" />
     case 'reblog':
     case 'quote':
-      return <Icon as={BsArrowRepeat} />
+      return <Icon as={BsArrowRepeat} color="green" />
     case 'poll_expired':
     case 'poll_vote':
       return <Icon as={BsMenuUp} />
     case 'status':
       return <Icon as={BsHouseDoor} />
     case 'emoji_reaction':
-      {
-        /** TODO **/
-      }
-      return null
+      return <span dangerouslySetInnerHTML={{ __html: notification.emoji }} />
     default:
       return null
   }
@@ -110,7 +107,7 @@ const Reaction: React.FC<Props> = props => {
       <FlexboxGrid style={{ paddingRight: '8px' }}>
         {/** icon **/}
         <FlexboxGrid.Item style={{ paddingRight: '8px', textAlign: 'right' }} colspan={4}>
-          {actionIcon(props.notification.type)}
+          {actionIcon(props.notification)}
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={14} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
           {actionText(props.notification)}

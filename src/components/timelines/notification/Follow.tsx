@@ -39,7 +39,7 @@ const Follow: React.FC<Props> = props => {
       <FlexboxGrid align="middle" style={{ paddingRight: '8px' }}>
         {/** icon **/}
         <FlexboxGrid.Item style={{ paddingRight: '8px', textAlign: 'right' }} colspan={4}>
-          <Icon as={BsPersonPlus} />
+          <Icon as={BsPersonPlus} color="cyan" />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={14} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
           {actionText(props.notification)}
