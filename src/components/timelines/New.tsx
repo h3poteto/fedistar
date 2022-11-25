@@ -1,6 +1,19 @@
-import { Popover, Dropdown, ButtonToolbar, Whisper, IconButton, List, FlexboxGrid, Loader } from 'rsuite'
+import {
+  Popover,
+  Dropdown,
+  ButtonToolbar,
+  Whisper,
+  IconButton,
+  List,
+  FlexboxGrid,
+  Loader,
+  Container,
+  Header,
+  Content,
+  Button
+} from 'rsuite'
 import { Icon } from '@rsuite/icons'
-import { BsPlus, BsHouseDoor, BsBell, BsPeople, BsGlobe2, BsStar, BsListUl } from 'react-icons/bs'
+import { BsPlus, BsHouseDoor, BsBell, BsPeople, BsGlobe2, BsStar, BsListUl, BsChevronLeft } from 'react-icons/bs'
 import { Server } from '../../entities/server'
 import { useEffect, useState } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
@@ -91,7 +104,7 @@ type Props = {
 }
 
 const New: React.FC<Props> = props => {
-  const [server, setServer] = useState<Server>()
+  const [server, setServer] = useState<Server | null>(null)
 
   const addTimelineMenu = ({ onClose, left, top, className }, ref: any) => {
     const handleSelect = (eventKey: string) => {
@@ -115,7 +128,13 @@ const New: React.FC<Props> = props => {
   const addButton = () => (
     <div
       className="add-timeline"
-      style={{ width: '240px', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#242424' }}
+      style={{
+        width: '240px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'var(--rs-sidenav-default-bg)'
+      }}
     >
       <ButtonToolbar>
         <Whisper placement="bottomStart" trigger="click" speaker={addTimelineMenu}>
@@ -127,38 +146,60 @@ const New: React.FC<Props> = props => {
 
   const select = async (tl: string) => {
     await invoke('add_timeline', { server: server, timeline: tl })
-    setServer(undefined)
+    setServer(null)
+  }
+
+  const back = async () => {
+    setServer(null)
   }
 
   const selectTimeline = () => (
-    <div className="add-timeline" style={{ width: '240px', display: 'flex', flexDirection: 'column', backgroundColor: '#242424' }}>
-      <List hover>
-        <List.Item index={1} onClick={() => select('local')}>
-          <FlexboxGrid align="middle">
-            <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <Icon as={BsPeople} />
-            </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={20}>
-              <div>Local</div>
-            </FlexboxGrid.Item>
-          </FlexboxGrid>
-        </List.Item>
-        <List.Item index={2} onClick={() => select('public')}>
-          <FlexboxGrid align="middle">
-            <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <Icon as={BsGlobe2} />
-            </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={20}>
-              <div>Federated</div>
+    <div
+      className="add-timeline"
+      style={{ width: '240px', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--rs-sidenav-default-bg)' }}
+    >
+      <Container>
+        <Header>
+          <FlexboxGrid align="middle" justify="space-between" style={{ backgroundColor: 'var(--rs-bg-card)' }}>
+            <FlexboxGrid.Item style={{ paddingLeft: '8px', lineHeight: '52px' }}>@{server.domain}</FlexboxGrid.Item>
+            <FlexboxGrid.Item>
+              <Button appearance="link" onClick={back}>
+                <Icon as={BsChevronLeft} />
+                Back
+              </Button>
             </FlexboxGrid.Item>
           </FlexboxGrid>
-        </List.Item>
-        {server.account_id && <AuthorizedTimelines server={server} select={select} />}
-      </List>
+        </Header>
+        <Content>
+          <List hover>
+            <List.Item index={1} onClick={() => select('local')}>
+              <FlexboxGrid align="middle">
+                <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <Icon as={BsPeople} />
+                </FlexboxGrid.Item>
+                <FlexboxGrid.Item colspan={20}>
+                  <div>Local</div>
+                </FlexboxGrid.Item>
+              </FlexboxGrid>
+            </List.Item>
+            <List.Item index={2} onClick={() => select('public')}>
+              <FlexboxGrid align="middle">
+                <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <Icon as={BsGlobe2} />
+                </FlexboxGrid.Item>
+                <FlexboxGrid.Item colspan={20}>
+                  <div>Federated</div>
+                </FlexboxGrid.Item>
+              </FlexboxGrid>
+            </List.Item>
+            {server.account_id && <AuthorizedTimelines server={server} select={select} />}
+          </List>
+        </Content>
+      </Container>
     </div>
   )
 
-  if (server === undefined) {
+  if (server === null) {
     return addButton()
   } else {
     return selectTimeline()
