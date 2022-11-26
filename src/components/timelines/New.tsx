@@ -17,7 +17,7 @@ import { BsPlus, BsHouseDoor, BsBell, BsPeople, BsGlobe2, BsStar, BsListUl, BsCh
 import { Server } from '../../entities/server'
 import { useEffect, useState } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
-import generator, { detector, Entity } from 'megalodon'
+import generator, { Entity } from 'megalodon'
 import { Account } from 'src/entities/account'
 
 type AuthorizedProps = {
@@ -35,8 +35,7 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
       setLoading(true)
       try {
         const account = await invoke<Account>('get_account', { id: server.account_id })
-        const sns = await detector(server.base_url)
-        const client = generator(sns, server.base_url, account.access_token, 'Fedistar')
+        const client = generator(server.sns, server.base_url, account.access_token, 'Fedistar')
         const res = await client.getLists()
         setLists(res.data)
       } finally {

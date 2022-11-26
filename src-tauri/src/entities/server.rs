@@ -6,17 +6,25 @@ pub struct Server {
     pub id: i64,
     pub domain: String,
     pub base_url: String,
+    pub sns: String,
     pub favicon: Option<String>,
     pub account_id: Option<i64>,
 }
 
 impl Server {
-    pub fn new(id: i64, domain: String, base_url: String, favicon: Option<String>) -> Self {
+    pub fn new(
+        id: i64,
+        domain: String,
+        base_url: String,
+        sns: String,
+        favicon: Option<String>,
+    ) -> Self {
         Self {
             id,
             domain,
             base_url,
             favicon,
+            sns,
             account_id: None,
         }
     }

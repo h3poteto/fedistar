@@ -1,6 +1,6 @@
 import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
-import generator, { Entity, detector, MegalodonInterface } from 'megalodon'
+import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useRef, useState, forwardRef } from 'react'
 import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, Message, useToaster } from 'rsuite'
 import { BsHouseDoor, BsPeople, BsGlobe2, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsStar, BsListUl } from 'react-icons/bs'
@@ -77,15 +77,14 @@ const Timeline: React.FC<Props> = props => {
   useEffect(() => {
     const f = async () => {
       setLoading(true)
-      const sns = await detector(props.server.base_url)
       let client: MegalodonInterface
       if (props.server.account_id) {
         const account = await invoke<Account>('get_account', { id: props.server.account_id })
         setAccount(account)
-        client = generator(sns, props.server.base_url, account.access_token, 'Fedistar')
+        client = generator(props.server.sns, props.server.base_url, account.access_token, 'Fedistar')
         setClient(client)
       } else {
-        client = generator(sns, props.server.base_url, undefined, 'Fedistar')
+        client = generator(props.server.sns, props.server.base_url, undefined, 'Fedistar')
         setClient(client)
       }
       try {
