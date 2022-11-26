@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/tauri'
-import { ReactElement, SetStateAction, useEffect } from 'react'
+import { ReactElement, SetStateAction } from 'react'
 import { Icon } from '@rsuite/icons'
 import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge } from 'rsuite'
 import { BsPlus, BsGear, BsPencilSquare } from 'react-icons/bs'
@@ -15,46 +15,8 @@ type NavigatorProps = {
   openCompose: () => void
 }
 
-type ServerMenuProps = {
-  className: string
-  left?: number
-  top?: number
-  onClose: (delay?: number) => NodeJS.Timeout | void
-  server: Server
-  setNewServer: (value: SetStateAction<boolean>) => void
-  setInitialServer: (value: SetStateAction<Server>) => void
-}
-
-const serverMenu = (
-  { className, left, top, onClose, server, setNewServer, setInitialServer }: ServerMenuProps,
-  ref: React.RefCallback<HTMLElement>
-): ReactElement => {
-  const handleSelect = (eventKey: string) => {
-    onClose()
-    switch (eventKey) {
-      case '0':
-        setNewServer(true)
-        setInitialServer(server)
-        break
-      case '1':
-        invoke('remove_server', { id: server.id })
-        break
-    }
-  }
-  return (
-    <Popover ref={ref} className={className} style={{ left, top, padding: 0 }}>
-      <Dropdown.Menu onSelect={handleSelect}>
-        {server.account_id === null && <Dropdown.Item eventKey="0">Authorize</Dropdown.Item>}
-        <Dropdown.Item eventKey="1">Remove</Dropdown.Item>
-      </Dropdown.Menu>
-    </Popover>
-  )
-}
-
 const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
   const { servers, setNewServer, setInitialServer } = props
-
-  useEffect(() => console.log('unreads changed: ', props.unreads), [props.unreads])
 
   return (
     <Sidebar
@@ -98,6 +60,42 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
         </Sidenav.Body>
       </Sidenav>
     </Sidebar>
+  )
+}
+
+type ServerMenuProps = {
+  className: string
+  left?: number
+  top?: number
+  onClose: (delay?: number) => NodeJS.Timeout | void
+  server: Server
+  setNewServer: (value: SetStateAction<boolean>) => void
+  setInitialServer: (value: SetStateAction<Server>) => void
+}
+
+const serverMenu = (
+  { className, left, top, onClose, server, setNewServer, setInitialServer }: ServerMenuProps,
+  ref: React.RefCallback<HTMLElement>
+): ReactElement => {
+  const handleSelect = (eventKey: string) => {
+    onClose()
+    switch (eventKey) {
+      case '0':
+        setNewServer(true)
+        setInitialServer(server)
+        break
+      case '1':
+        invoke('remove_server', { id: server.id })
+        break
+    }
+  }
+  return (
+    <Popover ref={ref} className={className} style={{ left, top, padding: 0 }}>
+      <Dropdown.Menu onSelect={handleSelect}>
+        {server.account_id === null && <Dropdown.Item eventKey="0">Authorize</Dropdown.Item>}
+        <Dropdown.Item eventKey="1">Remove</Dropdown.Item>
+      </Dropdown.Menu>
+    </Popover>
   )
 }
 

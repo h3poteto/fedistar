@@ -21,51 +21,6 @@ type Props = {
   setUnreads: (a: Array<Unread>) => void
 }
 
-const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
-  const removeTimeline = async (timeline: Timeline) => {
-    await invoke('remove_timeline', { id: timeline.id })
-  }
-
-  const switchLeftTimeline = async (timeline: Timeline) => {
-    await invoke('switch_left_timeline', { id: timeline.id })
-    props.close()
-  }
-
-  const switchRightTimeline = async (timeline: Timeline) => {
-    await invoke('switch_right_timeline', { id: timeline.id })
-    props.close()
-  }
-
-  return (
-    <Popover ref={ref} style={{ opacity: 1 }}>
-      <div style={{ display: 'flex', flexDirection: 'column', width: '200px' }}>
-        <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item>
-            <Button appearance="link" size="xs" onClick={() => removeTimeline(props.timeline)}>
-              <Icon as={BsX} style={{ paddingBottom: '2px', fontSize: '1.4em' }} />
-              <span>Unpin</span>
-            </Button>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item>
-            <Button appearance="link" size="xs" onClick={() => switchLeftTimeline(props.timeline)}>
-              <Icon as={BsChevronLeft} />
-            </Button>
-            <Button appearance="link" size="xs" onClick={() => switchRightTimeline(props.timeline)}>
-              <Icon as={BsChevronRight} />
-            </Button>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
-      </div>
-    </Popover>
-  )
-})
-
-const alert = (type: 'info' | 'success' | 'warning' | 'error', message: string) => (
-  <Message showIcon type={type}>
-    {message}
-  </Message>
-)
-
 const Notifications: React.FC<Props> = props => {
   const [account, setAccount] = useState<Account>()
   const [client, setClient] = useState<MegalodonInterface>()
@@ -226,5 +181,50 @@ const Notifications: React.FC<Props> = props => {
     </div>
   )
 }
+
+const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
+  const removeTimeline = async (timeline: Timeline) => {
+    await invoke('remove_timeline', { id: timeline.id })
+  }
+
+  const switchLeftTimeline = async (timeline: Timeline) => {
+    await invoke('switch_left_timeline', { id: timeline.id })
+    props.close()
+  }
+
+  const switchRightTimeline = async (timeline: Timeline) => {
+    await invoke('switch_right_timeline', { id: timeline.id })
+    props.close()
+  }
+
+  return (
+    <Popover ref={ref} style={{ opacity: 1 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', width: '200px' }}>
+        <FlexboxGrid justify="space-between">
+          <FlexboxGrid.Item>
+            <Button appearance="link" size="xs" onClick={() => removeTimeline(props.timeline)}>
+              <Icon as={BsX} style={{ paddingBottom: '2px', fontSize: '1.4em' }} />
+              <span>Unpin</span>
+            </Button>
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item>
+            <Button appearance="link" size="xs" onClick={() => switchLeftTimeline(props.timeline)}>
+              <Icon as={BsChevronLeft} />
+            </Button>
+            <Button appearance="link" size="xs" onClick={() => switchRightTimeline(props.timeline)}>
+              <Icon as={BsChevronRight} />
+            </Button>
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+      </div>
+    </Popover>
+  )
+})
+
+const alert = (type: 'info' | 'success' | 'warning' | 'error', message: string) => (
+  <Message showIcon type={type}>
+    {message}
+  </Message>
+)
 
 export default Notifications
