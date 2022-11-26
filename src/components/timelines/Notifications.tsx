@@ -1,5 +1,5 @@
 import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, useToaster, Message } from 'rsuite'
-import { BsBell, BsSliders, BsX, BsChevronLeft, BsChevronRight } from 'react-icons/bs'
+import { BsBell, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsCheck2 } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
@@ -12,56 +12,14 @@ import { Timeline } from 'src/entities/timeline'
 import Notification from './notification/Notification'
 
 import { ReceiveNotificationPayload } from 'src/payload'
+import { Unread } from 'src/entities/unread'
 
 type Props = {
   timeline: Timeline
   server: Server
+  unreads: Array<Unread>
+  setUnreads: (a: Array<Unread>) => void
 }
-
-const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
-  const removeTimeline = async (timeline: Timeline) => {
-    await invoke('remove_timeline', { id: timeline.id })
-  }
-
-  const switchLeftTimeline = async (timeline: Timeline) => {
-    await invoke('switch_left_timeline', { id: timeline.id })
-    props.close()
-  }
-
-  const switchRightTimeline = async (timeline: Timeline) => {
-    await invoke('switch_right_timeline', { id: timeline.id })
-    props.close()
-  }
-
-  return (
-    <Popover ref={ref} style={{ opacity: 1 }}>
-      <div style={{ display: 'flex', flexDirection: 'column', width: '200px' }}>
-        <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item>
-            <Button appearance="link" size="xs" onClick={() => removeTimeline(props.timeline)}>
-              <Icon as={BsX} style={{ paddingBottom: '2px', fontSize: '1.4em' }} />
-              <span>Unpin</span>
-            </Button>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item>
-            <Button appearance="link" size="xs" onClick={() => switchLeftTimeline(props.timeline)}>
-              <Icon as={BsChevronLeft} />
-            </Button>
-            <Button appearance="link" size="xs" onClick={() => switchRightTimeline(props.timeline)}>
-              <Icon as={BsChevronRight} />
-            </Button>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
-      </div>
-    </Popover>
-  )
-})
-
-const alert = (type: 'info' | 'success' | 'warning' | 'error', message: string) => (
-  <Message showIcon type={type}>
-    {message}
-  </Message>
-)
 
 const Notifications: React.FC<Props> = props => {
   const [account, setAccount] = useState<Account>()
@@ -130,6 +88,20 @@ const Notifications: React.FC<Props> = props => {
     setNotifications(renew)
   }
 
+  const read = () => {
+    props.setUnreads(
+      props.unreads.map(u => {
+        if (u.server_id === props.server.id) {
+          return Object.assign({}, u, { count: 0 })
+        }
+        return u
+      })
+    )
+
+    // Update maker for server-side
+    client.saveMarkers({ notifications: { last_read_id: notifications[0].id } })
+  }
+
   return (
     <div style={{ width: '340px' }}>
       <Container style={{ height: '100%', overflowY: 'scroll' }}>
@@ -146,12 +118,22 @@ const Notifications: React.FC<Props> = props => {
                 {/** name **/}
                 <FlexboxGrid.Item style={{ lineHeight: '48px', fontSize: '18px', verticalAlign: 'middle' }}>
                   {props.timeline.timeline}
-                  <span style={{ fontSize: '14px' }}>@{props.server.domain}</span>
+                  <span style={{ fontSize: '14px', color: 'var(--rs-text-secondary)' }}>@{props.server.domain}</span>
                 </FlexboxGrid.Item>
               </FlexboxGrid>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item>
               <FlexboxGrid align="middle" justify="end">
+                <FlexboxGrid.Item>
+                  <Button
+                    appearance="link"
+                    title="Mark as read"
+                    disabled={props.unreads.find(u => u.server_id === props.server.id && u.count > 0) ? false : true}
+                    onClick={read}
+                  >
+                    <Icon as={BsCheck2} />
+                  </Button>
+                </FlexboxGrid.Item>
                 <FlexboxGrid.Item style={{ paddingRight: '8px' }}>
                   <Whisper
                     trigger="click"
@@ -203,5 +185,50 @@ const Notifications: React.FC<Props> = props => {
     </div>
   )
 }
+
+const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
+  const removeTimeline = async (timeline: Timeline) => {
+    await invoke('remove_timeline', { id: timeline.id })
+  }
+
+  const switchLeftTimeline = async (timeline: Timeline) => {
+    await invoke('switch_left_timeline', { id: timeline.id })
+    props.close()
+  }
+
+  const switchRightTimeline = async (timeline: Timeline) => {
+    await invoke('switch_right_timeline', { id: timeline.id })
+    props.close()
+  }
+
+  return (
+    <Popover ref={ref} style={{ opacity: 1 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', width: '200px' }}>
+        <FlexboxGrid justify="space-between">
+          <FlexboxGrid.Item>
+            <Button appearance="link" size="xs" onClick={() => removeTimeline(props.timeline)}>
+              <Icon as={BsX} style={{ paddingBottom: '2px', fontSize: '1.4em' }} />
+              <span>Unpin</span>
+            </Button>
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item>
+            <Button appearance="link" size="xs" onClick={() => switchLeftTimeline(props.timeline)}>
+              <Icon as={BsChevronLeft} />
+            </Button>
+            <Button appearance="link" size="xs" onClick={() => switchRightTimeline(props.timeline)}>
+              <Icon as={BsChevronRight} />
+            </Button>
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+      </div>
+    </Popover>
+  )
+})
+
+const alert = (type: 'info' | 'success' | 'warning' | 'error', message: string) => (
+  <Message showIcon type={type}>
+    {message}
+  </Message>
+)
 
 export default Notifications
