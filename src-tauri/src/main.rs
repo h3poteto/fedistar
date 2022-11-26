@@ -33,8 +33,11 @@ async fn add_server(
     let url = format!("https://{}", domain);
 
     let icon = favicon::get_favicon_url(&url).await;
+    let sns = megalodon::detector(url.as_str())
+        .await
+        .map_err(|e| e.to_string())?;
 
-    let server = entities::Server::new(0, domain.to_string(), url, icon);
+    let server = entities::Server::new(0, domain.to_string(), url, sns.to_string(), icon);
     let created = database::add_server(&sqlite_pool, server)
         .await
         .map_err(|e| e.to_string())?;

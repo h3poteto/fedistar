@@ -7,7 +7,7 @@ import { invoke } from '@tauri-apps/api/tauri'
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import failoverImg from 'src/utils/failoverImg'
-import generator, { detector } from 'megalodon'
+import generator from 'megalodon'
 
 const renderAccountIcon = (props: any, ref: any, account: [Account, Server] | undefined) => {
   if (account && account.length > 0) {
@@ -36,8 +36,7 @@ const renderAccountIcon = (props: any, ref: any, account: [Account, Server] | un
 const Textarea = forwardRef<HTMLTextAreaElement>((props, ref) => <Input {...props} as="textarea" ref={ref} />)
 
 const post = async (account: Account, server: Server, value: FormValue) => {
-  const sns = await detector(server.base_url)
-  const client = generator(sns, server.base_url, account.access_token, 'Fedistar')
+  const client = generator(server.sns, server.base_url, account.access_token, 'Fedistar')
   const res = await client.postStatus(value.status)
   return res
 }
@@ -71,6 +70,7 @@ const Compose: React.FC<Props> = props => {
       setFromAccount(accounts[0])
     }
     f()
+    console.log(accounts)
   }, [])
 
   const selectAccount = (eventKey: string) => {

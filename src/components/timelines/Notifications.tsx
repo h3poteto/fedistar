@@ -4,7 +4,7 @@ import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
 import { useEffect, useState, forwardRef, useRef } from 'react'
-import generator, { detector, MegalodonInterface } from 'megalodon'
+import generator, { MegalodonInterface } from 'megalodon'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
@@ -78,8 +78,7 @@ const Notifications: React.FC<Props> = props => {
       setLoading(true)
       const account = await invoke<Account>('get_account', { id: props.server.account_id })
       setAccount(account)
-      const sns = await detector(props.server.base_url)
-      const client = generator(sns, props.server.base_url, account.access_token, 'Fedistar')
+      const client = generator(props.server.sns, props.server.base_url, account.access_token, 'Fedistar')
       setClient(client)
       try {
         const res = await loadNotifications(client)

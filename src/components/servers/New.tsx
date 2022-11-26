@@ -51,7 +51,9 @@ const New: React.FC<Props> = props => {
   const clear = () => {
     setServer(undefined)
     setApp(undefined)
+    setLoading(false)
     setDomain('')
+    setCode('')
   }
 
   const close = () => {
