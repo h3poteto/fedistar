@@ -43,6 +43,7 @@ const post = async (account: Account, server: Server, value: FormValue) => {
 
 type Props = {
   setOpened: (value: boolean) => void
+  servers: Array<Server>
 }
 
 type FormValue = {
@@ -70,8 +71,7 @@ const Compose: React.FC<Props> = props => {
       setFromAccount(accounts[0])
     }
     f()
-    console.log(accounts)
-  }, [])
+  }, [props.servers])
 
   const selectAccount = (eventKey: string) => {
     const account = accounts[parseInt(eventKey)]
