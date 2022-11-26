@@ -97,6 +97,9 @@ const Notifications: React.FC<Props> = props => {
         return u
       })
     )
+
+    // Update maker for server-side
+    client.saveMarkers({ notifications: { last_read_id: notifications[0].id } })
   }
 
   return (
