@@ -127,6 +127,7 @@ const Notifications: React.FC<Props> = props => {
                 <FlexboxGrid.Item>
                   <Button
                     appearance="link"
+                    title="Mark as read"
                     disabled={props.unreads.find(u => u.server_id === props.server.id && u.count > 0) ? false : true}
                     onClick={read}
                   >
