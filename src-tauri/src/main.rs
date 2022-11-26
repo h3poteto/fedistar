@@ -2,7 +2,7 @@
     all(not(debug_assertions), target_os = "windows"),
     windows_subsystem = "windows"
 )]
-use std::sync::Arc;
+use std::{fs::File, sync::Arc};
 
 use megalodon::{self, oauth};
 use serde::Serialize;
@@ -365,34 +365,51 @@ async fn start_streamings(
     Ok(())
 }
 
+fn init_logger(logfile_path: std::path::PathBuf) {
+    let mut logger: Vec<Box<dyn simplelog::SharedLogger>> = vec![simplelog::WriteLogger::new(
+        simplelog::LevelFilter::Info,
+        simplelog::Config::default(),
+        File::create(logfile_path).unwrap(),
+    )];
+    #[cfg(debug_assertions)]
+    {
+        logger.push(simplelog::TermLogger::new(
+            simplelog::LevelFilter::Debug,
+            simplelog::Config::default(),
+            simplelog::TerminalMode::Mixed,
+            simplelog::ColorChoice::Auto,
+        ));
+    }
+
+    simplelog::CombinedLogger::init(logger).unwrap();
+}
+
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use tauri::async_runtime::block_on;
-
-    env_logger::init();
-
-    const DATABASE_DIR: &str = ".fedistar";
+    const CONFIG_DIR: &str = ".fedistar";
     const DATABASE_FILE: &str = "fedistar.db";
+    const LOGFILE_PATH: &str = "fedistar.log";
+
     let home_dir = directories::UserDirs::new()
         .map(|dirs| dirs.home_dir().to_path_buf())
         .unwrap_or_else(|| std::env::current_dir().expect("Cannot access the current directory"));
-    let database_dir = home_dir.join(DATABASE_DIR);
-    let database_path = database_dir.join(DATABASE_FILE);
-
-    let db_exists = std::fs::metadata(&database_path).is_ok();
-    if !db_exists {
-        std::fs::create_dir(&database_dir)?;
+    let config_dir = home_dir.join(CONFIG_DIR);
+    let config_dir_exists = std::fs::metadata(&config_dir).is_ok();
+    if !config_dir_exists {
+        std::fs::create_dir(&config_dir)?;
     }
+    let log_path = config_dir.join(LOGFILE_PATH);
 
-    let database_dir_str = std::fs::canonicalize(&database_dir)
+    init_logger(log_path);
+
+    let database_dir_str = std::fs::canonicalize(&config_dir)
         .unwrap()
         .to_string_lossy()
         .replace('\\', "/");
     let database_url = format!("sqlite://{}/{}", database_dir_str, DATABASE_FILE);
 
     let sqlite_pool = block_on(database::create_sqlite_pool(&database_url))?;
-    if !db_exists {
-        block_on(database::migrate_database(&sqlite_pool))?;
-    }
+    block_on(database::migrate_database(&sqlite_pool))?;
 
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
