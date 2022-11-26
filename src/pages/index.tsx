@@ -12,13 +12,14 @@ import Navigator from 'src/components/Navigator'
 import generateNotification from 'src/utils/notification'
 import { ReceiveNotificationPayload } from 'src/payload'
 import Compose from 'src/components/Compose'
+import { Unread } from 'src/entities/unread'
 
 function App() {
   const [servers, setServers] = useState<Array<Server>>([])
   const [timelines, setTimelines] = useState<Array<[Timeline, Server]>>([])
   const [newServer, setNewServer] = useState<boolean>(false)
   const [initialServer, setInitialServer] = useState<Server | null>(null)
-  const [unreads, setUnreads] = useState<Map<number, number>>(new Map())
+  const [unreads, setUnreads] = useState<Array<Unread>>([])
   const [composeOpened, setComposeOpened] = useState<boolean>(false)
 
   const toaster = useToaster()
@@ -57,11 +58,18 @@ function App() {
 
     listen<ReceiveNotificationPayload>('receive-notification', async ev => {
       const server_id = ev.payload.server_id
-      if (unreads.get(server_id)) {
-        const current = unreads.get(server_id)
-        setUnreads(unreads.set(server_id, current + 1))
+      const target = unreads.find(u => u.server_id === server_id)
+      if (target) {
+        setUnreads(
+          unreads.map(u => {
+            if (u.server_id === server_id) {
+              return Object.assign({}, u, { count: u.count + 1 })
+            }
+            return u
+          })
+        )
       } else {
-        setUnreads(unreads.set(server_id, 1))
+        setUnreads(unreads.concat({ server_id: server_id, count: 1 }))
       }
 
       let permissionGranted = await isPermissionGranted()
@@ -108,7 +116,7 @@ function App() {
         </Animation.Transition>
         <Content style={{ display: 'flex' }}>
           {timelines.map(timeline => (
-            <ShowTimeline timeline={timeline[0]} server={timeline[1]} key={timeline[0].id} />
+            <ShowTimeline timeline={timeline[0]} server={timeline[1]} unreads={unreads} setUnreads={setUnreads} key={timeline[0].id} />
           ))}
           <NewTimeline servers={servers} />
         </Content>

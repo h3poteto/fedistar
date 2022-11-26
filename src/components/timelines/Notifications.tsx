@@ -1,5 +1,5 @@
 import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, useToaster, Message } from 'rsuite'
-import { BsBell, BsSliders, BsX, BsChevronLeft, BsChevronRight } from 'react-icons/bs'
+import { BsBell, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsCheck2 } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
@@ -12,10 +12,13 @@ import { Timeline } from 'src/entities/timeline'
 import Notification from './notification/Notification'
 
 import { ReceiveNotificationPayload } from 'src/payload'
+import { Unread } from 'src/entities/unread'
 
 type Props = {
   timeline: Timeline
   server: Server
+  unreads: Array<Unread>
+  setUnreads: (a: Array<Unread>) => void
 }
 
 const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
@@ -130,6 +133,17 @@ const Notifications: React.FC<Props> = props => {
     setNotifications(renew)
   }
 
+  const read = () => {
+    props.setUnreads(
+      props.unreads.map(u => {
+        if (u.server_id === props.server.id) {
+          return Object.assign({}, u, { count: 0 })
+        }
+        return u
+      })
+    )
+  }
+
   return (
     <div style={{ width: '340px' }}>
       <Container style={{ height: '100%', overflowY: 'scroll' }}>
@@ -146,12 +160,21 @@ const Notifications: React.FC<Props> = props => {
                 {/** name **/}
                 <FlexboxGrid.Item style={{ lineHeight: '48px', fontSize: '18px', verticalAlign: 'middle' }}>
                   {props.timeline.timeline}
-                  <span style={{ fontSize: '14px' }}>@{props.server.domain}</span>
+                  <span style={{ fontSize: '14px', color: 'var(--rs-text-secondary)' }}>@{props.server.domain}</span>
                 </FlexboxGrid.Item>
               </FlexboxGrid>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item>
               <FlexboxGrid align="middle" justify="end">
+                <FlexboxGrid.Item>
+                  <Button
+                    appearance="link"
+                    disabled={props.unreads.find(u => u.server_id === props.server.id && u.count > 0) ? false : true}
+                    onClick={read}
+                  >
+                    <Icon as={BsCheck2} />
+                  </Button>
+                </FlexboxGrid.Item>
                 <FlexboxGrid.Item style={{ paddingRight: '8px' }}>
                   <Whisper
                     trigger="click"

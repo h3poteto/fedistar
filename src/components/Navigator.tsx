@@ -1,14 +1,15 @@
 import { invoke } from '@tauri-apps/api/tauri'
-import { ReactElement, SetStateAction } from 'react'
+import { ReactElement, SetStateAction, useEffect } from 'react'
 import { Icon } from '@rsuite/icons'
 import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge } from 'rsuite'
 import { BsPlus, BsGear, BsPencilSquare } from 'react-icons/bs'
 import { Server } from 'src/entities/server'
 import FailoverImg from 'src/utils/failoverImg'
+import { Unread } from 'src/entities/unread'
 
 type NavigatorProps = {
   servers: Array<Server>
-  unreads: Map<number, number>
+  unreads: Array<Unread>
   setNewServer: (value: SetStateAction<boolean>) => void
   setInitialServer: (value: SetStateAction<Server>) => void
   openCompose: () => void
@@ -51,7 +52,9 @@ const serverMenu = (
 }
 
 const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
-  const { servers, setNewServer, setInitialServer, unreads } = props
+  const { servers, setNewServer, setInitialServer } = props
+
+  useEffect(() => console.log('unreads changed: ', props.unreads), [props.unreads])
 
   return (
     <Sidebar
@@ -81,8 +84,8 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
                   serverMenu({ className, left, top, onClose, server, setNewServer, setInitialServer }, ref)
                 }
               >
-                <Button appearance="link" size="xs" style={{ padding: '4px 8px' }}>
-                  <Badge content={unreads.get(server.id) ? true : false}>
+                <Button appearance="link" size="xs" style={{ padding: '8px' }}>
+                  <Badge content={props.unreads.find(u => u.server_id === server.id && u.count > 0) ? true : false}>
                     <Avatar size="sm" src={FailoverImg(server.favicon)} className="server-icon" alt={server.domain} key={server.id} />
                   </Badge>
                 </Button>

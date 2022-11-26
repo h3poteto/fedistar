@@ -206,7 +206,7 @@ const Timeline: React.FC<Props> = props => {
                 {/** name **/}
                 <FlexboxGrid.Item style={{ lineHeight: '48px', fontSize: '18px', verticalAlign: 'middle' }}>
                   {props.timeline.timeline}
-                  <span style={{ fontSize: '14px' }}>@{props.server.domain}</span>
+                  <span style={{ fontSize: '14px', color: 'var(--rs-text-secondary)' }}>@{props.server.domain}</span>
                 </FlexboxGrid.Item>
               </FlexboxGrid>
             </FlexboxGrid.Item>
