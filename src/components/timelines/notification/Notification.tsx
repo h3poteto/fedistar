@@ -8,6 +8,7 @@ type Props = {
   notification: Entity.Notification
   client: MegalodonInterface
   updateStatus: (status: Entity.Status) => void
+  openMedia: (media: Entity.Attachment) => void
 }
 
 const notification = (props: Props) => {
@@ -24,7 +25,9 @@ const notification = (props: Props) => {
     case 'emoji_reaction':
       return <Reaction notification={props.notification} />
     case 'mention':
-      return <Status client={props.client} status={props.notification.status} updateStatus={props.updateStatus} />
+      return (
+        <Status client={props.client} status={props.notification.status} updateStatus={props.updateStatus} openMedia={props.openMedia} />
+      )
     default:
       return null
   }

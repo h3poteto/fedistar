@@ -1,3 +1,4 @@
+import { Entity } from 'megalodon'
 import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
 import ShowTimeline from 'src/components/timelines/Timeline'
@@ -9,13 +10,22 @@ type Props = {
   server: Server
   unreads: Array<Unread>
   setUnreads: (a: Array<Unread>) => void
+  openMedia: (media: Entity.Attachment) => void
 }
 
 const Show: React.FC<Props> = props => {
   if (props.timeline.timeline === 'notifications') {
-    return <ShowNotifications timeline={props.timeline} server={props.server} unreads={props.unreads} setUnreads={props.setUnreads} />
+    return (
+      <ShowNotifications
+        timeline={props.timeline}
+        server={props.server}
+        unreads={props.unreads}
+        setUnreads={props.setUnreads}
+        openMedia={props.openMedia}
+      />
+    )
   } else {
-    return <ShowTimeline timeline={props.timeline} server={props.server} />
+    return <ShowTimeline timeline={props.timeline} server={props.server} openMedia={props.openMedia} />
   }
 }
 

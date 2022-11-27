@@ -19,6 +19,7 @@ type Props = {
   server: Server
   unreads: Array<Unread>
   setUnreads: (a: Array<Unread>) => void
+  openMedia: (media: Entity.Attachment) => void
 }
 
 const Notifications: React.FC<Props> = props => {
@@ -175,7 +176,12 @@ const Notifications: React.FC<Props> = props => {
                     transform: `translateY(${virtualRow.start}px)`
                   }}
                 >
-                  <Notification notification={notifications[virtualRow.index]} client={client} updateStatus={updateStatus} />
+                  <Notification
+                    notification={notifications[virtualRow.index]}
+                    client={client}
+                    updateStatus={updateStatus}
+                    openMedia={props.openMedia}
+                  />
                 </div>
               ))}
             </List>
