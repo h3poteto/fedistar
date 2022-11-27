@@ -71,6 +71,7 @@ jobs:
           releaseBody: 'See the assets to download this version and install.'
           releaseDraft: true
           prerelease: false
+          args: -- --target universal-apple-darwin
 
   release-windows:
     runs-on: windows-latest
