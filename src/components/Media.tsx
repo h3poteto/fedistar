@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Entity } from 'megalodon'
 
 type Props = {
-  media: Entity.Attachment | undefined
+  media: Entity.Attachment | null
   opened: boolean
   close: () => void
 }

@@ -20,7 +20,6 @@ import { ReceiveNotificationPayload } from 'src/payload'
 function App() {
   const [servers, setServers] = useState<Array<Server>>([])
   const [timelines, setTimelines] = useState<Array<[Timeline, Server]>>([])
-  const [initialServer, setInitialServer] = useState<Server | null>(null)
   const [unreads, setUnreads] = useState<Array<Unread>>([])
   const [composeOpened, setComposeOpened] = useState<boolean>(false)
   const [modalState, dispatch] = useReducer(modalReducer, initialModalState)
@@ -96,17 +95,21 @@ function App() {
   return (
     <div className="container index">
       <NewServer
-        open={modalState.newServer}
-        onClose={() => dispatch({ target: 'newServer', value: false })}
-        initialServer={initialServer}
+        open={modalState.newServer.opened}
+        onClose={() => dispatch({ target: 'newServer', value: false, object: null })}
+        initialServer={modalState.newServer.object}
       />
-      <Media media={modalState.media.object} opened={modalState.media.opened} close={() => dispatch({ target: 'media', value: false })} />
+      <Media
+        media={modalState.media.object}
+        opened={modalState.media.opened}
+        close={() => dispatch({ target: 'media', value: false, object: null })}
+      />
       <Container style={{ height: '100%' }}>
         <Navigator
           servers={servers}
           unreads={unreads}
-          setNewServer={(value: boolean) => dispatch({ target: 'newServer', value: value })}
-          setInitialServer={setInitialServer}
+          addNewServer={() => dispatch({ target: 'newServer', value: true, object: null })}
+          openAuthorize={(server: Server) => dispatch({ target: 'newServer', value: true, object: server })}
           openCompose={openCompose}
         />
         <Animation.Transition
@@ -141,25 +144,31 @@ function App() {
 }
 
 type ModalState = {
-  newServer: boolean
+  newServer: {
+    opened: boolean
+    object: Server | null
+  }
   media: {
     opened: boolean
-    object: Entity.Attachment
+    object: Entity.Attachment | null
   }
 }
 
 const initialModalState: ModalState = {
-  newServer: false,
+  newServer: {
+    opened: false,
+    object: null
+  },
   media: {
     opened: false,
-    object: undefined
+    object: null
   }
 }
 
 const modalReducer = (current: ModalState, action: { target: string; value: boolean; object?: any }) => {
   switch (action.target) {
     case 'newServer':
-      return { ...current, newServer: action.value }
+      return { ...current, newServer: { opened: action.value, object: action.object } }
     case 'media':
       return { ...current, media: { opened: action.value, object: action.object } }
     default:

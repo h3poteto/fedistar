@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/tauri'
-import { ReactElement, SetStateAction } from 'react'
+import { ReactElement } from 'react'
 import { Icon } from '@rsuite/icons'
 import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge } from 'rsuite'
 import { BsPlus, BsGear, BsPencilSquare } from 'react-icons/bs'
@@ -10,13 +10,13 @@ import { Unread } from 'src/entities/unread'
 type NavigatorProps = {
   servers: Array<Server>
   unreads: Array<Unread>
-  setNewServer: (value: SetStateAction<boolean>) => void
-  setInitialServer: (value: SetStateAction<Server>) => void
+  addNewServer: () => void
+  openAuthorize: (server: Server) => void
   openCompose: () => void
 }
 
 const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
-  const { servers, setNewServer, setInitialServer } = props
+  const { servers, openAuthorize } = props
 
   return (
     <Sidebar
@@ -33,7 +33,7 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
       </Sidenav>
       <Sidenav expanded={false}>
         <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Button appearance="link" size="lg" onClick={() => setNewServer(true)}>
+          <Button appearance="link" size="lg" onClick={props.addNewServer}>
             <Icon as={BsPlus} style={{ fontSize: '1.4em' }} />
           </Button>
           {servers.map(server => (
@@ -43,7 +43,7 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
                 controlId="control-id-context-menu"
                 trigger="contextMenu"
                 speaker={({ className, left, top, onClose }, ref) =>
-                  serverMenu({ className, left, top, onClose, server, setNewServer, setInitialServer }, ref)
+                  serverMenu({ className, left, top, onClose, server, openAuthorize }, ref)
                 }
               >
                 <Button appearance="link" size="xs" style={{ padding: '8px' }}>
@@ -69,20 +69,18 @@ type ServerMenuProps = {
   top?: number
   onClose: (delay?: number) => NodeJS.Timeout | void
   server: Server
-  setNewServer: (value: SetStateAction<boolean>) => void
-  setInitialServer: (value: SetStateAction<Server>) => void
+  openAuthorize: (server: Server) => void
 }
 
 const serverMenu = (
-  { className, left, top, onClose, server, setNewServer, setInitialServer }: ServerMenuProps,
+  { className, left, top, onClose, server, openAuthorize }: ServerMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
   const handleSelect = (eventKey: string) => {
     onClose()
     switch (eventKey) {
       case '0':
-        setNewServer(true)
-        setInitialServer(server)
+        openAuthorize(server)
         break
       case '1':
         invoke('remove_server', { id: server.id })
