@@ -5,62 +5,12 @@ import { Icon } from '@rsuite/icons'
 import { BsArrowRepeat, BsChat, BsStar, BsStarFill, BsBookmark, BsFillBookmarkFill, BsEmojiSmile, BsThreeDots } from 'react-icons/bs'
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
+import Attachments from './Attachments'
 
 type Props = {
   status: Entity.Status
   client: MegalodonInterface
   updateStatus: (status: Entity.Status) => void
-}
-
-const originalStatus = (status: Entity.Status) => {
-  if (status.reblog && !status.quote) {
-    return status.reblog
-  } else {
-    return status
-  }
-}
-
-const rebloggedHeader = (status: Entity.Status) => {
-  if (status.reblog && !status.quote) {
-    return (
-      <div style={{ color: 'var(--rs-text-tertiary)' }}>
-        <FlexboxGrid align="middle">
-          <FlexboxGrid.Item style={{ paddingRight: '8px', textAlign: 'right' }} colspan={4}>
-            <Icon as={BsArrowRepeat} style={{ color: 'green' }} />
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={20}>
-            <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
-      </div>
-    )
-  } else {
-    return null
-  }
-}
-
-const reblogIcon = (status: Entity.Status): ReactElement => {
-  if (status.reblogged) {
-    return <Icon as={BsArrowRepeat} color="green" />
-  } else {
-    return <Icon as={BsArrowRepeat} />
-  }
-}
-
-const favouriteIcon = (status: Entity.Status): ReactElement => {
-  if (status.favourited) {
-    return <Icon as={BsStarFill} color="orange" />
-  } else {
-    return <Icon as={BsStar} />
-  }
-}
-
-const bookmarkIcon = (status: Entity.Status): ReactElement => {
-  if (status.bookmarked) {
-    return <Icon as={BsFillBookmarkFill} color="green" />
-  } else {
-    return <Icon as={BsBookmark} />
-  }
 }
 
 const Status: React.FC<Props> = props => {
@@ -127,6 +77,7 @@ const Status: React.FC<Props> = props => {
             style={{ wordWrap: 'break-word' }}
             dangerouslySetInnerHTML={{ __html: emojify(status.content, status.emojis) }}
           ></div>
+          {status.media_attachments.length > 0 && <Attachments attachments={status.media_attachments} />}
           <div className="toolbox">
             <FlexboxGrid>
               <FlexboxGrid.Item>
@@ -153,6 +104,57 @@ const Status: React.FC<Props> = props => {
       </FlexboxGrid>
     </List.Item>
   )
+}
+
+const originalStatus = (status: Entity.Status) => {
+  if (status.reblog && !status.quote) {
+    return status.reblog
+  } else {
+    return status
+  }
+}
+
+const rebloggedHeader = (status: Entity.Status) => {
+  if (status.reblog && !status.quote) {
+    return (
+      <div style={{ color: 'var(--rs-text-tertiary)' }}>
+        <FlexboxGrid align="middle">
+          <FlexboxGrid.Item style={{ paddingRight: '8px', textAlign: 'right' }} colspan={4}>
+            <Icon as={BsArrowRepeat} style={{ color: 'green' }} />
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={20}>
+            <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+      </div>
+    )
+  } else {
+    return null
+  }
+}
+
+const reblogIcon = (status: Entity.Status): ReactElement => {
+  if (status.reblogged) {
+    return <Icon as={BsArrowRepeat} color="green" />
+  } else {
+    return <Icon as={BsArrowRepeat} />
+  }
+}
+
+const favouriteIcon = (status: Entity.Status): ReactElement => {
+  if (status.favourited) {
+    return <Icon as={BsStarFill} color="orange" />
+  } else {
+    return <Icon as={BsStar} />
+  }
+}
+
+const bookmarkIcon = (status: Entity.Status): ReactElement => {
+  if (status.bookmarked) {
+    return <Icon as={BsFillBookmarkFill} color="green" />
+  } else {
+    return <Icon as={BsBookmark} />
+  }
 }
 
 export default Status
