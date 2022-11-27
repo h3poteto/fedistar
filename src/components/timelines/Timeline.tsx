@@ -17,6 +17,7 @@ import { ReceiveHomeStatusPayload, ReceiveTimelineStatusPayload } from 'src/payl
 type Props = {
   timeline: Timeline
   server: Server
+  openMedia: (media: Entity.Attachment) => void
 }
 
 const Timeline: React.FC<Props> = props => {
@@ -222,7 +223,7 @@ const Timeline: React.FC<Props> = props => {
                       transform: `translateY(${virtualRow.start}px)`
                     }}
                   >
-                    <Status status={statuses[virtualRow.index]} client={client} updateStatus={updateStatus} />
+                    <Status status={statuses[virtualRow.index]} client={client} updateStatus={updateStatus} openMedia={props.openMedia} />
                   </div>
                 ))}
               </div>

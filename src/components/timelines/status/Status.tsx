@@ -11,6 +11,7 @@ type Props = {
   status: Entity.Status
   client: MegalodonInterface
   updateStatus: (status: Entity.Status) => void
+  openMedia: (media: Entity.Attachment) => void
 }
 
 const Status: React.FC<Props> = props => {
@@ -77,7 +78,7 @@ const Status: React.FC<Props> = props => {
             style={{ wordWrap: 'break-word' }}
             dangerouslySetInnerHTML={{ __html: emojify(status.content, status.emojis) }}
           ></div>
-          {status.media_attachments.length > 0 && <Attachments attachments={status.media_attachments} />}
+          {status.media_attachments.length > 0 && <Attachments attachments={status.media_attachments} openMedia={props.openMedia} />}
           <div className="toolbox">
             <FlexboxGrid>
               <FlexboxGrid.Item>

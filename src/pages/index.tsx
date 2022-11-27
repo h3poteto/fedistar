@@ -3,16 +3,19 @@ import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
 import { Container, Content, Message, useToaster, Animation } from 'rsuite'
 import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/api/notification'
+
 import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
+import { Unread } from 'src/entities/unread'
+
 import NewTimeline from 'src/components/timelines/New'
 import ShowTimeline from 'src/components/timelines/Show'
 import NewServer from 'src/components/servers/New'
 import Navigator from 'src/components/Navigator'
+import Compose from 'src/components/Compose'
+import Media from 'src/components/Media'
 import generateNotification from 'src/utils/notification'
 import { ReceiveNotificationPayload } from 'src/payload'
-import Compose from 'src/components/Compose'
-import { Unread } from 'src/entities/unread'
 
 function App() {
   const [servers, setServers] = useState<Array<Server>>([])
@@ -97,6 +100,7 @@ function App() {
         onClose={() => dispatch({ target: 'newServer', value: false })}
         initialServer={initialServer}
       />
+      <Media media={modalState.media.object} opened={modalState.media.opened} close={() => dispatch({ target: 'media', value: false })} />
       <Container style={{ height: '100%' }}>
         <Navigator
           servers={servers}
@@ -120,7 +124,14 @@ function App() {
         </Animation.Transition>
         <Content style={{ display: 'flex' }}>
           {timelines.map(timeline => (
-            <ShowTimeline timeline={timeline[0]} server={timeline[1]} unreads={unreads} setUnreads={setUnreads} key={timeline[0].id} />
+            <ShowTimeline
+              timeline={timeline[0]}
+              server={timeline[1]}
+              unreads={unreads}
+              setUnreads={setUnreads}
+              key={timeline[0].id}
+              openMedia={(media: Entity.Attachment) => dispatch({ target: 'media', value: true, object: media })}
+            />
           ))}
           <NewTimeline servers={servers} />
         </Content>
@@ -131,16 +142,26 @@ function App() {
 
 type ModalState = {
   newServer: boolean
+  media: {
+    opened: boolean
+    object: Entity.Attachment
+  }
 }
 
 const initialModalState: ModalState = {
-  newServer: false
+  newServer: false,
+  media: {
+    opened: false,
+    object: undefined
+  }
 }
 
-const modalReducer = (current: ModalState, action: { target: string; value: boolean }) => {
+const modalReducer = (current: ModalState, action: { target: string; value: boolean; object?: any }) => {
   switch (action.target) {
     case 'newServer':
       return { ...current, newServer: action.value }
+    case 'media':
+      return { ...current, media: { opened: action.value, object: action.object } }
     default:
       return current
   }
