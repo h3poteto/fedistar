@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useReducer } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
 import { Container, Content, Message, useToaster, Animation } from 'rsuite'
@@ -17,10 +17,10 @@ import { Unread } from 'src/entities/unread'
 function App() {
   const [servers, setServers] = useState<Array<Server>>([])
   const [timelines, setTimelines] = useState<Array<[Timeline, Server]>>([])
-  const [newServer, setNewServer] = useState<boolean>(false)
   const [initialServer, setInitialServer] = useState<Server | null>(null)
   const [unreads, setUnreads] = useState<Array<Unread>>([])
   const [composeOpened, setComposeOpened] = useState<boolean>(false)
+  const [modalState, dispatch] = useReducer(modalReducer, initialModalState)
 
   const toaster = useToaster()
 
@@ -39,7 +39,7 @@ function App() {
     invoke<Array<Server>>('list_servers').then(res => {
       if (res.length === 0) {
         console.debug('There is no server')
-        setNewServer(true)
+        dispatch({ target: 'newServer', value: true })
         toaster.push(message, { placement: 'topCenter' })
       } else {
         setServers(res)
@@ -92,12 +92,16 @@ function App() {
 
   return (
     <div className="container index">
-      <NewServer open={newServer} onClose={() => setNewServer(false)} initialServer={initialServer} />
+      <NewServer
+        open={modalState.newServer}
+        onClose={() => dispatch({ target: 'newServer', value: false })}
+        initialServer={initialServer}
+      />
       <Container style={{ height: '100%' }}>
         <Navigator
           servers={servers}
           unreads={unreads}
-          setNewServer={setNewServer}
+          setNewServer={(value: boolean) => dispatch({ target: 'newServer', value: value })}
           setInitialServer={setInitialServer}
           openCompose={openCompose}
         />
@@ -123,6 +127,23 @@ function App() {
       </Container>
     </div>
   )
+}
+
+type ModalState = {
+  newServer: boolean
+}
+
+const initialModalState: ModalState = {
+  newServer: false
+}
+
+const modalReducer = (current: ModalState, action: { target: string; value: boolean }) => {
+  switch (action.target) {
+    case 'newServer':
+      return { ...current, newServer: action.value }
+    default:
+      return current
+  }
 }
 
 export default App
