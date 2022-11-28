@@ -15,10 +15,10 @@ const Media: React.FC<Props> = props => {
       <Modal.Body style={{ height: '600px' }}>
         {props.media && (
           <Image
-            layout="fill"
-            objectFit="contain"
+            fill
             src={props.media?.url}
             alt={props.media?.description ? props.media?.description : props.media?.id}
+            style={{ objectFit: 'contain' }}
           />
         )}
       </Modal.Body>
