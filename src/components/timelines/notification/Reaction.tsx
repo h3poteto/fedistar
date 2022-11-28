@@ -1,9 +1,12 @@
+import { MouseEventHandler } from 'react'
 import { Entity } from 'megalodon'
 import { Avatar, FlexboxGrid } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsStar, BsArrowRepeat, BsMenuUp, BsHouseDoor } from 'react-icons/bs'
+import { open } from '@tauri-apps/api/shell'
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
+import { findLink } from 'src/utils/statusParser'
 
 type Props = {
   notification: Entity.Notification
@@ -140,15 +143,24 @@ const Reaction: React.FC<Props> = props => {
             </FlexboxGrid>
           </div>
           <div
-            className="body"
+            className="status-body"
             style={{ wordWrap: 'break-word' }}
             dangerouslySetInnerHTML={{ __html: emojify(status.content, status.emojis) }}
+            onClick={statusClicked}
           ></div>
           <div className="toolbox"></div>
         </FlexboxGrid.Item>
       </FlexboxGrid>
     </div>
   )
+}
+
+const statusClicked: MouseEventHandler<HTMLDivElement> = e => {
+  const url = findLink(e.target as HTMLElement, 'status-body')
+  if (url) {
+    open(url)
+    e.preventDefault()
+  }
 }
 
 export default Reaction

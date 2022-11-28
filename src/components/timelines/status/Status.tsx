@@ -1,11 +1,13 @@
-import { ReactElement } from 'react'
+import { MouseEventHandler, ReactElement } from 'react'
 import { Entity, MegalodonInterface, Response } from 'megalodon'
 import { FlexboxGrid, List, Avatar, IconButton } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsArrowRepeat, BsChat, BsStar, BsStarFill, BsBookmark, BsFillBookmarkFill, BsEmojiSmile, BsThreeDots } from 'react-icons/bs'
+import { open } from '@tauri-apps/api/shell'
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
 import Attachments from './Attachments'
+import { findLink } from 'src/utils/statusParser'
 
 type Props = {
   status: Entity.Status
@@ -74,9 +76,10 @@ const Status: React.FC<Props> = props => {
             </FlexboxGrid>
           </div>
           <div
-            className="body"
+            className="status-body"
             style={{ wordWrap: 'break-word' }}
             dangerouslySetInnerHTML={{ __html: emojify(status.content, status.emojis) }}
+            onClick={statusClicked}
           ></div>
           {status.media_attachments.length > 0 && <Attachments attachments={status.media_attachments} openMedia={props.openMedia} />}
           <div className="toolbox">
@@ -105,6 +108,14 @@ const Status: React.FC<Props> = props => {
       </FlexboxGrid>
     </List.Item>
   )
+}
+
+const statusClicked: MouseEventHandler<HTMLDivElement> = e => {
+  const url = findLink(e.target as HTMLElement, 'status-body')
+  if (url) {
+    open(url)
+    e.preventDefault()
+  }
 }
 
 const originalStatus = (status: Entity.Status) => {
