@@ -9,20 +9,24 @@
 
   50% {
     width: 200px;
+    min-width: 200px;
   }
 
   to {
     width: 320px;
+    min-width: 320px;
   }
 }
 
 @keyframes slideOut {
   from {
     width: 320px;
+    min-width: 320px;
   }
 
   50% {
     width: 100px;
+    min-width: 100px;
   }
 
   to {
@@ -48,6 +52,8 @@
 
 .compose-entered {
   width: 320px;
+  flex-basis: 320px;
+  min-width: 320px;
 }
 
 .compose-exited {
