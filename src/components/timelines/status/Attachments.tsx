@@ -14,10 +14,10 @@ const Attachments: React.FC<Props> = props => {
           <Image
             width={128}
             height={128}
-            objectFit="cover"
             src={media.preview_url}
-            alt={media.description}
+            alt={media.description ? media.description : media.id}
             onClick={() => props.openMedia(media)}
+            style={{ objectFit: 'cover' }}
           />
         </div>
       ))}
