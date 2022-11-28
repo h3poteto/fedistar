@@ -13,7 +13,14 @@ const Media: React.FC<Props> = props => {
     <Modal open={props.opened} size="lg" onClose={props.close}>
       <Modal.Header></Modal.Header>
       <Modal.Body style={{ height: '600px' }}>
-        {props.media && <Image layout="fill" objectFit="contain" src={props.media?.url} alt={props.media?.description} />}
+        {props.media && (
+          <Image
+            layout="fill"
+            objectFit="contain"
+            src={props.media?.url}
+            alt={props.media?.description ? props.media?.description : props.media?.id}
+          />
+        )}
       </Modal.Body>
     </Modal>
   )
