@@ -104,8 +104,8 @@ const Notifications: React.FC<Props> = props => {
   }
 
   return (
-    <div style={{ width: '340px' }}>
-      <Container style={{ height: '100%', overflowY: 'scroll' }}>
+    <div style={{ width: '340px', minWidth: '340px' }}>
+      <Container style={{ height: 'calc(100% - 8px)', overflowY: 'scroll' }}>
         <Header>
           <FlexboxGrid align="middle" justify="space-between">
             <FlexboxGrid.Item>
