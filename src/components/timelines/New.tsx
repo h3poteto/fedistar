@@ -155,7 +155,7 @@ const New: React.FC<Props> = props => {
   const selectTimeline = () => (
     <div
       className="add-timeline"
-      style={{ width: '240px', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--rs-bg-overlay)' }}
+      style={{ width: '240px', minWidth: '240px', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--rs-bg-overlay)' }}
     >
       <Container>
         <Header>
