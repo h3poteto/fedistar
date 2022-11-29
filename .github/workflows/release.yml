@@ -56,12 +56,13 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+          target: aarch64-apple-darwin
 
       - name: Install app dependencies and build web
         run: yarn && yarn build
 
       - name: Build the app
-        uses: tauri-apps/tauri-action@v0
+        uses: tauri-apps/tauri-action@dev
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
