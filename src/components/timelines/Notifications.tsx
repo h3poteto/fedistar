@@ -5,12 +5,12 @@ import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
 import { useEffect, useState, forwardRef, useRef } from 'react'
 import generator, { MegalodonInterface } from 'megalodon'
-import { useVirtualizer } from '@tanstack/react-virtual'
+import { Virtuoso } from 'react-virtuoso'
+
 import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
 import Notification from './notification/Notification'
-
 import { ReceiveNotificationPayload } from 'src/payload'
 import { Unread } from 'src/entities/unread'
 
@@ -28,7 +28,6 @@ const Notifications: React.FC<Props> = props => {
   const [notifications, setNotifications] = useState<Array<Entity.Notification>>([])
   const [loading, setLoading] = useState<boolean>(false)
 
-  const parentRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef(null)
   const toast = useToaster()
 
@@ -63,8 +62,6 @@ const Notifications: React.FC<Props> = props => {
       })
     })
   }, [])
-
-  const rowVirtualizer = useVirtualizer({ count: notifications.length, estimateSize: () => 125, getScrollElement: () => parentRef.current })
 
   const loadNotifications = async (client: MegalodonInterface): Promise<Array<Entity.Notification>> => {
     const res = await client.getNotifications({ limit: 40 })
@@ -160,30 +157,16 @@ const Notifications: React.FC<Props> = props => {
           <Loader style={{ margin: '10rem auto' }} />
         ) : (
           <Content style={{ height: 'calc(100% - 54px)' }}>
-            <List hover ref={parentRef} style={{ height: '100%', width: '340px', overflow: 'auto' }}>
-              <div style={{ height: rowVirtualizer.getTotalSize(), width: '100%', position: 'relative' }}></div>
-              {rowVirtualizer.getVirtualItems().map(virtualRow => (
-                <div
-                  key={virtualRow.key}
-                  data-index={virtualRow.index}
-                  ref={rowVirtualizer.measureElement}
-                  className={virtualRow.index % 2 ? 'ListItemOdd' : 'ListItemEven'}
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    transform: `translateY(${virtualRow.start}px)`
-                  }}
-                >
-                  <Notification
-                    notification={notifications[virtualRow.index]}
-                    client={client}
-                    updateStatus={updateStatus}
-                    openMedia={props.openMedia}
-                  />
-                </div>
-              ))}
+            <List hover style={{ width: '340px', height: '100%' }}>
+              <Virtuoso
+                style={{ height: '100%' }}
+                data={notifications}
+                itemContent={(index, notification) => (
+                  <div key={index}>
+                    <Notification notification={notification} client={client} updateStatus={updateStatus} openMedia={props.openMedia} />
+                  </div>
+                )}
+              />
             </List>
           </Content>
         )}

@@ -4,8 +4,8 @@ import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useRef, useState, forwardRef } from 'react'
 import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, Message, useToaster } from 'rsuite'
 import { BsHouseDoor, BsPeople, BsGlobe2, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsStar, BsListUl } from 'react-icons/bs'
-import { useVirtualizer } from '@tanstack/react-virtual'
 import { listen } from '@tauri-apps/api/event'
+import { Virtuoso } from 'react-virtuoso'
 
 import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
@@ -26,7 +26,6 @@ const Timeline: React.FC<Props> = props => {
   const [client, setClient] = useState<MegalodonInterface>()
   const [loading, setLoading] = useState<boolean>(false)
 
-  const parentRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef(null)
   const toast = useToaster()
 
@@ -82,8 +81,6 @@ const Timeline: React.FC<Props> = props => {
       })
     }
   }, [])
-
-  const rowVirtualizer = useVirtualizer({ count: statuses.length, estimateSize: () => 125, getScrollElement: () => parentRef.current })
 
   const loadTimeline = async (tl: Timeline, client: MegalodonInterface): Promise<Array<Entity.Status>> => {
     switch (tl.timeline) {
@@ -195,38 +192,20 @@ const Timeline: React.FC<Props> = props => {
           <Content style={{ height: 'calc(100% - 54px)' }}>
             <List
               hover
-              ref={parentRef}
               style={{
-                height: '100%',
                 width: '340px',
-                overflow: 'auto'
+                height: '100%'
               }}
             >
-              <div
-                style={{
-                  height: rowVirtualizer.getTotalSize(),
-                  width: '100%',
-                  position: 'relative'
-                }}
-              >
-                {rowVirtualizer.getVirtualItems().map(virtualRow => (
-                  <div
-                    key={virtualRow.key}
-                    data-index={virtualRow.index}
-                    ref={rowVirtualizer.measureElement}
-                    className={virtualRow.index % 2 ? 'ListItemOdd' : 'ListItemEven'}
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      transform: `translateY(${virtualRow.start}px)`
-                    }}
-                  >
-                    <Status status={statuses[virtualRow.index]} client={client} updateStatus={updateStatus} openMedia={props.openMedia} />
+              <Virtuoso
+                style={{ height: '100%' }}
+                data={statuses}
+                itemContent={(index, status) => (
+                  <div key={index}>
+                    <Status status={status} client={client} updateStatus={updateStatus} openMedia={props.openMedia} />
                   </div>
-                ))}
-              </div>
+                )}
+              />
             </List>
           </Content>
         )}

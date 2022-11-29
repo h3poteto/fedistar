@@ -723,18 +723,6 @@
   dependencies:
     tslib "^2.4.0"
 
-"@tanstack/react-virtual@^3.0.0-beta.23":
-  version "3.0.0-beta.23"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-virtual/-/react-virtual-3.0.0-beta.23.tgz#f3d3e049d6b49e2b91c46ec3d35f48d9fdf7426a"
-  integrity sha512-FurqZJD7oSXLtL5NP0YQKXNEY+2qczXjzxmxkD51ZO8ykyr2z62IRNfvpOyly2CPLg+M346mA/Ul2hlx4R3KPw==
-  dependencies:
-    "@tanstack/virtual-core" "3.0.0-beta.23"
-
-"@tanstack/virtual-core@3.0.0-beta.23":
-  version "3.0.0-beta.23"
-  resolved "https://registry.yarnpkg.com/@tanstack/virtual-core/-/virtual-core-3.0.0-beta.23.tgz#2e586256bdb239e35c8d1ca4e8d66c1c55151419"
-  integrity sha512-xQfJgz4mdaxifPjOqUBYAar60UAQTrED2SpS0VI5AZvxYI4NDTxx5cFrjaP4baKY3UnVc8IsGFbqr8Q/LZNMag==
-
 "@tauri-apps/api@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@tauri-apps/api/-/api-1.2.0.tgz#1f196b3e012971227f41b98214c846430a4eb477"
@@ -1048,6 +1036,18 @@
   dependencies:
     "@typescript-eslint/types" "5.44.0"
     eslint-visitor-keys "^3.3.0"
+
+"@virtuoso.dev/react-urx@^0.2.12":
+  version "0.2.13"
+  resolved "https://registry.yarnpkg.com/@virtuoso.dev/react-urx/-/react-urx-0.2.13.tgz#e2cfc42d259d2a002695e7517d34cb97b64ee9c4"
+  integrity sha512-MY0ugBDjFb5Xt8v2HY7MKcRGqw/3gTpMlLXId2EwQvYJoC8sP7nnXjAxcBtTB50KTZhO0SbzsFimaZ7pSdApwA==
+  dependencies:
+    "@virtuoso.dev/urx" "^0.2.13"
+
+"@virtuoso.dev/urx@^0.2.12", "@virtuoso.dev/urx@^0.2.13":
+  version "0.2.13"
+  resolved "https://registry.yarnpkg.com/@virtuoso.dev/urx/-/urx-0.2.13.tgz#a65e7e8d923cb03397ac876bfdd45c7f71c8edf1"
+  integrity sha512-iirJNv92A1ZWxoOHHDYW/1KPoi83939o83iUBQHIim0i3tMeSKEh+bxhJdTHQ86Mr4uXx9xGUTq69cp52ZP8Xw==
 
 abab@^2.0.6:
   version "2.0.6"
@@ -3456,6 +3456,14 @@ react-is@^18.0.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
+
+react-virtuoso@^3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/react-virtuoso/-/react-virtuoso-3.1.5.tgz#cee62d8f69240e6ce34d13d2101a5c0509345c49"
+  integrity sha512-Dwf7SGr73UAahfcQNIND+c+MtCb0PeHu+QTZ5ptR7oXxQkupfHXEKGwEDF5lDkLqdGxm+yH4uh/IFCqMKxudJw==
+  dependencies:
+    "@virtuoso.dev/react-urx" "^0.2.12"
+    "@virtuoso.dev/urx" "^0.2.12"
 
 react-window@^1.8.8:
   version "1.8.8"
