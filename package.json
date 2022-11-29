@@ -22,14 +22,15 @@
     "transform": {
       "^.+\\.(ts|tsx)$": [
         "ts-jest",
-        { "tsconfig": "tsconfig.json" }
+        {
+          "tsconfig": "tsconfig.json"
+        }
       ]
     },
     "testEnvironment": "node"
   },
   "dependencies": {
     "@rsuite/icons": "^1.0.2",
-    "@tanstack/react-virtual": "^3.0.0-beta.23",
     "@tauri-apps/api": "^1.2.0",
     "megalodon": "^4.1.1",
     "moment": "^2.29.4",
@@ -37,6 +38,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
+    "react-virtuoso": "^3.1.5",
     "rsuite": "^5.23.0",
     "sanitize-html": "^2.7.3"
   },
