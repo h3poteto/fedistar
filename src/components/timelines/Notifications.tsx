@@ -86,7 +86,7 @@ const Notifications: React.FC<Props> = props => {
     setNotifications(renew)
   }
 
-  const read = () => {
+  const read = async () => {
     props.setUnreads(
       props.unreads.map(u => {
         if (u.server_id === props.server.id) {
@@ -97,7 +97,10 @@ const Notifications: React.FC<Props> = props => {
     )
 
     // Update maker for server-side
-    client.saveMarkers({ notifications: { last_read_id: notifications[0].id } })
+    await client.saveMarkers({ notifications: { last_read_id: notifications[0].id } })
+    if (props.server.sns === 'pleroma') {
+      await client.readNotifications({ max_id: notifications[0].id })
+    }
   }
 
   return (
