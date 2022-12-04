@@ -1,11 +1,10 @@
 import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
-import { useEffect, useRef, useState, forwardRef } from 'react'
+import { useEffect, useRef, useState, forwardRef, useLayoutEffect } from 'react'
 import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, Message, useToaster } from 'rsuite'
 import { BsHouseDoor, BsPeople, BsGlobe2, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsStar, BsListUl } from 'react-icons/bs'
 import { listen } from '@tauri-apps/api/event'
-import { Virtuoso } from 'react-virtuoso'
 
 import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
@@ -25,7 +24,9 @@ const Timeline: React.FC<Props> = props => {
   const [account, setAccount] = useState<Account | null>(null)
   const [client, setClient] = useState<MegalodonInterface>()
   const [loading, setLoading] = useState<boolean>(false)
+  const [offset, setOffset] = useState<number | null>(null)
 
+  const scrollRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef(null)
   const toast = useToaster()
 
@@ -59,6 +60,11 @@ const Timeline: React.FC<Props> = props => {
           return
         }
 
+        if (scrollRef && scrollRef.current && scrollRef.current.scrollTop > 10) {
+          setOffset(scrollRef.current.scrollHeight - scrollRef.current.scrollTop)
+        } else {
+          setOffset(null)
+        }
         setStatuses(last => {
           if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
             return last
@@ -72,6 +78,11 @@ const Timeline: React.FC<Props> = props => {
           return
         }
 
+        if (scrollRef && scrollRef.current && scrollRef.current.scrollTop > 10) {
+          setOffset(scrollRef.current.scrollHeight - scrollRef.current.scrollTop)
+        } else {
+          setOffset(null)
+        }
         setStatuses(last => {
           if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
             return last
@@ -81,6 +92,12 @@ const Timeline: React.FC<Props> = props => {
       })
     }
   }, [])
+
+  useLayoutEffect(() => {
+    if (scrollRef && scrollRef.current && offset) {
+      scrollRef.current.scroll({ top: scrollRef.current.scrollHeight - offset })
+    }
+  }, [statuses])
 
   const loadTimeline = async (tl: Timeline, client: MegalodonInterface): Promise<Array<Entity.Status>> => {
     switch (tl.timeline) {
@@ -192,20 +209,17 @@ const Timeline: React.FC<Props> = props => {
           <Content style={{ height: 'calc(100% - 54px)' }}>
             <List
               hover
+              ref={scrollRef}
               style={{
                 width: '340px',
                 height: '100%'
               }}
             >
-              <Virtuoso
-                style={{ height: '100%' }}
-                data={statuses}
-                itemContent={(index, status) => (
-                  <div key={index}>
-                    <Status status={status} client={client} updateStatus={updateStatus} openMedia={props.openMedia} />
-                  </div>
-                )}
-              />
+              {statuses.map(status => (
+                <div key={status.id}>
+                  <Status status={status} client={client} updateStatus={updateStatus} openMedia={props.openMedia} />
+                </div>
+              ))}
             </List>
           </Content>
         )}

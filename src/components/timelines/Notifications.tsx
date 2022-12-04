@@ -3,9 +3,8 @@ import { BsBell, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsCheck2 } from 
 import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
-import { useEffect, useState, forwardRef, useRef } from 'react'
+import { useEffect, useState, forwardRef, useRef, useLayoutEffect } from 'react'
 import generator, { MegalodonInterface } from 'megalodon'
-import { Virtuoso } from 'react-virtuoso'
 
 import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
@@ -27,7 +26,9 @@ const Notifications: React.FC<Props> = props => {
   const [client, setClient] = useState<MegalodonInterface>()
   const [notifications, setNotifications] = useState<Array<Entity.Notification>>([])
   const [loading, setLoading] = useState<boolean>(false)
+  const [offset, setOffset] = useState<number | null>(null)
 
+  const scrollRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef(null)
   const toast = useToaster()
 
@@ -54,6 +55,11 @@ const Notifications: React.FC<Props> = props => {
         return
       }
 
+      if (scrollRef && scrollRef.current && scrollRef.current.scrollTop > 10) {
+        setOffset(scrollRef.current.scrollHeight - scrollRef.current.scrollTop)
+      } else {
+        setOffset(null)
+      }
       setNotifications(last => {
         if (last.find(n => n.id === ev.payload.notification.id)) {
           return last
@@ -62,6 +68,12 @@ const Notifications: React.FC<Props> = props => {
       })
     })
   }, [])
+
+  useLayoutEffect(() => {
+    if (scrollRef && scrollRef.current && offset) {
+      scrollRef.current.scroll({ top: scrollRef.current.scrollHeight - offset })
+    }
+  }, [notifications])
 
   const loadNotifications = async (client: MegalodonInterface): Promise<Array<Entity.Notification>> => {
     const res = await client.getNotifications({ limit: 40 })
@@ -160,16 +172,12 @@ const Notifications: React.FC<Props> = props => {
           <Loader style={{ margin: '10rem auto' }} />
         ) : (
           <Content style={{ height: 'calc(100% - 54px)' }}>
-            <List hover style={{ width: '340px', height: '100%' }}>
-              <Virtuoso
-                style={{ height: '100%' }}
-                data={notifications}
-                itemContent={(index, notification) => (
-                  <div key={index}>
-                    <Notification notification={notification} client={client} updateStatus={updateStatus} openMedia={props.openMedia} />
-                  </div>
-                )}
-              />
+            <List hover ref={scrollRef} style={{ width: '340px', height: '100%' }}>
+              {notifications.map(notification => (
+                <div key={notification.id}>
+                  <Notification notification={notification} client={client} updateStatus={updateStatus} openMedia={props.openMedia} />
+                </div>
+              ))}
             </List>
           </Content>
         )}
