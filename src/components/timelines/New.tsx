@@ -129,6 +129,7 @@ const New: React.FC<Props> = props => {
       className="add-timeline"
       style={{
         width: '240px',
+        minWidth: '240px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
