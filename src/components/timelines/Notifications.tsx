@@ -12,6 +12,7 @@ import { Timeline } from 'src/entities/timeline'
 import Notification from './notification/Notification'
 import { ReceiveNotificationPayload } from 'src/payload'
 import { Unread } from 'src/entities/unread'
+import { TIMELINE_STATUSES_COUNT } from 'src/defaults'
 
 type Props = {
   timeline: Timeline
@@ -57,15 +58,21 @@ const Notifications: React.FC<Props> = props => {
 
       if (scrollRef && scrollRef.current && scrollRef.current.scrollTop > 10) {
         setOffset(scrollRef.current.scrollHeight - scrollRef.current.scrollTop)
+        setNotifications(last => {
+          if (last.find(n => n.id === ev.payload.notification.id)) {
+            return last
+          }
+          return [ev.payload.notification].concat(last)
+        })
       } else {
         setOffset(null)
+        setNotifications(last => {
+          if (last.find(n => n.id === ev.payload.notification.id)) {
+            return last
+          }
+          return [ev.payload.notification].concat(last).slice(0, TIMELINE_STATUSES_COUNT)
+        })
       }
-      setNotifications(last => {
-        if (last.find(n => n.id === ev.payload.notification.id)) {
-          return last
-        }
-        return [ev.payload.notification].concat(last)
-      })
     })
   }, [])
 
