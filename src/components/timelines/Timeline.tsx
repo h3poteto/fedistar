@@ -12,6 +12,7 @@ import { Timeline } from 'src/entities/timeline'
 import Status from './status/Status'
 import FailoverImg from 'src/utils/failoverImg'
 import { ReceiveHomeStatusPayload, ReceiveTimelineStatusPayload } from 'src/payload'
+import { TIMELINE_STATUSES_COUNT } from 'src/defaults'
 
 type Props = {
   timeline: Timeline
@@ -62,15 +63,21 @@ const Timeline: React.FC<Props> = props => {
 
         if (scrollRef && scrollRef.current && scrollRef.current.scrollTop > 10) {
           setOffset(scrollRef.current.scrollHeight - scrollRef.current.scrollTop)
+          setStatuses(last => {
+            if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
+              return last
+            }
+            return [ev.payload.status].concat(last)
+          })
         } else {
           setOffset(null)
+          setStatuses(last => {
+            if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
+              return last
+            }
+            return [ev.payload.status].concat(last).slice(0, TIMELINE_STATUSES_COUNT)
+          })
         }
-        setStatuses(last => {
-          if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
-            return last
-          }
-          return [ev.payload.status].concat(last)
-        })
       })
     } else {
       listen<ReceiveTimelineStatusPayload>('receive-timeline-status', ev => {
@@ -80,15 +87,21 @@ const Timeline: React.FC<Props> = props => {
 
         if (scrollRef && scrollRef.current && scrollRef.current.scrollTop > 10) {
           setOffset(scrollRef.current.scrollHeight - scrollRef.current.scrollTop)
+          setStatuses(last => {
+            if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
+              return last
+            }
+            return [ev.payload.status].concat(last)
+          })
         } else {
           setOffset(null)
+          setStatuses(last => {
+            if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
+              return last
+            }
+            return [ev.payload.status].concat(last).slice(0, TIMELINE_STATUSES_COUNT)
+          })
         }
-        setStatuses(last => {
-          if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
-            return last
-          }
-          return [ev.payload.status].concat(last)
-        })
       })
     }
   }, [])
