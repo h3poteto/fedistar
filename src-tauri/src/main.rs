@@ -2,7 +2,7 @@
     all(not(debug_assertions), target_os = "windows"),
     windows_subsystem = "windows"
 )]
-use std::{fs::File, sync::Arc};
+use std::{fs::OpenOptions, sync::Arc};
 
 use megalodon::{self, oauth};
 use serde::Serialize;
@@ -369,7 +369,13 @@ fn init_logger(logfile_path: std::path::PathBuf) {
     let mut logger: Vec<Box<dyn simplelog::SharedLogger>> = vec![simplelog::WriteLogger::new(
         simplelog::LevelFilter::Info,
         simplelog::Config::default(),
-        File::create(logfile_path).unwrap(),
+        OpenOptions::new()
+            .read(true)
+            .write(true)
+            .create(true)
+            .append(true)
+            .open(logfile_path)
+            .unwrap(),
     )];
     #[cfg(debug_assertions)]
     {
