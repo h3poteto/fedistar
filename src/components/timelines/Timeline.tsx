@@ -1,10 +1,11 @@
 import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
-import { useEffect, useRef, useState, forwardRef, useLayoutEffect } from 'react'
+import { useEffect, useRef, useState, forwardRef, useCallback } from 'react'
 import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, Message, useToaster } from 'rsuite'
 import { BsHouseDoor, BsPeople, BsGlobe2, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsStar, BsListUl } from 'react-icons/bs'
 import { listen } from '@tauri-apps/api/event'
+import { Virtuoso } from 'react-virtuoso'
 
 import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
@@ -12,7 +13,7 @@ import { Timeline } from 'src/entities/timeline'
 import Status from './status/Status'
 import FailoverImg from 'src/utils/failoverImg'
 import { ReceiveHomeStatusPayload, ReceiveTimelineStatusPayload } from 'src/payload'
-import { TIMELINE_STATUSES_COUNT } from 'src/defaults'
+import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from 'src/defaults'
 
 type Props = {
   timeline: Timeline
@@ -22,12 +23,13 @@ type Props = {
 
 const Timeline: React.FC<Props> = props => {
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
+  const [unreadStatuses, setUnreadStatuses] = useState<Array<Entity.Status>>([])
+  const [firstItemIndex, setFirstItemIndex] = useState(TIMELINE_MAX_STATUSES)
   const [account, setAccount] = useState<Account | null>(null)
   const [client, setClient] = useState<MegalodonInterface>()
   const [loading, setLoading] = useState<boolean>(false)
-  const [offset, setOffset] = useState<number | null>(null)
 
-  const scrollRef = useRef<HTMLDivElement>(null)
+  const scrollerRef = useRef<HTMLElement | null>(null)
   const triggerRef = useRef(null)
   const toast = useToaster()
 
@@ -61,23 +63,22 @@ const Timeline: React.FC<Props> = props => {
           return
         }
 
-        if (scrollRef && scrollRef.current && scrollRef.current.scrollTop > 10) {
-          setOffset(scrollRef.current.scrollHeight - scrollRef.current.scrollTop)
-          setStatuses(last => {
+        if (scrollerRef.current && scrollerRef.current.scrollTop > 10) {
+          setUnreadStatuses(last => {
             if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
               return last
             }
             return [ev.payload.status].concat(last)
           })
-        } else {
-          setOffset(null)
-          setStatuses(last => {
-            if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
-              return last
-            }
-            return [ev.payload.status].concat(last).slice(0, TIMELINE_STATUSES_COUNT)
-          })
+          return
         }
+
+        setStatuses(last => {
+          if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
+            return last
+          }
+          return [ev.payload.status].concat(last).slice(0, TIMELINE_STATUSES_COUNT)
+        })
       })
     } else {
       listen<ReceiveTimelineStatusPayload>('receive-timeline-status', ev => {
@@ -85,54 +86,47 @@ const Timeline: React.FC<Props> = props => {
           return
         }
 
-        if (scrollRef && scrollRef.current && scrollRef.current.scrollTop > 10) {
-          setOffset(scrollRef.current.scrollHeight - scrollRef.current.scrollTop)
-          setStatuses(last => {
+        if (scrollerRef.current && scrollerRef.current.scrollTop > 10) {
+          setUnreadStatuses(last => {
             if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
               return last
             }
             return [ev.payload.status].concat(last)
           })
-        } else {
-          setOffset(null)
-          setStatuses(last => {
-            if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
-              return last
-            }
-            return [ev.payload.status].concat(last).slice(0, TIMELINE_STATUSES_COUNT)
-          })
+          return
         }
+
+        setStatuses(last => {
+          if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
+            return last
+          }
+          return [ev.payload.status].concat(last).slice(0, TIMELINE_STATUSES_COUNT)
+        })
       })
     }
   }, [])
 
-  useLayoutEffect(() => {
-    if (scrollRef && scrollRef.current && offset) {
-      scrollRef.current.scroll({ top: scrollRef.current.scrollHeight - offset })
-    }
-  }, [statuses])
-
   const loadTimeline = async (tl: Timeline, client: MegalodonInterface): Promise<Array<Entity.Status>> => {
     switch (tl.timeline) {
       case 'home': {
-        const res = await client.getHomeTimeline({ limit: 40 })
+        const res = await client.getHomeTimeline({ limit: TIMELINE_STATUSES_COUNT })
         return res.data
       }
       case 'local': {
-        const res = await client.getLocalTimeline({ limit: 40 })
+        const res = await client.getLocalTimeline({ limit: TIMELINE_STATUSES_COUNT })
         return res.data
       }
       case 'public': {
-        const res = await client.getPublicTimeline({ limit: 40 })
+        const res = await client.getPublicTimeline({ limit: TIMELINE_STATUSES_COUNT })
         return res.data
       }
       case 'favourite': {
-        const res = await client.getFavourites({ limit: 40 })
+        const res = await client.getFavourites({ limit: TIMELINE_STATUSES_COUNT })
         return res.data
       }
       default:
         if (tl.list_id) {
-          const res = await client.getListTimeline(tl.list_id, { limit: 40 })
+          const res = await client.getListTimeline(tl.list_id, { limit: TIMELINE_STATUSES_COUNT })
           return res.data
         }
         return []
@@ -172,6 +166,16 @@ const Timeline: React.FC<Props> = props => {
     })
     setStatuses(renew)
   }
+
+  const prependUnreads = useCallback(() => {
+    console.debug('prepending')
+    const unreads = unreadStatuses.slice().reverse().slice(0, TIMELINE_STATUSES_COUNT)
+    const remains = unreadStatuses.slice(0, -1 * TIMELINE_STATUSES_COUNT)
+    setUnreadStatuses(() => remains)
+    setFirstItemIndex(() => firstItemIndex - unreads.length)
+    setStatuses(() => [...unreads, ...statuses])
+    return false
+  }, [firstItemIndex, statuses, setStatuses, unreadStatuses])
 
   return (
     <div style={{ width: '340px', minWidth: '340px' }}>
@@ -222,17 +226,25 @@ const Timeline: React.FC<Props> = props => {
           <Content style={{ height: 'calc(100% - 54px)' }}>
             <List
               hover
-              ref={scrollRef}
               style={{
                 width: '340px',
                 height: '100%'
               }}
             >
-              {statuses.map(status => (
-                <div key={status.id}>
-                  <Status status={status} client={client} updateStatus={updateStatus} openMedia={props.openMedia} />
-                </div>
-              ))}
+              <Virtuoso
+                style={{ height: '100%' }}
+                data={statuses}
+                scrollerRef={ref => {
+                  scrollerRef.current = ref as HTMLElement
+                }}
+                firstItemIndex={firstItemIndex}
+                atTopStateChange={prependUnreads}
+                itemContent={(_, status) => (
+                  <div key={status.id}>
+                    <Status status={status} client={client} updateStatus={updateStatus} openMedia={props.openMedia} />
+                  </div>
+                )}
+              />
             </List>
           </Content>
         )}
