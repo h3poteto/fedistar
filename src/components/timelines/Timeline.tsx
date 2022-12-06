@@ -13,6 +13,7 @@ import { Timeline } from 'src/entities/timeline'
 import Status from './status/Status'
 import FailoverImg from 'src/utils/failoverImg'
 import { ReceiveHomeStatusPayload, ReceiveTimelineStatusPayload } from 'src/payload'
+import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from 'src/defaults'
 
 type Props = {
   timeline: Timeline
@@ -20,12 +21,10 @@ type Props = {
   openMedia: (media: Entity.Attachment) => void
 }
 
-const MAX_STATUSES = 2147483647
-
 const Timeline: React.FC<Props> = props => {
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [unreadStatuses, setUnreadStatuses] = useState<Array<Entity.Status>>([])
-  const [firstItemIndex, setFirstItemIndex] = useState(MAX_STATUSES)
+  const [firstItemIndex, setFirstItemIndex] = useState(TIMELINE_MAX_STATUSES)
   const [account, setAccount] = useState<Account | null>(null)
   const [client, setClient] = useState<MegalodonInterface>()
   const [loading, setLoading] = useState<boolean>(false)
@@ -78,7 +77,7 @@ const Timeline: React.FC<Props> = props => {
           if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
             return last
           }
-          return [ev.payload.status].concat(last)
+          return [ev.payload.status].concat(last).slice(0, TIMELINE_STATUSES_COUNT)
         })
       })
     } else {
@@ -101,7 +100,7 @@ const Timeline: React.FC<Props> = props => {
           if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
             return last
           }
-          return [ev.payload.status].concat(last)
+          return [ev.payload.status].concat(last).slice(0, TIMELINE_STATUSES_COUNT)
         })
       })
     }
@@ -110,24 +109,24 @@ const Timeline: React.FC<Props> = props => {
   const loadTimeline = async (tl: Timeline, client: MegalodonInterface): Promise<Array<Entity.Status>> => {
     switch (tl.timeline) {
       case 'home': {
-        const res = await client.getHomeTimeline({ limit: 40 })
+        const res = await client.getHomeTimeline({ limit: TIMELINE_STATUSES_COUNT })
         return res.data
       }
       case 'local': {
-        const res = await client.getLocalTimeline({ limit: 40 })
+        const res = await client.getLocalTimeline({ limit: TIMELINE_STATUSES_COUNT })
         return res.data
       }
       case 'public': {
-        const res = await client.getPublicTimeline({ limit: 40 })
+        const res = await client.getPublicTimeline({ limit: TIMELINE_STATUSES_COUNT })
         return res.data
       }
       case 'favourite': {
-        const res = await client.getFavourites({ limit: 40 })
+        const res = await client.getFavourites({ limit: TIMELINE_STATUSES_COUNT })
         return res.data
       }
       default:
         if (tl.list_id) {
-          const res = await client.getListTimeline(tl.list_id, { limit: 40 })
+          const res = await client.getListTimeline(tl.list_id, { limit: TIMELINE_STATUSES_COUNT })
           return res.data
         }
         return []
@@ -170,8 +169,8 @@ const Timeline: React.FC<Props> = props => {
 
   const prependUnreads = useCallback(() => {
     console.debug('prepending')
-    const unreads = unreadStatuses.slice().reverse().slice(0, 40)
-    const remains = unreadStatuses.slice(0, -40)
+    const unreads = unreadStatuses.slice().reverse().slice(0, TIMELINE_STATUSES_COUNT)
+    const remains = unreadStatuses.slice(0, -1 * TIMELINE_STATUSES_COUNT)
     setUnreadStatuses(() => remains)
     setFirstItemIndex(() => firstItemIndex - unreads.length)
     setStatuses(() => [...unreads, ...statuses])

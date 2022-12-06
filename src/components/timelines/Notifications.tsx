@@ -13,6 +13,7 @@ import { Timeline } from 'src/entities/timeline'
 import Notification from './notification/Notification'
 import { ReceiveNotificationPayload } from 'src/payload'
 import { Unread } from 'src/entities/unread'
+import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from 'src/defaults'
 
 type Props = {
   timeline: Timeline
@@ -22,14 +23,12 @@ type Props = {
   openMedia: (media: Entity.Attachment) => void
 }
 
-const MAX_STATUSES = 2147483647
-
 const Notifications: React.FC<Props> = props => {
   const [account, setAccount] = useState<Account>()
   const [client, setClient] = useState<MegalodonInterface>()
   const [notifications, setNotifications] = useState<Array<Entity.Notification>>([])
   const [unreadNotifications, setUnreadNotifications] = useState<Array<Entity.Notification>>([])
-  const [firstItemIndex, setFirstItemIndex] = useState(MAX_STATUSES)
+  const [firstItemIndex, setFirstItemIndex] = useState(TIMELINE_MAX_STATUSES)
   const [loading, setLoading] = useState<boolean>(false)
 
   const scrollerRef = useRef<HTMLElement | null>(null)
@@ -73,13 +72,13 @@ const Notifications: React.FC<Props> = props => {
         if (last.find(n => n.id === ev.payload.notification.id)) {
           return last
         }
-        return [ev.payload.notification].concat(last)
+        return [ev.payload.notification].concat(last).slice(0, TIMELINE_STATUSES_COUNT)
       })
     })
   }, [])
 
   const loadNotifications = async (client: MegalodonInterface): Promise<Array<Entity.Notification>> => {
-    const res = await client.getNotifications({ limit: 40 })
+    const res = await client.getNotifications({ limit: TIMELINE_STATUSES_COUNT })
     return res.data
   }
 
@@ -120,8 +119,8 @@ const Notifications: React.FC<Props> = props => {
 
   const prependUnreads = useCallback(() => {
     console.debug('prepending')
-    const unreads = unreadNotifications.slice().reverse().slice(0, 40)
-    const remains = unreadNotifications.slice(0, -40)
+    const unreads = unreadNotifications.slice().reverse().slice(0, TIMELINE_STATUSES_COUNT)
+    const remains = unreadNotifications.slice(0, -1 * TIMELINE_STATUSES_COUNT)
     setUnreadNotifications(() => remains)
     setFirstItemIndex(() => firstItemIndex - unreads.length)
     setNotifications(() => [...unreads, ...notifications])
