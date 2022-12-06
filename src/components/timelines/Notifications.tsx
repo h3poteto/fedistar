@@ -3,8 +3,9 @@ import { BsBell, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsCheck2 } from 
 import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
-import { useEffect, useState, forwardRef, useRef, useLayoutEffect } from 'react'
+import { useEffect, useState, forwardRef, useRef, useCallback } from 'react'
 import generator, { MegalodonInterface } from 'megalodon'
+import { Virtuoso } from 'react-virtuoso'
 
 import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
@@ -12,7 +13,6 @@ import { Timeline } from 'src/entities/timeline'
 import Notification from './notification/Notification'
 import { ReceiveNotificationPayload } from 'src/payload'
 import { Unread } from 'src/entities/unread'
-import { TIMELINE_STATUSES_COUNT } from 'src/defaults'
 
 type Props = {
   timeline: Timeline
@@ -22,14 +22,17 @@ type Props = {
   openMedia: (media: Entity.Attachment) => void
 }
 
+const MAX_STATUSES = 2147483647
+
 const Notifications: React.FC<Props> = props => {
   const [account, setAccount] = useState<Account>()
   const [client, setClient] = useState<MegalodonInterface>()
   const [notifications, setNotifications] = useState<Array<Entity.Notification>>([])
+  const [unreadNotifications, setUnreadNotifications] = useState<Array<Entity.Notification>>([])
+  const [firstItemIndex, setFirstItemIndex] = useState(MAX_STATUSES)
   const [loading, setLoading] = useState<boolean>(false)
-  const [offset, setOffset] = useState<number | null>(null)
 
-  const scrollRef = useRef<HTMLDivElement>(null)
+  const scrollerRef = useRef<HTMLElement | null>(null)
   const triggerRef = useRef(null)
   const toast = useToaster()
 
@@ -56,31 +59,24 @@ const Notifications: React.FC<Props> = props => {
         return
       }
 
-      if (scrollRef && scrollRef.current && scrollRef.current.scrollTop > 10) {
-        setOffset(scrollRef.current.scrollHeight - scrollRef.current.scrollTop)
-        setNotifications(last => {
+      if (scrollerRef.current && scrollerRef.current.scrollTop > 10) {
+        setUnreadNotifications(last => {
           if (last.find(n => n.id === ev.payload.notification.id)) {
             return last
           }
           return [ev.payload.notification].concat(last)
         })
-      } else {
-        setOffset(null)
-        setNotifications(last => {
-          if (last.find(n => n.id === ev.payload.notification.id)) {
-            return last
-          }
-          return [ev.payload.notification].concat(last).slice(0, TIMELINE_STATUSES_COUNT)
-        })
+        return
       }
+
+      setNotifications(last => {
+        if (last.find(n => n.id === ev.payload.notification.id)) {
+          return last
+        }
+        return [ev.payload.notification].concat(last)
+      })
     })
   }, [])
-
-  useLayoutEffect(() => {
-    if (scrollRef && scrollRef.current && offset) {
-      scrollRef.current.scroll({ top: scrollRef.current.scrollHeight - offset })
-    }
-  }, [notifications])
 
   const loadNotifications = async (client: MegalodonInterface): Promise<Array<Entity.Notification>> => {
     const res = await client.getNotifications({ limit: 40 })
@@ -121,6 +117,16 @@ const Notifications: React.FC<Props> = props => {
       await client.readNotifications({ max_id: notifications[0].id })
     }
   }
+
+  const prependUnreads = useCallback(() => {
+    console.debug('prepending')
+    const unreads = unreadNotifications.slice().reverse().slice(0, 40)
+    const remains = unreadNotifications.slice(0, -40)
+    setUnreadNotifications(() => remains)
+    setFirstItemIndex(() => firstItemIndex - unreads.length)
+    setNotifications(() => [...unreads, ...notifications])
+    return false
+  }, [firstItemIndex, notifications, setNotifications, unreadNotifications])
 
   return (
     <div style={{ width: '340px', minWidth: '340px' }}>
@@ -179,12 +185,21 @@ const Notifications: React.FC<Props> = props => {
           <Loader style={{ margin: '10rem auto' }} />
         ) : (
           <Content style={{ height: 'calc(100% - 54px)' }}>
-            <List hover ref={scrollRef} style={{ width: '340px', height: '100%' }}>
-              {notifications.map(notification => (
-                <div key={notification.id}>
-                  <Notification notification={notification} client={client} updateStatus={updateStatus} openMedia={props.openMedia} />
-                </div>
-              ))}
+            <List hover style={{ width: '340px', height: '100%' }}>
+              <Virtuoso
+                style={{ height: '100%' }}
+                data={notifications}
+                scrollerRef={ref => {
+                  scrollerRef.current = ref as HTMLElement
+                }}
+                firstItemIndex={firstItemIndex}
+                atTopStateChange={prependUnreads}
+                itemContent={(_, notification) => (
+                  <div key={notification.id}>
+                    <Notification notification={notification} client={client} updateStatus={updateStatus} openMedia={props.openMedia} />
+                  </div>
+                )}
+              />
             </List>
           </Content>
         )}
