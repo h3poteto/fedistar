@@ -1,13 +1,29 @@
-import { Container, Header, Content, FlexboxGrid, Button, Dropdown, Avatar, Form, Input, ButtonToolbar, Schema } from 'rsuite'
+import {
+  Container,
+  Header,
+  Content,
+  FlexboxGrid,
+  Button,
+  Dropdown,
+  Avatar,
+  Form,
+  Input,
+  ButtonToolbar,
+  Schema,
+  Whisper,
+  Popover
+} from 'rsuite'
 import { Icon } from '@rsuite/icons'
-import { BsX } from 'react-icons/bs'
+import { BsX, BsEmojiLaughing } from 'react-icons/bs'
 import { useEffect, useState, forwardRef, useRef } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
+import generator from 'megalodon'
 
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import failoverImg from 'src/utils/failoverImg'
-import generator from 'megalodon'
+import { data } from 'src/utils/emojiData'
+import Picker from '@emoji-mart/react'
 
 const renderAccountIcon = (props: any, ref: any, account: [Account, Server] | undefined) => {
   if (account && account.length > 0) {
@@ -128,9 +144,14 @@ const Compose: React.FC<Props> = props => {
         </FlexboxGrid>
         <div style={{ fontSize: '1.2em', padding: '12px 0' }}>Status</div>
         <Form fluid model={model} ref={formRef} onChange={setFormValue} formValue={formValue}>
-          <Form.Group controlId="status">
+          <Form.Group controlId="status" style={{ position: 'relative' }}>
             {/** @ts-ignore **/}
             <Form.Control rows={5} name="status" accepter={Textarea} />
+            <Whisper trigger="click" placement="bottom" speaker={<EmojiPicker />}>
+              <Button appearance="link" style={{ position: 'absolute', top: '4px', right: '8px', padding: 0 }}>
+                <Icon as={BsEmojiLaughing} style={{ fontSize: '1.2em' }} />
+              </Button>
+            </Whisper>
           </Form.Group>
           <Form.Group>
             <ButtonToolbar style={{ textAlign: 'right' }}>
@@ -144,5 +165,11 @@ const Compose: React.FC<Props> = props => {
     </Container>
   )
 }
+
+const EmojiPicker = forwardRef<HTMLDivElement>((props, ref) => (
+  <Popover ref={ref} {...props}>
+    <Picker data={data} onEmojiSelect={console.log} previewPosition="none" set="native" perLine="7" />
+  </Popover>
+))
 
 export default Compose
