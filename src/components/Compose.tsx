@@ -75,6 +75,7 @@ const Compose: React.FC<Props> = props => {
   const [loading, setLoading] = useState<boolean>(false)
 
   const formRef = useRef<any>()
+  const statusRef = useRef<HTMLDivElement>()
 
   const model = Schema.Model({
     status: Schema.Types.StringType().isRequired('This field is required.')
@@ -117,6 +118,24 @@ const Compose: React.FC<Props> = props => {
     })
   }
 
+  const onEmojiSelect = emoji => {
+    const textarea = statusRef.current.firstElementChild as HTMLTextAreaElement
+    const cursor = textarea.selectionStart
+    if (emoji.native) {
+      setFormValue(current =>
+        Object.assign({}, current, {
+          status: `${current.status.slice(0, cursor)}${emoji.native} ${current.status.slice(cursor)}`
+        })
+      )
+    }
+  }
+
+  const EmojiPicker = forwardRef<HTMLDivElement>((props, ref) => (
+    <Popover ref={ref} {...props}>
+      <Picker data={data} onEmojiSelect={onEmojiSelect} previewPosition="none" set="native" perLine="7" />
+    </Popover>
+  ))
+
   return (
     <Container>
       <Header style={{ borderBottom: '1px solid var(--rs-divider-border)', backgroundColor: 'var(--rs-sidenav-default-bg)' }}>
@@ -146,7 +165,7 @@ const Compose: React.FC<Props> = props => {
         <Form fluid model={model} ref={formRef} onChange={setFormValue} formValue={formValue}>
           <Form.Group controlId="status" style={{ position: 'relative' }}>
             {/** @ts-ignore **/}
-            <Form.Control rows={5} name="status" accepter={Textarea} />
+            <Form.Control rows={5} name="status" accepter={Textarea} ref={statusRef} />
             <Whisper trigger="click" placement="bottom" speaker={<EmojiPicker />}>
               <Button appearance="link" style={{ position: 'absolute', top: '4px', right: '8px', padding: 0 }}>
                 <Icon as={BsEmojiLaughing} style={{ fontSize: '1.2em' }} />
@@ -165,11 +184,5 @@ const Compose: React.FC<Props> = props => {
     </Container>
   )
 }
-
-const EmojiPicker = forwardRef<HTMLDivElement>((props, ref) => (
-  <Popover ref={ref} {...props}>
-    <Picker data={data} onEmojiSelect={console.log} previewPosition="none" set="native" perLine="7" />
-  </Popover>
-))
 
 export default Compose
