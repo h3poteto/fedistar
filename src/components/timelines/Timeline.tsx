@@ -28,6 +28,8 @@ const Timeline: React.FC<Props> = props => {
   const [account, setAccount] = useState<Account | null>(null)
   const [client, setClient] = useState<MegalodonInterface>()
   const [loading, setLoading] = useState<boolean>(false)
+  // This parameter is used only favourite. Because it is not receive streaming, and max_id in link header is required for favourite.
+  const [nextMaxId, setNextMaxId] = useState<string | null>(null)
 
   const scrollerRef = useRef<HTMLElement | null>(null)
   const triggerRef = useRef(null)
@@ -106,27 +108,32 @@ const Timeline: React.FC<Props> = props => {
     }
   }, [])
 
-  const loadTimeline = async (tl: Timeline, client: MegalodonInterface): Promise<Array<Entity.Status>> => {
+  const loadTimeline = async (tl: Timeline, client: MegalodonInterface, maxId?: string): Promise<Array<Entity.Status>> => {
+    let options = { limit: TIMELINE_STATUSES_COUNT }
+    if (maxId) {
+      options = Object.assign({}, options, { max_id: maxId })
+    }
     switch (tl.timeline) {
       case 'home': {
-        const res = await client.getHomeTimeline({ limit: TIMELINE_STATUSES_COUNT })
+        const res = await client.getHomeTimeline(options)
         return res.data
       }
       case 'local': {
-        const res = await client.getLocalTimeline({ limit: TIMELINE_STATUSES_COUNT })
+        const res = await client.getLocalTimeline(options)
         return res.data
       }
       case 'public': {
-        const res = await client.getPublicTimeline({ limit: TIMELINE_STATUSES_COUNT })
+        const res = await client.getPublicTimeline(options)
         return res.data
       }
       case 'favourite': {
-        const res = await client.getFavourites({ limit: TIMELINE_STATUSES_COUNT })
+        const res = await client.getFavourites(options)
+        // link parse and set it
         return res.data
       }
       default:
         if (tl.list_id) {
-          const res = await client.getListTimeline(tl.list_id, { limit: TIMELINE_STATUSES_COUNT })
+          const res = await client.getListTimeline(tl.list_id, options)
           return res.data
         }
         return []
@@ -166,6 +173,16 @@ const Timeline: React.FC<Props> = props => {
     })
     setStatuses(renew)
   }
+
+  const loadMore = useCallback(async () => {
+    console.debug('appending')
+    let maxId = nextMaxId
+    if (!maxId) {
+      maxId = statuses[statuses.length - 1].id
+    }
+    const append = await loadTimeline(props.timeline, client, maxId)
+    setStatuses(last => [...last, ...append])
+  }, [client, statuses, setStatuses, nextMaxId])
 
   const prependUnreads = useCallback(() => {
     console.debug('prepending')
@@ -239,6 +256,8 @@ const Timeline: React.FC<Props> = props => {
                 }}
                 firstItemIndex={firstItemIndex}
                 atTopStateChange={prependUnreads}
+                endReached={loadMore}
+                overscan={TIMELINE_STATUSES_COUNT}
                 itemContent={(_, status) => (
                   <div key={status.id}>
                     <Status status={status} client={client} updateStatus={updateStatus} openMedia={props.openMedia} />

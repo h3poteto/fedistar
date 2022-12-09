@@ -77,8 +77,12 @@ const Notifications: React.FC<Props> = props => {
     })
   }, [])
 
-  const loadNotifications = async (client: MegalodonInterface): Promise<Array<Entity.Notification>> => {
-    const res = await client.getNotifications({ limit: TIMELINE_STATUSES_COUNT })
+  const loadNotifications = async (client: MegalodonInterface, maxId?: string): Promise<Array<Entity.Notification>> => {
+    let options = { limit: TIMELINE_STATUSES_COUNT }
+    if (maxId) {
+      options = Object.assign({}, options, { max_id: maxId })
+    }
+    const res = await client.getNotifications(options)
     return res.data
   }
 
@@ -116,6 +120,12 @@ const Notifications: React.FC<Props> = props => {
       await client.readNotifications({ max_id: notifications[0].id })
     }
   }
+
+  const loadMore = useCallback(async () => {
+    console.debug('appending')
+    const append = await loadNotifications(client, notifications[notifications.length - 1].id)
+    setNotifications(last => [...last, ...append])
+  }, [client, notifications, setNotifications])
 
   const prependUnreads = useCallback(() => {
     console.debug('prepending')
@@ -193,6 +203,8 @@ const Notifications: React.FC<Props> = props => {
                 }}
                 firstItemIndex={firstItemIndex}
                 atTopStateChange={prependUnreads}
+                endReached={loadMore}
+                overscan={TIMELINE_STATUSES_COUNT}
                 itemContent={(_, notification) => (
                   <div key={notification.id}>
                     <Notification notification={notification} client={client} updateStatus={updateStatus} openMedia={props.openMedia} />
