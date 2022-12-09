@@ -17,7 +17,7 @@ import { Icon } from '@rsuite/icons'
 import { BsX, BsEmojiLaughing } from 'react-icons/bs'
 import { useEffect, useState, forwardRef, useRef } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
-import generator, { Entity, MegalodonInterface } from 'megalodon'
+import generator, { MegalodonInterface } from 'megalodon'
 
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
@@ -75,7 +75,7 @@ type CustomEmojiCategory = {
 type CustomEmoji = {
   id: string
   name: string
-  keywords: Array<String>
+  keywords: Array<string>
   skins: Array<{ src: string }>
 }
 
