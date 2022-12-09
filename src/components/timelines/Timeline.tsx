@@ -6,6 +6,7 @@ import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover
 import { BsHouseDoor, BsPeople, BsGlobe2, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsStar, BsListUl } from 'react-icons/bs'
 import { listen } from '@tauri-apps/api/event'
 import { Virtuoso } from 'react-virtuoso'
+import parse from 'parse-link-header'
 
 import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
@@ -128,7 +129,10 @@ const Timeline: React.FC<Props> = props => {
       }
       case 'favourite': {
         const res = await client.getFavourites(options)
-        // link parse and set it
+        const link = parse(res.headers.link)
+        if (link !== null) {
+          setNextMaxId(link.next.max_id)
+        }
         return res.data
       }
       default:
