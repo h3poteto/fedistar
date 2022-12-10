@@ -81,7 +81,9 @@ const Status: React.FC<Props> = props => {
             dangerouslySetInnerHTML={{ __html: emojify(status.content, status.emojis) }}
             onClick={statusClicked}
           ></div>
-          {status.media_attachments.length > 0 && <Attachments attachments={status.media_attachments} openMedia={props.openMedia} />}
+          {status.media_attachments.length > 0 && (
+            <Attachments attachments={status.media_attachments} sensitive={status.sensitive} openMedia={props.openMedia} />
+          )}
           <div className="toolbox">
             <FlexboxGrid>
               <FlexboxGrid.Item>
