@@ -1,6 +1,6 @@
 import { Entity } from 'megalodon'
 import { useState } from 'react'
-import { Button } from 'rsuite'
+import { Button, ButtonIcon } from 'rsuite'
 import emojify from 'src/utils/emojify'
 
 type Props = {
