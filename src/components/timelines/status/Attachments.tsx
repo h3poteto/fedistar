@@ -1,11 +1,13 @@
 import Image from 'next/image'
 import { Entity } from 'megalodon'
-import { Tag } from 'rsuite'
+import { Button, IconButton, Tag } from 'rsuite'
 import { Icon } from '@rsuite/icons'
-import { BsCameraVideo, BsVolumeUp } from 'react-icons/bs'
+import { BsCameraVideo, BsVolumeUp, BsEyeSlash } from 'react-icons/bs'
+import { useState } from 'react'
 
 type Props = {
   attachments: Array<Entity.Attachment>
+  sensitive: boolean
   openMedia: (media: Entity.Attachment) => void
 }
 
@@ -14,7 +16,7 @@ const Attachments: React.FC<Props> = props => {
     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
       {props.attachments.map((media, index) => (
         <div key={index} style={{ margin: '4px' }}>
-          <Attachment media={media} openMedia={props.openMedia} />
+          <Attachment media={media} sensitive={props.sensitive} openMedia={props.openMedia} />
         </div>
       ))}
     </div>
@@ -23,11 +25,25 @@ const Attachments: React.FC<Props> = props => {
 
 type AttachmentProps = {
   media: Entity.Attachment
+  sensitive: boolean
   openMedia: (media: Entity.Attachment) => void
 }
 
 const Attachment: React.FC<AttachmentProps> = props => {
   const { media } = props
+  const [sensitive, setSensitive] = useState<boolean>(props.sensitive)
+
+  const changeSensitive = () => {
+    setSensitive(current => !current)
+  }
+
+  if (sensitive) {
+    return (
+      <Button appearance="default" block onClick={changeSensitive}>
+        Media hidden
+      </Button>
+    )
+  }
 
   switch (media.type) {
     case 'gifv':
@@ -53,14 +69,23 @@ const Attachment: React.FC<AttachmentProps> = props => {
       )
     default:
       return (
-        <Image
-          width={128}
-          height={128}
-          src={media.preview_url}
-          alt={media.description ? media.description : media.id}
-          onClick={() => props.openMedia(media)}
-          style={{ objectFit: 'cover' }}
-        />
+        <div style={{ position: 'relative' }}>
+          <IconButton
+            icon={<Icon as={BsEyeSlash} />}
+            size="sm"
+            appearance="subtle"
+            onClick={changeSensitive}
+            style={{ position: 'absolute', top: '4px', left: '4px' }}
+          />
+          <Image
+            width={128}
+            height={128}
+            src={media.preview_url}
+            alt={media.description ? media.description : media.id}
+            onClick={() => props.openMedia(media)}
+            style={{ objectFit: 'cover' }}
+          />
+        </div>
       )
   }
 }
