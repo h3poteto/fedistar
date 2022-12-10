@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactElement } from 'react'
+import { MouseEventHandler, ReactElement, useState } from 'react'
 import { Entity, MegalodonInterface, Response } from 'megalodon'
 import { FlexboxGrid, List, Avatar, IconButton } from 'rsuite'
 import { Icon } from '@rsuite/icons'
@@ -8,17 +8,22 @@ import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
 import Attachments from './Attachments'
 import { findLink } from 'src/utils/statusParser'
+import Reply from 'src/components/compose/Status'
 import Body from './Body'
+import { Server } from 'src/entities/server'
 
 type Props = {
   status: Entity.Status
   client: MegalodonInterface
+  server: Server
   updateStatus: (status: Entity.Status) => void
   openMedia: (media: Entity.Attachment) => void
 }
 
 const Status: React.FC<Props> = props => {
   const { client } = props
+  const [showReply, setShowReply] = useState<boolean>(false)
+
   const status = originalStatus(props.status)
 
   const reblog = async () => {
@@ -83,7 +88,7 @@ const Status: React.FC<Props> = props => {
           <div className="toolbox">
             <FlexboxGrid>
               <FlexboxGrid.Item>
-                <IconButton appearance="link" icon={<Icon as={BsChat} />} disabled />
+                <IconButton appearance="link" icon={<Icon as={BsChat} />} onClick={() => setShowReply(current => !current)} />
               </FlexboxGrid.Item>
               <FlexboxGrid.Item>
                 <IconButton appearance="link" icon={reblogIcon(status)} onClick={reblog} />
@@ -104,6 +109,11 @@ const Status: React.FC<Props> = props => {
           </div>
         </FlexboxGrid.Item>
       </FlexboxGrid>
+      {showReply && (
+        <div style={{ padding: '8px 12px' }}>
+          <Reply client={client} server={props.server} in_reply_to={status} onClose={() => setShowReply(false)} />
+        </div>
+      )}
     </List.Item>
   )
 }

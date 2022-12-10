@@ -207,7 +207,13 @@ const Notifications: React.FC<Props> = props => {
                 overscan={TIMELINE_STATUSES_COUNT}
                 itemContent={(_, notification) => (
                   <div key={notification.id}>
-                    <Notification notification={notification} client={client} updateStatus={updateStatus} openMedia={props.openMedia} />
+                    <Notification
+                      notification={notification}
+                      client={client}
+                      server={props.server}
+                      updateStatus={updateStatus}
+                      openMedia={props.openMedia}
+                    />
                   </div>
                 )}
               />

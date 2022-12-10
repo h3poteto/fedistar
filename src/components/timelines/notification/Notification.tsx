@@ -3,10 +3,12 @@ import { List } from 'rsuite'
 import Follow from './Follow'
 import Reaction from './Reaction'
 import Status from '../status/Status'
+import { Server } from 'src/entities/server'
 
 type Props = {
   notification: Entity.Notification
   client: MegalodonInterface
+  server: Server
   updateStatus: (status: Entity.Status) => void
   openMedia: (media: Entity.Attachment) => void
 }
@@ -26,7 +28,13 @@ const notification = (props: Props) => {
       return <Reaction notification={props.notification} />
     case 'mention':
       return (
-        <Status client={props.client} status={props.notification.status} updateStatus={props.updateStatus} openMedia={props.openMedia} />
+        <Status
+          client={props.client}
+          status={props.notification.status}
+          server={props.server}
+          updateStatus={props.updateStatus}
+          openMedia={props.openMedia}
+        />
       )
     default:
       return null

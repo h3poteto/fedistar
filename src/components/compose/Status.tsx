@@ -2,17 +2,17 @@ import { Form, Button, ButtonToolbar, Schema, Whisper, Input, Popover } from 'rs
 import { useState, useEffect, useRef, forwardRef } from 'react'
 import { Icon } from '@rsuite/icons'
 import { BsEmojiLaughing } from 'react-icons/bs'
-import generator, { MegalodonInterface } from 'megalodon'
+import { Entity, MegalodonInterface } from 'megalodon'
 import Picker from '@emoji-mart/react'
 
-import { USER_AGENT } from 'src/defaults'
 import { data } from 'src/utils/emojiData'
-import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
 
 type Props = {
   server: Server
-  account: Account
+  client: MegalodonInterface
+  in_reply_to?: Entity.Status
+  onClose?: () => void
 }
 
 type FormValue = {
@@ -38,21 +38,18 @@ const Status: React.FC<Props> = props => {
   })
   const [customEmojis, setCustomEmojis] = useState<Array<CustomEmojiCategory>>([])
   const [loading, setLoading] = useState<boolean>(false)
-  const [client, setClient] = useState<MegalodonInterface>()
 
   const formRef = useRef<any>()
   const statusRef = useRef<HTMLDivElement>()
   const emojiPickerRef = useRef(null)
 
   useEffect(() => {
-    if (!props.account || !props.server) {
+    if (!props.client || !props.server) {
       return
     }
-    const client = generator(props.server.sns, props.server.base_url, props.account.access_token, USER_AGENT)
-    setClient(client)
 
     const f = async () => {
-      const emojis = await client.getInstanceCustomEmojis()
+      const emojis = await props.client.getInstanceCustomEmojis()
       setCustomEmojis([
         {
           id: props.server.domain,
@@ -73,7 +70,13 @@ const Status: React.FC<Props> = props => {
       ])
     }
     f()
-  }, [props.server, props.account])
+  }, [props.server, props.client])
+
+  useEffect(() => {
+    if (props.in_reply_to) {
+      setFormValue({ status: `@${props.in_reply_to.account.acct} ` })
+    }
+  }, [props.in_reply_to])
 
   const model = Schema.Model({
     status: Schema.Types.StringType().isRequired('This field is required.')
@@ -91,7 +94,7 @@ const Status: React.FC<Props> = props => {
     } else {
       setLoading(true)
       try {
-        await post(client, formValue)
+        await post(props.client, formValue, props.in_reply_to?.id)
         clear()
       } finally {
         setLoading(false)
@@ -103,6 +106,9 @@ const Status: React.FC<Props> = props => {
     setFormValue({
       status: ''
     })
+    if (props.onClose) {
+      props.onClose()
+    }
   }
 
   const onEmojiSelect = emoji => {
@@ -155,8 +161,14 @@ const Status: React.FC<Props> = props => {
 
 const Textarea = forwardRef<HTMLTextAreaElement>((props, ref) => <Input {...props} as="textarea" ref={ref} />)
 
-const post = async (client: MegalodonInterface, value: FormValue) => {
-  const res = await client.postStatus(value.status)
+const post = async (client: MegalodonInterface, value: FormValue, in_reply_to_id?: string) => {
+  let options = {}
+  if (in_reply_to_id) {
+    options = Object.assign({}, options, {
+      in_reply_to_id
+    })
+  }
+  const res = await client.postStatus(value.status, options)
   return res
 }
 
