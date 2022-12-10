@@ -264,7 +264,7 @@ const Timeline: React.FC<Props> = props => {
                 overscan={TIMELINE_STATUSES_COUNT}
                 itemContent={(_, status) => (
                   <div key={status.id}>
-                    <Status status={status} client={client} updateStatus={updateStatus} openMedia={props.openMedia} />
+                    <Status status={status} client={client} server={props.server} updateStatus={updateStatus} openMedia={props.openMedia} />
                   </div>
                 )}
               />

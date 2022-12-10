@@ -3,7 +3,9 @@ import { Icon } from '@rsuite/icons'
 import { BsX } from 'react-icons/bs'
 import { useEffect, useState } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
+import generator, { MegalodonInterface } from 'megalodon'
 
+import { USER_AGENT } from 'src/defaults'
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import failoverImg from 'src/utils/failoverImg'
@@ -41,6 +43,7 @@ type Props = {
 const Compose: React.FC<Props> = props => {
   const [accounts, setAccounts] = useState<Array<[Account, Server]>>([])
   const [fromAccount, setFromAccount] = useState<[Account, Server]>()
+  const [client, setClient] = useState<MegalodonInterface>()
 
   useEffect(() => {
     const f = async () => {
@@ -50,6 +53,14 @@ const Compose: React.FC<Props> = props => {
     }
     f()
   }, [props.servers])
+
+  useEffect(() => {
+    if (!fromAccount || fromAccount.length < 2) {
+      return
+    }
+    const client = generator(fromAccount[1].sns, fromAccount[1].base_url, fromAccount[0].access_token, USER_AGENT)
+    setClient(client)
+  }, [fromAccount])
 
   const selectAccount = (eventKey: string) => {
     const account = accounts[parseInt(eventKey)]
@@ -82,7 +93,7 @@ const Compose: React.FC<Props> = props => {
           </FlexboxGrid.Item>
         </FlexboxGrid>
         <div style={{ fontSize: '1.2em', padding: '12px 0' }}>Status</div>
-        {fromAccount && <Status account={fromAccount[0]} server={fromAccount[1]} />}
+        {fromAccount && <Status client={client} server={fromAccount[1]} />}
       </Content>
     </Container>
   )
