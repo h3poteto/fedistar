@@ -75,7 +75,7 @@ type CustomEmojiCategory = {
 type CustomEmoji = {
   id: string
   name: string
-  keywords: Array<string>
+  keywords: Array<String>
   skins: Array<{ src: string }>
 }
 
