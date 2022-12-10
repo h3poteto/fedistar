@@ -8,6 +8,7 @@ import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
 import Attachments from './Attachments'
 import { findLink } from 'src/utils/statusParser'
+import Body from './Body'
 
 type Props = {
   status: Entity.Status
@@ -75,12 +76,7 @@ const Status: React.FC<Props> = props => {
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </div>
-          <div
-            className="status-body"
-            style={{ wordWrap: 'break-word' }}
-            dangerouslySetInnerHTML={{ __html: emojify(status.content, status.emojis) }}
-            onClick={statusClicked}
-          ></div>
+          <Body status={status} onClick={statusClicked} />
           {status.media_attachments.length > 0 && (
             <Attachments attachments={status.media_attachments} sensitive={status.sensitive} openMedia={props.openMedia} />
           )}
