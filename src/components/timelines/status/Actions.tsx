@@ -1,8 +1,9 @@
-import { FlexboxGrid, IconButton } from 'rsuite'
+import { FlexboxGrid } from 'rsuite'
 import { BsChat, BsEmojiSmile, BsThreeDots, BsStar, BsStarFill, BsBookmark, BsFillBookmarkFill, BsArrowRepeat } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
-import { Dispatch, SetStateAction, ReactElement } from 'react'
+import { Dispatch, SetStateAction, ReactElement, useState } from 'react'
 import { Entity, MegalodonInterface, Response } from 'megalodon'
+import ActionButton from './ActionButton'
 
 type Props = {
   status: Entity.Status
@@ -13,12 +14,20 @@ type Props = {
 
 const Actions: React.FC<Props> = props => {
   const { status, client } = props
+  const [favouriteActivating, setFavouriteActivating] = useState<boolean>(false)
+  const [favouriteDeactivating, setFavouriteDeactivating] = useState<boolean>(false)
+  const [reblogActivating, setReblogActivating] = useState<boolean>(false)
+  const [reblogDeactivating, setReblogDeactivating] = useState<boolean>(false)
 
   const reblog = async () => {
     let res: Response<Entity.Status>
     if (status.reblogged) {
+      setReblogActivating(false)
+      setReblogDeactivating(true)
       res = await client.unreblogStatus(status.id)
     } else {
+      setReblogDeactivating(false)
+      setReblogActivating(true)
       res = await client.reblogStatus(status.id)
     }
     props.updateStatus(res.data)
@@ -27,8 +36,12 @@ const Actions: React.FC<Props> = props => {
   const favourite = async () => {
     let res: Response<Entity.Status>
     if (status.favourited) {
+      setFavouriteActivating(false)
+      setFavouriteDeactivating(true)
       res = await client.unfavouriteStatus(status.id)
     } else {
+      setFavouriteDeactivating(false)
+      setFavouriteActivating(true)
       res = await client.favouriteStatus(status.id)
     }
     props.updateStatus(res.data)
@@ -48,22 +61,34 @@ const Actions: React.FC<Props> = props => {
     <div className="toolbox">
       <FlexboxGrid>
         <FlexboxGrid.Item>
-          <IconButton appearance="link" icon={<Icon as={BsChat} />} onClick={() => props.setShowReply(current => !current)} />
+          <ActionButton icon={<Icon as={BsChat} />} onClick={() => props.setShowReply(current => !current)} />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
-          <IconButton appearance="link" icon={reblogIcon(props.status)} onClick={reblog} />
+          <ActionButton
+            className="reblog-action"
+            activating={reblogActivating}
+            deactivating={reblogDeactivating}
+            icon={reblogIcon(props.status)}
+            onClick={reblog}
+          />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
-          <IconButton appearance="link" icon={favouriteIcon(props.status)} onClick={favourite} />
+          <ActionButton
+            className="favourite-action"
+            activating={favouriteActivating}
+            deactivating={favouriteDeactivating}
+            icon={favouriteIcon(props.status)}
+            onClick={favourite}
+          />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
-          <IconButton appearance="link" icon={bookmarkIcon(props.status)} onClick={bookmark} />
+          <ActionButton icon={bookmarkIcon(props.status)} onClick={bookmark} />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
-          <IconButton appearance="link" icon={<Icon as={BsEmojiSmile} />} disabled />
+          <ActionButton icon={<Icon as={BsEmojiSmile} />} disabled />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
-          <IconButton appearance="link" icon={<Icon as={BsThreeDots} />} disabled />
+          <ActionButton icon={<Icon as={BsThreeDots} />} disabled />
         </FlexboxGrid.Item>
       </FlexboxGrid>
     </div>
@@ -88,7 +113,7 @@ const favouriteIcon = (status: Entity.Status): ReactElement => {
 
 const bookmarkIcon = (status: Entity.Status): ReactElement => {
   if (status.bookmarked) {
-    return <Icon as={BsFillBookmarkFill} color="green" />
+    return <Icon as={BsFillBookmarkFill} color="red" />
   } else {
     return <Icon as={BsBookmark} />
   }

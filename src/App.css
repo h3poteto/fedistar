@@ -64,3 +64,63 @@
   width: 1rem;
   height: 1rem;
 }
+
+.favourite-action.activating {
+  animation: spring-rotate-in 2s linear;
+}
+
+.favourite-action.deactivating {
+  animation: spring-rotate-out 2s linear;
+}
+
+.reblog-action.activating {
+  animation: spring-rotate-in 2s linear;
+}
+
+.reblog-action.deactivating {
+  animation: spring-rotate-out 2s linear;
+}
+
+@keyframes spring-rotate-in {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  30% {
+    transform: rotate(-484.8deg);
+  }
+
+  60% {
+    transform: rotate(-316.7deg);
+  }
+
+  90% {
+    transform: rotate(-375deg);
+  }
+
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes spring-rotate-out {
+  0% {
+    transform: rotate(-360deg);
+  }
+
+  30% {
+    transform: rotate(124.8deg);
+  }
+
+  60% {
+    transform: rotate(-43.27deg);
+  }
+
+  90% {
+    transform: rotate(15deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
