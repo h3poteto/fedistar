@@ -1,8 +1,8 @@
-import { MouseEventHandler, ReactElement, useState } from 'react'
-import { Entity, MegalodonInterface, Response } from 'megalodon'
-import { FlexboxGrid, List, Avatar, IconButton } from 'rsuite'
+import { MouseEventHandler, useState } from 'react'
+import { Entity, MegalodonInterface } from 'megalodon'
+import { FlexboxGrid, List, Avatar } from 'rsuite'
 import { Icon } from '@rsuite/icons'
-import { BsArrowRepeat, BsChat, BsStar, BsStarFill, BsBookmark, BsFillBookmarkFill, BsEmojiSmile, BsThreeDots } from 'react-icons/bs'
+import { BsArrowRepeat } from 'react-icons/bs'
 import { open } from '@tauri-apps/api/shell'
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
@@ -11,6 +11,7 @@ import { findLink } from 'src/utils/statusParser'
 import Reply from 'src/components/compose/Status'
 import Body from './Body'
 import { Server } from 'src/entities/server'
+import Actions from './Actions'
 
 type Props = {
   status: Entity.Status
@@ -25,36 +26,6 @@ const Status: React.FC<Props> = props => {
   const [showReply, setShowReply] = useState<boolean>(false)
 
   const status = originalStatus(props.status)
-
-  const reblog = async () => {
-    let res: Response<Entity.Status>
-    if (status.reblogged) {
-      res = await client.unreblogStatus(status.id)
-    } else {
-      res = await client.reblogStatus(status.id)
-    }
-    props.updateStatus(res.data)
-  }
-
-  const favourite = async () => {
-    let res: Response<Entity.Status>
-    if (status.favourited) {
-      res = await client.unfavouriteStatus(status.id)
-    } else {
-      res = await client.favouriteStatus(status.id)
-    }
-    props.updateStatus(res.data)
-  }
-
-  const bookmark = async () => {
-    let res: Response<Entity.Status>
-    if (status.bookmarked) {
-      res = await client.unbookmarkStatus(status.id)
-    } else {
-      res = await client.bookmarkStatus(status.id)
-    }
-    props.updateStatus(res.data)
-  }
 
   return (
     <List.Item style={{ paddingTop: '2px', paddingBottom: '2px' }}>
@@ -85,28 +56,7 @@ const Status: React.FC<Props> = props => {
           {status.media_attachments.length > 0 && (
             <Attachments attachments={status.media_attachments} sensitive={status.sensitive} openMedia={props.openMedia} />
           )}
-          <div className="toolbox">
-            <FlexboxGrid>
-              <FlexboxGrid.Item>
-                <IconButton appearance="link" icon={<Icon as={BsChat} />} onClick={() => setShowReply(current => !current)} />
-              </FlexboxGrid.Item>
-              <FlexboxGrid.Item>
-                <IconButton appearance="link" icon={reblogIcon(status)} onClick={reblog} />
-              </FlexboxGrid.Item>
-              <FlexboxGrid.Item>
-                <IconButton appearance="link" icon={favouriteIcon(status)} onClick={favourite} />
-              </FlexboxGrid.Item>
-              <FlexboxGrid.Item>
-                <IconButton appearance="link" icon={bookmarkIcon(status)} onClick={bookmark} />
-              </FlexboxGrid.Item>
-              <FlexboxGrid.Item>
-                <IconButton appearance="link" icon={<Icon as={BsEmojiSmile} />} disabled />
-              </FlexboxGrid.Item>
-              <FlexboxGrid.Item>
-                <IconButton appearance="link" icon={<Icon as={BsThreeDots} />} disabled />
-              </FlexboxGrid.Item>
-            </FlexboxGrid>
-          </div>
+          <Actions status={status} client={client} setShowReply={setShowReply} updateStatus={props.updateStatus} />
         </FlexboxGrid.Item>
       </FlexboxGrid>
       {showReply && (
@@ -150,30 +100,6 @@ const rebloggedHeader = (status: Entity.Status) => {
     )
   } else {
     return null
-  }
-}
-
-const reblogIcon = (status: Entity.Status): ReactElement => {
-  if (status.reblogged) {
-    return <Icon as={BsArrowRepeat} color="green" />
-  } else {
-    return <Icon as={BsArrowRepeat} />
-  }
-}
-
-const favouriteIcon = (status: Entity.Status): ReactElement => {
-  if (status.favourited) {
-    return <Icon as={BsStarFill} color="orange" />
-  } else {
-    return <Icon as={BsStar} />
-  }
-}
-
-const bookmarkIcon = (status: Entity.Status): ReactElement => {
-  if (status.bookmarked) {
-    return <Icon as={BsFillBookmarkFill} color="green" />
-  } else {
-    return <Icon as={BsBookmark} />
   }
 }
 
