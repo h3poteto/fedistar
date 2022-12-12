@@ -13,6 +13,12 @@ pub struct ReceiveHomeStatusPayload {
 }
 
 #[derive(Clone, Serialize)]
+pub struct DeleteHomeStatusPayload {
+    server_id: i64,
+    status_id: String,
+}
+
+#[derive(Clone, Serialize)]
 pub struct ReceiveNotificationPayload {
     server_id: i64,
     notification: megalodon::entities::Notification,
@@ -22,6 +28,12 @@ pub struct ReceiveNotificationPayload {
 pub struct ReceiveTimelineStatusPayload {
     timeline_id: i64,
     status: megalodon::entities::Status,
+}
+
+#[derive(Clone, Serialize)]
+pub struct DeleteTimelineStatusPayload {
+    timeline_id: i64,
+    status_id: String,
 }
 
 pub async fn start_user(
@@ -73,6 +85,18 @@ pub async fn start_user(
                     ReceiveNotificationPayload {
                         server_id,
                         notification: mes,
+                    },
+                )
+                .unwrap();
+        }
+        Message::Delete(status_id) => {
+            log::debug!("receive delete");
+            app_handle
+                .emit_all(
+                    "delete-home-status",
+                    DeleteHomeStatusPayload {
+                        server_id,
+                        status_id,
                     },
                 )
                 .unwrap();
@@ -145,6 +169,18 @@ pub async fn start(
                     ReceiveTimelineStatusPayload {
                         timeline_id,
                         status: mes,
+                    },
+                )
+                .unwrap();
+        }
+        Message::Delete(status_id) => {
+            log::debug!("receive delete");
+            app_handle
+                .emit_all(
+                    "delete-timeline-status",
+                    DeleteTimelineStatusPayload {
+                        timeline_id,
+                        status_id,
                     },
                 )
                 .unwrap();
