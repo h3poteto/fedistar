@@ -13,7 +13,7 @@ import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
 import Status from './status/Status'
 import FailoverImg from 'src/utils/failoverImg'
-import { ReceiveHomeStatusPayload, ReceiveTimelineStatusPayload } from 'src/payload'
+import { DeleteHomeStatusPayload, DeleteTimelineStatusPayload, ReceiveHomeStatusPayload, ReceiveTimelineStatusPayload } from 'src/payload'
 import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from 'src/defaults'
 
 type Props = {
@@ -67,21 +67,19 @@ const Timeline: React.FC<Props> = props => {
         }
 
         if (scrollerRef.current && scrollerRef.current.scrollTop > 10) {
-          setUnreadStatuses(last => {
-            if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
-              return last
-            }
-            return [ev.payload.status].concat(last)
-          })
+          setUnreadStatuses(last => prependStatus(last, ev.payload.status))
           return
         }
 
-        setStatuses(last => {
-          if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
-            return last
-          }
-          return [ev.payload.status].concat(last).slice(0, TIMELINE_STATUSES_COUNT)
-        })
+        setStatuses(last => appendStatus(last, ev.payload.status))
+      })
+
+      listen<DeleteHomeStatusPayload>('delete-home-status', ev => {
+        if (ev.payload.server_id !== props.server.id) {
+          return
+        }
+        setUnreadStatuses(last => deleteStatus(last, ev.payload.status_id))
+        setStatuses(last => deleteStatus(last, ev.payload.status_id))
       })
     } else {
       listen<ReceiveTimelineStatusPayload>('receive-timeline-status', ev => {
@@ -90,21 +88,19 @@ const Timeline: React.FC<Props> = props => {
         }
 
         if (scrollerRef.current && scrollerRef.current.scrollTop > 10) {
-          setUnreadStatuses(last => {
-            if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
-              return last
-            }
-            return [ev.payload.status].concat(last)
-          })
+          setUnreadStatuses(last => prependStatus(last, ev.payload.status))
           return
         }
 
-        setStatuses(last => {
-          if (last.find(s => s.id === ev.payload.status.id && s.uri === ev.payload.status.uri)) {
-            return last
-          }
-          return [ev.payload.status].concat(last).slice(0, TIMELINE_STATUSES_COUNT)
-        })
+        setStatuses(last => appendStatus(last, ev.payload.status))
+      })
+
+      listen<DeleteTimelineStatusPayload>('delete-timeline-status', ev => {
+        if (ev.payload.timeline_id !== props.timeline.id) {
+          return
+        }
+        setUnreadStatuses(last => deleteStatus(last, ev.payload.status_id))
+        setStatuses(last => deleteStatus(last, ev.payload.status_id))
       })
     }
   }, [])
@@ -320,5 +316,29 @@ const alert = (type: 'info' | 'success' | 'warning' | 'error', message: string) 
     {message}
   </Message>
 )
+
+const prependStatus = (statuses: Array<Entity.Status>, status: Entity.Status): Array<Entity.Status> => {
+  if (statuses.find(s => s.id === status.id && s.uri === status.uri)) {
+    return statuses
+  }
+  return [status].concat(statuses)
+}
+
+const appendStatus = (statuses: Array<Entity.Status>, status: Entity.Status): Array<Entity.Status> => {
+  if (statuses.find(s => s.id === status.id && s.uri === status.uri)) {
+    return statuses
+  }
+  return [status].concat(statuses).slice(0, TIMELINE_STATUSES_COUNT)
+}
+
+const deleteStatus = (statuses: Array<Entity.Status>, deleted_id: string): Array<Entity.Status> => {
+  return statuses.filter(status => {
+    if (status.reblog !== null && status.reblog.id === deleted_id) {
+      return false
+    } else {
+      return status.id !== deleted_id
+    }
+  })
+}
 
 export default Timeline
