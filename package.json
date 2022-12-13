@@ -33,7 +33,7 @@
     "@emoji-mart/react": "^1.0.1",
     "@rsuite/icons": "^1.0.2",
     "@tauri-apps/api": "^1.2.0",
-    "emoji-mart": "^5.3.3",
+    "emoji-mart": "^5.4.0",
     "megalodon": "^5.0.0",
     "moment": "^2.29.4",
     "next": "^13.0.6",
