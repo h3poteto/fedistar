@@ -1,4 +1,4 @@
-import { MouseEventHandler, useState } from 'react'
+import { MouseEventHandler, useEffect, useState } from 'react'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { FlexboxGrid, List, Avatar } from 'rsuite'
 import { Icon } from '@rsuite/icons'
@@ -19,6 +19,7 @@ type Props = {
   server: Server
   updateStatus: (status: Entity.Status) => void
   openMedia: (media: Entity.Attachment) => void
+  setReplyOpened: (opened: boolean) => void
 }
 
 const Status: React.FC<Props> = props => {
@@ -26,6 +27,10 @@ const Status: React.FC<Props> = props => {
   const [showReply, setShowReply] = useState<boolean>(false)
 
   const status = originalStatus(props.status)
+
+  useEffect(() => {
+    props.setReplyOpened(showReply)
+  }, [showReply])
 
   return (
     <List.Item style={{ paddingTop: '2px', paddingBottom: '2px' }}>

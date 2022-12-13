@@ -33,6 +33,7 @@ const Notifications: React.FC<Props> = props => {
 
   const scrollerRef = useRef<HTMLElement | null>(null)
   const triggerRef = useRef(null)
+  const replyOpened = useRef<boolean>(false)
   const toast = useToaster()
 
   useEffect(() => {
@@ -58,7 +59,7 @@ const Notifications: React.FC<Props> = props => {
         return
       }
 
-      if (scrollerRef.current && scrollerRef.current.scrollTop > 10) {
+      if (replyOpened.current || (scrollerRef.current && scrollerRef.current.scrollTop > 10)) {
         setUnreadNotifications(last => {
           if (last.find(n => n.id === ev.payload.notification.id)) {
             return last
@@ -76,6 +77,12 @@ const Notifications: React.FC<Props> = props => {
       })
     })
   }, [])
+
+  useEffect(() => {
+    if (!replyOpened.current) {
+      prependUnreads()
+    }
+  }, [replyOpened.current])
 
   const loadNotifications = async (client: MegalodonInterface, maxId?: string): Promise<Array<Entity.Notification>> => {
     let options = { limit: TIMELINE_STATUSES_COUNT }
@@ -213,6 +220,7 @@ const Notifications: React.FC<Props> = props => {
                       server={props.server}
                       updateStatus={updateStatus}
                       openMedia={props.openMedia}
+                      setReplyOpened={opened => (replyOpened.current = opened)}
                     />
                   </div>
                 )}
