@@ -11,6 +11,7 @@ type Props = {
   server: Server
   updateStatus: (status: Entity.Status) => void
   openMedia: (media: Entity.Attachment) => void
+  setReplyOpened: (opened: boolean) => void
 }
 
 const notification = (props: Props) => {
@@ -34,6 +35,7 @@ const notification = (props: Props) => {
           server={props.server}
           updateStatus={props.updateStatus}
           openMedia={props.openMedia}
+          setReplyOpened={props.setReplyOpened}
         />
       )
     default:

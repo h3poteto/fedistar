@@ -34,6 +34,7 @@ const Timeline: React.FC<Props> = props => {
 
   const scrollerRef = useRef<HTMLElement | null>(null)
   const triggerRef = useRef(null)
+  const replyOpened = useRef<boolean>(false)
   const toast = useToaster()
 
   useEffect(() => {
@@ -66,7 +67,7 @@ const Timeline: React.FC<Props> = props => {
           return
         }
 
-        if (scrollerRef.current && scrollerRef.current.scrollTop > 10) {
+        if (replyOpened.current || (scrollerRef.current && scrollerRef.current.scrollTop > 10)) {
           setUnreadStatuses(last => prependStatus(last, ev.payload.status))
           return
         }
@@ -87,7 +88,7 @@ const Timeline: React.FC<Props> = props => {
           return
         }
 
-        if (scrollerRef.current && scrollerRef.current.scrollTop > 10) {
+        if (replyOpened.current || (scrollerRef.current && scrollerRef.current.scrollTop > 10)) {
           setUnreadStatuses(last => prependStatus(last, ev.payload.status))
           return
         }
@@ -104,6 +105,12 @@ const Timeline: React.FC<Props> = props => {
       })
     }
   }, [])
+
+  useEffect(() => {
+    if (!replyOpened.current) {
+      prependUnreads()
+    }
+  }, [replyOpened.current])
 
   const loadTimeline = async (tl: Timeline, client: MegalodonInterface, maxId?: string): Promise<Array<Entity.Status>> => {
     let options = { limit: TIMELINE_STATUSES_COUNT }
@@ -260,7 +267,14 @@ const Timeline: React.FC<Props> = props => {
                 overscan={TIMELINE_STATUSES_COUNT}
                 itemContent={(_, status) => (
                   <div key={status.id}>
-                    <Status status={status} client={client} server={props.server} updateStatus={updateStatus} openMedia={props.openMedia} />
+                    <Status
+                      status={status}
+                      client={client}
+                      server={props.server}
+                      updateStatus={updateStatus}
+                      openMedia={props.openMedia}
+                      setReplyOpened={opened => (replyOpened.current = opened)}
+                    />
                   </div>
                 )}
               />
