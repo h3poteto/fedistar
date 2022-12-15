@@ -9,6 +9,48 @@ This is a Mastodon and Pleroma client application for desktop.
 There is no stable version of fedistar yet. We're developing it now, so there are many unimplemented features.
 Please be careful when using.
 
+## Roadmap
+- [x] Servers and Accounts
+    - [x] Add/Remove
+- [ ] Timelines
+    - [x] Home
+    - [x] Notifications
+    - [x] Local
+    - [x] Public
+    - [x] Lists
+    - [ ] Tags
+    - [ ] DirectMessages
+- [x] Notification
+- [ ] Search
+    - [ ] Accounts
+    - [ ] Tag
+    - [ ] Statuses
+- [ ] Status actions
+    - [x] Reply
+    - [x] Reblog
+    - [x] Favourite
+    - [x] Bookmark
+    - [ ] Emoji reaction
+- [ ] User Profile
+    - [ ] Show profile
+    - [ ] Show followers
+    - [ ] Show followings
+    - [ ] Show user timeline
+    - [ ] Follow/Unfollow
+    - [ ] Mute/Block
+- [ ] Status detail
+    - [x] Show media
+    - [x] Handle NSFW and CW
+    - [ ] Show the thread
+    - [ ] Show Poll and answer it
+    - [ ] Link preview
+- [ ] Post statuses
+    - [x] Post statuses
+    - [x] Add emoji
+    - [ ] Attach media
+    - [ ] Change visibility
+    - [ ] Specify NSFW and CW
+
 ## Development
 ### Prereqisites
 At first, install system dependencies.
