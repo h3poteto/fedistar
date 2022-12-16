@@ -61,7 +61,13 @@ const Status: React.FC<Props> = props => {
           {status.media_attachments.length > 0 && (
             <Attachments attachments={status.media_attachments} sensitive={status.sensitive} openMedia={props.openMedia} />
           )}
-          <Actions status={status} client={client} setShowReply={setShowReply} updateStatus={props.updateStatus} />
+          <Actions
+            disabled={props.server.account_id === null}
+            status={status}
+            client={client}
+            setShowReply={setShowReply}
+            updateStatus={props.updateStatus}
+          />
         </FlexboxGrid.Item>
       </FlexboxGrid>
       {showReply && (
