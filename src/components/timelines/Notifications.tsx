@@ -21,6 +21,7 @@ type Props = {
   unreads: Array<Unread>
   setUnreads: (a: Array<Unread>) => void
   openMedia: (media: Entity.Attachment) => void
+  setStatusDetail: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
 }
 
 const Notifications: React.FC<Props> = props => {
@@ -221,6 +222,7 @@ const Notifications: React.FC<Props> = props => {
                       updateStatus={updateStatus}
                       openMedia={props.openMedia}
                       setReplyOpened={opened => (replyOpened.current = opened)}
+                      setStatusDetail={props.setStatusDetail}
                     />
                   </div>
                 )}

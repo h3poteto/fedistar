@@ -12,6 +12,7 @@ type Props = {
   updateStatus: (status: Entity.Status) => void
   openMedia: (media: Entity.Attachment) => void
   setReplyOpened: (opened: boolean) => void
+  setStatusDetail: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
 }
 
 const notification = (props: Props) => {
@@ -36,6 +37,7 @@ const notification = (props: Props) => {
           updateStatus={props.updateStatus}
           openMedia={props.openMedia}
           setReplyOpened={props.setReplyOpened}
+          setStatusDetail={props.setStatusDetail}
         />
       )
     default:

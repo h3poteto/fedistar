@@ -9,7 +9,7 @@ export function findLink(target: HTMLElement | null, parentClassName: string): s
     return null
   }
   const parent = target.parentNode as HTMLElement
-  if (parent.getAttribute('class') === parentClassName) {
+  if (parent.getAttribute && parent.getAttribute('class') === parentClassName) {
     return null
   }
   return findLink(parent, parentClassName)

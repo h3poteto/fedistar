@@ -2,7 +2,7 @@
   background-color: transparent;
 }
 
-@keyframes slideIn {
+@keyframes slideInCompose {
   from {
     width: 0;
   }
@@ -18,7 +18,7 @@
   }
 }
 
-@keyframes slideOut {
+@keyframes slideOutCompose {
   from {
     width: 320px;
     min-width: 320px;
@@ -42,11 +42,11 @@
 
 
 .compose-exiting {
-  animation-name: slideOut;
+  animation-name: slideOutCompose;
 }
 
 .compose-entering {
-  animation-name: slideIn;
+  animation-name: slideInCompose;
 }
 
 
@@ -59,6 +59,66 @@
 .compose-exited {
   width: 0;
 }
+
+@keyframes slideInDetail {
+  from {
+    width: 0;
+  }
+
+  50% {
+    width: 200px;
+    min-width: 200px;
+  }
+
+  to {
+    width: 340px;
+    min-width: 340px;
+    max-width: 340px;
+  }
+}
+
+@keyframes slideOutDetail {
+  from {
+    width: 340px;
+    min-width: 340px;
+    max-width: 340px;
+  }
+
+  50% {
+    width: 100px;
+    min-width: 100px;
+  }
+
+  to {
+    width: 0;
+  }
+}
+
+
+.detail-exiting,
+.detail-entering {
+  animation: .3s liner;
+  animation-fill-mode: forwards;
+}
+
+.detail-exiting {
+  animation-name: slideOutDetail;
+}
+
+.detail-entering {
+  animation-name: slideInDetail;
+}
+
+.detail-entered {
+  width: 340x;
+  min-width: 340px;
+  max-width: 340px;
+}
+
+.detail-exited {
+  width: 0;
+}
+
 
 .emojione {
   width: 1rem;

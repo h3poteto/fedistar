@@ -16,6 +16,8 @@ import Compose from 'src/components/compose/Compose'
 import Media from 'src/components/Media'
 import generateNotification from 'src/utils/notification'
 import { ReceiveNotificationPayload } from 'src/payload'
+import { Entity, MegalodonInterface } from 'megalodon'
+import Status from 'src/components/detail/Status'
 
 function App() {
   const [servers, setServers] = useState<Array<Server>>([])
@@ -23,6 +25,7 @@ function App() {
   const [unreads, setUnreads] = useState<Array<Unread>>([])
   const [composeOpened, setComposeOpened] = useState<boolean>(false)
   const [modalState, dispatch] = useReducer(modalReducer, initialModalState)
+  const [drawerState, drawerDispatch] = useReducer(drawerReducer, initialDrawerState)
 
   const toaster = useToaster()
 
@@ -134,10 +137,33 @@ function App() {
               setUnreads={setUnreads}
               key={timeline[0].id}
               openMedia={(media: Entity.Attachment) => dispatch({ target: 'media', value: true, object: media })}
+              setStatusDetail={(status, server, client) => drawerDispatch({ status: status, server: server, client: client })}
             />
           ))}
           <NewTimeline servers={servers} />
         </Content>
+        <Animation.Transition
+          in={drawerState.status !== null}
+          exitedClassName="detail-exited"
+          exitingClassName="detail-exiting"
+          enteredClassName="detail-entered"
+          enteringClassName="detail-entering"
+        >
+          {(props, ref) => (
+            <div {...props} ref={ref} style={{ overflow: 'hidden' }}>
+              {drawerState.status && drawerState.server && drawerState.client && (
+                <Status
+                  status={drawerState.status}
+                  client={drawerState.client}
+                  server={drawerState.server}
+                  openMedia={(media: Entity.Attachment) => dispatch({ target: 'media', value: true, object: media })}
+                  onClose={() => drawerDispatch({ status: null, server: null, client: null })}
+                  setStatusDetail={(status, server, client) => drawerDispatch({ status: status, server: server, client: client })}
+                />
+              )}
+            </div>
+          )}
+        </Animation.Transition>
       </Container>
     </div>
   )
@@ -174,6 +200,25 @@ const modalReducer = (current: ModalState, action: { target: string; value: bool
     default:
       return current
   }
+}
+
+type DrawerState = {
+  status: Entity.Status | null
+  client: MegalodonInterface | null
+  server: Server | null
+}
+
+const initialDrawerState: DrawerState = {
+  status: null,
+  client: null,
+  server: null
+}
+
+const drawerReducer = (
+  current: DrawerState,
+  action: { status: Entity.Status | null; server: Server | null; client: MegalodonInterface | null }
+) => {
+  return { ...current, status: action.status, server: action.server, client: action.client }
 }
 
 export default App
