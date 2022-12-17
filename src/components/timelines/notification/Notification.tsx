@@ -46,7 +46,9 @@ const notification = (props: Props) => {
 }
 
 const Notification: React.FC<Props> = props => {
-  return <List.Item style={{ paddingTop: '2px', paddingBottom: '2px' }}>{notification(props)}</List.Item>
+  return (
+    <List.Item style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-gray-800)' }}>{notification(props)}</List.Item>
+  )
 }
 
 export default Notification

@@ -1,4 +1,4 @@
-import { MouseEventHandler, useEffect, useState } from 'react'
+import { HTMLAttributes, MouseEventHandler, useEffect, useState } from 'react'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { FlexboxGrid, List, Avatar } from 'rsuite'
 import { Icon } from '@rsuite/icons'
@@ -21,7 +21,7 @@ type Props = {
   openMedia: (media: Entity.Attachment) => void
   setReplyOpened: (opened: boolean) => void
   setStatusDetail: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
-}
+} & HTMLAttributes<HTMLElement>
 
 const Status: React.FC<Props> = props => {
   const { client } = props
@@ -44,7 +44,7 @@ const Status: React.FC<Props> = props => {
   }
 
   return (
-    <List.Item style={{ paddingTop: '2px', paddingBottom: '2px' }}>
+    <List.Item style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-gray-800)' }} {...props}>
       {rebloggedHeader(props.status)}
       <FlexboxGrid>
         {/** icon **/}
@@ -64,7 +64,11 @@ const Status: React.FC<Props> = props => {
               </FlexboxGrid.Item>
               {/** timestamp **/}
               <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', color: 'var(--rs-text-tertiary)' }}>
-                <Time time={status.created_at} />
+                <Time
+                  time={status.created_at}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => props.setStatusDetail(props.status, props.server, props.client)}
+                />
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </div>

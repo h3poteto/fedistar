@@ -73,14 +73,14 @@ const StatusDetail: React.FC<Props> = props => {
   )
 
   return (
-    <Container>
-      <Header style={{ borderBottom: '1px solid var(--rs-divider-border)', backgroundColor: 'var(--rs-sidenav-default-bg)' }}>
+    <Container style={{ height: '100%', borderLeft: '1px solid var(--rs-gray-600)' }}>
+      <Header style={{ borderBottom: '4px solid var(--rs-gray-800)', backgroundColor: 'var(--rs-gray-700)' }}>
         <Button appearance="link" onClick={props.onClose}>
           <Icon as={BsX} style={{ fontSize: '1.4em' }} />
         </Button>
       </Header>
-      <Content style={{ height: '100%' }}>
-        <List hover style={{ width: '340px', height: '100%' }}>
+      <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)' }}>
+        <List hover style={{ width: '340px' }}>
           {[...ancestors, status, ...descendants].map(status => (
             <div key={status.id}>
               <Status
@@ -91,6 +91,7 @@ const StatusDetail: React.FC<Props> = props => {
                 openMedia={props.openMedia}
                 setReplyOpened={() => null}
                 setStatusDetail={props.setStatusDetail}
+                style={{ backgroundColor: 'var(--rs-gray-700)' }}
               />
             </div>
           ))}

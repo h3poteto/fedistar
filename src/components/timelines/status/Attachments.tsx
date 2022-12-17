@@ -48,21 +48,21 @@ const Attachment: React.FC<AttachmentProps> = props => {
   switch (media.type) {
     case 'gifv':
       return (
-        <Tag>
+        <Tag className="attachment">
           <Icon as={BsCameraVideo} style={{ fontSize: '1.2em', paddingRight: '4px' }} />
           GIF
         </Tag>
       )
     case 'video':
       return (
-        <Tag>
+        <Tag className="attachment">
           <Icon as={BsCameraVideo} style={{ fontSize: '1.2em', paddingRight: '4px' }} />
           VIDEO
         </Tag>
       )
     case 'audio':
       return (
-        <Tag>
+        <Tag className="attachment">
           <Icon as={BsVolumeUp} style={{ fontSize: '1.2em', paddingRight: '4px' }} />
           AUDIO
         </Tag>
@@ -83,7 +83,7 @@ const Attachment: React.FC<AttachmentProps> = props => {
             src={media.preview_url}
             alt={media.description ? media.description : media.id}
             onClick={() => props.openMedia(media)}
-            style={{ objectFit: 'cover' }}
+            style={{ objectFit: 'cover', cursor: 'pointer', borderRadius: '4px' }}
           />
         </div>
       )

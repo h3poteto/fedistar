@@ -203,9 +203,9 @@ const Timeline: React.FC<Props> = props => {
   }, [firstItemIndex, statuses, setStatuses, unreadStatuses])
 
   return (
-    <div style={{ width: '340px', minWidth: '340px' }}>
+    <div style={{ width: '340px', minWidth: '340px', margin: '0 4px' }}>
       <Container style={{ height: 'calc(100% - 8px)', overflowY: 'scroll' }}>
-        <Header>
+        <Header style={{ backgroundColor: 'var(--rs-gray-800)' }}>
           <FlexboxGrid align="middle" justify="space-between">
             <FlexboxGrid.Item>
               <FlexboxGrid align="middle">
@@ -250,7 +250,6 @@ const Timeline: React.FC<Props> = props => {
         ) : (
           <Content style={{ height: 'calc(100% - 54px)' }}>
             <List
-              hover
               style={{
                 width: '340px',
                 height: '100%'
