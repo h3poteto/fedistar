@@ -6,6 +6,7 @@ import { Entity, MegalodonInterface, Response } from 'megalodon'
 import ActionButton from './ActionButton'
 
 type Props = {
+  disabled: boolean
   status: Entity.Status
   client: MegalodonInterface
   setShowReply: Dispatch<SetStateAction<boolean>>
@@ -61,10 +62,11 @@ const Actions: React.FC<Props> = props => {
     <div className="toolbox">
       <FlexboxGrid>
         <FlexboxGrid.Item>
-          <ActionButton icon={<Icon as={BsChat} />} onClick={() => props.setShowReply(current => !current)} />
+          <ActionButton disabled={props.disabled} icon={<Icon as={BsChat} />} onClick={() => props.setShowReply(current => !current)} />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
           <ActionButton
+            disabled={props.disabled}
             className="reblog-action"
             activating={reblogActivating}
             deactivating={reblogDeactivating}
@@ -74,6 +76,7 @@ const Actions: React.FC<Props> = props => {
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
           <ActionButton
+            disabled={props.disabled}
             className="favourite-action"
             activating={favouriteActivating}
             deactivating={favouriteDeactivating}
@@ -82,7 +85,7 @@ const Actions: React.FC<Props> = props => {
           />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
-          <ActionButton icon={bookmarkIcon(props.status)} onClick={bookmark} />
+          <ActionButton disabled={props.disabled} icon={bookmarkIcon(props.status)} onClick={bookmark} />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
           <ActionButton icon={<Icon as={BsEmojiSmile} />} disabled />
