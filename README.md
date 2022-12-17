@@ -9,7 +9,7 @@ This is a Mastodon and Pleroma client application for desktop.
 There is no stable version of fedistar yet. We're developing it now, so there are many unimplemented features.
 Please be careful when using.
 
-## Roadmap
+## Roadmap for 1.0.0
 - [x] Servers and Accounts
     - [x] Add/Remove
 - [ ] Timelines
@@ -18,13 +18,10 @@ Please be careful when using.
     - [x] Local
     - [x] Public
     - [x] Lists
-    - [ ] Tags
+    - [ ] Bookmarks
     - [ ] DirectMessages
+- [x] Streaming
 - [x] Notification
-- [ ] Search
-    - [ ] Accounts
-    - [ ] Tag
-    - [ ] Statuses
 - [ ] Status actions
     - [x] Reply
     - [x] Reblog
@@ -41,8 +38,7 @@ Please be careful when using.
 - [ ] Status detail
     - [x] Show media
     - [x] Handle NSFW and CW
-    - [ ] Show the thread
-    - [ ] Show Poll and answer it
+    - [x] Show the thread
     - [ ] Link preview
 - [ ] Post statuses
     - [x] Post statuses
