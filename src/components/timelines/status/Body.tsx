@@ -1,12 +1,12 @@
 import { Entity } from 'megalodon'
-import { useState } from 'react'
+import { HTMLAttributes, useState } from 'react'
 import { Button } from 'rsuite'
 import emojify from 'src/utils/emojify'
 
 type Props = {
   status: Entity.Status
   onClick: (e: any) => void
-}
+} & HTMLAttributes<HTMLElement>
 
 const Body: React.FC<Props> = props => {
   const [spoilered, setSpoilered] = useState<boolean>(props.status.spoiler_text.length > 0)
@@ -32,7 +32,7 @@ const Body: React.FC<Props> = props => {
   }
 
   return (
-    <div>
+    <div style={{ cursor: 'pointer' }}>
       {spoiler()}
       {!spoilered && (
         <div

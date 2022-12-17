@@ -184,3 +184,7 @@
     transform: rotate(0deg);
   }
 }
+
+.attachment {
+  cursor: "pointer";
+}
