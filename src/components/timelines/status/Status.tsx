@@ -20,6 +20,7 @@ type Props = {
   updateStatus: (status: Entity.Status) => void
   openMedia: (media: Entity.Attachment) => void
   setReplyOpened: (opened: boolean) => void
+  setStatusDetail: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
 }
 
 const Status: React.FC<Props> = props => {
@@ -31,6 +32,16 @@ const Status: React.FC<Props> = props => {
   useEffect(() => {
     props.setReplyOpened(showReply)
   }, [showReply])
+
+  const statusClicked: MouseEventHandler<HTMLDivElement> = e => {
+    const url = findLink(e.target as HTMLElement, 'status-body')
+    if (url) {
+      open(url)
+      e.preventDefault()
+    } else {
+      props.setStatusDetail(props.status, props.server, props.client)
+    }
+  }
 
   return (
     <List.Item style={{ paddingTop: '2px', paddingBottom: '2px' }}>
@@ -71,14 +82,6 @@ const Status: React.FC<Props> = props => {
       )}
     </List.Item>
   )
-}
-
-const statusClicked: MouseEventHandler<HTMLDivElement> = e => {
-  const url = findLink(e.target as HTMLElement, 'status-body')
-  if (url) {
-    open(url)
-    e.preventDefault()
-  }
 }
 
 const originalStatus = (status: Entity.Status) => {

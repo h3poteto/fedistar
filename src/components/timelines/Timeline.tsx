@@ -20,6 +20,7 @@ type Props = {
   timeline: Timeline
   server: Server
   openMedia: (media: Entity.Attachment) => void
+  setStatusDetail: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
 }
 
 const Timeline: React.FC<Props> = props => {
@@ -274,6 +275,7 @@ const Timeline: React.FC<Props> = props => {
                       updateStatus={updateStatus}
                       openMedia={props.openMedia}
                       setReplyOpened={opened => (replyOpened.current = opened)}
+                      setStatusDetail={props.setStatusDetail}
                     />
                   </div>
                 )}
