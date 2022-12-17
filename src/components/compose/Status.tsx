@@ -149,7 +149,7 @@ const Status: React.FC<Props> = props => {
         </Whisper>
       </Form.Group>
       <Form.Group>
-        <ButtonToolbar style={{ textAlign: 'right' }}>
+        <ButtonToolbar style={{ justifyContent: 'flex-end' }}>
           <Button appearance="primary" type="submit" onClick={handleSubmit} loading={loading}>
             Post
           </Button>

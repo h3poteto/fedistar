@@ -96,7 +96,7 @@ function App() {
   }
 
   return (
-    <div className="container index">
+    <div className="container index" style={{ backgroundColor: 'var(--rs-gray-900)' }}>
       <NewServer
         open={modalState.newServer.opened}
         onClose={() => dispatch({ target: 'newServer', value: false, object: null })}

@@ -44,7 +44,7 @@ const Status: React.FC<Props> = props => {
   }
 
   return (
-    <List.Item style={{ paddingTop: '2px', paddingBottom: '2px' }}>
+    <List.Item style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-gray-800)' }} {...props}>
       {rebloggedHeader(props.status)}
       <FlexboxGrid>
         {/** icon **/}

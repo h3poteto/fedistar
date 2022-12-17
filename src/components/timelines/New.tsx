@@ -132,8 +132,7 @@ const New: React.FC<Props> = props => {
         minWidth: '240px',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'var(--rs-bg-overlay)'
+        alignItems: 'center'
       }}
     >
       <ButtonToolbar>
@@ -154,13 +153,10 @@ const New: React.FC<Props> = props => {
   }
 
   const selectTimeline = () => (
-    <div
-      className="add-timeline"
-      style={{ width: '240px', minWidth: '240px', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--rs-bg-overlay)' }}
-    >
+    <div className="add-timeline" style={{ width: '240px', minWidth: '240px', display: 'flex', flexDirection: 'column' }}>
       <Container>
-        <Header>
-          <FlexboxGrid align="middle" justify="space-between" style={{ backgroundColor: 'var(--rs-bg-card)' }}>
+        <Header style={{ backgroundColor: 'var(--rs-gray-700)' }}>
+          <FlexboxGrid align="middle" justify="space-between">
             <FlexboxGrid.Item style={{ paddingLeft: '8px', lineHeight: '52px' }}>@{server.domain}</FlexboxGrid.Item>
             <FlexboxGrid.Item>
               <Button appearance="link" onClick={back}>
