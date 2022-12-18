@@ -5,6 +5,8 @@
 
 This is a Mastodon and Pleroma client application for desktop.
 
+![screenshot](screenshot.png)
+
 ## !! This software is under development
 There is no stable version of fedistar yet. We're developing it now, so there are many unimplemented features.
 Please be careful when using.
