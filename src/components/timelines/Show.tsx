@@ -15,7 +15,7 @@ type Props = {
 }
 
 const Show: React.FC<Props> = props => {
-  if (props.timeline.timeline === 'notifications') {
+  if (props.timeline.kind === 'notifications') {
     return (
       <ShowNotifications
         timeline={props.timeline}

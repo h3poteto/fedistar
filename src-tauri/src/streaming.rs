@@ -128,32 +128,33 @@ pub async fn start(
     let streaming_url = instance.json.urls.streaming_api;
 
     let streaming: Box<dyn megalodon::Streaming>;
-    match timeline.timeline.as_str() {
-        "public" => {
+    match timeline.kind {
+        entities::timeline::Kind::Public => {
             streaming = client.public_streaming(streaming_url);
         }
-        "local" => {
+        entities::timeline::Kind::Local => {
             streaming = client.local_streaming(streaming_url);
         }
-        other => match &timeline.list_id {
-            None => return Err(format!("{} is not supported timeline", other)),
+        entities::timeline::Kind::List => match &timeline.list_id {
+            None => return Err(format!("could not find list_id for {} ", timeline.name)),
             Some(list_id) => {
                 streaming = client.list_streaming(streaming_url, list_id.to_string());
             }
         },
+        _ => return Err(format!("{} is not supported", timeline.name)),
     }
 
     if let Some(account) = account {
         log::info!(
             "{} streaming is started for {}@{}",
-            timeline.timeline,
+            timeline.name,
             account.username,
             server.domain
         );
     } else {
         log::info!(
             "{} streaming is started for @{}",
-            timeline.timeline,
+            timeline.name,
             server.domain
         );
     }

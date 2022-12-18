@@ -106,7 +106,7 @@ pub(crate) async fn list_timelines(
 ) -> DBResult<Vec<(entities::Timeline, entities::Server)>> {
     let timelines = sqlx::query(
         r#"
-SELECT timelines.id, timelines.server_id, timelines.timeline, timelines.sort, timelines.list_id,
+SELECT timelines.id, timelines.server_id, timelines.kind, timelines.name, timelines.sort, timelines.list_id,
        servers.id, servers.domain, servers.base_url, servers.sns, servers.favicon, servers.account_id
 FROM timelines INNER JOIN servers ON servers.id = timelines.server_id ORDER BY timelines.sort"#,
     )
@@ -115,17 +115,18 @@ FROM timelines INNER JOIN servers ON servers.id = timelines.server_id ORDER BY t
             entities::Timeline {
                 id: row.get(0),
                 server_id: row.get(1),
-                timeline: row.get(2),
-                sort: row.get(3),
-                list_id: row.get(4),
+                kind: row.get(2),
+                name: row.get(3),
+                sort: row.get(4),
+                list_id: row.get(5),
             },
             entities::Server {
-                id: row.get(5),
-                domain: row.get(6),
-                base_url: row.get(7),
-                sns: row.get(8),
-                favicon: row.get(9),
-                account_id: row.get(10),
+                id: row.get(6),
+                domain: row.get(7),
+                base_url: row.get(8),
+                sns: row.get(9),
+                favicon: row.get(10),
+                account_id: row.get(11),
             },
         )
     })
@@ -138,6 +139,7 @@ FROM timelines INNER JOIN servers ON servers.id = timelines.server_id ORDER BY t
 pub(crate) async fn add_timeline(
     pool: &SqlitePool,
     server: &entities::Server,
+    kind: &entities::timeline::Kind,
     name: &str,
     list_id: Option<&str>,
 ) -> DBResult<entities::Timeline> {
@@ -152,9 +154,10 @@ pub(crate) async fn add_timeline(
         sort = exists[0].sort + 1;
     }
     let res = sqlx::query(
-        "INSERT INTO timelines (server_id, timeline, sort, list_id) VALUES (?, ?, ?, ?)",
+        "INSERT INTO timelines (server_id, kind, name, sort, list_id) VALUES (?, ?, ?, ?, ?)",
     )
     .bind(server.id)
+    .bind(kind)
     .bind(name)
     .bind::<i64>(sort)
     .bind(list_id)
@@ -166,6 +169,7 @@ pub(crate) async fn add_timeline(
     let created = entities::Timeline::new(
         id,
         server.id,
+        kind.clone(),
         name.to_string(),
         1,
         list_id.map(|i| i.to_string()),

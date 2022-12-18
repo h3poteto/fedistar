@@ -160,7 +160,7 @@ const Notifications: React.FC<Props> = props => {
                 </FlexboxGrid.Item>
                 {/** name **/}
                 <FlexboxGrid.Item style={{ lineHeight: '48px', fontSize: '18px', verticalAlign: 'middle' }}>
-                  {props.timeline.timeline}
+                  {props.timeline.name}
                   <span style={{ fontSize: '14px', color: 'var(--rs-text-secondary)' }}>@{props.server.domain}</span>
                 </FlexboxGrid.Item>
               </FlexboxGrid>
