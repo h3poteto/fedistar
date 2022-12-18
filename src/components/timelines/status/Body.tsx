@@ -2,6 +2,7 @@ import { Entity } from 'megalodon'
 import { HTMLAttributes, useState } from 'react'
 import { Button } from 'rsuite'
 import emojify from 'src/utils/emojify'
+import LinkPreview from './LinkPreview'
 
 type Props = {
   status: Entity.Status
@@ -42,6 +43,7 @@ const Body: React.FC<Props> = props => {
           onClick={props.onClick}
         />
       )}
+      {!spoilered && props.status.card && props.status.card.type === 'link' && <LinkPreview card={props.status.card} />}
     </div>
   )
 }
