@@ -287,6 +287,24 @@ async fn switch_right_timeline(
     Ok(())
 }
 
+// This method is not used now. In the future, it will be used.
+#[tauri::command]
+fn toggle_menu(app_handle: AppHandle) -> Result<(), String> {
+    let menu_handle = app_handle.get_window("main").unwrap().menu_handle();
+
+    match menu_handle.is_visible() {
+        Ok(true) => {
+            menu_handle.hide().unwrap();
+            Ok(())
+        }
+        Ok(false) => {
+            menu_handle.show().unwrap();
+            Ok(())
+        }
+        Err(e) => Err(e.to_string()),
+    }
+}
+
 async fn start_timeline_streaming(
     app_handle: Arc<AppHandle>,
     sqlite_pool: &sqlx::SqlitePool,
@@ -441,6 +459,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             remove_timeline,
             switch_left_timeline,
             switch_right_timeline,
+            toggle_menu,
         ])
         .setup(|app| {
             let app_handle = app.handle();
@@ -455,10 +474,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             app.manage(sqlite_pool);
             let handle = app.handle();
             app.manage(Mutex::new(handle));
+            let window = app.get_window("main").unwrap();
+            window.menu_handle().hide().unwrap();
 
             #[cfg(debug_assertions)]
             {
-                let window = app.get_window("main").unwrap();
                 window.open_devtools();
                 window.close_devtools();
             }
