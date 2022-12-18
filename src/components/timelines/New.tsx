@@ -13,7 +13,7 @@ import {
   Button
 } from 'rsuite'
 import { Icon } from '@rsuite/icons'
-import { BsPlus, BsHouseDoor, BsBell, BsPeople, BsGlobe2, BsStar, BsListUl, BsChevronLeft } from 'react-icons/bs'
+import { BsPlus, BsHouseDoor, BsBell, BsPeople, BsGlobe2, BsStar, BsListUl, BsChevronLeft, BsBookmark } from 'react-icons/bs'
 import { Server } from '../../entities/server'
 import { useEffect, useState } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
@@ -75,6 +75,16 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={20}>
             <div>Favourites</div>
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+      </List.Item>
+      <List.Item index={6} onClick={() => select('bookmarks', 'Bookmarks', null)} style={{ cursor: 'pointer' }}>
+        <FlexboxGrid align="middle">
+          <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Icon as={BsBookmark} />
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={20}>
+            <div>Bookmarks</div>
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </List.Item>

@@ -295,6 +295,7 @@ async fn start_timeline_streaming(
     if timeline.kind == entities::timeline::Kind::Home
         || timeline.kind == entities::timeline::Kind::Notifications
         || timeline.kind == entities::timeline::Kind::Favourites
+        || timeline.kind == entities::timeline::Kind::Bookmarks
     {
         return Ok(());
     }
