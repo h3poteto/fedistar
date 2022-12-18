@@ -20,7 +20,7 @@ Please be careful when using.
     - [x] Local
     - [x] Public
     - [x] Lists
-    - [ ] Bookmarks
+    - [x] Bookmarks
     - [ ] DirectMessages
 - [x] Streaming
 - [x] Notification
