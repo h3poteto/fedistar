@@ -8,10 +8,11 @@ use megalodon::{self, oauth};
 use serde::Serialize;
 use tauri::{async_runtime::Mutex, AppHandle, Manager, State};
 
-pub mod database;
-pub mod entities;
-pub mod favicon;
-pub mod streaming;
+mod database;
+mod entities;
+mod favicon;
+mod menu;
+mod streaming;
 
 #[tauri::command]
 async fn list_servers(
@@ -426,6 +427,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     block_on(database::migrate_database(&sqlite_pool))?;
 
     tauri::Builder::default()
+        .menu(menu::menu())
         .invoke_handler(tauri::generate_handler![
             list_servers,
             add_server,
