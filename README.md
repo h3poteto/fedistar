@@ -37,11 +37,11 @@ Please be careful when using.
     - [ ] Show user timeline
     - [ ] Follow/Unfollow
     - [ ] Mute/Block
-- [ ] Status detail
+- [x] Status detail
     - [x] Show media
     - [x] Handle NSFW and CW
     - [x] Show the thread
-    - [ ] Link preview
+    - [x] Link preview
 - [ ] Post statuses
     - [x] Post statuses
     - [x] Add emoji
