@@ -2,7 +2,7 @@
     all(not(debug_assertions), target_os = "windows"),
     windows_subsystem = "windows"
 )]
-use std::{fs::OpenOptions, sync::Arc};
+use std::{fs::OpenOptions, str::FromStr, sync::Arc};
 
 use megalodon::{self, oauth};
 use serde::Serialize;
@@ -174,10 +174,12 @@ async fn add_timeline(
     app_handle: AppHandle,
     sqlite_pool: State<'_, sqlx::SqlitePool>,
     server: entities::Server,
-    timeline: &str,
+    kind: &str,
+    name: &str,
     list_id: Option<&str>,
 ) -> Result<(), String> {
-    let timeline = database::add_timeline(&sqlite_pool, &server, timeline, list_id)
+    let k = entities::timeline::Kind::from_str(kind)?;
+    let timeline = database::add_timeline(&sqlite_pool, &server, &k, name, list_id)
         .await
         .map_err(|e| e.to_string())?;
 
@@ -290,9 +292,9 @@ async fn start_timeline_streaming(
     server: entities::Server,
     timeline: entities::Timeline,
 ) -> Result<(), String> {
-    if timeline.timeline == "home"
-        || timeline.timeline == "notifications"
-        || timeline.timeline == "favourite"
+    if timeline.kind == entities::timeline::Kind::Home
+        || timeline.kind == entities::timeline::Kind::Notifications
+        || timeline.kind == entities::timeline::Kind::Favourites
     {
         return Ok(());
     }
@@ -308,7 +310,7 @@ async fn start_timeline_streaming(
         match streaming::start(app_handle, &server, &timeline, account).await {
             Ok(()) => log::info!(
                 "{} streaming is finished for @{}",
-                timeline.timeline,
+                timeline.name,
                 server.domain
             ),
             Err(err) => log::error!("{}", err),
@@ -392,14 +394,19 @@ fn init_logger(logfile_path: std::path::PathBuf) {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use tauri::async_runtime::block_on;
-    const CONFIG_DIR: &str = ".fedistar";
+    let mut base_dir: &str = ".fedistar";
     const DATABASE_FILE: &str = "fedistar.db";
     const LOGFILE_PATH: &str = "fedistar.log";
+
+    #[cfg(debug_assertions)]
+    {
+        base_dir = ".fedistar.dev";
+    }
 
     let home_dir = directories::UserDirs::new()
         .map(|dirs| dirs.home_dir().to_path_buf())
         .unwrap_or_else(|| std::env::current_dir().expect("Cannot access the current directory"));
-    let config_dir = home_dir.join(CONFIG_DIR);
+    let config_dir = home_dir.join(base_dir);
     let config_dir_exists = std::fs::metadata(&config_dir).is_ok();
     if !config_dir_exists {
         std::fs::create_dir(&config_dir)?;

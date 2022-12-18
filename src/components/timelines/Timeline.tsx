@@ -10,7 +10,7 @@ import parse from 'parse-link-header'
 
 import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
-import { Timeline } from 'src/entities/timeline'
+import { Timeline, TimelineKind } from 'src/entities/timeline'
 import Status from './status/Status'
 import FailoverImg from 'src/utils/failoverImg'
 import { DeleteHomeStatusPayload, DeleteTimelineStatusPayload, ReceiveHomeStatusPayload, ReceiveTimelineStatusPayload } from 'src/payload'
@@ -55,14 +55,14 @@ const Timeline: React.FC<Props> = props => {
         const res = await loadTimeline(props.timeline, client)
         setStatuses(res)
       } catch {
-        toast.push(alert('error', `Failed to load ${props.timeline.timeline} timeline`), { placement: 'topStart' })
+        toast.push(alert('error', `Failed to load ${props.timeline.name} timeline`), { placement: 'topStart' })
       } finally {
         setLoading(false)
       }
     }
     f()
 
-    if (props.timeline.timeline === 'home') {
+    if (props.timeline.kind === 'home') {
       listen<ReceiveHomeStatusPayload>('receive-home-status', ev => {
         if (ev.payload.server_id !== props.server.id) {
           return
@@ -118,7 +118,7 @@ const Timeline: React.FC<Props> = props => {
     if (maxId) {
       options = Object.assign({}, options, { max_id: maxId })
     }
-    switch (tl.timeline) {
+    switch (tl.kind) {
       case 'home': {
         const res = await client.getHomeTimeline(options)
         return res.data
@@ -131,7 +131,7 @@ const Timeline: React.FC<Props> = props => {
         const res = await client.getPublicTimeline(options)
         return res.data
       }
-      case 'favourite': {
+      case 'favourites': {
         const res = await client.getFavourites(options)
         const link = parse(res.headers.link)
         if (link !== null) {
@@ -139,26 +139,28 @@ const Timeline: React.FC<Props> = props => {
         }
         return res.data
       }
-      default:
+      case 'list': {
         if (tl.list_id) {
           const res = await client.getListTimeline(tl.list_id, options)
           return res.data
         }
         return []
+      }
+      default:
     }
   }
 
-  const timelineIcon = (name: string) => {
-    switch (name) {
+  const timelineIcon = (kind: TimelineKind) => {
+    switch (kind) {
       case 'home':
         return <Icon as={BsHouseDoor} />
       case 'local':
         return <Icon as={BsPeople} />
       case 'public':
         return <Icon as={BsGlobe2} />
-      case 'favourite':
+      case 'favourites':
         return <Icon as={BsStar} />
-      default:
+      case 'list':
         return <Icon as={BsListUl} />
     }
   }
@@ -213,11 +215,11 @@ const Timeline: React.FC<Props> = props => {
                 <FlexboxGrid.Item
                   style={{ lineHeight: '48px', fontSize: '18px', paddingRight: '8px', paddingLeft: '8px', paddingBottom: '6px' }}
                 >
-                  {timelineIcon(props.timeline.timeline)}
+                  {timelineIcon(props.timeline.kind)}
                 </FlexboxGrid.Item>
                 {/** name **/}
                 <FlexboxGrid.Item style={{ lineHeight: '48px', fontSize: '18px', verticalAlign: 'middle' }}>
-                  {props.timeline.timeline}
+                  {props.timeline.name}
                   <span style={{ fontSize: '14px', color: 'var(--rs-text-secondary)' }}>@{props.server.domain}</span>
                 </FlexboxGrid.Item>
               </FlexboxGrid>
