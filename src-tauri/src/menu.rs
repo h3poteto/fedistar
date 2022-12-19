@@ -1,10 +1,12 @@
 use tauri::{AboutMetadata, Menu, MenuItem, Submenu};
 
+const APP_NAME: &str = "Fedistar";
+
 pub fn menu() -> Menu {
     let mut menu = Menu::new();
 
     let about = MenuItem::About(
-        "Fedistar".to_string(),
+        APP_NAME.to_string(),
         AboutMetadata::new()
             .authors(vec!["h3poteto".to_string()])
             .copyright("2022 h3poteto")
@@ -15,7 +17,7 @@ pub fn menu() -> Menu {
     #[cfg(target_os = "macos")]
     {
         menu = menu.add_submenu(Submenu::new(
-            app_name,
+            APP_NAME.to_string(),
             Menu::new()
                 .add_native_item(about)
                 .add_native_item(MenuItem::Separator)
@@ -39,14 +41,14 @@ pub fn menu() -> Menu {
     let mut edit_menu = Menu::new();
     #[cfg(target_os = "macos")]
     {
-        edit_menu
+        edit_menu = edit_menu
             .add_native_item(MenuItem::Undo)
             .add_native_item(MenuItem::Redo)
             .add_native_item(MenuItem::Separator);
     }
     #[cfg(not(target_os = "linux"))]
     {
-        edit_menu
+        edit_menu = edit_menu
             .add_native_item(MenuItem::Cut)
             .add_native_item(MenuItem::Copy)
             .add_native_item(MenuItem::Paste);
