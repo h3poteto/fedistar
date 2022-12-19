@@ -46,7 +46,7 @@
     "sanitize-html": "^2.8.0"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.2.2",
+    "@tauri-apps/cli": "^1.2.1",
     "@types/jest": "^29.2.4",
     "@types/node": "^18.11.15",
     "@types/parse-link-header": "^2.0.0",
