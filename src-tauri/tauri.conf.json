@@ -18,9 +18,6 @@
       },
       "shell": {
         "open": true
-      },
-      "globalShortcut": {
-        "all": true
       }
     },
     "bundle": {
