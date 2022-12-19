@@ -1,4 +1,4 @@
-import { shell } from '@tauri-apps/api'
+import { open } from '@tauri-apps/api/shell'
 import { Entity } from 'megalodon'
 import Image from 'next/image'
 import { FlexboxGrid, Panel } from 'rsuite'
@@ -11,7 +11,7 @@ type Props = {
 
 const LinkPreview: React.FC<Props> = props => {
   const onClick = () => {
-    shell.open(props.card.url)
+    open(props.card.url)
   }
 
   return (
