@@ -1,9 +1,10 @@
-import { FlexboxGrid } from 'rsuite'
+import { FlexboxGrid, useToaster } from 'rsuite'
 import { BsChat, BsEmojiSmile, BsThreeDots, BsStar, BsStarFill, BsBookmark, BsFillBookmarkFill, BsArrowRepeat } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 import { Dispatch, SetStateAction, ReactElement, useState } from 'react'
 import { Entity, MegalodonInterface, Response } from 'megalodon'
 import ActionButton from './ActionButton'
+import alert from 'src/components/utils/alert'
 
 type Props = {
   disabled: boolean
@@ -20,16 +21,26 @@ const Actions: React.FC<Props> = props => {
   const [reblogActivating, setReblogActivating] = useState<boolean>(false)
   const [reblogDeactivating, setReblogDeactivating] = useState<boolean>(false)
 
+  const toast = useToaster()
+
   const reblog = async () => {
     let res: Response<Entity.Status>
     if (status.reblogged) {
       setReblogActivating(false)
       setReblogDeactivating(true)
-      res = await client.unreblogStatus(status.id)
+      try {
+        res = await client.unreblogStatus(status.id)
+      } catch {
+        toast.push(alert('error', 'Failed to unreblog'), { placement: 'topStart' })
+      }
     } else {
       setReblogDeactivating(false)
       setReblogActivating(true)
-      res = await client.reblogStatus(status.id)
+      try {
+        res = await client.reblogStatus(status.id)
+      } catch {
+        toast.push(alert('error', 'Failed to reblog'), { placement: 'topStart' })
+      }
     }
     props.updateStatus(res.data)
   }
@@ -39,11 +50,19 @@ const Actions: React.FC<Props> = props => {
     if (status.favourited) {
       setFavouriteActivating(false)
       setFavouriteDeactivating(true)
-      res = await client.unfavouriteStatus(status.id)
+      try {
+        res = await client.unfavouriteStatus(status.id)
+      } catch {
+        toast.push(alert('error', 'Failed to unfavourite'), { placement: 'topStart' })
+      }
     } else {
       setFavouriteDeactivating(false)
       setFavouriteActivating(true)
-      res = await client.favouriteStatus(status.id)
+      try {
+        res = await client.favouriteStatus(status.id)
+      } catch {
+        toast.push(alert('error', 'Failed to favourite'), { placement: 'topStart' })
+      }
     }
     props.updateStatus(res.data)
   }
@@ -51,9 +70,17 @@ const Actions: React.FC<Props> = props => {
   const bookmark = async () => {
     let res: Response<Entity.Status>
     if (status.bookmarked) {
-      res = await client.unbookmarkStatus(status.id)
+      try {
+        res = await client.unbookmarkStatus(status.id)
+      } catch {
+        toast.push(alert('error', 'Failed to unbookmark'), { placement: 'topStart' })
+      }
     } else {
-      res = await client.bookmarkStatus(status.id)
+      try {
+        res = await client.bookmarkStatus(status.id)
+      } catch {
+        toast.push(alert('error', 'Failed to bookmark'), { placement: 'topStart' })
+      }
     }
     props.updateStatus(res.data)
   }
