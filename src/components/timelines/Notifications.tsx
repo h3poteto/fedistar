@@ -1,4 +1,4 @@
-import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, useToaster, Message } from 'rsuite'
+import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, useToaster } from 'rsuite'
 import { BsBell, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsCheck2 } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'

@@ -2,7 +2,7 @@ import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useRef, useState, forwardRef, useCallback } from 'react'
-import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, Message, useToaster } from 'rsuite'
+import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, useToaster } from 'rsuite'
 import {
   BsHouseDoor,
   BsPeople,
