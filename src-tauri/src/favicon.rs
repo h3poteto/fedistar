@@ -36,7 +36,7 @@ async fn parse_location(response: reqwest::Response) -> Result<Vec<String>, reqw
 fn parse_content(content: &str) -> Vec<String> {
     let mut list: Vec<String> = Vec::new();
     let fragment = Html::parse_fragment(content);
-    let selector = Selector::parse("link").unwrap();
+    let selector = Selector::parse("link").expect("Failed to parse link");
 
     for element in fragment.select(&selector) {
         if let Some(rel) = element.value().attr("rel") {

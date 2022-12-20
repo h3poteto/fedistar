@@ -1,4 +1,4 @@
-import { Form, Button, ButtonToolbar, Schema, Whisper, Input, Popover, Dropdown } from 'rsuite'
+import { Form, Button, ButtonToolbar, Schema, Whisper, Input, Popover, Dropdown, useToaster } from 'rsuite'
 import { useState, useEffect, useRef, forwardRef } from 'react'
 import { Icon } from '@rsuite/icons'
 import { BsEmojiLaughing, BsPaperclip, BsMenuButtonWide, BsGlobe, BsUnlock, BsLock, BsEnvelope } from 'react-icons/bs'
@@ -7,6 +7,7 @@ import Picker from '@emoji-mart/react'
 
 import { data } from 'src/utils/emojiData'
 import { Server } from 'src/entities/server'
+import alert from 'src/components/utils/alert'
 
 type Props = {
   server: Server
@@ -43,6 +44,7 @@ const Status: React.FC<Props> = props => {
   const formRef = useRef<any>()
   const statusRef = useRef<HTMLDivElement>()
   const emojiPickerRef = useRef(null)
+  const toast = useToaster()
 
   useEffect(() => {
     if (!props.client || !props.server) {
@@ -104,6 +106,8 @@ const Status: React.FC<Props> = props => {
         }
         await props.client.postStatus(formValue.status, options)
         clear()
+      } catch {
+        toast.push(alert('error', 'Failed to post status'), { placement: 'topStart' })
       } finally {
         setLoading(false)
       }

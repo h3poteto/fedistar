@@ -26,6 +26,7 @@ import Status from './status/Status'
 import FailoverImg from 'src/utils/failoverImg'
 import { DeleteHomeStatusPayload, DeleteTimelineStatusPayload, ReceiveHomeStatusPayload, ReceiveTimelineStatusPayload } from 'src/payload'
 import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from 'src/defaults'
+import alert from 'src/components/utils/alert'
 
 type Props = {
   timeline: Timeline
@@ -348,12 +349,6 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
     </Popover>
   )
 })
-
-const alert = (type: 'info' | 'success' | 'warning' | 'error', message: string) => (
-  <Message showIcon type={type} duration={5000}>
-    {message}
-  </Message>
-)
 
 const prependStatus = (statuses: Array<Entity.Status>, status: Entity.Status): Array<Entity.Status> => {
   if (statuses.find(s => s.id === status.id && s.uri === status.uri)) {

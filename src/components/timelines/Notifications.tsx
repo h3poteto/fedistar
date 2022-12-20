@@ -14,6 +14,7 @@ import Notification from './notification/Notification'
 import { ReceiveNotificationPayload } from 'src/payload'
 import { Unread } from 'src/entities/unread'
 import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from 'src/defaults'
+import alert from 'src/components/utils/alert'
 
 type Props = {
   timeline: Timeline
@@ -123,9 +124,13 @@ const Notifications: React.FC<Props> = props => {
     )
 
     // Update maker for server-side
-    await client.saveMarkers({ notifications: { last_read_id: notifications[0].id } })
-    if (props.server.sns === 'pleroma') {
-      await client.readNotifications({ max_id: notifications[0].id })
+    try {
+      await client.saveMarkers({ notifications: { last_read_id: notifications[0].id } })
+      if (props.server.sns === 'pleroma') {
+        await client.readNotifications({ max_id: notifications[0].id })
+      }
+    } catch {
+      toast.push(alert('error', 'Failed to mark as read'), { placement: 'topStart' })
     }
   }
 
@@ -273,11 +278,5 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
     </Popover>
   )
 })
-
-const alert = (type: 'info' | 'success' | 'warning' | 'error', message: string) => (
-  <Message showIcon type={type}>
-    {message}
-  </Message>
-)
 
 export default Notifications
