@@ -75,7 +75,7 @@ pub async fn start_user(
                         status: mes,
                     },
                 )
-                .unwrap();
+                .expect("Failed to send receive-home-status event");
         }
         Message::Notification(mes) => {
             log::debug!("receive notification");
@@ -87,7 +87,7 @@ pub async fn start_user(
                         notification: mes,
                     },
                 )
-                .unwrap();
+                .expect("Failed to send receive-notification event");
         }
         Message::Delete(status_id) => {
             log::debug!("receive delete");
@@ -99,7 +99,7 @@ pub async fn start_user(
                         status_id,
                     },
                 )
-                .unwrap();
+                .expect("Failed to send delete-home-status event");
         }
         _ => {}
     }));
@@ -172,7 +172,7 @@ pub async fn start(
                         status: mes,
                     },
                 )
-                .unwrap();
+                .expect("Failed to receive-timeline-status event");
         }
         Message::Delete(status_id) => {
             log::debug!("receive delete");
@@ -184,7 +184,7 @@ pub async fn start(
                         status_id,
                     },
                 )
-                .unwrap();
+                .expect("Failed to delete-timeline-status event");
         }
         _ => {}
     }));

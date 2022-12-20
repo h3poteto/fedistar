@@ -43,7 +43,9 @@ async fn add_server(
         .await
         .map_err(|e| e.to_string())?;
 
-    app_handle.emit_all("updated-servers", ()).unwrap();
+    app_handle
+        .emit_all("updated-servers", ())
+        .expect("Failed to send updated-servers event");
     Ok(created)
 }
 
@@ -57,8 +59,12 @@ async fn remove_server(
         .await
         .map_err(|e| e.to_string())?;
 
-    app_handle.emit_all("updated-servers", ()).unwrap();
-    app_handle.emit_all("updated-timelines", ()).unwrap();
+    app_handle
+        .emit_all("updated-servers", ())
+        .expect("Failed to send updated-servers event");
+    app_handle
+        .emit_all("updated-timelines", ())
+        .expect("Failed to send updated-timeline event");
     Ok(())
 }
 
@@ -93,7 +99,7 @@ async fn add_application(
         .map_err(|e| e.to_string())?;
 
     let url = app_data.url.clone();
-    open::that(url.unwrap()).unwrap();
+    open::that(url.expect("URL is not found")).expect("Failed to open the URL");
     Ok(app_data)
 }
 
@@ -155,7 +161,9 @@ async fn authorize_code(
         .await
         .map_err(|e| e.to_string())?;
 
-    app_handle.emit_all("updated-servers", ()).unwrap();
+    app_handle
+        .emit_all("updated-servers", ())
+        .expect("Failed to send updated-servers event");
 
     let cloned_handle = Arc::new(app_handle);
     start_user_streaming(cloned_handle, server, account).await?;
@@ -190,7 +198,7 @@ async fn add_timeline(
 
     app_handle
         .emit_all("updated-timelines", UpdatedTimelinePayload { timelines })
-        .unwrap();
+        .expect("Failed to send updated-timelines event");
 
     let cloned_handle = Arc::new(app_handle);
     start_timeline_streaming(cloned_handle, &sqlite_pool, server, timeline).await?;
@@ -229,7 +237,9 @@ async fn remove_timeline(
         .await
         .map_err(|e| e.to_string())?;
 
-    app_handle.emit_all("updated-timelines", ()).unwrap();
+    app_handle
+        .emit_all("updated-timelines", ())
+        .expect("Failed to updated-timelines event");
     Ok(())
 }
 
@@ -261,7 +271,7 @@ async fn switch_left_timeline(
 
     app_handle
         .emit_all("updated-timelines", UpdatedTimelinePayload { timelines })
-        .unwrap();
+        .expect("Failed to updated-timelines event");
 
     Ok(())
 }
@@ -282,7 +292,7 @@ async fn switch_right_timeline(
 
     app_handle
         .emit_all("updated-timelines", UpdatedTimelinePayload { timelines })
-        .unwrap();
+        .expect("Failed to updated-timelines event");
 
     Ok(())
 }
@@ -290,15 +300,18 @@ async fn switch_right_timeline(
 // This method is not used now. In the future, it will be used.
 #[tauri::command]
 fn toggle_menu(app_handle: AppHandle) -> Result<(), String> {
-    let menu_handle = app_handle.get_window("main").unwrap().menu_handle();
+    let menu_handle = app_handle
+        .get_window("main")
+        .expect("Failed to get main window")
+        .menu_handle();
 
     match menu_handle.is_visible() {
         Ok(true) => {
-            menu_handle.hide().unwrap();
+            menu_handle.hide().expect("Failed to hide menu");
             Ok(())
         }
         Ok(false) => {
-            menu_handle.show().unwrap();
+            menu_handle.show().expect("Failed to show menu");
             Ok(())
         }
         Err(e) => Err(e.to_string()),
@@ -397,7 +410,7 @@ fn init_logger(logfile_path: std::path::PathBuf) {
             .create(true)
             .append(true)
             .open(logfile_path)
-            .unwrap(),
+            .expect("Failed to open logfile"),
     )];
     #[cfg(debug_assertions)]
     {
@@ -409,7 +422,7 @@ fn init_logger(logfile_path: std::path::PathBuf) {
         ));
     }
 
-    simplelog::CombinedLogger::init(logger).unwrap();
+    simplelog::CombinedLogger::init(logger).expect("Failed to initialize logger");
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -436,7 +449,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     init_logger(log_path);
 
     let database_dir_str = std::fs::canonicalize(&config_dir)
-        .unwrap()
+        .expect("Failed to canonicalize")
         .to_string_lossy()
         .replace('\\', "/");
     let database_url = format!("sqlite://{}/{}", database_dir_str, DATABASE_FILE);
@@ -474,8 +487,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             app.manage(sqlite_pool);
             let handle = app.handle();
             app.manage(Mutex::new(handle));
-            let window = app.get_window("main").unwrap();
-            window.menu_handle().hide().unwrap();
+            let window = app.get_window("main").expect("Failed to get main window");
+            window.menu_handle().hide().expect("Failed to hide menu");
 
             #[cfg(debug_assertions)]
             {
