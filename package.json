@@ -43,7 +43,7 @@
     "react-icons": "^4.7.1",
     "react-virtuoso": "^3.1.5",
     "rsuite": "^5.23.3",
-    "sanitize-html": "^2.8.0"
+    "sanitize-html": "^2.8.1"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.2.2",
