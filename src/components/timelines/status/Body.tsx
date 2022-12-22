@@ -33,7 +33,7 @@ const Body: React.FC<Props> = props => {
   }
 
   return (
-    <div style={{ cursor: 'pointer' }}>
+    <div className="body">
       {spoiler()}
       {!spoilered && (
         <div

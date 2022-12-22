@@ -20,7 +20,7 @@ type Props = {
   updateStatus: (status: Entity.Status) => void
   openMedia: (media: Entity.Attachment) => void
   setReplyOpened: (opened: boolean) => void
-  setStatusDetail: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
+  setStatusDetail?: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
 } & HTMLAttributes<HTMLElement>
 
 const Status: React.FC<Props> = props => {
@@ -39,12 +39,17 @@ const Status: React.FC<Props> = props => {
       open(url)
       e.preventDefault()
     } else {
-      props.setStatusDetail(props.status, props.server, props.client)
+      if (props.setStatusDetail) {
+        props.setStatusDetail(props.status, props.server, props.client)
+      }
     }
   }
 
   return (
-    <List.Item style={Object.assign({ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-gray-800)' }, props.style)}>
+    <List.Item
+      className="status"
+      style={Object.assign({ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-gray-800)' }, props.style)}
+    >
       {rebloggedHeader(props.status)}
       <FlexboxGrid>
         {/** icon **/}
@@ -64,11 +69,7 @@ const Status: React.FC<Props> = props => {
               </FlexboxGrid.Item>
               {/** timestamp **/}
               <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', color: 'var(--rs-text-tertiary)' }}>
-                <Time
-                  time={status.created_at}
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => props.setStatusDetail(props.status, props.server, props.client)}
-                />
+                <Time time={status.created_at} onClick={() => props.setStatusDetail(props.status, props.server, props.client)} />
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </div>

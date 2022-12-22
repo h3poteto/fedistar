@@ -12,7 +12,6 @@ type Props = {
   server: Server
   onClose: () => void
   openMedia: (media: Entity.Attachment) => void
-  setStatusDetail: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
 }
 
 const StatusDetail: React.FC<Props> = props => {
@@ -73,7 +72,7 @@ const StatusDetail: React.FC<Props> = props => {
   )
 
   return (
-    <Container style={{ height: '100%', borderLeft: '1px solid var(--rs-gray-600)' }}>
+    <Container className="status-detail" style={{ height: '100%', borderLeft: '1px solid var(--rs-gray-600)' }}>
       <Header style={{ borderBottom: '4px solid var(--rs-gray-800)', backgroundColor: 'var(--rs-gray-700)' }}>
         <Button appearance="link" onClick={props.onClose}>
           <Icon as={BsX} style={{ fontSize: '1.4em' }} />
@@ -90,7 +89,6 @@ const StatusDetail: React.FC<Props> = props => {
                 updateStatus={updateStatus}
                 openMedia={props.openMedia}
                 setReplyOpened={() => null}
-                setStatusDetail={props.setStatusDetail}
                 style={{ backgroundColor: 'var(--rs-gray-700)' }}
               />
             </div>
