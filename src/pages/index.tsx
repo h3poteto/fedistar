@@ -158,7 +158,6 @@ function App() {
                   server={drawerState.server}
                   openMedia={(media: Entity.Attachment) => dispatch({ target: 'media', value: true, object: media })}
                   onClose={() => drawerDispatch({ status: null, server: null, client: null })}
-                  setStatusDetail={(status, server, client) => drawerDispatch({ status: status, server: server, client: client })}
                 />
               )}
             </div>

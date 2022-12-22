@@ -186,5 +186,21 @@
 }
 
 .attachment {
-  cursor: "pointer";
+  cursor: pointer;
+}
+
+.status .body {
+  cursor: pointer;
+}
+
+.status time {
+  cursor: pointer;
+}
+
+.status-detail .status .body {
+  cursor: default;
+}
+
+.status-detail .status time {
+  cursor: default;
 }
