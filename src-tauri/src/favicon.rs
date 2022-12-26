@@ -56,19 +56,22 @@ mod tests {
 
     #[tokio::test]
     async fn test_get_favicon_url_for_fedibird() {
-        let result = get_favicon_url("https://fedibird.com").await;
+        let result = get_favicon_url("https://mastodon.social").await;
         assert!(result.is_some());
         assert_eq!(
             result,
-            Some(String::from("https://fedibird.com/favicon.ico"))
+            Some(String::from("https://mastodon.social/favicon.ico"))
         );
     }
 
     #[tokio::test]
     async fn test_get_favicon_url_for_pleroma() {
-        let result = get_favicon_url("https://pleroma.io").await;
+        let result = get_favicon_url("https://pleroma.soykaf.com").await;
         assert!(result.is_some());
-        assert_eq!(result, Some(String::from("https://pleroma.io/favicon.png")));
+        assert_eq!(
+            result,
+            Some(String::from("https://pleroma.soykaf.com/favicon.png"))
+        );
     }
 
     #[test]
