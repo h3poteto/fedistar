@@ -1,7 +1,7 @@
-import { Form, Button, ButtonToolbar, Schema, Whisper, Input, Popover, Dropdown, useToaster } from 'rsuite'
-import { useState, useEffect, useRef, forwardRef } from 'react'
+import { Form, Button, ButtonToolbar, Schema, Whisper, Input, Popover, Dropdown, useToaster, IconButton } from 'rsuite'
+import { useState, useEffect, useRef, forwardRef, ChangeEvent } from 'react'
 import { Icon } from '@rsuite/icons'
-import { BsEmojiLaughing, BsPaperclip, BsMenuButtonWide, BsGlobe, BsUnlock, BsLock, BsEnvelope } from 'react-icons/bs'
+import { BsEmojiLaughing, BsPaperclip, BsMenuButtonWide, BsGlobe, BsUnlock, BsLock, BsEnvelope, BsXCircle } from 'react-icons/bs'
 import { Entity, MegalodonInterface } from 'megalodon'
 import Picker from '@emoji-mart/react'
 
@@ -18,6 +18,7 @@ type Props = {
 
 type FormValue = {
   status: string
+  attachments?: Array<Entity.Attachment | Entity.AsyncAttachment>
 }
 
 type CustomEmojiCategory = {
@@ -44,6 +45,7 @@ const Status: React.FC<Props> = props => {
   const formRef = useRef<any>()
   const statusRef = useRef<HTMLDivElement>()
   const emojiPickerRef = useRef(null)
+  const uploaderRef = useRef<HTMLInputElement>()
   const toast = useToaster()
 
   useEffect(() => {
@@ -83,7 +85,8 @@ const Status: React.FC<Props> = props => {
   }, [props.in_reply_to])
 
   const model = Schema.Model({
-    status: Schema.Types.StringType().isRequired('This field is required.')
+    status: Schema.Types.StringType().isRequired('This field is required.'),
+    attachments: Schema.Types.ArrayType().maxLength(4, "Can't attach over 5 files")
   })
 
   const handleSubmit = async () => {
@@ -93,7 +96,7 @@ const Status: React.FC<Props> = props => {
     if (formRef === undefined || formRef.current === undefined) {
       return
     } else if (!formRef.current.check()) {
-      console.error('Validation Error')
+      toast.push(alert('error', 'Validation error'), { placement: 'topStart' })
       return
     } else {
       setLoading(true)
@@ -102,6 +105,11 @@ const Status: React.FC<Props> = props => {
         if (props.in_reply_to) {
           options = Object.assign({}, options, {
             in_reply_to_id: props.in_reply_to.id
+          })
+        }
+        if (formValue.attachments) {
+          options = Object.assign({}, options, {
+            media_ids: formValue.attachments.map(m => m.id)
           })
         }
         await props.client.postStatus(formValue.status, options)
@@ -143,13 +151,59 @@ const Status: React.FC<Props> = props => {
     emojiPickerRef?.current.close()
   }
 
+  const selectFile = () => {
+    if (uploaderRef.current) {
+      uploaderRef.current.click()
+    }
+  }
+
+  const fileChanged = async (_filepath: string, event: ChangeEvent<HTMLInputElement>) => {
+    if (formValue.attachments && formValue.attachments.length >= 4) {
+      toast.push(alert('error', "You can't attach over 5 files"), { placement: 'topStart' })
+      return
+    }
+
+    const file = event.target.files?.item(0)
+    if (file === null || file === undefined) {
+      return
+    }
+    if (!file.type.includes('image') && !file.type.includes('video')) {
+      toast.push(alert('error', 'You can attach only images or videos'), { placement: 'topStart' })
+      return
+    }
+
+    // upload
+    try {
+      setLoading(true)
+      const res = await props.client.uploadMedia(file)
+      setFormValue(current => {
+        if (current.attachments) {
+          return Object.assign({}, current, { attachments: [...current.attachments, res.data] })
+        }
+        return Object.assign({}, current, { attachments: [res.data] })
+      })
+    } catch {
+      toast.push(alert('error', 'Failed to upload your file'), { placement: 'topStart' })
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const removeAttachment = (index: number) => {
+    setFormValue(current =>
+      Object.assign({}, current, {
+        attachments: current.attachments.filter((_, i) => i !== index)
+      })
+    )
+  }
+
   const EmojiPicker = forwardRef<HTMLDivElement>((props, ref) => (
     <Popover ref={ref} {...props}>
       <Picker data={data} custom={customEmojis} onEmojiSelect={onEmojiSelect} previewPosition="none" set="native" perLine="7" />
     </Popover>
   ))
 
-  const VisibilityDropdown = ({ onClose, left, top, className }, ref) => {
+  const VisibilityDropdown = ({ onClose, left, top, className }, ref: any) => {
     const handleSelect = (key: string) => {
       onClose()
       if (key === 'public' || key === 'unlisted' || key === 'private' || key === 'direct') {
@@ -189,7 +243,8 @@ const Status: React.FC<Props> = props => {
       </Form.Group>
       <Form.Group controlId="actions">
         <ButtonToolbar>
-          <Button appearance="subtle" disabled>
+          <Input name="attachments" type="file" style={{ display: 'none' }} ref={uploaderRef} onChange={fileChanged} />
+          <Button appearance="subtle" onClick={selectFile}>
             <Icon as={BsPaperclip} style={{ fontSize: '1.1em' }} />
           </Button>
           <Button appearance="subtle" disabled>
@@ -201,6 +256,33 @@ const Status: React.FC<Props> = props => {
             </Button>
           </Whisper>
         </ButtonToolbar>
+      </Form.Group>
+      <Form.Group controlId="attachments-preview">
+        <div>
+          {formValue.attachments?.map((media, index) => (
+            <div key={index} style={{ position: 'relative' }}>
+              <IconButton
+                icon={<Icon as={BsXCircle} style={{ fontSize: '1.0em' }} />}
+                appearance="subtle"
+                size="sm"
+                style={{ position: 'absolute', top: 4, left: 4 }}
+                onClick={() => removeAttachment(index)}
+              />
+
+              <img
+                src={media.preview_url}
+                style={{
+                  width: '100%',
+                  height: '140px',
+                  objectFit: 'cover',
+                  borderRadius: '8px',
+                  boxSizing: 'border-box',
+                  marginBottom: '4px'
+                }}
+              />
+            </div>
+          ))}
+        </div>
       </Form.Group>
       <Form.Group>
         <ButtonToolbar style={{ justifyContent: 'flex-end' }}>
