@@ -155,22 +155,34 @@ const Notifications: React.FC<Props> = props => {
       <Container style={{ height: 'calc(100% - 8px)', overflowY: 'scroll' }}>
         <Header style={{ backgroundColor: 'var(--rs-gray-800)' }}>
           <FlexboxGrid align="middle" justify="space-between">
-            <FlexboxGrid.Item>
+            <FlexboxGrid.Item colspan={16}>
               <FlexboxGrid align="middle">
                 {/** icon **/}
                 <FlexboxGrid.Item
+                  colspan={4}
                   style={{ lineHeight: '48px', fontSize: '18px', paddingRight: '8px', paddingLeft: '8px', paddingBottom: '6px' }}
                 >
                   <Icon as={BsBell} />
                 </FlexboxGrid.Item>
                 {/** name **/}
-                <FlexboxGrid.Item style={{ lineHeight: '48px', fontSize: '18px', verticalAlign: 'middle' }}>
+                <FlexboxGrid.Item
+                  colspan={20}
+                  style={{
+                    lineHeight: '48px',
+                    fontSize: '18px',
+                    verticalAlign: 'middle',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  }}
+                  title={props.server.domain}
+                >
                   {props.timeline.name}
                   <span style={{ fontSize: '14px', color: 'var(--rs-text-secondary)' }}>@{props.server.domain}</span>
                 </FlexboxGrid.Item>
               </FlexboxGrid>
             </FlexboxGrid.Item>
-            <FlexboxGrid.Item>
+            <FlexboxGrid.Item colspan={8}>
               <FlexboxGrid align="middle" justify="end">
                 <FlexboxGrid.Item>
                   <Button
