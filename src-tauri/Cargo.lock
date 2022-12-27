@@ -1816,12 +1816,13 @@ checksum = "a3e378b66a060d48947b590737b30a1be76706c8dd7b8ba0f2fe3989c68a853f"
 
 [[package]]
 name = "megalodon"
-version = "0.3.2"
+version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ed03bb1fb4c0a97fb4213e7441675ad2339ff3eedf494979bfa1e3161da6068c"
+checksum = "0e7bc4427c44dc9c4b439da7bcd15a87b51e21340a12ef5a4f7eac90fc247886"
 dependencies = [
  "async-trait",
  "chrono",
+ "futures-util",
  "hex",
  "log",
  "oauth2",
@@ -1831,8 +1832,8 @@ dependencies = [
  "sha1",
  "thiserror",
  "tokio",
+ "tokio-tungstenite",
  "tokio-util",
- "tungstenite",
  "url",
  "urlencoding",
 ]
@@ -3814,6 +3815,20 @@ dependencies = [
  "futures-core",
  "pin-project-lite",
  "tokio",
+]
+
+[[package]]
+name = "tokio-tungstenite"
+version = "0.18.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "54319c93411147bced34cb5609a80e0a8e44c5999c93903a81cd866630ec0bfd"
+dependencies = [
+ "futures-util",
+ "log",
+ "native-tls",
+ "tokio",
+ "tokio-native-tls",
+ "tungstenite",
 ]
 
 [[package]]
