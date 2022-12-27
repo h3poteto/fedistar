@@ -1,4 +1,4 @@
-import { Form, Button, ButtonToolbar, Schema, Whisper, Input, Popover, Dropdown, useToaster, IconButton } from 'rsuite'
+import { Form, Button, ButtonToolbar, Schema, Whisper, Input, Popover, Dropdown, useToaster, IconButton, Toggle } from 'rsuite'
 import { useState, useEffect, useRef, forwardRef, ChangeEvent } from 'react'
 import { Icon } from '@rsuite/icons'
 import { BsEmojiLaughing, BsPaperclip, BsMenuButtonWide, BsGlobe, BsUnlock, BsLock, BsEnvelope, BsXCircle } from 'react-icons/bs'
@@ -19,6 +19,7 @@ type Props = {
 type FormValue = {
   status: string
   attachments?: Array<Entity.Attachment | Entity.AsyncAttachment>
+  nsfw?: boolean
 }
 
 type CustomEmojiCategory = {
@@ -110,6 +111,11 @@ const Status: React.FC<Props> = props => {
         if (formValue.attachments) {
           options = Object.assign({}, options, {
             media_ids: formValue.attachments.map(m => m.id)
+          })
+        }
+        if (formValue.nsfw !== undefined) {
+          options = Object.assign({}, options, {
+            sensitive: formValue.nsfw
           })
         }
         await props.client.postStatus(formValue.status, options)
@@ -257,6 +263,12 @@ const Status: React.FC<Props> = props => {
           </Whisper>
         </ButtonToolbar>
       </Form.Group>
+      {formValue.attachments?.length > 0 && (
+        <Form.Group controlId="nsfw">
+          <Form.Control name="nsfw" accepter={Toggle} checkedChildren="Sensitive" unCheckedChildren="Not sensitive" />
+        </Form.Group>
+      )}
+
       <Form.Group controlId="attachments-preview">
         <div>
           {formValue.attachments?.map((media, index) => (
