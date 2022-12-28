@@ -1,6 +1,6 @@
 import { HTMLAttributes, MouseEventHandler, useEffect, useState } from 'react'
 import { Entity, MegalodonInterface } from 'megalodon'
-import { FlexboxGrid, List, Avatar } from 'rsuite'
+import { FlexboxGrid, Avatar } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsArrowRepeat } from 'react-icons/bs'
 import { open } from '@tauri-apps/api/shell'
