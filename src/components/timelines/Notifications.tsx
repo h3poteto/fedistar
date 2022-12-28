@@ -3,7 +3,7 @@ import { BsBell, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsCheck2 } from 
 import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
-import { useEffect, useState, forwardRef, useRef, useCallback } from 'react'
+import { useEffect, useState, forwardRef, useRef, useCallback, Dispatch, SetStateAction } from 'react'
 import generator, { MegalodonInterface } from 'megalodon'
 import { Virtuoso } from 'react-virtuoso'
 
@@ -20,9 +20,16 @@ type Props = {
   timeline: Timeline
   server: Server
   unreads: Array<Unread>
-  setUnreads: (a: Array<Unread>) => void
+  setUnreads: Dispatch<SetStateAction<Array<Unread>>>
   openMedia: (media: Entity.Attachment) => void
   setStatusDetail: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
+}
+
+type Marker = {
+  last_read_id: string
+  version: number
+  updated_at: string
+  unread_count?: number
 }
 
 const Notifications: React.FC<Props> = props => {
@@ -32,6 +39,7 @@ const Notifications: React.FC<Props> = props => {
   const [unreadNotifications, setUnreadNotifications] = useState<Array<Entity.Notification>>([])
   const [firstItemIndex, setFirstItemIndex] = useState(TIMELINE_MAX_STATUSES)
   const [loading, setLoading] = useState<boolean>(false)
+  const [marker, setMarker] = useState<Marker | null>(null)
 
   const scrollerRef = useRef<HTMLElement | null>(null)
   const triggerRef = useRef(null)
@@ -45,13 +53,40 @@ const Notifications: React.FC<Props> = props => {
       setAccount(account)
       const client = generator(props.server.sns, props.server.base_url, account.access_token, 'Fedistar')
       setClient(client)
+      let notifications = []
       try {
         const res = await loadNotifications(client)
         setNotifications(res)
+        notifications = res
       } catch {
         toast.push(alert('error', 'Failed to load notifications'), { placement: 'topStart' })
       } finally {
         setLoading(false)
+      }
+      try {
+        const res = await client.getMarkers(['notifications'])
+        const marker = res.data as Entity.Marker
+        if (marker.notifications) {
+          setMarker(marker.notifications)
+
+          const count = unreadCount(marker.notifications, notifications)
+
+          const target = props.unreads.find(u => u.server_id === props.server.id)
+          if (target) {
+            props.setUnreads(unreads =>
+              unreads.map(u => {
+                if (u.server_id === props.server.id) {
+                  return Object.assign({}, u, { count: count })
+                }
+                return u
+              })
+            )
+          } else {
+            props.setUnreads(unreads => unreads.concat({ server_id: props.server.id, count: count }))
+          }
+        }
+      } catch (err) {
+        console.error(err)
       }
     }
     f()
@@ -128,6 +163,11 @@ const Notifications: React.FC<Props> = props => {
       await client.saveMarkers({ notifications: { last_read_id: notifications[0].id } })
       if (props.server.sns === 'pleroma') {
         await client.readNotifications({ max_id: notifications[0].id })
+      }
+      const res = await client.getMarkers(['notifications'])
+      const marker = res.data as Entity.Marker
+      if (marker.notifications) {
+        setMarker(marker.notifications)
       }
     } catch {
       toast.push(alert('error', 'Failed to mark as read'), { placement: 'topStart' })
@@ -230,19 +270,35 @@ const Notifications: React.FC<Props> = props => {
                 atTopStateChange={prependUnreads}
                 endReached={loadMore}
                 overscan={TIMELINE_STATUSES_COUNT}
-                itemContent={(_, notification) => (
-                  <div key={notification.id}>
-                    <Notification
-                      notification={notification}
-                      client={client}
-                      server={props.server}
-                      updateStatus={updateStatus}
-                      openMedia={props.openMedia}
-                      setReplyOpened={opened => (replyOpened.current = opened)}
-                      setStatusDetail={props.setStatusDetail}
-                    />
-                  </div>
-                )}
+                itemContent={(index, notification) => {
+                  let shadow = {}
+                  if (marker && (marker.last_read_id < notification.id || index < marker.unread_count)) {
+                    shadow = { boxShadow: '2px 0 1px var(--rs-primary-700) inset' }
+                  }
+                  return (
+                    <List.Item
+                      key={notification.id}
+                      style={Object.assign(
+                        {
+                          paddingTop: '2px',
+                          paddingBottom: '2px',
+                          backgroundColor: 'var(--rs-gray-800)'
+                        },
+                        shadow
+                      )}
+                    >
+                      <Notification
+                        notification={notification}
+                        client={client}
+                        server={props.server}
+                        updateStatus={updateStatus}
+                        openMedia={props.openMedia}
+                        setReplyOpened={opened => (replyOpened.current = opened)}
+                        setStatusDetail={props.setStatusDetail}
+                      />
+                    </List.Item>
+                  )
+                }}
               />
             </List>
           </Content>
@@ -290,5 +346,12 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
     </Popover>
   )
 })
+
+const unreadCount = (marker: Marker, notifications: Array<Entity.Notification>): number => {
+  if (marker.unread_count !== undefined) {
+    return marker.unread_count
+  }
+  return notifications.filter(n => parseInt(n.id) > parseInt(marker.last_read_id)).length
+}
 
 export default Notifications
