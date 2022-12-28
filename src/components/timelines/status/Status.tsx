@@ -46,10 +46,7 @@ const Status: React.FC<Props> = props => {
   }
 
   return (
-    <List.Item
-      className="status"
-      style={Object.assign({ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-gray-800)' }, props.style)}
-    >
+    <div className="status">
       {rebloggedHeader(props.status)}
       <FlexboxGrid>
         {/** icon **/}
@@ -91,7 +88,7 @@ const Status: React.FC<Props> = props => {
           <Reply client={client} server={props.server} in_reply_to={status} onClose={() => setShowReply(false)} />
         </div>
       )}
-    </List.Item>
+    </div>
   )
 }
 

@@ -81,7 +81,15 @@ const StatusDetail: React.FC<Props> = props => {
       <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)' }}>
         <List hover style={{ width: '340px' }}>
           {[...ancestors, status, ...descendants].map(status => (
-            <div key={status.id}>
+            <List.Item
+              key={status.id}
+              style={{
+                paddingTop: '2px',
+                paddingBottom: '2px',
+                backgroundColor: 'var(--rs-gray-700)',
+                boxShadow: '0 -1px 0 var(--rs-gray-900),0 1px 0 var(--rs-gray-900)'
+              }}
+            >
               <Status
                 status={status}
                 client={props.client}
@@ -89,9 +97,8 @@ const StatusDetail: React.FC<Props> = props => {
                 updateStatus={updateStatus}
                 openMedia={props.openMedia}
                 setReplyOpened={() => null}
-                style={{ backgroundColor: 'var(--rs-gray-700)' }}
               />
-            </div>
+            </List.Item>
           ))}
         </List>
       </Content>

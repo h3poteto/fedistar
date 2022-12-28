@@ -302,7 +302,7 @@ const Timeline: React.FC<Props> = props => {
                 endReached={loadMore}
                 overscan={TIMELINE_STATUSES_COUNT}
                 itemContent={(_, status) => (
-                  <div key={status.id}>
+                  <List.Item key={status.id} style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-gray-800)' }}>
                     <Status
                       status={status}
                       client={client}
@@ -312,7 +312,7 @@ const Timeline: React.FC<Props> = props => {
                       setReplyOpened={opened => (replyOpened.current = opened)}
                       setStatusDetail={props.setStatusDetail}
                     />
-                  </div>
+                  </List.Item>
                 )}
               />
             </List>
