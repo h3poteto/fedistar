@@ -1,15 +1,18 @@
 import { MouseEventHandler } from 'react'
 import { Entity } from 'megalodon'
-import { Avatar, FlexboxGrid } from 'rsuite'
+import { Avatar, Button, FlexboxGrid } from 'rsuite'
 import { Icon } from '@rsuite/icons'
-import { BsStar, BsArrowRepeat, BsMenuUp, BsHouseDoor } from 'react-icons/bs'
+import { BsStar, BsArrowRepeat, BsMenuUp, BsHouseDoor, BsPaperclip } from 'react-icons/bs'
 import { open } from '@tauri-apps/api/shell'
+
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
 import { findLink } from 'src/utils/statusParser'
+import Body from '../status/Body'
 
 type Props = {
   notification: Entity.Notification
+  openMedia: (media: Entity.Attachment) => void
 }
 
 const actionIcon = (notification: Entity.Notification) => {
@@ -142,12 +145,15 @@ const Reaction: React.FC<Props> = props => {
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </div>
-          <div
-            className="status-body"
-            style={{ wordWrap: 'break-word' }}
-            dangerouslySetInnerHTML={{ __html: emojify(status.content, status.emojis) }}
-            onClick={statusClicked}
-          ></div>
+          <Body status={status} onClick={statusClicked} />
+          {status.media_attachments.map((media, index) => (
+            <div key={index}>
+              <Button appearance="subtle" size="sm" onClick={() => props.openMedia(media)}>
+                <Icon as={BsPaperclip} />
+                {media.type}
+              </Button>
+            </div>
+          ))}
           <div className="toolbox"></div>
         </FlexboxGrid.Item>
       </FlexboxGrid>

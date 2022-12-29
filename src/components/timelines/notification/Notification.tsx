@@ -26,7 +26,7 @@ const notification = (props: Props) => {
     case 'quote':
     case 'status':
     case 'emoji_reaction':
-      return <Reaction notification={props.notification} />
+      return <Reaction notification={props.notification} openMedia={props.openMedia} />
     case 'mention':
       return (
         <Status
