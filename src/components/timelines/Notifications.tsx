@@ -272,7 +272,7 @@ const Notifications: React.FC<Props> = props => {
                 overscan={TIMELINE_STATUSES_COUNT}
                 itemContent={(index, notification) => {
                   let shadow = {}
-                  if (marker && (marker.last_read_id < notification.id || index < marker.unread_count)) {
+                  if (marker && (parseInt(marker.last_read_id) < parseInt(notification.id) || index < marker.unread_count)) {
                     shadow = { boxShadow: '2px 0 1px var(--rs-primary-700) inset' }
                   }
                   return (
