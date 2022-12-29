@@ -1197,10 +1197,10 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==
 
-axios@1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.1.tgz#44cf04a3c9f0c2252ebd85975361c026cb9f864a"
-  integrity sha512-I88cFiGu9ryt/tfVEi4kX2SITsvDddTajXTOFmt2uK1ZVA8LytjtdeyefdQWEf5PU8w+4SSJDoYnggflB5tW4A==
+axios@1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.2.tgz#72681724c6e6a43a9fea860fc558127dbe32f9f1"
+  integrity sha512-bz/J4gS2S3I7mpN/YZfGFTqhXTYzRho8Ay38w2otuuDR322KzFIWm/4W2K6gIwvWaws5n+mnb7D1lN9uD+QH6Q==
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
@@ -3002,14 +3002,14 @@ makeerror@1.0.12:
   dependencies:
     tmpl "1.0.5"
 
-megalodon@^5.0.2:
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-5.0.2.tgz#d9b37be1cd9a0d239fae6f3e2e01e321efb3e3cd"
-  integrity sha512-Sf/5CRxuCOfnXLXrNULJd4N9DoXlCQHW2EZAse552eR7h0EGrPqZsza4nNOov3baT5+rgok2t1Ip5Sq9C1GNew==
+megalodon@^5.0.4:
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-5.0.4.tgz#b9d3693dcf4172ff6b0438aaafdf6a8211c6456a"
+  integrity sha512-mys03A3vFAwuj/7KrAytk2kIz3lc02DbLSjDF/lxYf1BDqGGA2lwAqgYwws194flyvhZbLiUDzZ73KuZxHy6GQ==
   dependencies:
     "@types/oauth" "^0.9.0"
     "@types/ws" "^8.2.3"
-    axios "1.2.1"
+    axios "1.2.2"
     dayjs "^1.11.7"
     form-data "^4.0.0"
     https-proxy-agent "^5.0.1"
