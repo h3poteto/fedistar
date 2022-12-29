@@ -64,7 +64,7 @@ pub async fn start_user(
 
     let server_id = server.id;
 
-    streaming.listen(Box::new(move |message| match message {
+    let s = streaming.listen(Box::new(move |message| match message {
         Message::Update(mes) => {
             log::debug!("receive update");
             app_handle
@@ -103,6 +103,7 @@ pub async fn start_user(
         }
         _ => {}
     }));
+    s.await;
 
     Ok(())
 }
@@ -127,7 +128,7 @@ pub async fn start(
     let instance = client.get_instance().await.map_err(|e| e.to_string())?;
     let streaming_url = instance.json.urls.streaming_api;
 
-    let streaming: Box<dyn megalodon::Streaming>;
+    let streaming: Box<dyn megalodon::Streaming + Send + Sync>;
     match timeline.kind {
         entities::timeline::Kind::Public => {
             streaming = client.public_streaming(streaming_url);
@@ -161,7 +162,7 @@ pub async fn start(
 
     let timeline_id = timeline.id;
 
-    streaming.listen(Box::new(move |message| match message {
+    let s = streaming.listen(Box::new(move |message| match message {
         Message::Update(mes) => {
             log::debug!("receive update");
             app_handle
@@ -188,6 +189,7 @@ pub async fn start(
         }
         _ => {}
     }));
+    s.await;
 
     Ok(())
 }
