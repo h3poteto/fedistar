@@ -18,6 +18,7 @@ import generateNotification from 'src/utils/notification'
 import { ReceiveNotificationPayload } from 'src/payload'
 import { Entity, MegalodonInterface } from 'megalodon'
 import Status from 'src/components/detail/Status'
+import Thirdparty from 'src/components/settings/Thirdparty'
 
 function App() {
   const [servers, setServers] = useState<Array<Server>>([])
@@ -97,6 +98,7 @@ function App() {
 
   return (
     <div className="container index" style={{ backgroundColor: 'var(--rs-gray-900)' }}>
+      {/** Modals **/}
       <NewServer
         open={modalState.newServer.opened}
         onClose={() => dispatch({ target: 'newServer', value: false, object: null })}
@@ -107,12 +109,15 @@ function App() {
         opened={modalState.media.opened}
         close={() => dispatch({ target: 'media', value: false, object: null })}
       />
+      <Thirdparty open={modalState.thirdparty.opened} onClose={() => dispatch({ target: 'thirdparty', value: false })} />
+
       <Container style={{ height: '100%' }}>
         <Navigator
           servers={servers}
           unreads={unreads}
           addNewServer={() => dispatch({ target: 'newServer', value: true, object: null })}
           openAuthorize={(server: Server) => dispatch({ target: 'newServer', value: true, object: server })}
+          openThirdparty={() => dispatch({ target: 'thirdparty', value: true })}
           openCompose={openCompose}
         />
         <Animation.Transition
@@ -177,6 +182,9 @@ type ModalState = {
     opened: boolean
     object: Entity.Attachment | null
   }
+  thirdparty: {
+    opened: boolean
+  }
 }
 
 const initialModalState: ModalState = {
@@ -187,6 +195,9 @@ const initialModalState: ModalState = {
   media: {
     opened: false,
     object: null
+  },
+  thirdparty: {
+    opened: false
   }
 }
 
@@ -196,6 +207,8 @@ const modalReducer = (current: ModalState, action: { target: string; value: bool
       return { ...current, newServer: { opened: action.value, object: action.object } }
     case 'media':
       return { ...current, media: { opened: action.value, object: action.object } }
+    case 'thirdparty':
+      return { ...current, thirdparty: { opened: action.value } }
     default:
       return current
   }

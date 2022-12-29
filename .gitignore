@@ -25,3 +25,5 @@ dist-ssr
 *.sw?
 
 tsconfig.tsbuildinfo
+/thirdparty.json
+/src-tauri/thirdparty.json
