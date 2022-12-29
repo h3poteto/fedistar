@@ -13,10 +13,11 @@ type NavigatorProps = {
   addNewServer: () => void
   openAuthorize: (server: Server) => void
   openCompose: () => void
+  openThirdparty: () => void
 }
 
 const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
-  const { servers, openAuthorize } = props
+  const { servers, openAuthorize, openThirdparty } = props
 
   return (
     <Sidebar
@@ -54,9 +55,16 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
               </Whisper>
             </div>
           ))}
-          <Button appearance="link" size="lg" disabled>
-            <Icon as={BsGear} style={{ fontSize: '1.4em' }} />
-          </Button>
+          <Whisper
+            placement="right"
+            controlId="control-id-settings-menu"
+            trigger="click"
+            speaker={({ className, left, top, onClose }, ref) => settingsMenu({ className, left, top, onClose, openThirdparty }, ref)}
+          >
+            <Button appearance="link" size="lg">
+              <Icon as={BsGear} style={{ fontSize: '1.4em' }} />
+            </Button>
+          </Whisper>
         </Sidenav.Body>
       </Sidenav>
     </Sidebar>
@@ -92,6 +100,37 @@ const serverMenu = (
       <Dropdown.Menu onSelect={handleSelect}>
         {server.account_id === null && <Dropdown.Item eventKey="0">Authorize</Dropdown.Item>}
         <Dropdown.Item eventKey="1">Remove</Dropdown.Item>
+      </Dropdown.Menu>
+    </Popover>
+  )
+}
+
+type SettingsMenuProps = {
+  className: string
+  left?: number
+  top?: number
+  onClose: (delay?: number) => NodeJS.Timeout | void
+  openThirdparty: () => void
+}
+
+const settingsMenu = (
+  { className, left, top, onClose, openThirdparty }: SettingsMenuProps,
+  ref: React.RefCallback<HTMLElement>
+): ReactElement => {
+  const handleSelect = (eventKey: string) => {
+    onClose()
+    switch (eventKey) {
+      case 'thirdparty': {
+        openThirdparty()
+        break
+      }
+    }
+  }
+
+  return (
+    <Popover ref={ref} className={className} style={{ left, top, padding: 0 }}>
+      <Dropdown.Menu onSelect={handleSelect}>
+        <Dropdown.Item eventKey="thirdparty">Third-party licenses</Dropdown.Item>
       </Dropdown.Menu>
     </Popover>
   )

@@ -8,7 +8,8 @@
     "tauri": "tauri",
     "lint": "eslint src --ext ts,tsx",
     "typecheck": "tsc -p . --noEmit",
-    "test": "NODE_ENV=test jest -u --maxWorkers=3"
+    "test": "NODE_ENV=test jest -u --maxWorkers=3",
+    "thirdparty": "cd src-tauri && cargo bundle-licenses --format json --output thirdparty.json && cd ../ && license-checker --production --json > thirdparty.json && node scripts/thirdparty.js"
   },
   "jest": {
     "moduleFileExtensions": [
