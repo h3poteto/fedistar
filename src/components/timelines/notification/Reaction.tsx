@@ -150,7 +150,7 @@ const Reaction: React.FC<Props> = props => {
             <div key={index}>
               <Button appearance="subtle" size="sm" onClick={() => props.openMedia(media)}>
                 <Icon as={BsPaperclip} />
-                {media.type}
+                {media.id}
               </Button>
             </div>
           ))}

@@ -66,7 +66,8 @@ const Timeline: React.FC<Props> = props => {
       try {
         const res = await loadTimeline(props.timeline, client)
         setStatuses(res)
-      } catch {
+      } catch (err) {
+        console.error(err)
         toast.push(alert('error', `Failed to load ${props.timeline.name} timeline`), { placement: 'topStart' })
       } finally {
         setLoading(false)
@@ -146,7 +147,7 @@ const Timeline: React.FC<Props> = props => {
       case 'favourites': {
         const res = await client.getFavourites(options)
         const link = parse(res.headers.link)
-        if (link !== null) {
+        if (link !== null && link.next) {
           setNextMaxId(link.next.max_id)
         }
         return res.data
@@ -161,7 +162,7 @@ const Timeline: React.FC<Props> = props => {
       case 'bookmarks': {
         const res = await client.getBookmarks(options)
         const link = parse(res.headers.link)
-        if (link !== null) {
+        if (link !== null && link.next) {
           setNextMaxId(link.next.max_id)
         }
         return res.data
@@ -208,10 +209,20 @@ const Timeline: React.FC<Props> = props => {
 
   const loadMore = useCallback(async () => {
     console.debug('appending')
-    let maxId = nextMaxId
-    if (!maxId) {
-      maxId = statuses[statuses.length - 1].id
+    let maxId = null
+    switch (props.timeline.kind) {
+      case 'favourites':
+      case 'bookmarks':
+        if (!nextMaxId) {
+          return
+        }
+        maxId = nextMaxId
+        break
+      default:
+        maxId = statuses[statuses.length - 1].id
+        break
     }
+
     const append = await loadTimeline(props.timeline, client, maxId)
     setStatuses(last => [...last, ...append])
   }, [client, statuses, setStatuses, nextMaxId])
