@@ -204,3 +204,11 @@
 .status-detail .status time {
   cursor: default;
 }
+
+.media-dialog {
+  height: 100%;
+}
+
+.media-dialog .rs-modal-content {
+  height: 100%;
+}
