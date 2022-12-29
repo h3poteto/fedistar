@@ -46,7 +46,7 @@ Please be careful when using.
     - [x] Post statuses
     - [x] Add emoji
     - [x] Attach media
-    - [ ] Change visibility
+    - [x] Change visibility
     - [ ] Specify NSFW and CW
 
 ## Development
