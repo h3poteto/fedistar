@@ -35,7 +35,7 @@
     "@rsuite/icons": "^1.0.2",
     "@tauri-apps/api": "^1.2.0",
     "emoji-mart": "^5.4.0",
-    "megalodon": "^5.0.4",
+    "megalodon": "^5.0.5",
     "moment": "^2.29.4",
     "next": "^13.1.1",
     "parse-link-header": "^2.0.0",
