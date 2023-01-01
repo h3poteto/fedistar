@@ -14,6 +14,7 @@ Please be careful when using.
 ## Roadmap for 1.0.0
 - [x] Servers and Accounts
     - [x] Add/Remove
+- [x] See timelines without sign in
 - [ ] Timelines
     - [x] Home
     - [x] Notifications
@@ -42,12 +43,16 @@ Please be careful when using.
     - [x] Handle NSFW and CW
     - [x] Show the thread
     - [x] Link preview
-- [ ] Post statuses
+- [x] Post statuses
     - [x] Post statuses
     - [x] Add emoji
     - [x] Attach media
     - [x] Change visibility
-    - [ ] Specify NSFW and CW
+    - [x] Specify NSFW and CW
+- [x] See media
+    - [x] Image
+    - [x] Video
+    - [x] Audio
 
 ## Development
 ### Prereqisites
