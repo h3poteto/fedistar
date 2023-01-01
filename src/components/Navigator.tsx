@@ -12,7 +12,7 @@ type NavigatorProps = {
   unreads: Array<Unread>
   addNewServer: () => void
   openAuthorize: (server: Server) => void
-  openCompose: () => void
+  toggleCompose: () => void
   openThirdparty: () => void
 }
 
@@ -27,7 +27,7 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
     >
       <Sidenav expanded={false}>
         <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Button appearance="link" size="lg" onClick={props.openCompose}>
+          <Button appearance="link" size="lg" onClick={props.toggleCompose}>
             <Icon as={BsPencilSquare} style={{ fontSize: '1.4em' }} />
           </Button>
         </Sidenav.Body>
