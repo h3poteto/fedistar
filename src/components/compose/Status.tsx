@@ -17,6 +17,7 @@ type Props = {
 }
 
 type FormValue = {
+  spoiler: string
   status: string
   attachments?: Array<Entity.Attachment | Entity.AsyncAttachment>
   nsfw?: boolean
@@ -37,11 +38,13 @@ type CustomEmoji = {
 
 const Status: React.FC<Props> = props => {
   const [formValue, setFormValue] = useState<FormValue>({
+    spoiler: '',
     status: ''
   })
   const [customEmojis, setCustomEmojis] = useState<Array<CustomEmojiCategory>>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [visibility, setVisibility] = useState<'public' | 'unlisted' | 'private' | 'direct'>('public')
+  const [cw, setCW] = useState<boolean>(false)
 
   const formRef = useRef<any>()
   const statusRef = useRef<HTMLDivElement>()
@@ -80,7 +83,7 @@ const Status: React.FC<Props> = props => {
 
   useEffect(() => {
     if (props.in_reply_to) {
-      setFormValue({ status: `@${props.in_reply_to.account.acct} ` })
+      setFormValue({ spoiler: '', status: `@${props.in_reply_to.account.acct} ` })
       setVisibility(props.in_reply_to.visibility)
     }
   }, [props.in_reply_to])
@@ -118,6 +121,11 @@ const Status: React.FC<Props> = props => {
             sensitive: formValue.nsfw
           })
         }
+        if (formValue.spoiler.length > 0) {
+          options = Object.assign({}, options, {
+            spoiler_text: formValue.spoiler
+          })
+        }
         await props.client.postStatus(formValue.status, options)
         clear()
       } catch {
@@ -130,6 +138,7 @@ const Status: React.FC<Props> = props => {
 
   const clear = () => {
     setFormValue({
+      spoiler: '',
       status: ''
     })
     if (props.onClose) {
@@ -238,9 +247,15 @@ const Status: React.FC<Props> = props => {
 
   return (
     <Form fluid model={model} ref={formRef} onChange={setFormValue} formValue={formValue}>
+      {cw && (
+        <Form.Group controlId="spoiler">
+          <Form.Control name="spoiler" placeholder="Write your warning here" />
+        </Form.Group>
+      )}
+
       <Form.Group controlId="status" style={{ position: 'relative', marginBottom: '4px' }}>
         {/** @ts-ignore **/}
-        <Form.Control rows={5} name="status" accepter={Textarea} ref={statusRef} />
+        <Form.Control rows={5} name="status" accepter={Textarea} ref={statusRef} placeholder="What's on your mind?" />
         <Whisper trigger="click" placement="bottomStart" ref={emojiPickerRef} speaker={<EmojiPicker />}>
           <Button appearance="link" style={{ position: 'absolute', top: '4px', right: '8px', padding: 0 }}>
             <Icon as={BsEmojiLaughing} style={{ fontSize: '1.2em' }} />
@@ -261,6 +276,9 @@ const Status: React.FC<Props> = props => {
               <Icon as={privacyIcon(visibility)} style={{ fontSize: '1.1em' }} />
             </Button>
           </Whisper>
+          <Button appearance="subtle" onClick={() => setCW(previous => !previous)}>
+            <span style={{ fontSize: '0.8em' }}>CW</span>
+          </Button>
         </ButtonToolbar>
       </Form.Group>
       {formValue.attachments?.length > 0 && (
