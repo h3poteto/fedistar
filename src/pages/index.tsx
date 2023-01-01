@@ -92,8 +92,8 @@ function App() {
     })
   }, [])
 
-  const openCompose = () => {
-    setComposeOpened(true)
+  const toggleCompose = () => {
+    setComposeOpened(previous => !previous)
   }
 
   return (
@@ -118,7 +118,7 @@ function App() {
           addNewServer={() => dispatch({ target: 'newServer', value: true, object: null })}
           openAuthorize={(server: Server) => dispatch({ target: 'newServer', value: true, object: server })}
           openThirdparty={() => dispatch({ target: 'thirdparty', value: true })}
-          openCompose={openCompose}
+          toggleCompose={toggleCompose}
         />
         <Animation.Transition
           in={composeOpened}
