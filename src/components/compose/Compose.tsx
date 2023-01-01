@@ -49,7 +49,13 @@ const Compose: React.FC<Props> = props => {
     const f = async () => {
       const accounts = await invoke<Array<[Account, Server]>>('list_accounts')
       setAccounts(accounts)
-      setFromAccount(accounts[0])
+
+      const usual = accounts.find(([a, _]) => a.usual)
+      if (usual) {
+        setFromAccount(usual)
+      } else {
+        setFromAccount(accounts[0])
+      }
     }
     f()
   }, [props.servers])
@@ -62,9 +68,10 @@ const Compose: React.FC<Props> = props => {
     setClient(client)
   }, [fromAccount])
 
-  const selectAccount = (eventKey: string) => {
+  const selectAccount = async (eventKey: string) => {
     const account = accounts[parseInt(eventKey)]
     setFromAccount(account)
+    await invoke('set_usual_account', { id: account[0].id })
   }
 
   return (

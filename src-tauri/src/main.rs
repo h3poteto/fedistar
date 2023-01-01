@@ -155,6 +155,7 @@ async fn authorize_code(
         client_secret,
         token_data.access_token,
         token_data.refresh_token,
+        false,
     );
 
     database::add_account(&sqlite_pool, &server, &account)
@@ -253,6 +254,17 @@ async fn get_account(
         .map_err(|e| e.to_string())?;
 
     Ok(account)
+}
+
+#[tauri::command]
+async fn set_usual_account(
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+    id: i64,
+) -> Result<(), String> {
+    let _ = database::set_usual_account(&sqlite_pool, id)
+        .await
+        .map_err(|e| e.to_string())?;
+    Ok(())
 }
 
 #[tauri::command]
@@ -466,6 +478,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             add_application,
             authorize_code,
             get_account,
+            set_usual_account,
             list_accounts,
             add_timeline,
             list_timelines,
