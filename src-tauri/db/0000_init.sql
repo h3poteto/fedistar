@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS accounts(
   client_id TEXT DEFAULT NULL,
   client_secret TEXT NOT NULL,
   access_token TEXT NOT NULL,
-  refresh_token TEXT DEFAULT NULL
+  refresh_token TEXT DEFAULT NULL,
+  usual BOOL NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS timelines(

@@ -78,7 +78,7 @@ pub(crate) async fn add_account(
     let mut tx = pool.begin().await?;
     let mut created = account.clone();
 
-    let res = sqlx::query("INSERT INTO accounts (username, account_id, avatar, client_id, client_secret, access_token, refresh_token) VALUES (?, ?, ?, ?, ?, ?, ?)")
+    let res = sqlx::query("INSERT INTO accounts (username, account_id, avatar, client_id, client_secret, access_token, refresh_token, usual) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
         .bind(account.username.clone())
         .bind(account.account_id.clone())
         .bind(account.avatar.clone())
@@ -86,6 +86,7 @@ pub(crate) async fn add_account(
         .bind(account.client_secret.clone())
         .bind(account.access_token.clone())
         .bind(account.refresh_token.clone())
+        .bind(account.usual.clone())
         .execute(&mut tx)
         .await?;
     let id = res.last_insert_rowid();
@@ -276,7 +277,7 @@ pub(crate) async fn list_account(
     let accounts = sqlx::query(
         r#"
 SELECT accounts.id, accounts.username, accounts.account_id, accounts.avatar, accounts.client_id, accounts.client_secret,
-       accounts.access_token, accounts.refresh_token, servers.id, servers.domain, servers.base_url, servers.sns,
+       accounts.access_token, accounts.refresh_token, accounts.usual, servers.id, servers.domain, servers.base_url, servers.sns,
        servers.favicon, servers.account_id
 FROM accounts INNER JOIN servers ON accounts.id = servers.account_id"#
         ).map(|row: SqliteRow| {
@@ -290,18 +291,42 @@ FROM accounts INNER JOIN servers ON accounts.id = servers.account_id"#
                     client_secret: row.get(5),
                     access_token: row.get(6),
                     refresh_token: row.get(7),
+                    usual: row.get(8),
                 },
                 entities::Server {
-                    id: row.get(8),
-                    domain: row.get(9),
-                    base_url: row.get(10),
-                    sns: row.get(11),
-                    favicon: row.get(12),
-                    account_id: row.get(13),
+                    id: row.get(9),
+                    domain: row.get(10),
+                    base_url: row.get(11),
+                    sns: row.get(12),
+                    favicon: row.get(13),
+                    account_id: row.get(14),
                 },
             )
         }).fetch_all(pool)
         .await?;
 
     Ok(accounts)
+}
+
+pub(crate) async fn set_usual_account(pool: &SqlitePool, id: i64) -> DBResult<entities::Account> {
+    let mut tx = pool.begin().await?;
+
+    sqlx::query("UPDATE accounts SET usual = ? WHERE id = ?")
+        .bind(true)
+        .bind(id)
+        .execute(&mut tx)
+        .await?;
+    sqlx::query("UPDATE accounts SET usual = ? WHERE id != ?")
+        .bind(false)
+        .bind(id)
+        .execute(&mut tx)
+        .await?;
+    tx.commit().await?;
+
+    let account = query_as::<_, entities::Account>("SELECT * FROM accounts WHERE id = ?")
+        .bind(id)
+        .fetch_one(pool)
+        .await?;
+
+    Ok(account)
 }

@@ -13,6 +13,7 @@ pub struct Account {
     pub access_token: String,
     // Mastodon and Misskey does not provide refresh_token.
     pub refresh_token: Option<String>,
+    pub usual: bool,
 }
 
 impl Account {
@@ -25,6 +26,7 @@ impl Account {
         client_secret: String,
         access_token: String,
         refresh_token: Option<String>,
+        usual: bool,
     ) -> Self {
         Self {
             id,
@@ -35,6 +37,7 @@ impl Account {
             client_secret,
             access_token,
             refresh_token,
+            usual,
         }
     }
 }
