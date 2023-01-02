@@ -75,7 +75,7 @@ const StatusDetail: React.FC<Props> = props => {
     <Container className="status-detail" style={{ height: '100%', borderLeft: '1px solid var(--rs-gray-600)' }}>
       <Header style={{ borderBottom: '4px solid var(--rs-gray-800)', backgroundColor: 'var(--rs-gray-700)' }}>
         <Button appearance="link" onClick={props.onClose}>
-          <Icon as={BsX} style={{ fontSize: '1.4em' }} />
+          <Icon as={BsX} style={{ fontSize: '1.4rem' }} />
         </Button>
       </Header>
       <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)' }}>

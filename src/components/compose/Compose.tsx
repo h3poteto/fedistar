@@ -81,7 +81,7 @@ const Compose: React.FC<Props> = props => {
           <FlexboxGrid.Item style={{ lineHeight: '53px', paddingLeft: '12px', fontSize: '18px' }}>New Status</FlexboxGrid.Item>
           <FlexboxGrid.Item>
             <Button appearance="link" onClick={() => props.setOpened(false)}>
-              <Icon as={BsX} style={{ fontSize: '1.4em' }} />
+              <Icon as={BsX} style={{ fontSize: '1.4rem' }} />
             </Button>
           </FlexboxGrid.Item>
         </FlexboxGrid>

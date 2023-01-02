@@ -329,7 +329,7 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item>
             <Button appearance="link" size="xs" onClick={() => removeTimeline(props.timeline)}>
-              <Icon as={BsX} style={{ paddingBottom: '2px', fontSize: '1.4em' }} />
+              <Icon as={BsX} style={{ paddingBottom: '2px', fontSize: '1.4rem' }} />
               <span>Unpin</span>
             </Button>
           </FlexboxGrid.Item>

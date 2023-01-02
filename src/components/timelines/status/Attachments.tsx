@@ -49,21 +49,21 @@ const Attachment: React.FC<AttachmentProps> = props => {
     case 'gifv':
       return (
         <Tag className="attachment" onClick={() => props.openMedia(media)}>
-          <Icon as={BsCameraVideo} style={{ fontSize: '1.2em', paddingRight: '4px' }} />
+          <Icon as={BsCameraVideo} style={{ fontSize: '1.2rem', paddingRight: '4px' }} />
           GIF
         </Tag>
       )
     case 'video':
       return (
         <Tag className="attachment" onClick={() => props.openMedia(media)}>
-          <Icon as={BsCameraVideo} style={{ fontSize: '1.2em', paddingRight: '4px' }} />
+          <Icon as={BsCameraVideo} style={{ fontSize: '1.2rem', paddingRight: '4px' }} />
           VIDEO
         </Tag>
       )
     case 'audio':
       return (
         <Tag className="attachment" onClick={() => props.openMedia(media)}>
-          <Icon as={BsVolumeUp} style={{ fontSize: '1.2em', paddingRight: '4px' }} />
+          <Icon as={BsVolumeUp} style={{ fontSize: '1.2rem', paddingRight: '4px' }} />
           AUDIO
         </Tag>
       )

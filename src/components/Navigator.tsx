@@ -28,14 +28,14 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
       <Sidenav expanded={false}>
         <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Button appearance="link" size="lg" onClick={props.toggleCompose}>
-            <Icon as={BsPencilSquare} style={{ fontSize: '1.4em' }} />
+            <Icon as={BsPencilSquare} style={{ fontSize: '1.4rem' }} />
           </Button>
         </Sidenav.Body>
       </Sidenav>
       <Sidenav expanded={false}>
         <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Button appearance="link" size="lg" onClick={props.addNewServer}>
-            <Icon as={BsPlus} style={{ fontSize: '1.4em' }} />
+            <Icon as={BsPlus} style={{ fontSize: '1.4rem' }} />
           </Button>
           {servers.map(server => (
             <div key={server.id}>
@@ -62,7 +62,7 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
             speaker={({ className, left, top, onClose }, ref) => settingsMenu({ className, left, top, onClose, openThirdparty }, ref)}
           >
             <Button appearance="link" size="lg">
-              <Icon as={BsGear} style={{ fontSize: '1.4em' }} />
+              <Icon as={BsGear} style={{ fontSize: '1.4rem' }} />
             </Button>
           </Whisper>
         </Sidenav.Body>

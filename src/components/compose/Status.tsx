@@ -258,7 +258,7 @@ const Status: React.FC<Props> = props => {
         <Form.Control rows={5} name="status" accepter={Textarea} ref={statusRef} placeholder="What's on your mind?" />
         <Whisper trigger="click" placement="bottomStart" ref={emojiPickerRef} speaker={<EmojiPicker />}>
           <Button appearance="link" style={{ position: 'absolute', top: '4px', right: '8px', padding: 0 }}>
-            <Icon as={BsEmojiLaughing} style={{ fontSize: '1.2em' }} />
+            <Icon as={BsEmojiLaughing} style={{ fontSize: '1.1rem' }} />
           </Button>
         </Whisper>
       </Form.Group>
@@ -266,18 +266,18 @@ const Status: React.FC<Props> = props => {
         <ButtonToolbar>
           <Input name="attachments" type="file" style={{ display: 'none' }} ref={uploaderRef} onChange={fileChanged} />
           <Button appearance="subtle" onClick={selectFile}>
-            <Icon as={BsPaperclip} style={{ fontSize: '1.1em' }} />
+            <Icon as={BsPaperclip} style={{ fontSize: '1.0rem' }} />
           </Button>
           <Button appearance="subtle" disabled>
-            <Icon as={BsMenuButtonWide} style={{ fontSize: '1.1em' }} />
+            <Icon as={BsMenuButtonWide} style={{ fontSize: '1.0rem' }} />
           </Button>
           <Whisper placement="bottomStart" trigger="click" speaker={VisibilityDropdown}>
             <Button appearance="subtle">
-              <Icon as={privacyIcon(visibility)} style={{ fontSize: '1.1em' }} />
+              <Icon as={privacyIcon(visibility)} style={{ fontSize: '1.0rem' }} />
             </Button>
           </Whisper>
           <Button appearance="subtle" onClick={() => setCW(previous => !previous)}>
-            <span style={{ fontSize: '0.8em' }}>CW</span>
+            <span style={{ fontSize: '0.8rem' }}>CW</span>
           </Button>
         </ButtonToolbar>
       </Form.Group>
@@ -292,7 +292,7 @@ const Status: React.FC<Props> = props => {
           {formValue.attachments?.map((media, index) => (
             <div key={index} style={{ position: 'relative' }}>
               <IconButton
-                icon={<Icon as={BsXCircle} style={{ fontSize: '1.0em' }} />}
+                icon={<Icon as={BsXCircle} style={{ fontSize: '1.0rem' }} />}
                 appearance="subtle"
                 size="sm"
                 style={{ position: 'absolute', top: 4, left: 4 }}
