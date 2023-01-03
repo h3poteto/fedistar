@@ -9,7 +9,7 @@ type Props = {
   client: MegalodonInterface
   server: Server
   updateStatus: (status: Entity.Status) => void
-  openMedia: (media: Entity.Attachment) => void
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setReplyOpened: (opened: boolean) => void
   setStatusDetail: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
 }

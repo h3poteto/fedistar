@@ -12,7 +12,7 @@ import Body from '../status/Body'
 
 type Props = {
   notification: Entity.Notification
-  openMedia: (media: Entity.Attachment) => void
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
 }
 
 const actionIcon = (notification: Entity.Notification) => {
@@ -148,7 +148,7 @@ const Reaction: React.FC<Props> = props => {
           <Body status={status} onClick={statusClicked} />
           {status.media_attachments.map((media, index) => (
             <div key={index}>
-              <Button appearance="subtle" size="sm" onClick={() => props.openMedia(media)}>
+              <Button appearance="subtle" size="sm" onClick={() => props.openMedia(status.media_attachments, index)}>
                 <Icon as={BsPaperclip} />
                 {media.id}
               </Button>
