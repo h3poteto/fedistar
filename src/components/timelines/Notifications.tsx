@@ -21,7 +21,7 @@ type Props = {
   server: Server
   unreads: Array<Unread>
   setUnreads: Dispatch<SetStateAction<Array<Unread>>>
-  openMedia: (media: Entity.Attachment) => void
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setStatusDetail: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
 }
 

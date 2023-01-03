@@ -8,7 +8,7 @@ import { useState } from 'react'
 type Props = {
   attachments: Array<Entity.Attachment>
   sensitive: boolean
-  openMedia: (media: Entity.Attachment) => void
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
 }
 
 const Attachments: React.FC<Props> = props => {
@@ -16,7 +16,7 @@ const Attachments: React.FC<Props> = props => {
     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
       {props.attachments.map((media, index) => (
         <div key={index} style={{ margin: '4px' }}>
-          <Attachment media={media} sensitive={props.sensitive} openMedia={props.openMedia} />
+          <Attachment media={media} sensitive={props.sensitive} openMedia={() => props.openMedia(props.attachments, index)} />
         </div>
       ))}
     </div>

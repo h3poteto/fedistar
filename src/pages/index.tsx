@@ -117,9 +117,10 @@ function App() {
         initialServer={modalState.newServer.object}
       />
       <Media
+        index={modalState.media.index}
         media={modalState.media.object}
         opened={modalState.media.opened}
-        close={() => dispatch({ target: 'media', value: false, object: null })}
+        close={() => dispatch({ target: 'media', value: false, object: [], index: 0 })}
       />
       <Thirdparty open={modalState.thirdparty.opened} onClose={() => dispatch({ target: 'thirdparty', value: false })} />
       <SettingsPage
@@ -159,7 +160,9 @@ function App() {
               unreads={unreads}
               setUnreads={setUnreads}
               key={timeline[0].id}
-              openMedia={(media: Entity.Attachment) => dispatch({ target: 'media', value: true, object: media })}
+              openMedia={(media: Array<Entity.Attachment>, index: number) =>
+                dispatch({ target: 'media', value: true, object: media, index: index })
+              }
               setStatusDetail={(status, server, client) => drawerDispatch({ status: status, server: server, client: client })}
             />
           ))}
@@ -179,7 +182,9 @@ function App() {
                   status={drawerState.status}
                   client={drawerState.client}
                   server={drawerState.server}
-                  openMedia={(media: Entity.Attachment) => dispatch({ target: 'media', value: true, object: media })}
+                  openMedia={(media: Array<Entity.Attachment>, index: number) =>
+                    dispatch({ target: 'media', value: true, object: media, index: index })
+                  }
                   onClose={() => drawerDispatch({ status: null, server: null, client: null })}
                 />
               )}
@@ -198,7 +203,8 @@ type ModalState = {
   }
   media: {
     opened: boolean
-    object: Entity.Attachment | null
+    object: Array<Entity.Attachment>
+    index: number
   }
   thirdparty: {
     opened: boolean
@@ -215,7 +221,8 @@ const initialModalState: ModalState = {
   },
   media: {
     opened: false,
-    object: null
+    object: [],
+    index: 0
   },
   thirdparty: {
     opened: false
@@ -225,12 +232,12 @@ const initialModalState: ModalState = {
   }
 }
 
-const modalReducer = (current: ModalState, action: { target: string; value: boolean; object?: any }) => {
+const modalReducer = (current: ModalState, action: { target: string; value: boolean; object?: any; index?: number }) => {
   switch (action.target) {
     case 'newServer':
       return { ...current, newServer: { opened: action.value, object: action.object } }
     case 'media':
-      return { ...current, media: { opened: action.value, object: action.object } }
+      return { ...current, media: { opened: action.value, object: action.object, index: action.index } }
     case 'thirdparty':
       return { ...current, thirdparty: { opened: action.value } }
     case 'settings':

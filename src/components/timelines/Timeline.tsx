@@ -31,7 +31,7 @@ import alert from 'src/components/utils/alert'
 type Props = {
   timeline: Timeline
   server: Server
-  openMedia: (media: Entity.Attachment) => void
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setStatusDetail: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
 }
 

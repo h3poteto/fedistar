@@ -11,7 +11,7 @@ type Props = {
   status: Entity.Status
   server: Server
   onClose: () => void
-  openMedia: (media: Entity.Attachment) => void
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
 }
 
 const StatusDetail: React.FC<Props> = props => {
