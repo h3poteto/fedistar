@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react'
+import { useState, useEffect, useReducer, CSSProperties } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
 import { Container, Content, Message, useToaster, Animation } from 'rsuite'
@@ -19,12 +19,16 @@ import { ReceiveNotificationPayload } from 'src/payload'
 import { Entity, MegalodonInterface } from 'megalodon'
 import Status from 'src/components/detail/Status'
 import Thirdparty from 'src/components/settings/Thirdparty'
+import { Settings } from 'src/entities/settings'
+import SettingsPage from 'src/components/settings/Settings'
 
 function App() {
   const [servers, setServers] = useState<Array<Server>>([])
   const [timelines, setTimelines] = useState<Array<[Timeline, Server]>>([])
   const [unreads, setUnreads] = useState<Array<Unread>>([])
   const [composeOpened, setComposeOpened] = useState<boolean>(false)
+  const [style, setStyle] = useState<CSSProperties>({})
+
   const [modalState, dispatch] = useReducer(modalReducer, initialModalState)
   const [drawerState, drawerDispatch] = useReducer(drawerReducer, initialDrawerState)
 
@@ -42,6 +46,11 @@ function App() {
   )
 
   useEffect(() => {
+    invoke<Settings>('read_settings').then(res => {
+      setStyle({
+        fontSize: res.appearance.font_size
+      })
+    })
     invoke<Array<Server>>('list_servers').then(res => {
       if (res.length === 0) {
         console.debug('There is no server')
@@ -97,7 +106,7 @@ function App() {
   }
 
   return (
-    <div className="container index" style={{ backgroundColor: 'var(--rs-gray-900)' }}>
+    <div className="container index" style={Object.assign({ backgroundColor: 'var(--rs-gray-900)' }, style)}>
       {/** Modals **/}
       <NewServer
         open={modalState.newServer.opened}
@@ -110,6 +119,7 @@ function App() {
         close={() => dispatch({ target: 'media', value: false, object: null })}
       />
       <Thirdparty open={modalState.thirdparty.opened} onClose={() => dispatch({ target: 'thirdparty', value: false })} />
+      <SettingsPage open={modalState.settings.opened} onClose={() => dispatch({ target: 'settings', value: false })} />
 
       <Container style={{ height: '100%' }}>
         <Navigator
@@ -118,6 +128,7 @@ function App() {
           addNewServer={() => dispatch({ target: 'newServer', value: true, object: null })}
           openAuthorize={(server: Server) => dispatch({ target: 'newServer', value: true, object: server })}
           openThirdparty={() => dispatch({ target: 'thirdparty', value: true })}
+          openSettings={() => dispatch({ target: 'settings', value: true })}
           toggleCompose={toggleCompose}
         />
         <Animation.Transition
@@ -185,6 +196,9 @@ type ModalState = {
   thirdparty: {
     opened: boolean
   }
+  settings: {
+    opened: boolean
+  }
 }
 
 const initialModalState: ModalState = {
@@ -198,6 +212,9 @@ const initialModalState: ModalState = {
   },
   thirdparty: {
     opened: false
+  },
+  settings: {
+    opened: false
   }
 }
 
@@ -209,6 +226,8 @@ const modalReducer = (current: ModalState, action: { target: string; value: bool
       return { ...current, media: { opened: action.value, object: action.object } }
     case 'thirdparty':
       return { ...current, thirdparty: { opened: action.value } }
+    case 'settings':
+      return { ...current, settings: { opened: action.value } }
     default:
       return current
   }

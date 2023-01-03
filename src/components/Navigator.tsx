@@ -14,10 +14,11 @@ type NavigatorProps = {
   openAuthorize: (server: Server) => void
   toggleCompose: () => void
   openThirdparty: () => void
+  openSettings: () => void
 }
 
 const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
-  const { servers, openAuthorize, openThirdparty } = props
+  const { servers, openAuthorize, openThirdparty, openSettings } = props
 
   return (
     <Sidebar
@@ -56,10 +57,12 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
             </div>
           ))}
           <Whisper
-            placement="right"
+            placement="rightEnd"
             controlId="control-id-settings-menu"
             trigger="click"
-            speaker={({ className, left, top, onClose }, ref) => settingsMenu({ className, left, top, onClose, openThirdparty }, ref)}
+            speaker={({ className, left, top, onClose }, ref) =>
+              settingsMenu({ className, left, top, onClose, openThirdparty, openSettings }, ref)
+            }
           >
             <Button appearance="link" size="lg">
               <Icon as={BsGear} style={{ fontSize: '1.4em' }} />
@@ -111,15 +114,20 @@ type SettingsMenuProps = {
   top?: number
   onClose: (delay?: number) => NodeJS.Timeout | void
   openThirdparty: () => void
+  openSettings: () => void
 }
 
 const settingsMenu = (
-  { className, left, top, onClose, openThirdparty }: SettingsMenuProps,
+  { className, left, top, onClose, openThirdparty, openSettings }: SettingsMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
   const handleSelect = (eventKey: string) => {
     onClose()
     switch (eventKey) {
+      case 'settings': {
+        openSettings()
+        break
+      }
       case 'thirdparty': {
         openThirdparty()
         break
@@ -130,6 +138,7 @@ const settingsMenu = (
   return (
     <Popover ref={ref} className={className} style={{ left, top, padding: 0 }}>
       <Dropdown.Menu onSelect={handleSelect}>
+        <Dropdown.Item eventKey="settings">Settings</Dropdown.Item>
         <Dropdown.Item eventKey="thirdparty">Third-party licenses</Dropdown.Item>
       </Dropdown.Menu>
     </Popover>
