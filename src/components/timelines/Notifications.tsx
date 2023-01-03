@@ -256,7 +256,7 @@ const Notifications: React.FC<Props> = props => {
         </Header>
 
         {loading ? (
-          <Loader style={{ margin: '10rem auto' }} />
+          <Loader style={{ margin: '10em auto' }} />
         ) : (
           <Content style={{ height: 'calc(100% - 54px)' }}>
             <List hover style={{ width: '340px', height: '100%' }}>

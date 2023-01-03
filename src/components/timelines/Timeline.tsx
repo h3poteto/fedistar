@@ -293,7 +293,7 @@ const Timeline: React.FC<Props> = props => {
         </Header>
 
         {loading ? (
-          <Loader style={{ margin: '10rem auto' }} />
+          <Loader style={{ margin: '10em auto' }} />
         ) : (
           <Content style={{ height: 'calc(100% - 54px)' }}>
             <List

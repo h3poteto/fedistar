@@ -2,7 +2,7 @@
     all(not(debug_assertions), target_os = "windows"),
     windows_subsystem = "windows"
 )]
-use std::{fs::OpenOptions, str::FromStr, sync::Arc};
+use std::{fs::OpenOptions, path::PathBuf, str::FromStr, sync::Arc};
 
 use megalodon::{self, oauth};
 use serde::Serialize;
@@ -12,6 +12,7 @@ mod database;
 mod entities;
 mod favicon;
 mod menu;
+mod settings;
 mod streaming;
 
 #[tauri::command]
@@ -309,6 +310,16 @@ async fn switch_right_timeline(
     Ok(())
 }
 
+#[tauri::command]
+fn read_settings(settings_path: State<'_, PathBuf>) -> Result<settings::Settings, String> {
+    settings::read_settings(&settings_path)
+}
+
+#[tauri::command]
+fn save_settings(settings_path: State<'_, PathBuf>, obj: settings::Settings) -> Result<(), String> {
+    settings::save_settings(&settings_path, &obj)
+}
+
 // This method is not used now. In the future, it will be used.
 #[tauri::command]
 fn toggle_menu(app_handle: AppHandle) -> Result<(), String> {
@@ -442,6 +453,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut base_dir: &str = ".fedistar";
     const DATABASE_FILE: &str = "fedistar.db";
     const LOGFILE_PATH: &str = "fedistar.log";
+    const SETTINGS_PATH: &str = "settings.json";
 
     #[cfg(debug_assertions)]
     {
@@ -459,6 +471,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let log_path = config_dir.join(LOGFILE_PATH);
 
     init_logger(log_path);
+
+    let settings_path = config_dir.join(SETTINGS_PATH);
 
     let database_dir_str = std::fs::canonicalize(&config_dir)
         .expect("Failed to canonicalize")
@@ -486,6 +500,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             switch_left_timeline,
             switch_right_timeline,
             toggle_menu,
+            read_settings,
+            save_settings,
         ])
         .setup(|app| {
             let app_handle = app.handle();
@@ -500,6 +516,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             app.manage(sqlite_pool);
             let handle = app.handle();
             app.manage(Mutex::new(handle));
+            app.manage(settings_path);
+
             let window = app.get_window("main").expect("Failed to get main window");
             window.menu_handle().hide().expect("Failed to hide menu");
 
