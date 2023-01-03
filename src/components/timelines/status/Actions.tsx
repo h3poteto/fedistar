@@ -93,7 +93,7 @@ const Actions: React.FC<Props> = props => {
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
           <ActionButton
-            disabled={props.disabled}
+            disabled={props.disabled || status.visibility === 'direct' || status.visibility === 'private'}
             className="reblog-action"
             activating={reblogActivating}
             deactivating={reblogDeactivating}
