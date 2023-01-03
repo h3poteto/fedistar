@@ -46,11 +46,6 @@ function App() {
   )
 
   useEffect(() => {
-    invoke<Settings>('read_settings').then(res => {
-      setStyle({
-        fontSize: res.appearance.font_size
-      })
-    })
     invoke<Array<Server>>('list_servers').then(res => {
       if (res.length === 0) {
         console.debug('There is no server')
@@ -101,6 +96,14 @@ function App() {
     })
   }, [])
 
+  const loadAppearance = () => {
+    invoke<Settings>('read_settings').then(res => {
+      setStyle({
+        fontSize: res.appearance.font_size
+      })
+    })
+  }
+
   const toggleCompose = () => {
     setComposeOpened(previous => !previous)
   }
@@ -119,7 +122,11 @@ function App() {
         close={() => dispatch({ target: 'media', value: false, object: null })}
       />
       <Thirdparty open={modalState.thirdparty.opened} onClose={() => dispatch({ target: 'thirdparty', value: false })} />
-      <SettingsPage open={modalState.settings.opened} onClose={() => dispatch({ target: 'settings', value: false })} />
+      <SettingsPage
+        open={modalState.settings.opened}
+        onClose={() => dispatch({ target: 'settings', value: false })}
+        reloadAppearance={loadAppearance}
+      />
 
       <Container style={{ height: '100%' }}>
         <Navigator

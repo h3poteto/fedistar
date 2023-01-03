@@ -1,11 +1,12 @@
 import { invoke } from '@tauri-apps/api/tauri'
-import { useCallback, useEffect, useState } from 'react'
-import { FlexboxGrid, InputNumber, Modal, Panel, Form, Schema, ButtonToolbar, Button } from 'rsuite'
+import { useEffect, useState } from 'react'
+import { InputNumber, Modal, Panel, Form, Schema, ButtonToolbar, Button } from 'rsuite'
 import { Settings } from 'src/entities/settings'
 
 type Props = {
   open: boolean
   onClose: () => void
+  reloadAppearance: () => void
 }
 
 type FormValue = {
@@ -38,6 +39,7 @@ const Settings: React.FC<Props> = props => {
       }
     }
     await invoke('save_settings', { obj: settings })
+    props.reloadAppearance()
   }
 
   return (
