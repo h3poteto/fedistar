@@ -182,7 +182,7 @@ const Notifications: React.FC<Props> = props => {
 
   const prependUnreads = useCallback(() => {
     console.debug('prepending')
-    const unreads = unreadNotifications.slice().reverse().slice(0, TIMELINE_STATUSES_COUNT)
+    const unreads = unreadNotifications.slice().reverse().slice(0, TIMELINE_STATUSES_COUNT).reverse()
     const remains = unreadNotifications.slice(0, -1 * TIMELINE_STATUSES_COUNT)
     setUnreadNotifications(() => remains)
     setFirstItemIndex(() => firstItemIndex - unreads.length)

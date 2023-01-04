@@ -229,7 +229,7 @@ const Timeline: React.FC<Props> = props => {
 
   const prependUnreads = useCallback(() => {
     console.debug('prepending')
-    const unreads = unreadStatuses.slice().reverse().slice(0, TIMELINE_STATUSES_COUNT)
+    const unreads = unreadStatuses.slice().reverse().slice(0, TIMELINE_STATUSES_COUNT).reverse()
     const remains = unreadStatuses.slice(0, -1 * TIMELINE_STATUSES_COUNT)
     setUnreadStatuses(() => remains)
     setFirstItemIndex(() => firstItemIndex - unreads.length)
