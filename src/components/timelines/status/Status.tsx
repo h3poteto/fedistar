@@ -21,6 +21,7 @@ type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setReplyOpened: (opened: boolean) => void
   setStatusDetail?: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
+  setAccountDetail?: (account: Entity.Account, server: Server, client: MegalodonInterface) => void
 } & HTMLAttributes<HTMLElement>
 
 const Status: React.FC<Props> = props => {
@@ -52,7 +53,7 @@ const Status: React.FC<Props> = props => {
         {/** icon **/}
         <FlexboxGrid.Item colspan={4}>
           <div style={{ margin: '6px' }}>
-            <Avatar src={status.account.avatar} />
+            <Avatar src={status.account.avatar} onClick={() => props.setAccountDetail(status.account, props.server, props.client)} />
           </div>
         </FlexboxGrid.Item>
         {/** status **/}
@@ -60,7 +61,11 @@ const Status: React.FC<Props> = props => {
           <div className="metadata">
             <FlexboxGrid>
               {/** account name **/}
-              <FlexboxGrid.Item colspan={18} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <FlexboxGrid.Item
+                colspan={18}
+                style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                onClick={() => props.setAccountDetail(status.account, props.server, props.client)}
+              >
                 <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
                 <span style={{ color: 'var(--rs-text-tertiary)' }}>@{status.account.acct}</span>
               </FlexboxGrid.Item>

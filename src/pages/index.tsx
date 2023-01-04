@@ -21,6 +21,7 @@ import Status from 'src/components/detail/Status'
 import Thirdparty from 'src/components/settings/Thirdparty'
 import { Settings } from 'src/entities/settings'
 import SettingsPage from 'src/components/settings/Settings'
+import Profile from 'src/components/detail/Profile'
 
 function App() {
   const [servers, setServers] = useState<Array<Server>>([])
@@ -163,13 +164,16 @@ function App() {
               openMedia={(media: Array<Entity.Attachment>, index: number) =>
                 dispatch({ target: 'media', value: true, object: media, index: index })
               }
-              setStatusDetail={(status, server, client) => drawerDispatch({ status: status, server: server, client: client })}
+              setStatusDetail={(status, server, client) =>
+                drawerDispatch({ status: status, account: null, server: server, client: client })
+              }
+              setAccountDetail={(account, server, client) => drawerDispatch({ status: null, account, server, client })}
             />
           ))}
           <NewTimeline servers={servers} />
         </Content>
         <Animation.Transition
-          in={drawerState.status !== null}
+          in={drawerState.status !== null || drawerState.account !== null}
           exitedClassName="detail-exited"
           exitingClassName="detail-exiting"
           enteredClassName="detail-entered"
@@ -185,7 +189,13 @@ function App() {
                   openMedia={(media: Array<Entity.Attachment>, index: number) =>
                     dispatch({ target: 'media', value: true, object: media, index: index })
                   }
-                  onClose={() => drawerDispatch({ status: null, server: null, client: null })}
+                  onClose={() => drawerDispatch({ status: null, account: null, server: null, client: null })}
+                />
+              )}
+              {drawerState.account && drawerState.server && drawerState.client && (
+                <Profile
+                  account={drawerState.account}
+                  onClose={() => drawerDispatch({ status: null, account: null, server: null, client: null })}
                 />
               )}
             </div>
@@ -249,21 +259,23 @@ const modalReducer = (current: ModalState, action: { target: string; value: bool
 
 type DrawerState = {
   status: Entity.Status | null
+  account: Entity.Account | null
   client: MegalodonInterface | null
   server: Server | null
 }
 
 const initialDrawerState: DrawerState = {
   status: null,
+  account: null,
   client: null,
   server: null
 }
 
 const drawerReducer = (
   current: DrawerState,
-  action: { status: Entity.Status | null; server: Server | null; client: MegalodonInterface | null }
+  action: { status: Entity.Status | null; account: Entity.Account | null; server: Server | null; client: MegalodonInterface | null }
 ) => {
-  return { ...current, status: action.status, server: action.server, client: action.client }
+  return { ...current, status: action.status, account: action.account, server: action.server, client: action.client }
 }
 
 export default App
