@@ -78,7 +78,7 @@ const StatusDetail: React.FC<Props> = props => {
           <Icon as={BsX} style={{ fontSize: '1.4em' }} />
         </Button>
       </Header>
-      <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)' }}>
+      <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'scroll' }}>
         <List hover style={{ width: '340px' }}>
           {[...ancestors, status, ...descendants].map(status => (
             <List.Item
