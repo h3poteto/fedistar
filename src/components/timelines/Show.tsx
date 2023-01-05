@@ -12,6 +12,7 @@ type Props = {
   setUnreads: (a: Array<Unread>) => void
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setStatusDetail: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
+  setAccountDetail: (account: Entity.Account, server: Server, client: MegalodonInterface) => void
 }
 
 const Show: React.FC<Props> = props => {
@@ -28,7 +29,13 @@ const Show: React.FC<Props> = props => {
     )
   } else {
     return (
-      <ShowTimeline timeline={props.timeline} server={props.server} openMedia={props.openMedia} setStatusDetail={props.setStatusDetail} />
+      <ShowTimeline
+        timeline={props.timeline}
+        server={props.server}
+        openMedia={props.openMedia}
+        setStatusDetail={props.setStatusDetail}
+        setAccountDetail={props.setAccountDetail}
+      />
     )
   }
 }

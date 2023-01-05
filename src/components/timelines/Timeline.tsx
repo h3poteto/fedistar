@@ -33,6 +33,7 @@ type Props = {
   server: Server
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setStatusDetail: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
+  setAccountDetail: (account: Entity.Account, server: Server, client: MegalodonInterface) => void
 }
 
 const Timeline: React.FC<Props> = props => {
@@ -322,6 +323,7 @@ const Timeline: React.FC<Props> = props => {
                       openMedia={props.openMedia}
                       setReplyOpened={opened => (replyOpened.current = opened)}
                       setStatusDetail={props.setStatusDetail}
+                      setAccountDetail={props.setAccountDetail}
                     />
                   </List.Item>
                 )}
