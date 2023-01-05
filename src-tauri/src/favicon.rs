@@ -55,12 +55,12 @@ mod tests {
     use super::*;
 
     #[tokio::test]
-    async fn test_get_favicon_url_for_fedibird() {
-        let result = get_favicon_url("https://mastodon.social").await;
+    async fn test_get_favicon_url_for_mastodon() {
+        let result = get_favicon_url("https://fedibird.com").await;
         assert!(result.is_some());
         assert_eq!(
             result,
-            Some(String::from("https://mastodon.social/favicon.ico"))
+            Some(String::from("https://fedibird.com/favicon.ico"))
         );
     }
 
