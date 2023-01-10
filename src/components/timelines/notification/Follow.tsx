@@ -7,6 +7,7 @@ import emojify from 'src/utils/emojify'
 
 type Props = {
   notification: Entity.Notification
+  setAccountDetail: (account: Entity.Account) => void
 }
 
 const actionText = (notification: Entity.Notification) => {
@@ -52,7 +53,11 @@ const Follow: React.FC<Props> = props => {
       <FlexboxGrid>
         <FlexboxGrid.Item colspan={4}>
           <div style={{ margin: '6px' }}>
-            <Avatar src={props.notification.account.avatar} />
+            <Avatar
+              src={props.notification.account.avatar}
+              onClick={() => props.setAccountDetail(props.notification.account)}
+              style={{ cursor: 'pointer' }}
+            />
           </div>
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={20} style={{ paddingRight: '8px' }}>

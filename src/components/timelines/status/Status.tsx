@@ -21,7 +21,7 @@ type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setReplyOpened: (opened: boolean) => void
   setStatusDetail?: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
-  setAccountDetail?: (account: Entity.Account, server: Server, client: MegalodonInterface) => void
+  setAccountDetail: (account: Entity.Account, server: Server, client: MegalodonInterface) => void
 } & HTMLAttributes<HTMLElement>
 
 const Status: React.FC<Props> = props => {
@@ -53,7 +53,11 @@ const Status: React.FC<Props> = props => {
         {/** icon **/}
         <FlexboxGrid.Item colspan={4}>
           <div style={{ margin: '6px' }}>
-            <Avatar src={status.account.avatar} onClick={() => props.setAccountDetail(status.account, props.server, props.client)} />
+            <Avatar
+              src={status.account.avatar}
+              onClick={() => props.setAccountDetail(status.account, props.server, props.client)}
+              style={{ cursor: 'pointer' }}
+            />
           </div>
         </FlexboxGrid.Item>
         {/** status **/}

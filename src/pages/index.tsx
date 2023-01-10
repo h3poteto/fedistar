@@ -189,12 +189,14 @@ function App() {
                   openMedia={(media: Array<Entity.Attachment>, index: number) =>
                     dispatch({ target: 'media', value: true, object: media, index: index })
                   }
+                  setAccountDetail={(account, server, client) => drawerDispatch({ status: null, account, server, client })}
                   onClose={() => drawerDispatch({ status: null, account: null, server: null, client: null })}
                 />
               )}
               {drawerState.account && drawerState.server && drawerState.client && (
                 <Profile
                   account={drawerState.account}
+                  client={drawerState.client}
                   onClose={() => drawerDispatch({ status: null, account: null, server: null, client: null })}
                 />
               )}

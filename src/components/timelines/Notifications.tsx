@@ -23,6 +23,7 @@ type Props = {
   setUnreads: Dispatch<SetStateAction<Array<Unread>>>
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setStatusDetail: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
+  setAccountDetail: (account: Entity.Account, server: Server, client: MegalodonInterface) => void
 }
 
 type Marker = {
@@ -295,6 +296,7 @@ const Notifications: React.FC<Props> = props => {
                         openMedia={props.openMedia}
                         setReplyOpened={opened => (replyOpened.current = opened)}
                         setStatusDetail={props.setStatusDetail}
+                        setAccountDetail={props.setAccountDetail}
                       />
                     </List.Item>
                   )
