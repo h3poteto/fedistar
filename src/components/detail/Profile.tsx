@@ -1,10 +1,11 @@
+import { open } from '@tauri-apps/api/shell'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { BsX, BsThreeDotsVertical } from 'react-icons/bs'
-import { Button, Container, Content, FlexboxGrid, Header, IconButton, useToaster } from 'rsuite'
+import { Button, Container, Content, Dropdown, FlexboxGrid, Header, IconButton, Popover, useToaster, Whisper } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import Image from 'next/image'
 import emojify from 'src/utils/emojify'
-import { useCallback, useEffect, useState } from 'react'
+import { ReactElement, useCallback, useEffect, useState } from 'react'
 import alert from '../utils/alert'
 
 type Props = {
@@ -16,17 +17,18 @@ type Props = {
 const Profile: React.FC<Props> = props => {
   const { account, client } = props
 
-  const [relationship, setRelationship] = useState<Entity.Relationship>(null)
+  const [relationship, setRelationship] = useState<Entity.Relationship | null>(null)
 
   const toaster = useToaster()
 
   useEffect(() => {
-    const f = async () => {
-      const res = await client.getRelationship(account.id)
-      setRelationship(res.data)
-    }
-    f()
+    loadRelationship(client, account)
   }, [account, client])
+
+  const loadRelationship = async (client: MegalodonInterface, account: Entity.Account) => {
+    const res = await client.getRelationship(account.id)
+    setRelationship(res.data)
+  }
 
   const followButton = () => {
     if (!relationship) {
@@ -89,7 +91,30 @@ const Profile: React.FC<Props> = props => {
               <FlexboxGrid style={{ gap: '8px' }}>
                 <FlexboxGrid.Item>{followButton()}</FlexboxGrid.Item>
                 <FlexboxGrid.Item>
-                  <IconButton icon={<Icon as={BsThreeDotsVertical} />} />
+                  <Whisper
+                    placement="bottomEnd"
+                    controlId="control-id-profile-detail"
+                    trigger="click"
+                    speaker={({ className, left, top, onClose }, ref) =>
+                      profileMenu(
+                        {
+                          className,
+                          left,
+                          top,
+                          onClose,
+                          client,
+                          account,
+                          relationship,
+                          onChange: () => {
+                            loadRelationship(client, account)
+                          }
+                        },
+                        ref
+                      )
+                    }
+                  >
+                    <IconButton icon={<Icon as={BsThreeDotsVertical} />} />
+                  </Whisper>
                 </FlexboxGrid.Item>
               </FlexboxGrid>
             </FlexboxGrid.Item>
@@ -120,6 +145,64 @@ const Profile: React.FC<Props> = props => {
         </div>
       </Content>
     </Container>
+  )
+}
+
+type ProfileMenuProps = {
+  className: string
+  left?: number
+  top?: number
+  onClose: (delay?: number) => NodeJS.Timeout | void
+  client: MegalodonInterface
+  account: Entity.Account
+  relationship: Entity.Relationship | null
+  onChange: () => void
+}
+
+const profileMenu = (
+  { className, left, top, onClose, client, account, relationship, onChange }: ProfileMenuProps,
+  ref: React.RefCallback<HTMLElement>
+): ReactElement => {
+  const handleSelect = async (eventKey: string) => {
+    onClose()
+    switch (eventKey) {
+      case 'browser': {
+        open(account.url)
+        return
+      }
+      case 'mute': {
+        if (relationship.muting) {
+          await client.unmuteAccount(account.id)
+        } else {
+          await client.muteAccount(account.id, false)
+        }
+        onChange()
+        return
+      }
+      case 'block': {
+        if (relationship.blocking) {
+          await client.unblockAccount(account.id)
+        } else {
+          await client.blockAccount(account.id)
+        }
+        onChange()
+        return
+      }
+    }
+  }
+  return (
+    <Popover ref={ref} className={className} style={{ left, top, padding: '0 4px' }}>
+      <Dropdown.Menu onSelect={handleSelect}>
+        <Dropdown.Item eventKey="browser">Open original page</Dropdown.Item>
+        <Dropdown.Separator />
+        <Dropdown.Item eventKey="mute">
+          {relationship.muting ? 'Unmute' : 'Mute'} @{account.username}
+        </Dropdown.Item>
+        <Dropdown.Item eventKey="block">
+          {relationship.blocking ? 'Unblock' : 'Block'} @{account.username}
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Popover>
   )
 }
 
