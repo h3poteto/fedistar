@@ -12,13 +12,19 @@ type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setReplyOpened: (opened: boolean) => void
   setStatusDetail: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
+  setAccountDetail: (account: Entity.Account, server: Server, client: MegalodonInterface) => void
 }
 
 const notification = (props: Props) => {
   switch (props.notification.type) {
     case 'follow':
     case 'follow_request':
-      return <Follow notification={props.notification} />
+      return (
+        <Follow
+          notification={props.notification}
+          setAccountDetail={account => props.setAccountDetail(account, props.server, props.client)}
+        />
+      )
     case 'favourite':
     case 'reblog':
     case 'poll_expired':
@@ -26,7 +32,13 @@ const notification = (props: Props) => {
     case 'quote':
     case 'status':
     case 'emoji_reaction':
-      return <Reaction notification={props.notification} openMedia={props.openMedia} />
+      return (
+        <Reaction
+          notification={props.notification}
+          openMedia={props.openMedia}
+          setAccountDetail={account => props.setAccountDetail(account, props.server, props.client)}
+        />
+      )
     case 'mention':
       return (
         <Status
@@ -37,6 +49,7 @@ const notification = (props: Props) => {
           openMedia={props.openMedia}
           setReplyOpened={props.setReplyOpened}
           setStatusDetail={props.setStatusDetail}
+          setAccountDetail={props.setAccountDetail}
         />
       )
     default:

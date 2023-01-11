@@ -12,6 +12,7 @@ type Props = {
   server: Server
   onClose: () => void
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
+  setAccountDetail: (account: Entity.Account, server: Server, client: MegalodonInterface) => void
 }
 
 const StatusDetail: React.FC<Props> = props => {
@@ -97,6 +98,7 @@ const StatusDetail: React.FC<Props> = props => {
                 updateStatus={updateStatus}
                 openMedia={props.openMedia}
                 setReplyOpened={() => null}
+                setAccountDetail={props.setAccountDetail}
               />
             </List.Item>
           ))}

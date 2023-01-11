@@ -1,17 +1,73 @@
-import { Entity } from 'megalodon'
+import { Entity, MegalodonInterface } from 'megalodon'
 import { BsX, BsThreeDotsVertical } from 'react-icons/bs'
-import { Button, Container, Content, FlexboxGrid, Header, IconButton } from 'rsuite'
+import { Button, Container, Content, FlexboxGrid, Header, IconButton, useToaster } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import Image from 'next/image'
 import emojify from 'src/utils/emojify'
+import { useCallback, useEffect, useState } from 'react'
+import alert from '../utils/alert'
 
 type Props = {
   account: Entity.Account
+  client: MegalodonInterface
   onClose: () => void
 }
 
 const Profile: React.FC<Props> = props => {
-  const { account } = props
+  const { account, client } = props
+
+  const [relationship, setRelationship] = useState<Entity.Relationship>(null)
+
+  const toaster = useToaster()
+
+  useEffect(() => {
+    const f = async () => {
+      const res = await client.getRelationship(account.id)
+      setRelationship(res.data)
+    }
+    f()
+  }, [account, client])
+
+  const followButton = () => {
+    if (!relationship) {
+      return null
+    }
+    if (relationship.following) {
+      return (
+        <Button appearance="primary" onClick={unfollow}>
+          Unfollow
+        </Button>
+      )
+    } else if (relationship.requested) {
+      return <Button appearance="primary">Follow Requested</Button>
+    } else {
+      return (
+        <Button appearance="primary" onClick={follow}>
+          Follow
+        </Button>
+      )
+    }
+  }
+
+  const follow = useCallback(async () => {
+    try {
+      const res = await client.followAccount(account.id)
+      setRelationship(res.data)
+    } catch (err) {
+      console.error(err)
+      toaster.push(alert('error', 'Failed to follow'), { placement: 'topEnd' })
+    }
+  }, [client, account])
+
+  const unfollow = useCallback(async () => {
+    try {
+      const res = await client.unfollowAccount(account.id)
+      setRelationship(res.data)
+    } catch (err) {
+      console.error(err)
+      toaster.push(alert('error', 'Failed to unfollow'), { placement: 'topEnd' })
+    }
+  }, [client, account])
 
   return (
     <Container className="profile" style={{ height: '100%', borderLeft: '1px solid var(--rs-gray-600)' }}>
@@ -31,9 +87,7 @@ const Profile: React.FC<Props> = props => {
             </FlexboxGrid.Item>
             <FlexboxGrid.Item>
               <FlexboxGrid style={{ gap: '8px' }}>
-                <FlexboxGrid.Item>
-                  <Button appearance="primary">Follow</Button>
-                </FlexboxGrid.Item>
+                <FlexboxGrid.Item>{followButton()}</FlexboxGrid.Item>
                 <FlexboxGrid.Item>
                   <IconButton icon={<Icon as={BsThreeDotsVertical} />} />
                 </FlexboxGrid.Item>

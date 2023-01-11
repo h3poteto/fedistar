@@ -13,6 +13,7 @@ import Body from '../status/Body'
 type Props = {
   notification: Entity.Notification
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
+  setAccountDetail: (account: Entity.Account) => void
 }
 
 const actionIcon = (notification: Entity.Notification) => {
@@ -127,7 +128,7 @@ const Reaction: React.FC<Props> = props => {
         {/** icon **/}
         <FlexboxGrid.Item colspan={4}>
           <div style={{ margin: '6px' }}>
-            <Avatar src={status.account.avatar} />
+            <Avatar src={status.account.avatar} onClick={() => props.setAccountDetail(status.account)} style={{ cursor: 'pointer' }} />
           </div>
         </FlexboxGrid.Item>
         {/** status **/}

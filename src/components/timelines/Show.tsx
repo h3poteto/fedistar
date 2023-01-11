@@ -25,6 +25,7 @@ const Show: React.FC<Props> = props => {
         setUnreads={props.setUnreads}
         openMedia={props.openMedia}
         setStatusDetail={props.setStatusDetail}
+        setAccountDetail={props.setAccountDetail}
       />
     )
   } else {
