@@ -32,12 +32,12 @@ Please be careful when using.
     - [x] Bookmark
     - [ ] Emoji reaction
 - [ ] User Profile
-    - [ ] Show profile
+    - [x] Show profile
     - [ ] Show followers
     - [ ] Show followings
     - [ ] Show user timeline
-    - [ ] Follow/Unfollow
-    - [ ] Mute/Block
+    - [x] Follow/Unfollow
+    - [x] Mute/Block
 - [x] Status detail
     - [x] Show media
     - [x] Handle NSFW and CW
