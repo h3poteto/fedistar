@@ -1,3 +1,4 @@
+import { open } from '@tauri-apps/api/shell'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { BsX, BsThreeDotsVertical } from 'react-icons/bs'
 import { Button, Container, Content, Dropdown, FlexboxGrid, Header, IconButton, Popover, useToaster, Whisper } from 'rsuite'
@@ -165,6 +166,10 @@ const profileMenu = (
   const handleSelect = async (eventKey: string) => {
     onClose()
     switch (eventKey) {
+      case 'browser': {
+        open(account.url)
+        return
+      }
       case 'mute': {
         if (relationship.muting) {
           await client.unmuteAccount(account.id)
@@ -188,8 +193,14 @@ const profileMenu = (
   return (
     <Popover ref={ref} className={className} style={{ left, top, padding: '0 4px' }}>
       <Dropdown.Menu onSelect={handleSelect}>
-        <Dropdown.Item eventKey="mute">{relationship.muting ? 'Unmute' : 'Mute'}</Dropdown.Item>
-        <Dropdown.Item eventKey="block">{relationship.blocking ? 'Unblock' : 'Block'}</Dropdown.Item>
+        <Dropdown.Item eventKey="browser">Open original page</Dropdown.Item>
+        <Dropdown.Separator />
+        <Dropdown.Item eventKey="mute">
+          {relationship.muting ? 'Unmute' : 'Mute'} @{account.username}
+        </Dropdown.Item>
+        <Dropdown.Item eventKey="block">
+          {relationship.blocking ? 'Unblock' : 'Block'} @{account.username}
+        </Dropdown.Item>
       </Dropdown.Menu>
     </Popover>
   )
