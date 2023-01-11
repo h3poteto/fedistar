@@ -12,6 +12,7 @@ env:
 jobs:
   frontend:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
       - uses: actions/checkout@v2
@@ -26,8 +27,8 @@ jobs:
           yarn run test
 
   backend:
-
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
     - uses: actions/checkout@v3
