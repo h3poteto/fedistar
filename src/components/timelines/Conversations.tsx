@@ -14,6 +14,8 @@ import { TIMELINE_STATUSES_COUNT } from 'src/defaults'
 import alert from '../utils/alert'
 import { Virtuoso } from 'react-virtuoso'
 import Conversation from './conversation/Conversation'
+import { listen } from '@tauri-apps/api/event'
+import { ReceiveTimelineConversationPayload } from 'src/payload'
 
 type Props = {
   server: Server
@@ -53,6 +55,25 @@ const Conversations: React.FC<Props> = props => {
       }
     }
     f()
+
+    listen<ReceiveTimelineConversationPayload>('receive-timeline-conversation', ev => {
+      if (ev.payload.timeline_id !== props.timeline.id) {
+        return
+      }
+      setConversations(current => {
+        const find = current.find(conv => conv.id === ev.payload.conversation.id)
+        if (find) {
+          return current.map(conv => {
+            if (conv.id === ev.payload.conversation.id) {
+              return ev.payload.conversation
+            }
+            return conv
+          })
+        } else {
+          return [ev.payload.conversation, ...current]
+        }
+      })
+    })
   }, [])
 
   const loadConversations = async (client: MegalodonInterface, maxId?: string): Promise<Array<Entity.Conversation>> => {

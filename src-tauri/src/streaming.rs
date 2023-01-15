@@ -36,6 +36,12 @@ pub struct DeleteTimelineStatusPayload {
     status_id: String,
 }
 
+#[derive(Clone, Serialize)]
+pub struct ReceiveTimelineConversationPayload {
+    timeline_id: i64,
+    conversation: megalodon::entities::Conversation,
+}
+
 pub async fn start_user(
     app_handle: Arc<AppHandle>,
     server: &entities::Server,
@@ -136,6 +142,9 @@ pub async fn start(
         entities::timeline::Kind::Local => {
             streaming = client.local_streaming(streaming_url);
         }
+        entities::timeline::Kind::Direct => {
+            streaming = client.direct_streaming(streaming_url);
+        }
         entities::timeline::Kind::List => match &timeline.list_id {
             None => return Err(format!("could not find list_id for {} ", timeline.name)),
             Some(list_id) => {
@@ -186,6 +195,18 @@ pub async fn start(
                     },
                 )
                 .expect("Failed to delete-timeline-status event");
+        }
+        Message::Conversation(conversation) => {
+            log::debug!("receive conversation");
+            app_handle
+                .emit_all(
+                    "receive-timeline-conversation",
+                    ReceiveTimelineConversationPayload {
+                        timeline_id,
+                        conversation,
+                    },
+                )
+                .expect("Failed to receive-timeline-conversation event");
         }
         _ => {}
     }));
