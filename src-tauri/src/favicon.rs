@@ -2,10 +2,19 @@ use reqwest::{self, header::CONTENT_TYPE};
 use scraper::{Html, Selector};
 
 pub async fn get_favicon_url(url: &str) -> Option<String> {
-    match reqwest::get(url).await {
-        Err(_) => None,
+    let Ok(client) = reqwest::Client::builder().user_agent("fedistar").build() else {
+        return None
+    };
+    match client.get(url).send().await {
+        Err(err) => {
+            log::error!("{:#?}", err);
+            None
+        }
         Ok(res) => match parse_location(res).await {
-            Err(_) => None,
+            Err(err) => {
+                log::error!("{:#?}", err);
+                None
+            }
             Ok(list) => {
                 if list.len() > 0 {
                     let path = list[0].clone();
@@ -52,7 +61,15 @@ fn parse_content(content: &str) -> Vec<String> {
 
 #[cfg(test)]
 mod tests {
+
     use super::*;
+
+    #[tokio::test]
+    async fn test_get_favicon_url_for_mstdnjp() {
+        let result = get_favicon_url("https://mstdn.jp").await;
+        assert!(result.is_some());
+        assert_eq!(result, Some(String::from("https://mstdn.jp/favicon.ico")));
+    }
 
     #[tokio::test]
     async fn test_get_favicon_url_for_mastodon() {
