@@ -44,6 +44,7 @@ pub enum Kind {
     Favourites,
     List,
     Bookmarks,
+    Direct,
 }
 
 impl fmt::Display for Kind {
@@ -56,6 +57,7 @@ impl fmt::Display for Kind {
             Kind::Favourites => write!(f, "favourites"),
             Kind::List => write!(f, "list"),
             Kind::Bookmarks => write!(f, "bookmarks"),
+            Kind::Direct => write!(f, "direct"),
         }
     }
 }
@@ -72,6 +74,7 @@ impl FromStr for Kind {
             "favourites" => Ok(Kind::Favourites),
             "list" => Ok(Kind::List),
             "bookmarks" => Ok(Kind::Bookmarks),
+            "direct" => Ok(Kind::Direct),
             _ => Err(String::from("Unknown timeline kind")),
         }
     }

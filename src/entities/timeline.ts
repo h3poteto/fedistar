@@ -7,4 +7,4 @@ export type Timeline = {
   list_id: string | null
 }
 
-export type TimelineKind = 'home' | 'notifications' | 'local' | 'public' | 'favourites' | 'list' | 'bookmarks'
+export type TimelineKind = 'home' | 'notifications' | 'local' | 'public' | 'favourites' | 'list' | 'bookmarks' | 'direct'
