@@ -10,7 +10,7 @@ import FailoverImg from 'src/utils/failoverImg'
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import { Timeline } from 'src/entities/timeline'
-import { TIMELINE_STATUSES_COUNT } from 'src/defaults'
+import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from 'src/defaults'
 import alert from '../utils/alert'
 import { Virtuoso } from 'react-virtuoso'
 import Conversation from './conversation/Conversation'
@@ -28,9 +28,12 @@ const Conversations: React.FC<Props> = props => {
   const [account, setAccount] = useState<Account | null>(null)
   const [client, setClient] = useState<MegalodonInterface>()
   const [conversations, setConversations] = useState<Array<Entity.Conversation>>([])
+  const [unreadConversations, setUnreadConversations] = useState<Array<Entity.Conversation>>([])
+  const [firstItemIndex, setFirstItemIndex] = useState(TIMELINE_MAX_STATUSES)
   const [loading, setLoading] = useState(false)
   const [nextMaxId, setNextMaxId] = useState<string | null>(null)
 
+  const scrollerRef = useRef<HTMLElement | null>(null)
   const triggerRef = useRef(null)
   const toast = useToaster()
 
@@ -60,19 +63,15 @@ const Conversations: React.FC<Props> = props => {
       if (ev.payload.timeline_id !== props.timeline.id) {
         return
       }
-      setConversations(current => {
-        const find = current.find(conv => conv.id === ev.payload.conversation.id)
-        if (find) {
-          return current.map(conv => {
-            if (conv.id === ev.payload.conversation.id) {
-              return ev.payload.conversation
-            }
-            return conv
-          })
-        } else {
-          return [ev.payload.conversation, ...current]
-        }
-      })
+
+      if (scrollerRef.current && scrollerRef.current.scrollTop > 10) {
+        // When scrolling, prepend and update unreads, and update conversations
+        setUnreadConversations(current => prependConversation(current, ev.payload.conversation))
+        setConversations(current => updateConversation(current, ev.payload.conversation))
+      } else {
+        // When top, prepend and update conversations
+        setConversations(current => prependConversation(current, ev.payload.conversation))
+      }
     })
   }, [])
 
@@ -98,6 +97,16 @@ const Conversations: React.FC<Props> = props => {
       setConversations(last => [...last, ...append])
     }
   }, [client, conversations, setConversations, nextMaxId])
+
+  const prependUnreads = useCallback(() => {
+    console.debug('prepending')
+    const unreads = unreadConversations.slice().reverse().slice(0, TIMELINE_STATUSES_COUNT).reverse()
+    const remains = unreadConversations.slice(0, -1 * TIMELINE_STATUSES_COUNT)
+    setUnreadConversations(() => remains)
+    setFirstItemIndex(() => firstItemIndex - unreads.length)
+    setConversations(() => [...unreads, ...conversations])
+    return false
+  }, [firstItemIndex, conversations, setConversations, unreadConversations])
 
   return (
     <div style={{ width: '340px', minWidth: '340px', margin: '0 4px' }}>
@@ -162,6 +171,11 @@ const Conversations: React.FC<Props> = props => {
               <Virtuoso
                 style={{ height: '100%' }}
                 data={conversations}
+                scrollerRef={ref => {
+                  scrollerRef.current = ref as HTMLElement
+                }}
+                firstItemIndex={firstItemIndex}
+                atTopStateChange={prependUnreads}
                 endReached={loadMore}
                 overscan={TIMELINE_STATUSES_COUNT}
                 itemContent={(_, conversation) => (
@@ -227,5 +241,21 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
     </Popover>
   )
 })
+
+const prependConversation = (conversations: Array<Entity.Conversation>, conversation: Entity.Conversation): Array<Entity.Conversation> => {
+  if (conversations.find(c => c.id === conversation.id)) {
+    return updateConversation(conversations, conversation)
+  }
+  return [conversation, ...conversations]
+}
+
+const updateConversation = (conversations: Array<Entity.Conversation>, conversation: Entity.Conversation): Array<Entity.Conversation> => {
+  return conversations.map(c => {
+    if (c.id === conversation.id) {
+      return conversation
+    }
+    return c
+  })
+}
 
 export default Conversations
