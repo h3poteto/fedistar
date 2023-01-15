@@ -1,9 +1,10 @@
 import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
-import { useRef, forwardRef, useState, useEffect } from 'react'
+import { useRef, forwardRef, useState, useEffect, useCallback } from 'react'
 import { BsEnvelope, BsSliders, BsX, BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, useToaster } from 'rsuite'
 import generator, { MegalodonInterface } from 'megalodon'
+import parse from 'parse-link-header'
 
 import FailoverImg from 'src/utils/failoverImg'
 import { Server } from 'src/entities/server'
@@ -26,6 +27,7 @@ const Conversations: React.FC<Props> = props => {
   const [client, setClient] = useState<MegalodonInterface>()
   const [conversations, setConversations] = useState<Array<Entity.Conversation>>([])
   const [loading, setLoading] = useState(false)
+  const [nextMaxId, setNextMaxId] = useState<string | null>(null)
 
   const triggerRef = useRef(null)
   const toast = useToaster()
@@ -59,10 +61,22 @@ const Conversations: React.FC<Props> = props => {
       options = Object.assign({}, options, { max_id: maxId })
     }
     const res = await client.getConversationTimeline(options)
+    const link = parse(res.headers.link)
+    if (link !== null && link.next) {
+      setNextMaxId(link.next.max_id)
+    }
     return res.data
   }
 
   const closeOptionPopover = () => triggerRef?.current.close()
+
+  const loadMore = useCallback(async () => {
+    console.debug('appending')
+    if (nextMaxId) {
+      const append = await loadConversations(client, nextMaxId)
+      setConversations(last => [...last, ...append])
+    }
+  }, [client, conversations, setConversations, nextMaxId])
 
   return (
     <div style={{ width: '340px', minWidth: '340px', margin: '0 4px' }}>
@@ -127,6 +141,7 @@ const Conversations: React.FC<Props> = props => {
               <Virtuoso
                 style={{ height: '100%' }}
                 data={conversations}
+                endReached={loadMore}
                 overscan={TIMELINE_STATUSES_COUNT}
                 itemContent={(_, conversation) => (
                   <List.Item
