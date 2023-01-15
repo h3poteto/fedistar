@@ -15,14 +15,14 @@ Please be careful when using.
 - [x] Servers and Accounts
     - [x] Add/Remove
 - [x] See timelines without sign in
-- [ ] Timelines
+- [x] Timelines
     - [x] Home
     - [x] Notifications
     - [x] Local
     - [x] Public
     - [x] Lists
     - [x] Bookmarks
-    - [ ] DirectMessages
+    - [x] DirectMessages
 - [x] Streaming
 - [x] Notification
 - [ ] Status actions
