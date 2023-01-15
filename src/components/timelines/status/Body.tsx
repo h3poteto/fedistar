@@ -18,7 +18,7 @@ const Body: React.FC<Props> = props => {
         <div>
           <div
             className="spoiler-text"
-            style={{ wordWrap: 'break-word' }}
+            style={Object.assign({ wordWrap: 'break-word' }, props.style)}
             dangerouslySetInnerHTML={{ __html: emojify(props.status.spoiler_text, props.status.emojis) }}
             onClick={props.onClick}
           />
@@ -38,7 +38,7 @@ const Body: React.FC<Props> = props => {
       {!spoilered && (
         <div
           className="status-body"
-          style={{ wordWrap: 'break-word' }}
+          style={Object.assign({ wordWrap: 'break-word' }, props.style)}
           dangerouslySetInnerHTML={{ __html: emojify(props.status.content, props.status.emojis) }}
           onClick={props.onClick}
         />

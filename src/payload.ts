@@ -24,3 +24,8 @@ export type DeleteTimelineStatusPayload = {
   timeline_id: number
   status_id: string
 }
+
+export type ReceiveTimelineConversationPayload = {
+  timeline_id: number
+  conversation: Entity.Conversation
+}

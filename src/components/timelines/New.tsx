@@ -13,7 +13,7 @@ import {
   Button
 } from 'rsuite'
 import { Icon } from '@rsuite/icons'
-import { BsPlus, BsHouseDoor, BsBell, BsPeople, BsGlobe2, BsStar, BsListUl, BsChevronLeft, BsBookmark } from 'react-icons/bs'
+import { BsPlus, BsHouseDoor, BsBell, BsPeople, BsGlobe2, BsStar, BsListUl, BsChevronLeft, BsBookmark, BsEnvelope } from 'react-icons/bs'
 import { Server } from '../../entities/server'
 import { useEffect, useState } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
@@ -88,13 +88,23 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </List.Item>
+      <List.Item index={7} onClick={() => select('direct', 'Direct messages', null)} style={{ cursor: 'pointer' }}>
+        <FlexboxGrid align="middle">
+          <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Icon as={BsEnvelope} />
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={20}>
+            <div>Direct messages</div>
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+      </List.Item>
       {loading && (
-        <List.Item index={7}>
+        <List.Item index={8}>
           <Loader />
         </List.Item>
       )}
       {lists.map((list, index) => (
-        <List.Item key={index} index={7 + index} onClick={() => select('list', list.title, list.id)} style={{ cursor: 'pointer' }}>
+        <List.Item key={index} index={8 + index} onClick={() => select('list', list.title, list.id)} style={{ cursor: 'pointer' }}>
           <FlexboxGrid align="middle">
             <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <Icon as={BsListUl} />
