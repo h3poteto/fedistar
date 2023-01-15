@@ -1,8 +1,9 @@
-import { Modal, Form, ButtonToolbar, Button, Input, Loader } from 'rsuite'
+import { Modal, Form, ButtonToolbar, Button, Input, Loader, useToaster } from 'rsuite'
 import { useEffect, useState } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
 import { Server } from 'src/entities/server'
 import { OAuth } from 'megalodon'
+import alert from '../utils/alert'
 
 type Props = {
   open: boolean
@@ -17,6 +18,8 @@ const New: React.FC<Props> = props => {
   const [domain, setDomain] = useState('')
   const [code, setCode] = useState('')
 
+  const toast = useToaster()
+
   useEffect(() => {
     if (props.initialServer) {
       setServer(props.initialServer)
@@ -26,26 +29,42 @@ const New: React.FC<Props> = props => {
 
   async function addServer() {
     setLoading(true)
-    setServer(
-      await invoke<Server>('add_server', { domain })
-    )
-    setLoading(false)
+    try {
+      const res = await invoke<Server>('add_server', { domain })
+      setServer(res)
+    } catch (err) {
+      console.error(err)
+      toast.push(alert('error', 'Failed to add server'), { placement: 'topCenter' })
+    } finally {
+      setLoading(false)
+    }
   }
 
   async function addApplication() {
     setLoading(true)
-    setApp(
-      await invoke<OAuth.AppDataFromServer>('add_application', { url: server.base_url })
-    )
-    setLoading(false)
+    try {
+      const res = await invoke<OAuth.AppDataFromServer>('add_application', { url: server.base_url })
+      setApp(res)
+    } catch (err) {
+      console.error(err)
+      toast.push(alert('error', 'Failed to add application'), { placement: 'topCenter' })
+    } finally {
+      setLoading(false)
+    }
   }
 
   async function authorizeCode() {
     setLoading(true)
-    await invoke('authorize_code', { server: server, app: app, code: code })
-    setLoading(false)
-    clear()
-    props.onClose()
+    try {
+      await invoke('authorize_code', { server: server, app: app, code: code })
+      clear()
+      props.onClose()
+    } catch (err) {
+      console.error(err)
+      toast.push(alert('error', 'Failed to authorize'), { placement: 'topCenter' })
+    } finally {
+      setLoading(false)
+    }
   }
 
   const clear = () => {
