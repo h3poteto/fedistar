@@ -85,7 +85,7 @@ const Status: React.FC<Props> = props => {
           )}
           {status.emoji_reactions &&
             status.emoji_reactions.map(e => (
-              <Button appearance="subtle" size="sm">
+              <Button appearance="subtle" size="sm" key={e.name}>
                 {e.name}
               </Button>
             ))}
