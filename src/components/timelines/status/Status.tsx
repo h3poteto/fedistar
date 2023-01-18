@@ -91,6 +91,7 @@ const Status: React.FC<Props> = props => {
             ))}
           <Actions
             disabled={props.server.account_id === null}
+            server={props.server}
             status={status}
             client={client}
             setShowReply={setShowReply}

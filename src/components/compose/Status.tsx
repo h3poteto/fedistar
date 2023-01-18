@@ -7,6 +7,7 @@ import Picker from '@emoji-mart/react'
 
 import { data } from 'src/utils/emojiData'
 import { Server } from 'src/entities/server'
+import { CustomEmojiCategory } from 'src/entities/emoji'
 import alert from 'src/components/utils/alert'
 
 type Props = {
@@ -21,19 +22,6 @@ type FormValue = {
   status: string
   attachments?: Array<Entity.Attachment | Entity.AsyncAttachment>
   nsfw?: boolean
-}
-
-type CustomEmojiCategory = {
-  id: string
-  name: string
-  emojis: Array<CustomEmoji>
-}
-
-type CustomEmoji = {
-  id: string
-  name: string
-  keywords: Array<string>
-  skins: Array<{ src: string }>
 }
 
 const Status: React.FC<Props> = props => {
