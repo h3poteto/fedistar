@@ -10,7 +10,7 @@ import Body from '../status/Body'
 type Props = {
   conversation: Entity.Conversation
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  selectStatus: (status: Entity.Status | null) => void
+  selectStatus: (conversationId: string, status: Entity.Status | null) => void
 }
 const Conversation: React.FC<Props> = props => {
   const { conversation } = props
@@ -20,14 +20,18 @@ const Conversation: React.FC<Props> = props => {
     <div className="conversation">
       <FlexboxGrid>
         {/** icon **/}
-        <FlexboxGrid.Item colspan={4} onClick={() => props.selectStatus(conversation.last_status)} style={{ cursor: 'pointer' }}>
+        <FlexboxGrid.Item
+          colspan={4}
+          onClick={() => props.selectStatus(conversation.id, conversation.last_status)}
+          style={{ cursor: 'pointer' }}
+        >
           <div style={{ margin: '6px' }}>
             <Avatar src={account.avatar} circle />
           </div>
         </FlexboxGrid.Item>
         {/** message **/}
         <FlexboxGrid.Item colspan={20} style={{ cursor: 'pointer' }}>
-          <div className="metadata" onClick={() => props.selectStatus(conversation.last_status)}>
+          <div className="metadata" onClick={() => props.selectStatus(conversation.id, conversation.last_status)}>
             <FlexboxGrid>
               {/** account name **/}
               <FlexboxGrid.Item colspan={18} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -45,7 +49,7 @@ const Conversation: React.FC<Props> = props => {
             <Body
               status={conversation.last_status}
               style={{ color: 'var(--rs-text-tertiary)' }}
-              onClick={() => props.selectStatus(conversation.last_status)}
+              onClick={() => props.selectStatus(conversation.id, conversation.last_status)}
             />
           )}
           {conversation.last_status &&
