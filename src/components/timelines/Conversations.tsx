@@ -88,6 +88,13 @@ const Conversations: React.FC<Props> = props => {
     return res.data
   }
 
+  const selectStatus = (conversationId: string, status: Entity.Status | null) => {
+    if (status) {
+      props.setStatusDetail(status, props.server, client)
+      client.readConversation(conversationId)
+    }
+  }
+
   const closeOptionPopover = () => triggerRef?.current.close()
 
   const loadMore = useCallback(async () => {
@@ -183,15 +190,7 @@ const Conversations: React.FC<Props> = props => {
                     key={conversation.id}
                     style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-gray-800)' }}
                   >
-                    <Conversation
-                      conversation={conversation}
-                      openMedia={props.openMedia}
-                      selectStatus={status => {
-                        if (status) {
-                          props.setStatusDetail(status, props.server, client)
-                        }
-                      }}
-                    />
+                    <Conversation conversation={conversation} openMedia={props.openMedia} selectStatus={selectStatus} />
                   </List.Item>
                 )}
               />
