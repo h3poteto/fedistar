@@ -1,5 +1,5 @@
 import { Entity } from 'megalodon'
-import { Avatar, FlexboxGrid, Button } from 'rsuite'
+import { Avatar, FlexboxGrid, Button, Badge } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsPaperclip } from 'react-icons/bs'
 
@@ -36,6 +36,7 @@ const Conversation: React.FC<Props> = props => {
               </FlexboxGrid.Item>
               {/** timestamp **/}
               <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', color: 'var(--rs-text-tertiary)' }}>
+                {conversation.unread && <Badge color="blue" style={{ marginRight: '4px' }} />}
                 {conversation.last_status && <Time time={conversation.last_status.created_at} />}
               </FlexboxGrid.Item>
             </FlexboxGrid>
