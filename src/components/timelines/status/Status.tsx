@@ -1,6 +1,6 @@
 import { HTMLAttributes, MouseEventHandler, useEffect, useState } from 'react'
 import { Entity, MegalodonInterface } from 'megalodon'
-import { FlexboxGrid, Avatar } from 'rsuite'
+import { FlexboxGrid, Avatar, Button } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsArrowRepeat } from 'react-icons/bs'
 import { open } from '@tauri-apps/api/shell'
@@ -83,6 +83,12 @@ const Status: React.FC<Props> = props => {
           {status.media_attachments.length > 0 && (
             <Attachments attachments={status.media_attachments} sensitive={status.sensitive} openMedia={props.openMedia} />
           )}
+          {status.emoji_reactions &&
+            status.emoji_reactions.map(e => (
+              <Button appearance="subtle" size="sm">
+                {e.name}
+              </Button>
+            ))}
           <Actions
             disabled={props.server.account_id === null}
             status={status}
