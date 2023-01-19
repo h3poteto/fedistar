@@ -46,6 +46,16 @@ const Status: React.FC<Props> = props => {
     }
   }
 
+  const emojiClicked = async (e: Entity.Reaction) => {
+    if (e.me) {
+      const res = await props.client.deleteEmojiReaction(props.status.id, e.name)
+      props.updateStatus(res.data)
+    } else {
+      const res = await props.client.createEmojiReaction(props.status.id, e.name)
+      props.updateStatus(res.data)
+    }
+  }
+
   return (
     <div className="status">
       {rebloggedHeader(props.status)}
@@ -85,8 +95,8 @@ const Status: React.FC<Props> = props => {
           )}
           {status.emoji_reactions &&
             status.emoji_reactions.map(e => (
-              <Button appearance="subtle" size="sm" key={e.name}>
-                {e.name}
+              <Button appearance="subtle" size="sm" key={e.name} onClick={() => emojiClicked(e)}>
+                {e.name} {e.count}
               </Button>
             ))}
           <Actions
