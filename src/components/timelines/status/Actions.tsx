@@ -1,13 +1,18 @@
-import { FlexboxGrid, useToaster } from 'rsuite'
+import { FlexboxGrid, useToaster, Popover, Whisper, IconButton } from 'rsuite'
 import { BsChat, BsEmojiSmile, BsThreeDots, BsStar, BsStarFill, BsBookmark, BsFillBookmarkFill, BsArrowRepeat } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
-import { Dispatch, SetStateAction, ReactElement, useState } from 'react'
+import { Dispatch, SetStateAction, ReactElement, useState, forwardRef, useRef } from 'react'
 import { Entity, MegalodonInterface, Response } from 'megalodon'
+import Picker from '@emoji-mart/react'
+
 import ActionButton from './ActionButton'
 import alert from 'src/components/utils/alert'
+import { Server } from 'src/entities/server'
+import { data } from 'src/utils/emojiData'
 
 type Props = {
   disabled: boolean
+  server: Server
   status: Entity.Status
   client: MegalodonInterface
   setShowReply: Dispatch<SetStateAction<boolean>>
@@ -22,6 +27,7 @@ const Actions: React.FC<Props> = props => {
   const [reblogDeactivating, setReblogDeactivating] = useState<boolean>(false)
 
   const toast = useToaster()
+  const emojiPickerRef = useRef(null)
 
   const reblog = async () => {
     let res: Response<Entity.Status>
@@ -85,6 +91,19 @@ const Actions: React.FC<Props> = props => {
     props.updateStatus(res.data)
   }
 
+  const onEmojiSelect = async emoji => {
+    const res = await props.client.createEmojiReaction(props.status.id, emoji.native)
+    props.updateStatus(res.data)
+
+    emojiPickerRef?.current.close()
+  }
+
+  const EmojiPicker = forwardRef<HTMLDivElement>((props, ref) => (
+    <Popover ref={ref} {...props}>
+      <Picker data={data} onEmojiSelect={onEmojiSelect} previewPosition="none" set="native" perLine="7" />
+    </Popover>
+  ))
+
   return (
     <div className="toolbox">
       <FlexboxGrid>
@@ -115,7 +134,9 @@ const Actions: React.FC<Props> = props => {
           <ActionButton disabled={props.disabled} icon={bookmarkIcon(props.status)} onClick={bookmark} />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
-          <ActionButton icon={<Icon as={BsEmojiSmile} />} disabled />
+          <Whisper trigger="click" placement="bottomStart" ref={emojiPickerRef} speaker={<EmojiPicker />}>
+            <IconButton appearance="link" icon={<Icon as={BsEmojiSmile} />} disabled={props.disabled || props.server.sns === 'mastodon'} />
+          </Whisper>
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
           <ActionButton icon={<Icon as={BsThreeDots} />} disabled />
