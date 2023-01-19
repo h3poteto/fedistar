@@ -8,7 +8,6 @@ import Picker from '@emoji-mart/react'
 import ActionButton from './ActionButton'
 import alert from 'src/components/utils/alert'
 import { Server } from 'src/entities/server'
-import { CustomEmojiCategory } from 'src/entities/emoji'
 import { data } from 'src/utils/emojiData'
 
 type Props = {
@@ -26,7 +25,6 @@ const Actions: React.FC<Props> = props => {
   const [favouriteDeactivating, setFavouriteDeactivating] = useState<boolean>(false)
   const [reblogActivating, setReblogActivating] = useState<boolean>(false)
   const [reblogDeactivating, setReblogDeactivating] = useState<boolean>(false)
-  const [customEmojis, setCustomEmojis] = useState<Array<CustomEmojiCategory>>([])
 
   const toast = useToaster()
   const emojiPickerRef = useRef(null)
@@ -102,7 +100,7 @@ const Actions: React.FC<Props> = props => {
 
   const EmojiPicker = forwardRef<HTMLDivElement>((props, ref) => (
     <Popover ref={ref} {...props}>
-      <Picker data={data} custom={customEmojis} onEmojiSelect={onEmojiSelect} previewPosition="none" set="native" perLine="7" />
+      <Picker data={data} onEmojiSelect={onEmojiSelect} previewPosition="none" set="native" perLine="7" />
     </Popover>
   ))
 
