@@ -9,6 +9,7 @@ import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
 import { findLink } from 'src/utils/statusParser'
 import Body from '../status/Body'
+import Poll from '../status/Poll'
 
 type Props = {
   notification: Entity.Notification
@@ -147,6 +148,7 @@ const Reaction: React.FC<Props> = props => {
             </FlexboxGrid>
           </div>
           <Body status={status} onClick={statusClicked} />
+          {status.poll && <Poll poll={status.poll} />}
           {status.media_attachments.map((media, index) => (
             <div key={index}>
               <Button appearance="subtle" size="sm" onClick={() => props.openMedia(status.media_attachments, index)}>
