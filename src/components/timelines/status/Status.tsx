@@ -12,6 +12,7 @@ import Reply from 'src/components/compose/Status'
 import Body from './Body'
 import { Server } from 'src/entities/server'
 import Actions from './Actions'
+import Poll from './Poll'
 
 type Props = {
   status: Entity.Status
@@ -90,6 +91,7 @@ const Status: React.FC<Props> = props => {
             </FlexboxGrid>
           </div>
           <Body status={status} onClick={statusClicked} />
+          {status.poll && <Poll poll={status.poll} />}
           {status.media_attachments.length > 0 && (
             <Attachments attachments={status.media_attachments} sensitive={status.sensitive} openMedia={props.openMedia} />
           )}
