@@ -34,7 +34,16 @@ const Media: React.FC<Props> = props => {
   }, [props.media, index, setIndex])
 
   return (
-    <Modal open={props.opened} size="lg" onClose={props.close} style={{ height: 'calc(100% - 30px)' }} dialogClassName="media-dialog">
+    <Modal
+      open={props.opened}
+      size="lg"
+      onClose={() => {
+        props.close()
+        setIndex(0)
+      }}
+      style={{ height: 'calc(100% - 30px)' }}
+      dialogClassName="media-dialog"
+    >
       <Modal.Header></Modal.Header>
       <Modal.Body style={{ height: '100%' }}>
         <FlexboxGrid style={{ height: '100%' }} align="middle">
