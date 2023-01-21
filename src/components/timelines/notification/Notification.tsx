@@ -35,6 +35,8 @@ const notification = (props: Props) => {
       return (
         <Reaction
           notification={props.notification}
+          updateStatus={props.updateStatus}
+          client={props.client}
           openMedia={props.openMedia}
           setAccountDetail={account => props.setAccountDetail(account, props.server, props.client)}
         />

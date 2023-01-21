@@ -1,5 +1,5 @@
 import { MouseEventHandler } from 'react'
-import { Entity } from 'megalodon'
+import { Entity, MegalodonInterface } from 'megalodon'
 import { Avatar, Button, FlexboxGrid } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsStar, BsArrowRepeat, BsMenuUp, BsHouseDoor, BsPaperclip } from 'react-icons/bs'
@@ -13,6 +13,8 @@ import Poll from '../status/Poll'
 
 type Props = {
   notification: Entity.Notification
+  client: MegalodonInterface
+  updateStatus: (status: Entity.Status) => void
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setAccountDetail: (account: Entity.Account) => void
 }
@@ -109,6 +111,11 @@ const actionText = (notification: Entity.Notification) => {
 const Reaction: React.FC<Props> = props => {
   const status = props.notification.status
 
+  const refresh = async () => {
+    const res = await props.client.getStatus(status.id)
+    props.updateStatus(res.data)
+  }
+
   return (
     <div>
       {/** action **/}
@@ -148,7 +155,7 @@ const Reaction: React.FC<Props> = props => {
             </FlexboxGrid>
           </div>
           <Body status={status} onClick={statusClicked} />
-          {status.poll && <Poll poll={status.poll} />}
+          {status.poll && <Poll poll={status.poll} client={props.client} pollUpdated={refresh} />}
           {status.media_attachments.map((media, index) => (
             <div key={index}>
               <Button appearance="subtle" size="sm" onClick={() => props.openMedia(status.media_attachments, index)}>
