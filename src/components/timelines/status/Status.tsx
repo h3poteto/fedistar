@@ -49,12 +49,17 @@ const Status: React.FC<Props> = props => {
 
   const emojiClicked = async (e: Entity.Reaction) => {
     if (e.me) {
-      const res = await props.client.deleteEmojiReaction(props.status.id, e.name)
+      const res = await props.client.deleteEmojiReaction(status.id, e.name)
       props.updateStatus(res.data)
     } else {
-      const res = await props.client.createEmojiReaction(props.status.id, e.name)
+      const res = await props.client.createEmojiReaction(status.id, e.name)
       props.updateStatus(res.data)
     }
+  }
+
+  const refresh = async () => {
+    const res = await props.client.getStatus(props.status.id)
+    props.updateStatus(res.data)
   }
 
   return (
@@ -91,7 +96,7 @@ const Status: React.FC<Props> = props => {
             </FlexboxGrid>
           </div>
           <Body status={status} onClick={statusClicked} />
-          {status.poll && <Poll poll={status.poll} />}
+          {status.poll && <Poll poll={status.poll} client={props.client} pollUpdated={refresh} />}
           {status.media_attachments.length > 0 && (
             <Attachments attachments={status.media_attachments} sensitive={status.sensitive} openMedia={props.openMedia} />
           )}
