@@ -25,12 +25,12 @@ Please be careful when using.
     - [x] DirectMessages
 - [x] Streaming
 - [x] Notification
-- [ ] Status actions
+- [x] Status actions
     - [x] Reply
     - [x] Reblog
     - [x] Favourite
     - [x] Bookmark
-    - [ ] Emoji reaction
+    - [x] Emoji reaction
 - [ ] User Profile
     - [x] Show profile
     - [ ] Show followers
