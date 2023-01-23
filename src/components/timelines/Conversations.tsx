@@ -149,7 +149,7 @@ const Conversations: React.FC<Props> = props => {
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={6}>
               <FlexboxGrid align="middle" justify="end">
-                <FlexboxGrid.Item style={{ paddingRight: '8px' }}>
+                <FlexboxGrid.Item>
                   <Whisper
                     trigger="click"
                     placement="bottomEnd"
@@ -157,12 +157,12 @@ const Conversations: React.FC<Props> = props => {
                     ref={triggerRef}
                     speaker={<OptionPopover timeline={props.timeline} close={closeOptionPopover} />}
                   >
-                    <Button appearance="link">
+                    <Button appearance="link" style={{ padding: '4px 8px 4px 4px' }}>
                       <Icon as={BsSliders} />
                     </Button>
                   </Whisper>
                 </FlexboxGrid.Item>
-                <FlexboxGrid.Item style={{ paddingRight: '8px' }}>
+                <FlexboxGrid.Item style={{ paddingRight: '8px', height: '20px' }}>
                   <Avatar circle src={FailoverImg(account ? account.avatar : null)} size="xs" />
                 </FlexboxGrid.Item>
               </FlexboxGrid>

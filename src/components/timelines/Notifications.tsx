@@ -231,11 +231,12 @@ const Notifications: React.FC<Props> = props => {
                     title="Mark as read"
                     disabled={props.unreads.find(u => u.server_id === props.server.id && u.count > 0) ? false : true}
                     onClick={read}
+                    style={{ padding: '4px' }}
                   >
                     <Icon as={BsCheck2} />
                   </Button>
                 </FlexboxGrid.Item>
-                <FlexboxGrid.Item style={{ paddingRight: '8px' }}>
+                <FlexboxGrid.Item>
                   <Whisper
                     trigger="click"
                     placement="bottomEnd"
@@ -243,12 +244,12 @@ const Notifications: React.FC<Props> = props => {
                     ref={triggerRef}
                     speaker={<OptionPopover timeline={props.timeline} close={closeOptionPopover} />}
                   >
-                    <Button appearance="link">
+                    <Button appearance="link" style={{ padding: '4px 8px 4px 4px' }}>
                       <Icon as={BsSliders} />
                     </Button>
                   </Whisper>
                 </FlexboxGrid.Item>
-                <FlexboxGrid.Item style={{ paddingRight: '8px' }}>
+                <FlexboxGrid.Item style={{ paddingRight: '8px', height: '20px' }}>
                   <Avatar circle src={account ? account.avatar : ''} size="xs" />
                 </FlexboxGrid.Item>
               </FlexboxGrid>

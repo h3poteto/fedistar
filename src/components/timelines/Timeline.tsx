@@ -13,7 +13,8 @@ import {
   BsChevronRight,
   BsStar,
   BsListUl,
-  BsBookmark
+  BsBookmark,
+  BsArrowClockwise
 } from 'react-icons/bs'
 import { listen } from '@tauri-apps/api/event'
 import { Virtuoso } from 'react-virtuoso'
@@ -172,6 +173,19 @@ const Timeline: React.FC<Props> = props => {
     }
   }
 
+  const reload = useCallback(async () => {
+    try {
+      setLoading(true)
+      const res = await loadTimeline(props.timeline, client)
+      setStatuses(res)
+    } catch (err) {
+      console.error(err)
+      toast.push(alert('error', `Failed to load ${props.timeline.name} timeline`), { placement: 'topStart' })
+    } finally {
+      setLoading(false)
+    }
+  }, [client, props.timeline])
+
   const timelineIcon = (kind: TimelineKind) => {
     switch (kind) {
       case 'home':
@@ -186,6 +200,16 @@ const Timeline: React.FC<Props> = props => {
         return <Icon as={BsListUl} />
       case 'bookmarks':
         return <Icon as={BsBookmark} />
+    }
+  }
+
+  const reloadEnabled = (kind: TimelineKind) => {
+    switch (kind) {
+      case 'favourites':
+      case 'bookmarks':
+        return true
+      default:
+        return false
     }
   }
 
@@ -272,7 +296,15 @@ const Timeline: React.FC<Props> = props => {
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={6}>
               <FlexboxGrid align="middle" justify="end">
-                <FlexboxGrid.Item style={{ paddingRight: '8px' }}>
+                {reloadEnabled(props.timeline.kind) && (
+                  <FlexboxGrid.Item>
+                    <Button appearance="link" onClick={reload} style={{ padding: '4px' }}>
+                      <Icon as={BsArrowClockwise} />
+                    </Button>
+                  </FlexboxGrid.Item>
+                )}
+
+                <FlexboxGrid.Item>
                   <Whisper
                     trigger="click"
                     placement="bottomEnd"
@@ -280,12 +312,12 @@ const Timeline: React.FC<Props> = props => {
                     ref={triggerRef}
                     speaker={<OptionPopover timeline={props.timeline} close={closeOptionPopover} />}
                   >
-                    <Button appearance="link">
+                    <Button appearance="link" style={{ padding: '4px 8px 4px 4px' }}>
                       <Icon as={BsSliders} />
                     </Button>
                   </Whisper>
                 </FlexboxGrid.Item>
-                <FlexboxGrid.Item style={{ paddingRight: '8px' }}>
+                <FlexboxGrid.Item style={{ paddingRight: '8px', height: '20px' }}>
                   <Avatar circle src={FailoverImg(account ? account.avatar : null)} size="xs" />
                 </FlexboxGrid.Item>
               </FlexboxGrid>
