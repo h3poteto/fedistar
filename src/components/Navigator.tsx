@@ -121,9 +121,13 @@ const settingsMenu = (
   { className, left, top, onClose, openThirdparty, openSettings }: SettingsMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
-  const handleSelect = (eventKey: string) => {
+  const handleSelect = async (eventKey: string) => {
     onClose()
     switch (eventKey) {
+      case 'menu': {
+        await invoke('toggle_menu')
+        break
+      }
       case 'settings': {
         openSettings()
         break
@@ -138,6 +142,7 @@ const settingsMenu = (
   return (
     <Popover ref={ref} className={className} style={{ left, top, padding: 0 }}>
       <Dropdown.Menu onSelect={handleSelect}>
+        <Dropdown.Item eventKey="menu">Toggle app menu</Dropdown.Item>
         <Dropdown.Item eventKey="settings">Settings</Dropdown.Item>
         <Dropdown.Item eventKey="thirdparty">Third-party licenses</Dropdown.Item>
       </Dropdown.Menu>

@@ -520,7 +520,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             app.manage(settings_path);
 
             let window = app.get_window("main").expect("Failed to get main window");
-            window.menu_handle().hide().expect("Failed to hide menu");
+            #[cfg(not(target_os = "macos"))]
+            {
+                window.menu_handle().hide().expect("Failed to hide menu");
+            }
 
             #[cfg(debug_assertions)]
             {
