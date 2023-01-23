@@ -450,20 +450,19 @@ fn init_logger(logfile_path: std::path::PathBuf) {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use tauri::async_runtime::block_on;
-    let mut base_dir: &str = ".fedistar";
+    let mut base_dir: &str = "fedistar";
     const DATABASE_FILE: &str = "fedistar.db";
     const LOGFILE_PATH: &str = "fedistar.log";
     const SETTINGS_PATH: &str = "settings.json";
 
     #[cfg(debug_assertions)]
     {
-        base_dir = ".fedistar.dev";
+        base_dir = "fedistar.dev";
     }
 
-    let home_dir = directories::UserDirs::new()
-        .map(|dirs| dirs.home_dir().to_path_buf())
+    let user_dir = tauri::api::path::data_dir()
         .unwrap_or_else(|| std::env::current_dir().expect("Cannot access the current directory"));
-    let config_dir = home_dir.join(base_dir);
+    let config_dir = user_dir.join(base_dir);
     let config_dir_exists = std::fs::metadata(&config_dir).is_ok();
     if !config_dir_exists {
         std::fs::create_dir(&config_dir)?;
@@ -477,7 +476,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let database_dir_str = std::fs::canonicalize(&config_dir)
         .expect("Failed to canonicalize")
         .to_string_lossy()
-        .replace('\\', "/");
+        .replace('?', "")
+        .replace('\\', "/")
+        .replace("//", "");
     let database_url = format!("sqlite://{}/{}", database_dir_str, DATABASE_FILE);
 
     let sqlite_pool = block_on(database::create_sqlite_pool(&database_url))?;
