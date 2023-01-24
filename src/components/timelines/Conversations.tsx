@@ -117,7 +117,7 @@ const Conversations: React.FC<Props> = props => {
 
   return (
     <div style={{ width: '340px', minWidth: '340px', margin: '0 4px' }}>
-      <Container style={{ height: 'calc(100% - 8px)', overflowY: 'scroll' }}>
+      <Container style={{ height: 'calc(100% - 8px)' }}>
         <Header style={{ backgroundColor: 'var(--rs-gray-800)' }}>
           <FlexboxGrid align="middle" justify="space-between">
             <FlexboxGrid.Item colspan={18}>
