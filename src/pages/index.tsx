@@ -16,7 +16,7 @@ import Compose from 'src/components/compose/Compose'
 import Media from 'src/components/Media'
 import generateNotification from 'src/utils/notification'
 import { ReceiveNotificationPayload } from 'src/payload'
-import { Entity, MegalodonInterface } from 'megalodon'
+import { Entity } from 'megalodon'
 import Thirdparty from 'src/components/settings/Thirdparty'
 import { Settings } from 'src/entities/settings'
 import SettingsPage from 'src/components/settings/Settings'
@@ -30,7 +30,6 @@ function App() {
   const [style, setStyle] = useState<CSSProperties>({})
 
   const [modalState, dispatch] = useReducer(modalReducer, initialModalState)
-  const [drawerState, drawerDispatch] = useReducer(drawerReducer, initialDrawerState)
 
   const toaster = useToaster()
 
@@ -163,7 +162,6 @@ function App() {
               openMedia={(media: Array<Entity.Attachment>, index: number) =>
                 dispatch({ target: 'media', value: true, object: media, index: index })
               }
-              setAccountDetail={(account, server, client) => drawerDispatch({ account, server, client })}
             />
           ))}
           <NewTimeline servers={servers} />
@@ -223,25 +221,6 @@ const modalReducer = (current: ModalState, action: { target: string; value: bool
     default:
       return current
   }
-}
-
-type DrawerState = {
-  account: Entity.Account | null
-  client: MegalodonInterface | null
-  server: Server | null
-}
-
-const initialDrawerState: DrawerState = {
-  account: null,
-  client: null,
-  server: null
-}
-
-const drawerReducer = (
-  current: DrawerState,
-  action: { account: Entity.Account | null; server: Server | null; client: MegalodonInterface | null }
-) => {
-  return { ...current, account: action.account, server: action.server, client: action.client }
 }
 
 export default App

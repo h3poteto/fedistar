@@ -23,7 +23,6 @@ type Props = {
   unreads: Array<Unread>
   setUnreads: Dispatch<SetStateAction<Array<Unread>>>
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  setAccountDetail: (account: Entity.Account, server: Server, client: MegalodonInterface) => void
 }
 
 type Marker = {
@@ -155,6 +154,14 @@ const Notifications: React.FC<Props> = props => {
       router.push({ query: { status_id: statusId, server_id: serverId, account_id: accountId } })
     } else {
       router.push({ query: { status_id: statusId, server_id: serverId } })
+    }
+  }
+
+  const setAccountDetail = (userId: string, serverId: number, accountId?: number) => {
+    if (accountId) {
+      router.push({ query: { user_id: userId, server_id: serverId, account_id: accountId } })
+    } else {
+      router.push({ query: { user_id: userId, server_id: serverId } })
     }
   }
 
@@ -307,7 +314,7 @@ const Notifications: React.FC<Props> = props => {
                         openMedia={props.openMedia}
                         setReplyOpened={opened => (replyOpened.current = opened)}
                         setStatusDetail={setStatusDetail}
-                        setAccountDetail={props.setAccountDetail}
+                        setAccountDetail={setAccountDetail}
                       />
                     </List.Item>
                   )

@@ -3,6 +3,7 @@ import { Dispatch, useEffect, useState } from 'react'
 import { Animation } from 'rsuite'
 
 import Status from './Status'
+import Profile from './Profile'
 
 type Props = {
   dispatch: Dispatch<{ target: string; value: boolean; object?: any; index?: number }>
@@ -39,6 +40,7 @@ const Detail: React.FC<Props> = props => {
               }
             />
           )}
+          {target === 'profile' && <Profile />}
         </div>
       )}
     </Animation.Transition>

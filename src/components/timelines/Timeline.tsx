@@ -34,7 +34,6 @@ type Props = {
   timeline: Timeline
   server: Server
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  setAccountDetail: (account: Entity.Account, server: Server, client: MegalodonInterface) => void
 }
 
 const Timeline: React.FC<Props> = props => {
@@ -241,6 +240,14 @@ const Timeline: React.FC<Props> = props => {
     }
   }
 
+  const setAccountDetail = (userId: string, serverId: number, accountId?: number) => {
+    if (accountId) {
+      router.push({ query: { user_id: userId, server_id: serverId, account_id: accountId } })
+    } else {
+      router.push({ query: { user_id: userId, server_id: serverId } })
+    }
+  }
+
   const loadMore = useCallback(async () => {
     console.debug('appending')
     let maxId = null
@@ -365,7 +372,7 @@ const Timeline: React.FC<Props> = props => {
                       openMedia={props.openMedia}
                       setReplyOpened={opened => (replyOpened.current = opened)}
                       setStatusDetail={setStatusDetail}
-                      setAccountDetail={props.setAccountDetail}
+                      setAccountDetail={setAccountDetail}
                     />
                   </List.Item>
                 )}

@@ -106,6 +106,14 @@ const StatusDetail: React.FC<Props> = props => {
     router.push({ query: {} })
   }
 
+  const setAccountDetail = (userId: string, serverId: number, accountId?: number) => {
+    if (accountId) {
+      router.push({ query: { user_id: userId, server_id: serverId, account_id: accountId } })
+    } else {
+      router.push({ query: { user_id: userId, server_id: serverId } })
+    }
+  }
+
   return (
     <Container className="status-detail" style={{ height: '100%', borderLeft: '1px solid var(--rs-gray-600)' }}>
       <Header style={{ borderBottom: '4px solid var(--rs-gray-800)', backgroundColor: 'var(--rs-gray-700)' }}>
@@ -135,7 +143,7 @@ const StatusDetail: React.FC<Props> = props => {
                   updateStatus={updateStatus}
                   openMedia={props.openMedia}
                   setReplyOpened={() => null}
-                  setAccountDetail={() => {}}
+                  setAccountDetail={setAccountDetail}
                 />
               </List.Item>
             ))}

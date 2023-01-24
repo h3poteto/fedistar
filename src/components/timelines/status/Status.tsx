@@ -24,7 +24,7 @@ type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setReplyOpened: (opened: boolean) => void
   setStatusDetail?: (statusId: string, serverId: number, accountId?: number) => void
-  setAccountDetail: (account: Entity.Account, server: Server, client: MegalodonInterface) => void
+  setAccountDetail: (userId: string, serverId: number, accountId?: number) => void
 } & HTMLAttributes<HTMLElement>
 
 const Status: React.FC<Props> = props => {
@@ -73,7 +73,7 @@ const Status: React.FC<Props> = props => {
           <div style={{ margin: '6px' }}>
             <Avatar
               src={status.account.avatar}
-              onClick={() => props.setAccountDetail(status.account, props.server, props.client)}
+              onClick={() => props.setAccountDetail(status.account.id, props.server.id, props.account?.id)}
               style={{ cursor: 'pointer' }}
             />
           </div>
@@ -86,7 +86,7 @@ const Status: React.FC<Props> = props => {
               <FlexboxGrid.Item
                 colspan={18}
                 style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
-                onClick={() => props.setAccountDetail(status.account, props.server, props.client)}
+                onClick={() => props.setAccountDetail(status.account.id, props.server.id, props.account?.id)}
               >
                 <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
                 <span style={{ color: 'var(--rs-text-tertiary)' }}>@{status.account.acct}</span>
