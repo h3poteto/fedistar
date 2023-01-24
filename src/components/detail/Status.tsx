@@ -1,38 +1,68 @@
 import { Icon } from '@rsuite/icons'
-import { Entity, MegalodonInterface } from 'megalodon'
+import { invoke } from '@tauri-apps/api/tauri'
+import generator, { Entity, MegalodonInterface } from 'megalodon'
+import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 import { BsX } from 'react-icons/bs'
 import { Button, Container, Content, Header, List } from 'rsuite'
 import { Server } from 'src/entities/server'
+import { Account } from 'src/entities/account'
 import Status from '../timelines/status/Status'
 
 type Props = {
-  client: MegalodonInterface
-  status: Entity.Status
-  server: Server
-  onClose: () => void
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  setAccountDetail: (account: Entity.Account, server: Server, client: MegalodonInterface) => void
 }
 
 const StatusDetail: React.FC<Props> = props => {
-  const [status, setStatus] = useState(props.status)
+  const [client, setClient] = useState<MegalodonInterface | null>(null)
+  const [server, setServer] = useState<Server | null>(null)
+  const [account, setAccount] = useState<Account | null>(null)
+  const [status, setStatus] = useState<Entity.Status | null>(null)
   const [ancestors, setAncestors] = useState<Array<Entity.Status>>([])
   const [descendants, setDescendants] = useState<Array<Entity.Status>>([])
+
+  const router = useRouter()
+
+  useEffect(() => {
+    const f = async () => {
+      let cli: MegalodonInterface
+      if (router.query.account_id && router.query.server_id) {
+        const [account, server] = await invoke<[Account, Server]>('get_account', {
+          id: parseInt(router.query.account_id.toLocaleString())
+        })
+        setServer(server)
+        setAccount(account)
+        cli = generator(server.sns, server.base_url, account.access_token, 'Fedistar')
+        setClient(cli)
+      } else if (router.query.server_id) {
+        const server = await invoke<Server>('get_server', { id: parseInt(router.query.server_id.toString()) })
+        setServer(server)
+        setAccount(null)
+        cli = generator(server.sns, server.base_url, undefined, 'Fedistar')
+        setClient(cli)
+      }
+      if (router.query.status_id) {
+        const res = await cli.getStatus(router.query.status_id.toString())
+        setStatus(res.data)
+      } else {
+        setStatus(null)
+      }
+    }
+    f()
+  }, [router.query.status_id, router.query.server_id, router.query.account_id])
 
   useEffect(() => {
     setAncestors([])
     setDescendants([])
-    setStatus(props.status)
-    const f = async () => {
-      const s = await props.client.getStatus(props.status.id)
-      setStatus(s.data)
-      const c = await props.client.getStatusContext(props.status.id)
-      setAncestors(c.data.ancestors)
-      setDescendants(c.data.descendants)
+    if (status) {
+      const f = async () => {
+        const c = await client.getStatusContext(status.id)
+        setAncestors(c.data.ancestors)
+        setDescendants(c.data.descendants)
+      }
+      f()
     }
-    f()
-  }, [props.status, props.client])
+  }, [status, client])
 
   const updateStatus = useCallback(
     (updated: Entity.Status) => {
@@ -72,36 +102,43 @@ const StatusDetail: React.FC<Props> = props => {
     [status, setStatus, ancestors, setAncestors, descendants, setDescendants]
   )
 
+  const close = () => {
+    router.push({ query: {} })
+  }
+
   return (
     <Container className="status-detail" style={{ height: '100%', borderLeft: '1px solid var(--rs-gray-600)' }}>
       <Header style={{ borderBottom: '4px solid var(--rs-gray-800)', backgroundColor: 'var(--rs-gray-700)' }}>
-        <Button appearance="link" onClick={props.onClose}>
+        <Button appearance="link" onClick={close}>
           <Icon as={BsX} style={{ fontSize: '1.4em' }} />
         </Button>
       </Header>
       <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'scroll' }}>
         <List hover style={{ width: '340px' }}>
-          {[...ancestors, status, ...descendants].map(status => (
-            <List.Item
-              key={status.id}
-              style={{
-                paddingTop: '2px',
-                paddingBottom: '2px',
-                backgroundColor: 'var(--rs-gray-700)',
-                boxShadow: '0 -1px 0 var(--rs-gray-900),0 1px 0 var(--rs-gray-900)'
-              }}
-            >
-              <Status
-                status={status}
-                client={props.client}
-                server={props.server}
-                updateStatus={updateStatus}
-                openMedia={props.openMedia}
-                setReplyOpened={() => null}
-                setAccountDetail={props.setAccountDetail}
-              />
-            </List.Item>
-          ))}
+          {[...ancestors, status, ...descendants]
+            .filter(s => s !== null)
+            .map(status => (
+              <List.Item
+                key={status.id}
+                style={{
+                  paddingTop: '2px',
+                  paddingBottom: '2px',
+                  backgroundColor: 'var(--rs-gray-700)',
+                  boxShadow: '0 -1px 0 var(--rs-gray-900),0 1px 0 var(--rs-gray-900)'
+                }}
+              >
+                <Status
+                  status={status}
+                  client={client}
+                  server={server}
+                  account={account}
+                  updateStatus={updateStatus}
+                  openMedia={props.openMedia}
+                  setReplyOpened={() => null}
+                  setAccountDetail={() => {}}
+                />
+              </List.Item>
+            ))}
         </List>
       </Content>
     </Container>

@@ -3,15 +3,17 @@ import Follow from './Follow'
 import Reaction from './Reaction'
 import Status from '../status/Status'
 import { Server } from 'src/entities/server'
+import { Account } from 'src/entities/account'
 
 type Props = {
   notification: Entity.Notification
   client: MegalodonInterface
   server: Server
+  account: Account | null
   updateStatus: (status: Entity.Status) => void
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setReplyOpened: (opened: boolean) => void
-  setStatusDetail: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
+  setStatusDetail: (statusId: string, serverId: number, accountId?: number) => void
   setAccountDetail: (account: Entity.Account, server: Server, client: MegalodonInterface) => void
 }
 
@@ -47,6 +49,7 @@ const notification = (props: Props) => {
           client={props.client}
           status={props.notification.status}
           server={props.server}
+          account={props.account}
           updateStatus={props.updateStatus}
           openMedia={props.openMedia}
           setReplyOpened={props.setReplyOpened}

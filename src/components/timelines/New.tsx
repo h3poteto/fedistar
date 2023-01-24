@@ -35,7 +35,7 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
     const f = async () => {
       setLoading(true)
       try {
-        const account = await invoke<Account>('get_account', { id: server.account_id })
+        const [account, _] = await invoke<[Account, Server]>('get_account', { id: server.account_id })
         const client = generator(server.sns, server.base_url, account.access_token, 'Fedistar')
         const res = await client.getLists()
         setLists(res.data)

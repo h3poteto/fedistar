@@ -28,12 +28,12 @@ import FailoverImg from 'src/utils/failoverImg'
 import { DeleteHomeStatusPayload, DeleteTimelineStatusPayload, ReceiveHomeStatusPayload, ReceiveTimelineStatusPayload } from 'src/payload'
 import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from 'src/defaults'
 import alert from 'src/components/utils/alert'
+import { useRouter } from 'next/router'
 
 type Props = {
   timeline: Timeline
   server: Server
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  setStatusDetail: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
   setAccountDetail: (account: Entity.Account, server: Server, client: MegalodonInterface) => void
 }
 
@@ -51,13 +51,14 @@ const Timeline: React.FC<Props> = props => {
   const triggerRef = useRef(null)
   const replyOpened = useRef<boolean>(false)
   const toast = useToaster()
+  const router = useRouter()
 
   useEffect(() => {
     const f = async () => {
       setLoading(true)
       let client: MegalodonInterface
       if (props.server.account_id) {
-        const account = await invoke<Account>('get_account', { id: props.server.account_id })
+        const [account, _] = await invoke<[Account, Server]>('get_account', { id: props.server.account_id })
         setAccount(account)
         client = generator(props.server.sns, props.server.base_url, account.access_token, 'Fedistar')
         setClient(client)
@@ -232,6 +233,14 @@ const Timeline: React.FC<Props> = props => {
     setStatuses(renew)
   }
 
+  const setStatusDetail = (statusId: string, serverId: number, accountId?: number) => {
+    if (accountId) {
+      router.push({ query: { status_id: statusId, server_id: serverId, account_id: accountId } })
+    } else {
+      router.push({ query: { status_id: statusId, server_id: serverId } })
+    }
+  }
+
   const loadMore = useCallback(async () => {
     console.debug('appending')
     let maxId = null
@@ -351,10 +360,11 @@ const Timeline: React.FC<Props> = props => {
                       status={status}
                       client={client}
                       server={props.server}
+                      account={account}
                       updateStatus={updateStatus}
                       openMedia={props.openMedia}
                       setReplyOpened={opened => (replyOpened.current = opened)}
-                      setStatusDetail={props.setStatusDetail}
+                      setStatusDetail={setStatusDetail}
                       setAccountDetail={props.setAccountDetail}
                     />
                   </List.Item>

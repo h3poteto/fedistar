@@ -9,8 +9,9 @@ import emojify from 'src/utils/emojify'
 import Attachments from './Attachments'
 import { findLink } from 'src/utils/statusParser'
 import Reply from 'src/components/compose/Status'
-import Body from './Body'
+import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
+import Body from './Body'
 import Actions from './Actions'
 import Poll from './Poll'
 
@@ -18,10 +19,11 @@ type Props = {
   status: Entity.Status
   client: MegalodonInterface
   server: Server
+  account: Account | null
   updateStatus: (status: Entity.Status) => void
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setReplyOpened: (opened: boolean) => void
-  setStatusDetail?: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
+  setStatusDetail?: (statusId: string, serverId: number, accountId?: number) => void
   setAccountDetail: (account: Entity.Account, server: Server, client: MegalodonInterface) => void
 } & HTMLAttributes<HTMLElement>
 
@@ -42,7 +44,7 @@ const Status: React.FC<Props> = props => {
       e.preventDefault()
     } else {
       if (props.setStatusDetail) {
-        props.setStatusDetail(props.status, props.server, props.client)
+        props.setStatusDetail(props.status.id, props.server.id, props.account?.id)
       }
     }
   }
@@ -91,7 +93,10 @@ const Status: React.FC<Props> = props => {
               </FlexboxGrid.Item>
               {/** timestamp **/}
               <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', color: 'var(--rs-text-tertiary)' }}>
-                <Time time={status.created_at} onClick={() => props.setStatusDetail(props.status, props.server, props.client)} />
+                <Time
+                  time={status.created_at}
+                  onClick={() => props.setStatusDetail && props.setStatusDetail(props.status.id, props.server.id, props.account.id)}
+                />
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </div>
