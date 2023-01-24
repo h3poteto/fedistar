@@ -27,6 +27,18 @@ async fn list_servers(
 }
 
 #[tauri::command]
+async fn get_server(
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+    id: i64,
+) -> Result<entities::Server, String> {
+    let server = database::get_server(&sqlite_pool, id)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    Ok(server)
+}
+
+#[tauri::command]
 async fn add_server(
     app_handle: AppHandle,
     sqlite_pool: State<'_, sqlx::SqlitePool>,
@@ -249,7 +261,7 @@ async fn remove_timeline(
 async fn get_account(
     sqlite_pool: State<'_, sqlx::SqlitePool>,
     id: i64,
-) -> Result<entities::Account, String> {
+) -> Result<(entities::Account, entities::Server), String> {
     let account = database::get_account(&sqlite_pool, id)
         .await
         .map_err(|e| e.to_string())?;
@@ -356,7 +368,7 @@ async fn start_timeline_streaming(
     }
     let mut account: Option<entities::Account> = None;
     if let Some(account_id) = server.account_id {
-        let a = database::get_account(&sqlite_pool, account_id)
+        let (a, _) = database::get_account(&sqlite_pool, account_id)
             .await
             .map_err(|e| e.to_string())?;
         account = Some(a);
@@ -488,6 +500,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .menu(menu::menu())
         .invoke_handler(tauri::generate_handler![
             list_servers,
+            get_server,
             add_server,
             remove_server,
             add_application,

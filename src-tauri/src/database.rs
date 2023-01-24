@@ -36,6 +36,15 @@ pub(crate) async fn list_servers(pool: &SqlitePool) -> DBResult<Vec<entities::Se
     Ok(servers)
 }
 
+pub(crate) async fn get_server(pool: &SqlitePool, id: i64) -> DBResult<entities::Server> {
+    let server = query_as::<_, entities::Server>("SELECT * FROM servers WHERE id = ?")
+        .bind(id)
+        .fetch_one(pool)
+        .await?;
+
+    Ok(server)
+}
+
 pub(crate) async fn add_server(
     pool: &SqlitePool,
     server: entities::Server,
@@ -262,10 +271,41 @@ pub(crate) async fn switch_right_timeline(pool: &SqlitePool, id: i64) -> DBResul
     Ok(())
 }
 
-pub(crate) async fn get_account(pool: &SqlitePool, id: i64) -> DBResult<entities::Account> {
-    let account = query_as::<_, entities::Account>("SELECT * FROM accounts WHERE id = ?")
+pub(crate) async fn get_account(
+    pool: &SqlitePool,
+    id: i64,
+) -> DBResult<(entities::Account, entities::Server)> {
+    let account = sqlx::query(
+        r#"
+SELECT accounts.id, accounts.username, accounts.account_id, accounts.avatar, accounts.client_id, accounts.client_secret,
+       accounts.access_token, accounts.refresh_token, accounts.usual, servers.id, servers.domain, servers.base_url, servers.sns,
+       servers.favicon, servers.account_id
+FROM accounts INNER JOIN servers ON accounts.id = servers.account_id WHERE accounts.id = ?"#
+        )
         .bind(id)
-        .fetch_one(pool)
+        .map(|row: SqliteRow| {
+            (
+                entities::Account {
+                    id: row.get(0),
+                    username: row.get(1),
+                    account_id: row.get(2),
+                    avatar: row.get(3),
+                    client_id: row.get(4),
+                    client_secret: row.get(5),
+                    access_token: row.get(6),
+                    refresh_token: row.get(7),
+                    usual: row.get(8),
+                },
+                entities::Server {
+                    id: row.get(9),
+                    domain: row.get(10),
+                    base_url: row.get(11),
+                    sns: row.get(12),
+                    favicon: row.get(13),
+                    account_id: row.get(14),
+                },
+            )
+        }).fetch_one(pool)
         .await?;
 
     Ok(account)

@@ -16,12 +16,11 @@ import Compose from 'src/components/compose/Compose'
 import Media from 'src/components/Media'
 import generateNotification from 'src/utils/notification'
 import { ReceiveNotificationPayload } from 'src/payload'
-import { Entity, MegalodonInterface } from 'megalodon'
-import Status from 'src/components/detail/Status'
+import { Entity } from 'megalodon'
 import Thirdparty from 'src/components/settings/Thirdparty'
 import { Settings } from 'src/entities/settings'
 import SettingsPage from 'src/components/settings/Settings'
-import Profile from 'src/components/detail/Profile'
+import Detail from 'src/components/detail/Detail'
 
 function App() {
   const [servers, setServers] = useState<Array<Server>>([])
@@ -31,7 +30,6 @@ function App() {
   const [style, setStyle] = useState<CSSProperties>({})
 
   const [modalState, dispatch] = useReducer(modalReducer, initialModalState)
-  const [drawerState, drawerDispatch] = useReducer(drawerReducer, initialDrawerState)
 
   const toaster = useToaster()
 
@@ -164,45 +162,11 @@ function App() {
               openMedia={(media: Array<Entity.Attachment>, index: number) =>
                 dispatch({ target: 'media', value: true, object: media, index: index })
               }
-              setStatusDetail={(status, server, client) =>
-                drawerDispatch({ status: status, account: null, server: server, client: client })
-              }
-              setAccountDetail={(account, server, client) => drawerDispatch({ status: null, account, server, client })}
             />
           ))}
           <NewTimeline servers={servers} />
         </Content>
-        <Animation.Transition
-          in={drawerState.status !== null || drawerState.account !== null}
-          exitedClassName="detail-exited"
-          exitingClassName="detail-exiting"
-          enteredClassName="detail-entered"
-          enteringClassName="detail-entering"
-        >
-          {(props, ref) => (
-            <div {...props} ref={ref} style={{ overflow: 'hidden' }}>
-              {drawerState.status && drawerState.server && drawerState.client && (
-                <Status
-                  status={drawerState.status}
-                  client={drawerState.client}
-                  server={drawerState.server}
-                  openMedia={(media: Array<Entity.Attachment>, index: number) =>
-                    dispatch({ target: 'media', value: true, object: media, index: index })
-                  }
-                  setAccountDetail={(account, server, client) => drawerDispatch({ status: null, account, server, client })}
-                  onClose={() => drawerDispatch({ status: null, account: null, server: null, client: null })}
-                />
-              )}
-              {drawerState.account && drawerState.server && drawerState.client && (
-                <Profile
-                  account={drawerState.account}
-                  client={drawerState.client}
-                  onClose={() => drawerDispatch({ status: null, account: null, server: null, client: null })}
-                />
-              )}
-            </div>
-          )}
-        </Animation.Transition>
+        <Detail dispatch={dispatch} />
       </Container>
     </div>
   )
@@ -257,27 +221,6 @@ const modalReducer = (current: ModalState, action: { target: string; value: bool
     default:
       return current
   }
-}
-
-type DrawerState = {
-  status: Entity.Status | null
-  account: Entity.Account | null
-  client: MegalodonInterface | null
-  server: Server | null
-}
-
-const initialDrawerState: DrawerState = {
-  status: null,
-  account: null,
-  client: null,
-  server: null
-}
-
-const drawerReducer = (
-  current: DrawerState,
-  action: { status: Entity.Status | null; account: Entity.Account | null; server: Server | null; client: MegalodonInterface | null }
-) => {
-  return { ...current, status: action.status, account: action.account, server: action.server, client: action.client }
 }
 
 export default App

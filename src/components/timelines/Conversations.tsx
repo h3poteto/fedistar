@@ -16,12 +16,12 @@ import { Virtuoso } from 'react-virtuoso'
 import Conversation from './conversation/Conversation'
 import { listen } from '@tauri-apps/api/event'
 import { ReceiveTimelineConversationPayload } from 'src/payload'
+import { useRouter } from 'next/router'
 
 type Props = {
   server: Server
   timeline: Timeline
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  setStatusDetail: (status: Entity.Status, server: Server, client: MegalodonInterface) => void
 }
 
 const Conversations: React.FC<Props> = props => {
@@ -36,13 +36,14 @@ const Conversations: React.FC<Props> = props => {
   const scrollerRef = useRef<HTMLElement | null>(null)
   const triggerRef = useRef(null)
   const toast = useToaster()
+  const router = useRouter()
 
   useEffect(() => {
     const f = async () => {
       if (props.server.account_id) {
         setLoading(true)
         try {
-          const account = await invoke<Account>('get_account', { id: props.server.account_id })
+          const [account, _] = await invoke<[Account, Server]>('get_account', { id: props.server.account_id })
           setAccount(account)
           const client = generator(props.server.sns, props.server.base_url, account.access_token, 'Fedistar')
           setClient(client)
@@ -90,7 +91,11 @@ const Conversations: React.FC<Props> = props => {
 
   const selectStatus = (conversationId: string, status: Entity.Status | null) => {
     if (status) {
-      props.setStatusDetail(status, props.server, client)
+      if (account) {
+        router.push({ query: { status_id: status.id, server_id: props.server.id, account_id: account.id } })
+      } else {
+        router.push({ query: { status_id: status.id, server_id: props.server.id } })
+      }
       client.readConversation(conversationId)
     }
   }
