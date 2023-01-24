@@ -1613,10 +1613,10 @@ emittery@^0.13.1:
   resolved "https://registry.yarnpkg.com/emittery/-/emittery-0.13.1.tgz#c04b8c3457490e0847ae51fced3af52d338e3dad"
   integrity sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ==
 
-emoji-mart@^5.5.1:
-  version "5.5.1"
-  resolved "https://registry.yarnpkg.com/emoji-mart/-/emoji-mart-5.5.1.tgz#b0c5bd11b3b9558fd8f5e35225369628e0226d4c"
-  integrity sha512-16hsygz4oz7BVi0tGEWZRQXs4+KC3IyR1s2uftRECYyLstZHoIUAceZ+VvEMhEZUpWtEKMWBTjgGJJVDBuOIVQ==
+emoji-mart@^5.5.2:
+  version "5.5.2"
+  resolved "https://registry.yarnpkg.com/emoji-mart/-/emoji-mart-5.5.2.tgz#3ddbaf053139cf4aa217650078bc1c50ca8381af"
+  integrity sha512-Sqc/nso4cjxhOwWJsp9xkVm8OF5c+mJLZJFoFfzRuKO+yWiN7K8c96xmtughYb0d/fZ8UC6cLIQ/p4BR6Pv3/A==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
