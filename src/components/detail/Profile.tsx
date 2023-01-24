@@ -12,9 +12,7 @@ import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import { useRouter } from 'next/router'
 
-type Props = {}
-
-const Profile: React.FC<Props> = () => {
+const Profile: React.FC = () => {
   const [client, setClient] = useState<MegalodonInterface | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
   const [user, setUser] = useState<Entity.Account | null>(null)
