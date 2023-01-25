@@ -1,10 +1,8 @@
-import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
-import { BsX } from 'react-icons/bs'
-import { Button, Container, Content, Header, List } from 'rsuite'
+import { Content, List } from 'rsuite'
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import Status from '../timelines/status/Status'
@@ -102,10 +100,6 @@ const StatusDetail: React.FC<Props> = props => {
     [status, setStatus, ancestors, setAncestors, descendants, setDescendants]
   )
 
-  const close = () => {
-    router.push({ query: {} })
-  }
-
   const setAccountDetail = (userId: string, serverId: number, accountId?: number) => {
     if (accountId) {
       router.push({ query: { user_id: userId, server_id: serverId, account_id: accountId } })
@@ -115,41 +109,34 @@ const StatusDetail: React.FC<Props> = props => {
   }
 
   return (
-    <Container className="status-detail" style={{ height: '100%', borderLeft: '1px solid var(--rs-gray-600)' }}>
-      <Header style={{ borderBottom: '4px solid var(--rs-gray-800)', backgroundColor: 'var(--rs-gray-700)' }}>
-        <Button appearance="link" onClick={close}>
-          <Icon as={BsX} style={{ fontSize: '1.4em' }} />
-        </Button>
-      </Header>
-      <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'scroll' }}>
-        <List hover style={{ width: '340px' }}>
-          {[...ancestors, status, ...descendants]
-            .filter(s => s !== null)
-            .map(status => (
-              <List.Item
-                key={status.id}
-                style={{
-                  paddingTop: '2px',
-                  paddingBottom: '2px',
-                  backgroundColor: 'var(--rs-gray-700)',
-                  boxShadow: '0 -1px 0 var(--rs-gray-900),0 1px 0 var(--rs-gray-900)'
-                }}
-              >
-                <Status
-                  status={status}
-                  client={client}
-                  server={server}
-                  account={account}
-                  updateStatus={updateStatus}
-                  openMedia={props.openMedia}
-                  setReplyOpened={() => null}
-                  setAccountDetail={setAccountDetail}
-                />
-              </List.Item>
-            ))}
-        </List>
-      </Content>
-    </Container>
+    <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'scroll' }}>
+      <List hover style={{ width: '340px' }}>
+        {[...ancestors, status, ...descendants]
+          .filter(s => s !== null)
+          .map(status => (
+            <List.Item
+              key={status.id}
+              style={{
+                paddingTop: '2px',
+                paddingBottom: '2px',
+                backgroundColor: 'var(--rs-gray-700)',
+                boxShadow: '0 -1px 0 var(--rs-gray-900),0 1px 0 var(--rs-gray-900)'
+              }}
+            >
+              <Status
+                status={status}
+                client={client}
+                server={server}
+                account={account}
+                updateStatus={updateStatus}
+                openMedia={props.openMedia}
+                setReplyOpened={() => null}
+                setAccountDetail={setAccountDetail}
+              />
+            </List.Item>
+          ))}
+      </List>
+    </Content>
   )
 }
 

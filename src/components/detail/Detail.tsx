@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router'
 import { Dispatch, useEffect, useState } from 'react'
-import { Animation } from 'rsuite'
+import { BsX, BsChevronLeft } from 'react-icons/bs'
+import { Animation, Container, Header, FlexboxGrid, Button } from 'rsuite'
+import { Icon } from '@rsuite/icons'
 
 import Status from './Status'
 import Profile from './Profile'
@@ -23,6 +25,14 @@ const Detail: React.FC<Props> = props => {
     }
   }, [router.query])
 
+  const back = () => {
+    router.back()
+  }
+
+  const close = () => {
+    router.push({ query: {} })
+  }
+
   return (
     <Animation.Transition
       in={target !== null}
@@ -33,14 +43,31 @@ const Detail: React.FC<Props> = props => {
     >
       {(p, ref) => (
         <div {...p} ref={ref} style={{ overflow: 'hidden' }}>
-          {target === 'status' && (
-            <Status
-              openMedia={(media: Array<Entity.Attachment>, index: number) =>
-                props.dispatch({ target: 'media', value: true, object: media, index: index })
-              }
-            />
-          )}
-          {target === 'profile' && <Profile />}
+          <Container className="profile" style={{ height: '100%', borderLeft: '1px solid var(--rs-gray-600)' }}>
+            <Header style={{ backgroundColor: 'var(--rs-gray-700)' }}>
+              <FlexboxGrid justify="space-between">
+                <FlexboxGrid.Item>
+                  <Button appearance="link" onClick={back}>
+                    <Icon as={BsChevronLeft} style={{ fontSize: '1.4em' }} />
+                    Back
+                  </Button>
+                </FlexboxGrid.Item>
+                <FlexboxGrid.Item>
+                  <Button appearance="link" onClick={close}>
+                    <Icon as={BsX} style={{ fontSize: '1.4em' }} />
+                  </Button>
+                </FlexboxGrid.Item>
+              </FlexboxGrid>
+            </Header>
+            {target === 'status' && (
+              <Status
+                openMedia={(media: Array<Entity.Attachment>, index: number) =>
+                  props.dispatch({ target: 'media', value: true, object: media, index: index })
+                }
+              />
+            )}
+            {target === 'profile' && <Profile />}
+          </Container>
         </div>
       )}
     </Animation.Transition>
