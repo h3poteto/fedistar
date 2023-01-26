@@ -9,6 +9,7 @@ import Profile from './Profile'
 
 type Props = {
   dispatch: Dispatch<{ target: string; value: boolean; object?: any; index?: number }>
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
 }
 
 const Detail: React.FC<Props> = props => {
@@ -66,7 +67,7 @@ const Detail: React.FC<Props> = props => {
                 }
               />
             )}
-            {target === 'profile' && <Profile />}
+            {target === 'profile' && <Profile openMedia={props.openMedia} />}
           </Container>
         </div>
       )}

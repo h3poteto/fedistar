@@ -15,7 +15,11 @@ import Posts, { FuncProps } from './profile/Posts'
 
 const PostsTab = forwardRef(Posts)
 
-const Profile: React.FC = () => {
+type Props = {
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
+}
+
+const Profile: React.FC<Props> = props => {
   const [client, setClient] = useState<MegalodonInterface | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
   const [server, setServer] = useState<Server | null>(null)
@@ -123,10 +127,13 @@ const Profile: React.FC = () => {
             if (postsRef.current) {
               await postsRef.current.loadMore()
             }
+            break
           case 'following':
             console.debug('todo')
+            break
           case 'followers':
             console.debug('todo')
+            break
         }
       }
     }
@@ -135,7 +142,7 @@ const Profile: React.FC = () => {
   const timeline = () => {
     switch (activeNav) {
       case 'posts':
-        return <PostsTab client={client} user={user} server={server} account={account} ref={postsRef} />
+        return <PostsTab client={client} user={user} server={server} account={account} openMedia={props.openMedia} ref={postsRef} />
       case 'following':
         return <></>
       case 'followers':

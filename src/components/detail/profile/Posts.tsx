@@ -1,4 +1,5 @@
 import { Entity, MegalodonInterface } from 'megalodon'
+import { useRouter } from 'next/router'
 import { useEffect, useImperativeHandle, useState } from 'react'
 import { List, Loader } from 'rsuite'
 import Status from 'src/components/timelines/status/Status'
@@ -15,6 +16,7 @@ type ArgProps = {
   user: Entity.Account
   server: Server
   account: Account
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
 }
 
 const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) => {
@@ -22,6 +24,8 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [loadingMore, setLoadingMore] = useState<boolean>(false)
+
+  const router = useRouter()
 
   useEffect(() => {
     const f = async () => {
@@ -51,6 +55,31 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
     }
   }))
 
+  const updateStatus = (status: Entity.Status) => {
+    const renew = statuses.map(s => {
+      if (s.id === status.id) {
+        return status
+      } else if (s.reblog && s.reblog.id === status.id) {
+        return Object.assign({}, s, { reblog: status })
+      } else if (status.reblog && s.id === status.reblog.id) {
+        return status.reblog
+      } else if (status.reblog && s.reblog && s.reblog.id === status.reblog.id) {
+        return Object.assign({}, s, { reblog: status.reblog })
+      } else {
+        return s
+      }
+    })
+    setStatuses(renew)
+  }
+
+  const setAccountDetail = (userId: string, serverId: number, accountId?: number) => {
+    if (accountId) {
+      router.push({ query: { user_id: userId, server_id: serverId, account_id: accountId } })
+    } else {
+      router.push({ query: { user_id: userId, server_id: serverId } })
+    }
+  }
+
   return (
     <div style={{ width: '100%' }}>
       {loading ? (
@@ -66,10 +95,9 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
                 client={client}
                 server={props.server}
                 account={props.account}
-                updateStatus={() => {}}
-                openMedia={() => {}}
-                setReplyOpened={() => {}}
-                setAccountDetail={() => {}}
+                updateStatus={updateStatus}
+                openMedia={props.openMedia}
+                setAccountDetail={setAccountDetail}
               />
             </List.Item>
           ))}
