@@ -166,7 +166,12 @@ function App() {
           ))}
           <NewTimeline servers={servers} />
         </Content>
-        <Detail dispatch={dispatch} />
+        <Detail
+          dispatch={dispatch}
+          openMedia={(media: Array<Entity.Attachment>, index: number) =>
+            dispatch({ target: 'media', value: true, object: media, index: index })
+          }
+        />
       </Container>
     </div>
   )

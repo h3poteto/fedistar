@@ -22,7 +22,7 @@ type Props = {
   account: Account | null
   updateStatus: (status: Entity.Status) => void
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  setReplyOpened: (opened: boolean) => void
+  setReplyOpened?: (opened: boolean) => void
   setStatusDetail?: (statusId: string, serverId: number, accountId?: number) => void
   setAccountDetail: (userId: string, serverId: number, accountId?: number) => void
 } & HTMLAttributes<HTMLElement>
@@ -34,7 +34,9 @@ const Status: React.FC<Props> = props => {
   const status = originalStatus(props.status)
 
   useEffect(() => {
-    props.setReplyOpened(showReply)
+    if (props.setReplyOpened) {
+      props.setReplyOpened(showReply)
+    }
   }, [showReply])
 
   const statusClicked: MouseEventHandler<HTMLDivElement> = e => {
