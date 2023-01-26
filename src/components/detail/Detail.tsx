@@ -42,8 +42,8 @@ const Detail: React.FC<Props> = props => {
       enteringClassName="detail-entering"
     >
       {(p, ref) => (
-        <div {...p} ref={ref} style={{ overflow: 'hidden' }}>
-          <Container className="profile" style={{ height: '100%', borderLeft: '1px solid var(--rs-gray-600)' }}>
+        <div {...p} ref={ref}>
+          <Container className="profile" style={{ height: '100%', borderLeft: '1px solid var(--rs-gray-600)', overflow: 'hidden' }}>
             <Header style={{ backgroundColor: 'var(--rs-gray-700)' }}>
               <FlexboxGrid justify="space-between">
                 <FlexboxGrid.Item>

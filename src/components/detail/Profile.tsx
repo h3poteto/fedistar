@@ -2,24 +2,31 @@ import { open } from '@tauri-apps/api/shell'
 import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { BsThreeDotsVertical } from 'react-icons/bs'
-import { Button, Content, Dropdown, FlexboxGrid, IconButton, Popover, useToaster, Whisper } from 'rsuite'
+import { Button, Content, Dropdown, FlexboxGrid, IconButton, Nav, Popover, useToaster, Whisper } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import Image from 'next/image'
 import emojify from 'src/utils/emojify'
-import { ReactElement, useCallback, useEffect, useState } from 'react'
+import { forwardRef, ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import alert from '../utils/alert'
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import { useRouter } from 'next/router'
+import Posts, { FuncProps } from './profile/Posts'
+
+const PostsTab = forwardRef(Posts)
 
 const Profile: React.FC = () => {
   const [client, setClient] = useState<MegalodonInterface | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
+  const [server, setServer] = useState<Server | null>(null)
   const [user, setUser] = useState<Entity.Account | null>(null)
   const [relationship, setRelationship] = useState<Entity.Relationship | null>(null)
+  const [activeNav, setActiveNav] = useState<'posts' | 'following' | 'followers'>('posts')
 
   const toaster = useToaster()
   const router = useRouter()
+  const scrollerRef = useRef<HTMLElement | null>(null)
+  const postsRef = useRef<FuncProps>()
 
   useEffect(() => {
     const f = async () => {
@@ -29,6 +36,7 @@ const Profile: React.FC = () => {
           id: parseInt(router.query.account_id.toLocaleString())
         })
         setAccount(account)
+        setServer(server)
         cli = generator(server.sns, server.base_url, account.access_token, 'Fedistar')
         setClient(cli)
       } else if (router.query.server_id) {
@@ -43,7 +51,12 @@ const Profile: React.FC = () => {
       }
     }
     f()
-  }, [router.query.user_id, router.query.server_id, router.query.account_id])
+    if (router.query.active_nav === 'posts' || router.query.active_nav === 'following' || router.query.active_nav === 'followers') {
+      setActiveNav(router.query.active_nav)
+    } else {
+      setActiveNav('posts')
+    }
+  }, [router.query.user_id, router.query.server_id, router.query.account_id, router.query.active_nav])
 
   useEffect(() => {
     if (client && user) {
@@ -97,9 +110,42 @@ const Profile: React.FC = () => {
     }
   }, [client, account])
 
+  const changeNav = (eventKey: string) => {
+    router.push({ query: Object.assign({}, router.query, { active_nav: eventKey }) })
+  }
+
+  const onScroll = async e => {
+    if (scrollerRef.current) {
+      const scrollBottom = scrollerRef.current.scrollHeight - scrollerRef.current.clientHeight - e.currentTarget.scrollTop
+      if (scrollBottom < 100) {
+        switch (activeNav) {
+          case 'posts':
+            if (postsRef.current) {
+              await postsRef.current.loadMore()
+            }
+          case 'following':
+            console.debug('todo')
+          case 'followers':
+            console.debug('todo')
+        }
+      }
+    }
+  }
+
+  const timeline = () => {
+    switch (activeNav) {
+      case 'posts':
+        return <PostsTab client={client} user={user} server={server} account={account} ref={postsRef} />
+      case 'following':
+        return <></>
+      case 'followers':
+        return <></>
+    }
+  }
+
   return (
     user && (
-      <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)' }}>
+      <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'auto' }} onScroll={onScroll} ref={scrollerRef}>
         <div className="profile-header-image" style={{ width: '100%', backgroundColor: 'var(--rs-body)' }}>
           <img src={user.header} alt="header image" style={{ objectFit: 'cover', width: '100%', height: '146px' }} />
         </div>
@@ -158,12 +204,19 @@ const Profile: React.FC = () => {
               </dl>
             ))}
           </div>
-          <FlexboxGrid className="status" justify="space-between">
-            <FlexboxGrid.Item style={{ fontWeight: 'bold' }}>{user.statuses_count} Posts</FlexboxGrid.Item>
-            <FlexboxGrid.Item style={{ fontWeight: 'bold' }}>{user.following_count} Following</FlexboxGrid.Item>
-            <FlexboxGrid.Item style={{ fontWeight: 'bold' }}>{user.followers_count} Followers</FlexboxGrid.Item>
-          </FlexboxGrid>
         </div>
+        <Nav appearance="subtle" activeKey={activeNav} onSelect={changeNav} justified>
+          <Nav.Item eventKey="posts" style={{ fontWeight: 'bold' }}>
+            {user.statuses_count} Posts
+          </Nav.Item>
+          <Nav.Item eventKey="following" style={{ fontWeight: 'bold' }}>
+            {user.following_count} Following
+          </Nav.Item>
+          <Nav.Item eventKey="followers" style={{ fontWeight: 'bold' }}>
+            {user.followers_count} Followers
+          </Nav.Item>
+        </Nav>
+        {timeline()}
       </Content>
     )
   )
