@@ -69,10 +69,18 @@ const Media: React.FC<Props> = props => {
 const mediaComponent = (media: Entity.Attachment): ReactElement => {
   switch (media.type) {
     case 'gifv':
-      return <video src={media.url} autoPlay loop style={{ objectFit: 'contain' }} />
+      return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+          <video src={media.url} autoPlay loop style={{ maxWidth: '100%', objectFit: 'contain' }} />
+        </div>
+      )
     case 'video':
     case 'audio':
-      return <video src={media.url} autoPlay loop controls style={{ objectFit: 'contain' }} />
+      return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+          <video src={media.url} autoPlay loop controls style={{ maxWidth: '100%', objectFit: 'contain' }} />
+        </div>
+      )
     default:
       return <Image src={media.url} fill alt={media.description ? media.description : media.id} style={{ objectFit: 'contain' }} />
   }
