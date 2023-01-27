@@ -108,7 +108,10 @@ function App() {
   }
 
   return (
-    <div className="container index" style={Object.assign({ backgroundColor: 'var(--rs-gray-900)' }, style)}>
+    <div
+      className="container index"
+      style={Object.assign({ backgroundColor: 'var(--rs-gray-900)', width: '100%', overflow: 'hidden' }, style)}
+    >
       {/** Modals **/}
       <NewServer
         open={modalState.newServer.opened}
