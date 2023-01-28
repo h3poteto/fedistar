@@ -11,9 +11,11 @@ import alert from '../utils/alert'
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import { useRouter } from 'next/router'
-import Posts, { FuncProps } from './profile/Posts'
+import Posts, { FuncProps as PostsFunc } from './profile/Posts'
+import Following, { FuncProps as FollowingFunc } from './profile/Following'
 
 const PostsTab = forwardRef(Posts)
+const FollowingTab = forwardRef(Following)
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
@@ -30,9 +32,11 @@ const Profile: React.FC<Props> = props => {
   const toaster = useToaster()
   const router = useRouter()
   const scrollerRef = useRef<HTMLElement | null>(null)
-  const postsRef = useRef<FuncProps>()
+  const postsRef = useRef<PostsFunc>()
+  const followingRef = useRef<FollowingFunc>()
 
   useEffect(() => {
+    setUser(null)
     const f = async () => {
       let cli: MegalodonInterface
       if (router.query.account_id && router.query.server_id) {
@@ -129,7 +133,9 @@ const Profile: React.FC<Props> = props => {
             }
             break
           case 'following':
-            console.debug('todo')
+            if (followingRef.current) {
+              await followingRef.current.loadMore()
+            }
             break
           case 'followers':
             console.debug('todo')
@@ -139,16 +145,17 @@ const Profile: React.FC<Props> = props => {
     }
   }
 
-  const timeline = () => {
+  const timeline = useCallback(() => {
+    if (!user) return <></>
     switch (activeNav) {
       case 'posts':
         return <PostsTab client={client} user={user} server={server} account={account} openMedia={props.openMedia} ref={postsRef} />
       case 'following':
-        return <></>
+        return <FollowingTab client={client} user={user} ref={followingRef} />
       case 'followers':
         return <></>
     }
-  }
+  }, [activeNav, client, user, server, account])
 
   return (
     user && (
