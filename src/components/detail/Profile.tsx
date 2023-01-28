@@ -13,9 +13,11 @@ import { Account } from 'src/entities/account'
 import { useRouter } from 'next/router'
 import Posts, { FuncProps as PostsFunc } from './profile/Posts'
 import Following, { FuncProps as FollowingFunc } from './profile/Following'
+import Followers, { FuncProps as FollowersFunc } from './profile/Followers'
 
 const PostsTab = forwardRef(Posts)
 const FollowingTab = forwardRef(Following)
+const FollowersTab = forwardRef(Followers)
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
@@ -34,6 +36,7 @@ const Profile: React.FC<Props> = props => {
   const scrollerRef = useRef<HTMLElement | null>(null)
   const postsRef = useRef<PostsFunc>()
   const followingRef = useRef<FollowingFunc>()
+  const followersRef = useRef<FollowersFunc>()
 
   useEffect(() => {
     setUser(null)
@@ -138,7 +141,9 @@ const Profile: React.FC<Props> = props => {
             }
             break
           case 'followers':
-            console.debug('todo')
+            if (followersRef.current) {
+              await followersRef.current.loadMore()
+            }
             break
         }
       }
@@ -153,13 +158,17 @@ const Profile: React.FC<Props> = props => {
       case 'following':
         return <FollowingTab client={client} user={user} ref={followingRef} />
       case 'followers':
-        return <></>
+        return <FollowersTab client={client} user={user} ref={followersRef} />
     }
   }, [activeNav, client, user, server, account])
 
   return (
     user && (
-      <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'auto' }} onScroll={onScroll} ref={scrollerRef}>
+      <Content
+        style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'auto', overflowX: 'hidden' }}
+        onScroll={onScroll}
+        ref={scrollerRef}
+      >
         <div className="profile-header-image" style={{ width: '100%', backgroundColor: 'var(--rs-body)' }}>
           <img src={user.header} alt="header image" style={{ objectFit: 'cover', width: '100%', height: '146px' }} />
         </div>
@@ -208,9 +217,18 @@ const Profile: React.FC<Props> = props => {
             <span style={{ display: 'block', color: 'var(--rs-text-secondary)' }}>@{user.acct}</span>
           </div>
           <div className="bio">
-            <div dangerouslySetInnerHTML={{ __html: user.note }} />
+            <div dangerouslySetInnerHTML={{ __html: user.note }} style={{ overflow: 'hidden', wordBreak: 'break-all' }} />
           </div>
-          <div className="fields" style={{ backgroundColor: 'var(--rs-body)', borderRadius: '4px', margin: '16px 0' }}>
+          <div
+            className="fields"
+            style={{
+              backgroundColor: 'var(--rs-body)',
+              borderRadius: '4px',
+              margin: '16px 0',
+              overflow: 'hidden',
+              wordBreak: 'break-all'
+            }}
+          >
             {user.fields.map((data, index) => (
               <dl key={index} style={{ padding: '8px 16px', margin: 0, borderBottom: '1px solid var(--rs-bg-card)' }}>
                 <dt>{data.name}</dt>
@@ -220,14 +238,14 @@ const Profile: React.FC<Props> = props => {
           </div>
         </div>
         <Nav appearance="subtle" activeKey={activeNav} onSelect={changeNav} justified>
-          <Nav.Item eventKey="posts" style={{ fontWeight: 'bold' }}>
-            {user.statuses_count} Posts
+          <Nav.Item eventKey="posts" style={{ fontWeight: 'bold', padding: '6px 8px' }}>
+            {precision(user.statuses_count)} Posts
           </Nav.Item>
-          <Nav.Item eventKey="following" style={{ fontWeight: 'bold' }}>
-            {user.following_count} Following
+          <Nav.Item eventKey="following" style={{ fontWeight: 'bold', padding: '6px 8px' }}>
+            {precision(user.following_count)} Following
           </Nav.Item>
-          <Nav.Item eventKey="followers" style={{ fontWeight: 'bold' }}>
-            {user.followers_count} Followers
+          <Nav.Item eventKey="followers" style={{ fontWeight: 'bold', padding: '6px 8px' }}>
+            {precision(user.followers_count)} Followers
           </Nav.Item>
         </Nav>
         {timeline()}
@@ -292,6 +310,16 @@ const profileMenu = (
       </Dropdown.Menu>
     </Popover>
   )
+}
+
+const precision = (num: number): string => {
+  if (num > 1000) {
+    return `${(num / 1000).toPrecision(2)}K`
+  } else if (num > 1000000) {
+    return `${(num / 1000000).toPrecision(3)}M`
+  } else {
+    return num.toString()
+  }
 }
 
 export default Profile

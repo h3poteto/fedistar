@@ -31,24 +31,29 @@ Please be careful when using.
     - [x] Favourite
     - [x] Bookmark
     - [x] Emoji reaction
-- [ ] User Profile
+- [x] User Profile
     - [x] Show profile
-    - [ ] Show followers
-    - [ ] Show followings
-    - [ ] Show user timeline
+    - [x] Show followers
+    - [x] Show followings
+    - [x] Show user timeline
     - [x] Follow/Unfollow
     - [x] Mute/Block
-- [x] Status detail
+- [ ] Status detail
     - [x] Show media
     - [x] Handle NSFW and CW
     - [x] Show the thread
     - [x] Link preview
-- [x] Post statuses
+    - [x] Show and vote polls
+    - [ ] Edit statuses
+- [ ] Post statuses
     - [x] Post statuses
     - [x] Add emoji
     - [x] Attach media
     - [x] Change visibility
     - [x] Specify NSFW and CW
+    - [ ] Add poll
+    - [ ] Suggest emojis
+    - [ ] Suggest hashtags
 - [x] See media
     - [x] Image
     - [x] Video
