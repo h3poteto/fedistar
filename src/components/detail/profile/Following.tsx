@@ -76,6 +76,30 @@ const Following: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, r
     return rel.data
   }
 
+  const follow = async (user: Entity.Account) => {
+    const res = await client.followAccount(user.id)
+    setRelationships(current =>
+      current.map(r => {
+        if (r.id === res.data.id) {
+          return res.data
+        }
+        return r
+      })
+    )
+  }
+
+  const unfollow = async (user: Entity.Account) => {
+    const res = await client.unfollowAccount(user.id)
+    setRelationships(current =>
+      current.map(r => {
+        if (r.id === res.data.id) {
+          return res.data
+        }
+        return r
+      })
+    )
+  }
+
   return (
     <div style={{ width: '100%' }}>
       {loading ? (
@@ -86,7 +110,7 @@ const Following: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, r
         <List>
           {following.map((account, index) => (
             <List.Item key={account.id} style={{ padding: '4px 0', backgroundColor: 'var(rs-gary-800)' }}>
-              <User user={account} relationship={relationships[index]} />
+              <User user={account} relationship={relationships[index]} follow={follow} unfollow={unfollow} />
             </List.Item>
           ))}
         </List>
