@@ -13,9 +13,11 @@ import { Account } from 'src/entities/account'
 import { useRouter } from 'next/router'
 import Posts, { FuncProps as PostsFunc } from './profile/Posts'
 import Following, { FuncProps as FollowingFunc } from './profile/Following'
+import Followers, { FuncProps as FollowersFunc } from './profile/Followers'
 
 const PostsTab = forwardRef(Posts)
 const FollowingTab = forwardRef(Following)
+const FollowersTab = forwardRef(Followers)
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
@@ -34,6 +36,7 @@ const Profile: React.FC<Props> = props => {
   const scrollerRef = useRef<HTMLElement | null>(null)
   const postsRef = useRef<PostsFunc>()
   const followingRef = useRef<FollowingFunc>()
+  const followersRef = useRef<FollowersFunc>()
 
   useEffect(() => {
     setUser(null)
@@ -138,7 +141,9 @@ const Profile: React.FC<Props> = props => {
             }
             break
           case 'followers':
-            console.debug('todo')
+            if (followersRef.current) {
+              await followersRef.current.loadMore()
+            }
             break
         }
       }
@@ -153,13 +158,17 @@ const Profile: React.FC<Props> = props => {
       case 'following':
         return <FollowingTab client={client} user={user} ref={followingRef} />
       case 'followers':
-        return <></>
+        return <FollowersTab client={client} user={user} ref={followersRef} />
     }
   }, [activeNav, client, user, server, account])
 
   return (
     user && (
-      <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'auto' }} onScroll={onScroll} ref={scrollerRef}>
+      <Content
+        style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'auto', overflowX: 'hidden' }}
+        onScroll={onScroll}
+        ref={scrollerRef}
+      >
         <div className="profile-header-image" style={{ width: '100%', backgroundColor: 'var(--rs-body)' }}>
           <img src={user.header} alt="header image" style={{ objectFit: 'cover', width: '100%', height: '146px' }} />
         </div>
@@ -208,9 +217,18 @@ const Profile: React.FC<Props> = props => {
             <span style={{ display: 'block', color: 'var(--rs-text-secondary)' }}>@{user.acct}</span>
           </div>
           <div className="bio">
-            <div dangerouslySetInnerHTML={{ __html: user.note }} />
+            <div dangerouslySetInnerHTML={{ __html: user.note }} style={{ overflow: 'hidden', wordBreak: 'break-all' }} />
           </div>
-          <div className="fields" style={{ backgroundColor: 'var(--rs-body)', borderRadius: '4px', margin: '16px 0' }}>
+          <div
+            className="fields"
+            style={{
+              backgroundColor: 'var(--rs-body)',
+              borderRadius: '4px',
+              margin: '16px 0',
+              overflow: 'hidden',
+              wordBreak: 'break-all'
+            }}
+          >
             {user.fields.map((data, index) => (
               <dl key={index} style={{ padding: '8px 16px', margin: 0, borderBottom: '1px solid var(--rs-bg-card)' }}>
                 <dt>{data.name}</dt>
