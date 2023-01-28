@@ -238,14 +238,14 @@ const Profile: React.FC<Props> = props => {
           </div>
         </div>
         <Nav appearance="subtle" activeKey={activeNav} onSelect={changeNav} justified>
-          <Nav.Item eventKey="posts" style={{ fontWeight: 'bold' }}>
-            {user.statuses_count} Posts
+          <Nav.Item eventKey="posts" style={{ fontWeight: 'bold', padding: '6px 8px' }}>
+            {precision(user.statuses_count)} Posts
           </Nav.Item>
-          <Nav.Item eventKey="following" style={{ fontWeight: 'bold' }}>
-            {user.following_count} Following
+          <Nav.Item eventKey="following" style={{ fontWeight: 'bold', padding: '6px 8px' }}>
+            {precision(user.following_count)} Following
           </Nav.Item>
-          <Nav.Item eventKey="followers" style={{ fontWeight: 'bold' }}>
-            {user.followers_count} Followers
+          <Nav.Item eventKey="followers" style={{ fontWeight: 'bold', padding: '6px 8px' }}>
+            {precision(user.followers_count)} Followers
           </Nav.Item>
         </Nav>
         {timeline()}
@@ -310,6 +310,16 @@ const profileMenu = (
       </Dropdown.Menu>
     </Popover>
   )
+}
+
+const precision = (num: number): string => {
+  if (num > 1000) {
+    return `${(num / 1000).toPrecision(2)}K`
+  } else if (num > 1000000) {
+    return `${(num / 1000000).toPrecision(3)}M`
+  } else {
+    return num.toString()
+  }
 }
 
 export default Profile
