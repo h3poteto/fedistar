@@ -250,7 +250,7 @@ const Status: React.FC<Props> = props => {
           </Button>
         </Whisper>
       </Form.Group>
-      <Form.Group controlId="actions">
+      <Form.Group controlId="actions" style={{ marginBottom: '4px' }}>
         <ButtonToolbar>
           <Input name="attachments" type="file" style={{ display: 'none' }} ref={uploaderRef} onChange={fileChanged} />
           <Button appearance="subtle" onClick={selectFile}>
@@ -270,12 +270,12 @@ const Status: React.FC<Props> = props => {
         </ButtonToolbar>
       </Form.Group>
       {formValue.attachments?.length > 0 && (
-        <Form.Group controlId="nsfw">
+        <Form.Group controlId="nsfw" style={{ marginBottom: '4px' }}>
           <Form.Control name="nsfw" accepter={Toggle} checkedChildren="Sensitive" unCheckedChildren="Not sensitive" />
         </Form.Group>
       )}
 
-      <Form.Group controlId="attachments-preview">
+      <Form.Group controlId="attachments-preview" style={{ marginBottom: '4px' }}>
         <div>
           {formValue.attachments?.map((media, index) => (
             <div key={index} style={{ position: 'relative' }}>
@@ -304,6 +304,7 @@ const Status: React.FC<Props> = props => {
       </Form.Group>
       <Form.Group>
         <ButtonToolbar style={{ justifyContent: 'flex-end' }}>
+          {props.in_reply_to && <Button onClick={clear}>Cancel</Button>}
           <Button appearance="primary" type="submit" onClick={handleSubmit} loading={loading}>
             Post
           </Button>
