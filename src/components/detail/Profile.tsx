@@ -165,10 +165,25 @@ const Profile: React.FC<Props> = props => {
   return (
     user && (
       <Content
-        style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'auto', overflowX: 'hidden' }}
+        style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'auto', overflowX: 'hidden', position: 'relative' }}
         onScroll={onScroll}
         ref={scrollerRef}
       >
+        {relationship && relationship.followed_by && (
+          <div
+            className="followed-status"
+            style={{
+              position: 'absolute',
+              top: '10px',
+              left: '10px',
+              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+              padding: '4px',
+              borderRadius: '4px'
+            }}
+          >
+            FOLLOWS YOU
+          </div>
+        )}
         <div className="profile-header-image" style={{ width: '100%', backgroundColor: 'var(--rs-body)' }}>
           <img src={user.header} alt="header image" style={{ objectFit: 'cover', width: '100%', height: '146px' }} />
         </div>
