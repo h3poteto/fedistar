@@ -158,7 +158,7 @@ const New: React.FC<Props> = props => {
     >
       <ButtonToolbar>
         <Whisper placement="bottomStart" trigger="click" speaker={addTimelineMenu}>
-          <IconButton icon={<Icon as={BsPlus} />} size="lg" appearance="ghost" />
+          <IconButton icon={<Icon as={BsPlus} />} size="lg" appearance="ghost" title="Add a new timeline" />
         </Whisper>
       </ButtonToolbar>
     </div>
@@ -180,7 +180,7 @@ const New: React.FC<Props> = props => {
           <FlexboxGrid align="middle" justify="space-between">
             <FlexboxGrid.Item style={{ paddingLeft: '8px', lineHeight: '52px' }}>@{server.domain}</FlexboxGrid.Item>
             <FlexboxGrid.Item>
-              <Button appearance="link" onClick={back}>
+              <Button appearance="link" onClick={back} title="back">
                 <Icon as={BsChevronLeft} />
                 Back
               </Button>

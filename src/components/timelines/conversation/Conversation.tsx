@@ -26,7 +26,7 @@ const Conversation: React.FC<Props> = props => {
           style={{ cursor: 'pointer' }}
         >
           <div style={{ margin: '6px' }}>
-            <Avatar src={account.avatar} circle />
+            <Avatar src={account.avatar} circle title={account.acct} alt={account.acct} />
           </div>
         </FlexboxGrid.Item>
         {/** message **/}

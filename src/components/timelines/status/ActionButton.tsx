@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import { ReactElement, HTMLAttributes } from 'react'
 import { IconButton } from 'rsuite'
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
   className?: string
   activating?: boolean
   deactivating?: boolean
-}
+} & HTMLAttributes<HTMLElement>
 
 const ActionButton: React.FC<Props> = props => {
   const className = () => {
@@ -27,6 +27,7 @@ const ActionButton: React.FC<Props> = props => {
       icon={props.icon}
       onClick={props.onClick}
       disabled={props.disabled}
+      title={props.title}
     />
   )
 }

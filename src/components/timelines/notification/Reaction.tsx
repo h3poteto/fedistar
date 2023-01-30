@@ -136,7 +136,13 @@ const Reaction: React.FC<Props> = props => {
         {/** icon **/}
         <FlexboxGrid.Item colspan={4}>
           <div style={{ margin: '6px' }}>
-            <Avatar src={status.account.avatar} onClick={() => props.setAccountDetail(status.account)} style={{ cursor: 'pointer' }} />
+            <Avatar
+              src={status.account.avatar}
+              onClick={() => props.setAccountDetail(status.account)}
+              style={{ cursor: 'pointer' }}
+              title={status.account.acct}
+              alt={status.account.acct}
+            />
           </div>
         </FlexboxGrid.Item>
         {/** status **/}
