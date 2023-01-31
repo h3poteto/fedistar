@@ -108,7 +108,12 @@ const Actions: React.FC<Props> = props => {
     <div className="toolbox">
       <FlexboxGrid>
         <FlexboxGrid.Item>
-          <ActionButton disabled={props.disabled} icon={<Icon as={BsChat} />} onClick={() => props.setShowReply(current => !current)} />
+          <ActionButton
+            disabled={props.disabled}
+            icon={<Icon as={BsChat} />}
+            onClick={() => props.setShowReply(current => !current)}
+            title="Reply"
+          />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
           <ActionButton
@@ -118,6 +123,7 @@ const Actions: React.FC<Props> = props => {
             deactivating={reblogDeactivating}
             icon={reblogIcon(props.status)}
             onClick={reblog}
+            title="Reblog"
           />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
@@ -128,18 +134,24 @@ const Actions: React.FC<Props> = props => {
             deactivating={favouriteDeactivating}
             icon={favouriteIcon(props.status)}
             onClick={favourite}
+            title="Favourite"
           />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
-          <ActionButton disabled={props.disabled} icon={bookmarkIcon(props.status)} onClick={bookmark} />
+          <ActionButton disabled={props.disabled} icon={bookmarkIcon(props.status)} onClick={bookmark} title="Bookmark" />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
           <Whisper trigger="click" placement="bottomStart" ref={emojiPickerRef} speaker={<EmojiPicker />}>
-            <IconButton appearance="link" icon={<Icon as={BsEmojiSmile} />} disabled={props.disabled || props.server.sns === 'mastodon'} />
+            <IconButton
+              appearance="link"
+              icon={<Icon as={BsEmojiSmile} />}
+              disabled={props.disabled || props.server.sns === 'mastodon'}
+              title="Emoji reaction"
+            />
           </Whisper>
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
-          <ActionButton icon={<Icon as={BsThreeDots} />} disabled />
+          <ActionButton icon={<Icon as={BsThreeDots} />} disabled title="Details" />
         </FlexboxGrid.Item>
       </FlexboxGrid>
     </div>

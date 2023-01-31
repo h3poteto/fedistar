@@ -57,6 +57,8 @@ const Follow: React.FC<Props> = props => {
               src={props.notification.account.avatar}
               onClick={() => props.setAccountDetail(props.notification.account)}
               style={{ cursor: 'pointer' }}
+              title={props.notification.account.acct}
+              alt={props.notification.account.acct}
             />
           </div>
         </FlexboxGrid.Item>

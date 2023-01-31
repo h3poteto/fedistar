@@ -77,6 +77,8 @@ const Status: React.FC<Props> = props => {
               src={status.account.avatar}
               onClick={() => props.setAccountDetail(status.account.id, props.server.id, props.account?.id)}
               style={{ cursor: 'pointer' }}
+              title={status.account.acct}
+              alt={status.account.acct}
             />
           </div>
         </FlexboxGrid.Item>

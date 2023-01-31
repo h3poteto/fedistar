@@ -35,7 +35,7 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
       </Sidenav>
       <Sidenav expanded={false}>
         <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Button appearance="link" size="lg" onClick={props.addNewServer}>
+          <Button appearance="link" size="lg" onClick={props.addNewServer} title="Add a new server">
             <Icon as={BsPlus} style={{ fontSize: '1.4em' }} />
           </Button>
           {servers.map(server => (
@@ -48,7 +48,7 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
                   serverMenu({ className, left, top, onClose, server, openAuthorize }, ref)
                 }
               >
-                <Button appearance="link" size="xs" style={{ padding: '8px' }}>
+                <Button appearance="link" size="xs" style={{ padding: '8px' }} title={server.domain}>
                   <Badge content={props.unreads.find(u => u.server_id === server.id && u.count > 0) ? true : false}>
                     <Avatar size="sm" src={FailoverImg(server.favicon)} className="server-icon" alt={server.domain} key={server.id} />
                   </Badge>
@@ -64,7 +64,7 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
               settingsMenu({ className, left, top, onClose, openThirdparty, openSettings }, ref)
             }
           >
-            <Button appearance="link" size="lg">
+            <Button appearance="link" size="lg" title="Settings">
               <Icon as={BsGear} style={{ fontSize: '1.4em' }} />
             </Button>
           </Whisper>

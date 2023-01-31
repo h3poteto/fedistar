@@ -303,7 +303,7 @@ const Timeline: React.FC<Props> = props => {
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap'
                   }}
-                  title={props.server.domain}
+                  title={props.timeline.name + '@' + props.server.domain}
                 >
                   {props.timeline.name}
                   <span style={{ fontSize: '14px', color: 'var(--rs-text-secondary)' }}>@{props.server.domain}</span>
@@ -314,7 +314,7 @@ const Timeline: React.FC<Props> = props => {
               <FlexboxGrid align="middle" justify="end">
                 {reloadEnabled(props.timeline.kind) && (
                   <FlexboxGrid.Item>
-                    <Button appearance="link" onClick={reload} style={{ padding: '4px' }}>
+                    <Button appearance="link" onClick={reload} style={{ padding: '4px' }} title="Reload">
                       <Icon as={BsArrowClockwise} />
                     </Button>
                   </FlexboxGrid.Item>
@@ -328,13 +328,13 @@ const Timeline: React.FC<Props> = props => {
                     ref={triggerRef}
                     speaker={<OptionPopover timeline={props.timeline} close={closeOptionPopover} />}
                   >
-                    <Button appearance="link" style={{ padding: '4px 8px 4px 4px' }}>
+                    <Button appearance="link" style={{ padding: '4px 8px 4px 4px' }} title="Settings">
                       <Icon as={BsSliders} />
                     </Button>
                   </Whisper>
                 </FlexboxGrid.Item>
                 <FlexboxGrid.Item style={{ paddingRight: '8px', height: '20px' }}>
-                  <Avatar circle src={FailoverImg(account ? account.avatar : null)} size="xs" />
+                  <Avatar circle src={FailoverImg(account ? account.avatar : null)} size="xs" title={account.username} />
                 </FlexboxGrid.Item>
               </FlexboxGrid>
             </FlexboxGrid.Item>

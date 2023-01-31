@@ -11,6 +11,7 @@ import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
 import Notification from './notification/Notification'
+import FailoverImg from 'src/utils/failoverImg'
 import { ReceiveNotificationPayload } from 'src/payload'
 import { Unread } from 'src/entities/unread'
 import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from 'src/defaults'
@@ -232,7 +233,7 @@ const Notifications: React.FC<Props> = props => {
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap'
                   }}
-                  title={props.server.domain}
+                  title={props.timeline.name + '' + props.server.domain}
                 >
                   {props.timeline.name}
                   <span style={{ fontSize: '14px', color: 'var(--rs-text-secondary)' }}>@{props.server.domain}</span>
@@ -260,13 +261,13 @@ const Notifications: React.FC<Props> = props => {
                     ref={triggerRef}
                     speaker={<OptionPopover timeline={props.timeline} close={closeOptionPopover} />}
                   >
-                    <Button appearance="link" style={{ padding: '4px 8px 4px 4px' }}>
+                    <Button appearance="link" style={{ padding: '4px 8px 4px 4px' }} title="Settings">
                       <Icon as={BsSliders} />
                     </Button>
                   </Whisper>
                 </FlexboxGrid.Item>
                 <FlexboxGrid.Item style={{ paddingRight: '8px', height: '20px' }}>
-                  <Avatar circle src={account ? account.avatar : ''} size="xs" />
+                  <Avatar circle src={FailoverImg(account ? account.avatar : null)} size="xs" title={account.username} />
                 </FlexboxGrid.Item>
               </FlexboxGrid>
             </FlexboxGrid.Item>

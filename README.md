@@ -25,12 +25,13 @@ Please be careful when using.
     - [x] DirectMessages
 - [x] Streaming
 - [x] Notification
-- [x] Status actions
+- [ ] Status actions
     - [x] Reply
     - [x] Reblog
     - [x] Favourite
     - [x] Bookmark
     - [x] Emoji reaction
+    - [ ] Edit statuses
 - [x] User Profile
     - [x] Show profile
     - [x] Show followers
@@ -38,13 +39,12 @@ Please be careful when using.
     - [x] Show user timeline
     - [x] Follow/Unfollow
     - [x] Mute/Block
-- [ ] Status detail
+- [x] Status detail
     - [x] Show media
     - [x] Handle NSFW and CW
     - [x] Show the thread
     - [x] Link preview
     - [x] Show and vote polls
-    - [ ] Edit statuses
 - [ ] Post statuses
     - [x] Post statuses
     - [x] Add emoji
