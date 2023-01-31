@@ -21,6 +21,7 @@ type ArgProps = {
 
 const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) => {
   const { client, user } = props
+  const [pinned, setPinned] = useState<Array<Entity.Status>>([])
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [loadingMore, setLoadingMore] = useState<boolean>(false)
@@ -31,6 +32,8 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
     const f = async () => {
       setLoading(true)
       try {
+        const pin = await client.getAccountStatuses(user.id, { limit: TIMELINE_STATUSES_COUNT, pinned: true })
+        setPinned(pin.data)
         const res = await client.getAccountStatuses(user.id, { limit: TIMELINE_STATUSES_COUNT })
         setStatuses(res.data)
       } finally {
@@ -88,6 +91,20 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
         </div>
       ) : (
         <List>
+          {pinned.map(status => (
+            <List.Item key={status.id} style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(rs-gray-800)' }}>
+              <Status
+                status={status}
+                client={client}
+                server={props.server}
+                account={props.account}
+                pinned={true}
+                updateStatus={updateStatus}
+                openMedia={props.openMedia}
+                setAccountDetail={setAccountDetail}
+              />
+            </List.Item>
+          ))}
           {statuses.map(status => (
             <List.Item key={status.id} style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(rs-gray-800)' }}>
               <Status

@@ -267,7 +267,7 @@ const Notifications: React.FC<Props> = props => {
                   </Whisper>
                 </FlexboxGrid.Item>
                 <FlexboxGrid.Item style={{ paddingRight: '8px', height: '20px' }}>
-                  <Avatar circle src={FailoverImg(account ? account.avatar : null)} size="xs" title={account.username} />
+                  <Avatar circle src={FailoverImg(account ? account.avatar : null)} size="xs" title={account ? account.username : ''} />
                 </FlexboxGrid.Item>
               </FlexboxGrid>
             </FlexboxGrid.Item>

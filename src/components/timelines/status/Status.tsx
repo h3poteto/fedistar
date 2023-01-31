@@ -2,7 +2,7 @@ import { HTMLAttributes, MouseEventHandler, useEffect, useState } from 'react'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { FlexboxGrid, Avatar, Button } from 'rsuite'
 import { Icon } from '@rsuite/icons'
-import { BsArrowRepeat } from 'react-icons/bs'
+import { BsArrowRepeat, BsPin } from 'react-icons/bs'
 import { open } from '@tauri-apps/api/shell'
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
@@ -20,6 +20,7 @@ type Props = {
   client: MegalodonInterface
   server: Server
   account: Account | null
+  pinned?: boolean
   updateStatus: (status: Entity.Status) => void
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setReplyOpened?: (opened: boolean) => void
@@ -68,6 +69,7 @@ const Status: React.FC<Props> = props => {
 
   return (
     <div className="status">
+      {pinnedHeader(props.pinned)}
       {rebloggedHeader(props.status)}
       <FlexboxGrid>
         {/** icon **/}
@@ -139,6 +141,23 @@ const originalStatus = (status: Entity.Status) => {
     return status.reblog
   } else {
     return status
+  }
+}
+
+const pinnedHeader = (pinned?: boolean) => {
+  if (pinned) {
+    return (
+      <div style={{ color: 'var(--rs-text-tertiary)' }}>
+        <FlexboxGrid align="middle">
+          <FlexboxGrid.Item style={{ paddingRight: '8px', textAlign: 'right' }} colspan={4}>
+            <Icon as={BsPin} />
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={20}>Pinned post</FlexboxGrid.Item>
+        </FlexboxGrid>
+      </div>
+    )
+  } else {
+    return null
   }
 }
 
