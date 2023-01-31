@@ -329,7 +329,7 @@ const profileMenu = (
 
 const precision = (num: number): string => {
   if (num > 1000) {
-    return `${(num / 1000).toPrecision(2)}K`
+    return `${(num / 1000).toPrecision(3)}K`
   } else if (num > 1000000) {
     return `${(num / 1000000).toPrecision(3)}M`
   } else {
