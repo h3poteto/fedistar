@@ -2,7 +2,7 @@ name: Thirdparty
 
 on:
   schedule:
-    - cron: '54 * * * *'
+    - cron: '54 10 * * *'
 
 permissions:
   contents: write
