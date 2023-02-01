@@ -1,7 +1,23 @@
-import { Form, Button, ButtonToolbar, Schema, Whisper, Input, Popover, Dropdown, useToaster, IconButton, Toggle } from 'rsuite'
+import {
+  Form,
+  Button,
+  ButtonToolbar,
+  Schema,
+  Whisper,
+  Input,
+  Popover,
+  Dropdown,
+  useToaster,
+  IconButton,
+  Toggle,
+  Checkbox,
+  FlexboxGrid,
+  Radio,
+  InputPicker
+} from 'rsuite'
 import { useState, useEffect, useRef, forwardRef, ChangeEvent } from 'react'
 import { Icon } from '@rsuite/icons'
-import { BsEmojiLaughing, BsPaperclip, BsMenuButtonWide, BsGlobe, BsUnlock, BsLock, BsEnvelope, BsXCircle } from 'react-icons/bs'
+import { BsEmojiLaughing, BsPaperclip, BsMenuButtonWide, BsGlobe, BsUnlock, BsLock, BsEnvelope, BsXCircle, BsX } from 'react-icons/bs'
 import { Entity, MegalodonInterface } from 'megalodon'
 import Picker from '@emoji-mart/react'
 
@@ -33,6 +49,11 @@ const Status: React.FC<Props> = props => {
   const [loading, setLoading] = useState<boolean>(false)
   const [visibility, setVisibility] = useState<'public' | 'unlisted' | 'private' | 'direct'>('public')
   const [cw, setCW] = useState<boolean>(false)
+  const [poll, setPoll] = useState<{ options: Array<string>; expires_in: number; multiple: boolean }>({
+    options: [],
+    expires_in: 86400,
+    multiple: false
+  })
 
   const formRef = useRef<any>()
   const statusRef = useRef<HTMLDivElement>()
@@ -200,6 +221,50 @@ const Status: React.FC<Props> = props => {
     )
   }
 
+  const togglePoll = () => {
+    console.log(poll)
+    if (poll.options.length > 0) {
+      setPoll({
+        options: [],
+        expires_in: 86400,
+        multiple: false
+      })
+    } else {
+      setPoll({
+        options: ['', ''],
+        expires_in: 86400,
+        multiple: false
+      })
+    }
+  }
+
+  const setOption = (value: string, index: number) => {
+    setPoll(current =>
+      Object.assign({}, current, {
+        options: current.options.map((v, i) => {
+          if (i === index) return value
+          return v
+        })
+      })
+    )
+  }
+
+  const addOption = () => {
+    setPoll(current =>
+      Object.assign({}, current, {
+        options: [...current.options, '']
+      })
+    )
+  }
+
+  const removeOption = (index: number) => {
+    setPoll(current =>
+      Object.assign({}, current, {
+        options: current.options.filter((_, i) => i !== index)
+      })
+    )
+  }
+
   const EmojiPicker = forwardRef<HTMLDivElement>((props, ref) => (
     <Popover ref={ref} {...props}>
       <Picker data={data} custom={customEmojis} onEmojiSelect={onEmojiSelect} previewPosition="none" set="native" perLine="7" />
@@ -250,13 +315,62 @@ const Status: React.FC<Props> = props => {
           </Button>
         </Whisper>
       </Form.Group>
+      {poll.options.length > 0 && (
+        <>
+          <Form.Group controlId="poll">
+            {poll.options.map((option, index) => (
+              <FlexboxGrid key={index} align="middle">
+                <FlexboxGrid.Item>{poll.multiple ? <Checkbox disabled /> : <Radio />}</FlexboxGrid.Item>
+                <FlexboxGrid.Item>
+                  <Input value={option} onChange={value => setOption(value, index)} />
+                </FlexboxGrid.Item>
+                <FlexboxGrid.Item>
+                  <Button appearance="link" onClick={() => removeOption(index)}>
+                    <Icon as={BsX} />
+                  </Button>
+                </FlexboxGrid.Item>
+              </FlexboxGrid>
+            ))}
+          </Form.Group>
+          <Form.Group controlId="meta">
+            <FlexboxGrid align="middle" justify="space-between">
+              <FlexboxGrid.Item>
+                <Toggle
+                  checkedChildren="multiple"
+                  unCheckedChildren="simple"
+                  onChange={value =>
+                    setPoll(current =>
+                      Object.assign({}, current, {
+                        multiple: value
+                      })
+                    )
+                  }
+                />
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item>
+                <Button appearance="ghost" onClick={addOption}>
+                  Add a choice
+                </Button>
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item>
+                <InputPicker
+                  data={expiresList}
+                  value={poll.expires_in}
+                  onChange={value => setPoll(current => Object.assign({}, current, { expires_in: value }))}
+                  style={{ width: '100px' }}
+                />
+              </FlexboxGrid.Item>
+            </FlexboxGrid>
+          </Form.Group>
+        </>
+      )}
       <Form.Group controlId="actions" style={{ marginBottom: '4px' }}>
         <ButtonToolbar>
           <Input name="attachments" type="file" style={{ display: 'none' }} ref={uploaderRef} onChange={fileChanged} />
           <Button appearance="subtle" onClick={selectFile}>
             <Icon as={BsPaperclip} style={{ fontSize: '1.1em' }} />
           </Button>
-          <Button appearance="subtle" disabled>
+          <Button appearance="subtle" onClick={togglePoll}>
             <Icon as={BsMenuButtonWide} style={{ fontSize: '1.1em' }} />
           </Button>
           <Whisper placement="bottomStart" trigger="click" speaker={VisibilityDropdown}>
@@ -330,5 +444,15 @@ const privacyIcon = (visibility: 'public' | 'unlisted' | 'private' | 'direct') =
 }
 
 const Textarea = forwardRef<HTMLTextAreaElement>((props, ref) => <Input {...props} as="textarea" ref={ref} />)
+
+const expiresList = [
+  { label: '5 minutes', value: 300 },
+  { label: '30 minutes', value: 1800 },
+  { label: '1 hour', value: 3600 },
+  { label: '6 hour', value: 21600 },
+  { label: '1 day', value: 86400 },
+  { label: '3 days', value: 259200 },
+  { label: '7 days', value: 604800 }
+]
 
 export default Status
