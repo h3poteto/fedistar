@@ -3551,10 +3551,10 @@ react-is@^18.0.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-react-virtuoso@^4.0.6:
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/react-virtuoso/-/react-virtuoso-4.0.6.tgz#5ee8a72bf0b57d31063cef6343b26e6cde5529e3"
-  integrity sha512-TJ4fyTbre0uTpXE0AXaMG2BOX9PgKfDC7wLhnSmDvBU0WoEUrIAcNJACLJvqyWZMDAuEv3v+b4OyK6jiSkFL9Q==
+react-virtuoso@^4.0.7:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/react-virtuoso/-/react-virtuoso-4.0.7.tgz#74ad76a47af9d414e67b446aa869e350bda816f3"
+  integrity sha512-ZDiX9VuXSH9gt9nGiaTmhj3DJ9mZ0bTmfLjEt/f1pkdY3vCXYn8k4Edo7hXumgTFt6UfRpR8G0Q81z28a7282Q==
 
 react-window@^1.8.8:
   version "1.8.8"
