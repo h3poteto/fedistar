@@ -135,6 +135,11 @@ const Status: React.FC<Props> = props => {
             spoiler_text: formValue.spoiler
           })
         }
+        if (poll.options.length > 0) {
+          options = Object.assign({}, options, {
+            poll: poll
+          })
+        }
         await props.client.postStatus(formValue.status, options)
         clear()
       } catch {
@@ -149,6 +154,11 @@ const Status: React.FC<Props> = props => {
     setFormValue({
       spoiler: '',
       status: ''
+    })
+    setPoll({
+      options: [],
+      expires_in: 86400,
+      multiple: false
     })
     if (props.onClose) {
       props.onClose()
@@ -356,6 +366,7 @@ const Status: React.FC<Props> = props => {
                 <InputPicker
                   data={expiresList}
                   value={poll.expires_in}
+                  cleanable={false}
                   onChange={value => setPoll(current => Object.assign({}, current, { expires_in: value }))}
                   style={{ width: '100px' }}
                 />
