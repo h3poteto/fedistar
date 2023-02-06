@@ -31,6 +31,9 @@ jobs:
     timeout-minutes: 15
 
     steps:
+    - name: Rewrite apt mirrors
+      run: |
+        sudo sed -i.bak -r 's!(deb|deb-src) \S+!\1 https://mirror.enzu.com/ubuntu/!' /etc/apt/sources.list
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
