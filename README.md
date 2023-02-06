@@ -51,7 +51,7 @@ Please be careful when using.
     - [x] Attach media
     - [x] Change visibility
     - [x] Specify NSFW and CW
-    - [ ] Add poll
+    - [x] Add poll
     - [ ] Suggest emojis
     - [ ] Suggest hashtags
 - [x] See media
