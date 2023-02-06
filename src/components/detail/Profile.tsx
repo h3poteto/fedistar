@@ -109,7 +109,7 @@ const Profile: React.FC<Props> = props => {
       console.error(err)
       toaster.push(alert('error', 'Failed to follow'), { placement: 'topEnd' })
     }
-  }, [client, account])
+  }, [client, account, user])
 
   const unfollow = useCallback(async () => {
     try {
@@ -119,7 +119,7 @@ const Profile: React.FC<Props> = props => {
       console.error(err)
       toaster.push(alert('error', 'Failed to unfollow'), { placement: 'topEnd' })
     }
-  }, [client, account])
+  }, [client, account, user])
 
   const changeNav = (eventKey: string) => {
     router.push({ query: Object.assign({}, router.query, { active_nav: eventKey }) })
