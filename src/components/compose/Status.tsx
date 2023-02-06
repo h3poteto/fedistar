@@ -13,7 +13,8 @@ import {
   Checkbox,
   FlexboxGrid,
   Radio,
-  InputPicker
+  InputPicker,
+  FormControlProps
 } from 'rsuite'
 import { useState, useEffect, useRef, forwardRef, ChangeEvent } from 'react'
 import { Icon } from '@rsuite/icons'
@@ -38,22 +39,35 @@ type FormValue = {
   status: string
   attachments?: Array<Entity.Attachment | Entity.AsyncAttachment>
   nsfw?: boolean
+  poll?: Poll
 }
+
+type Poll = {
+  options: Array<string>
+  expires_in: number
+  multiple: boolean
+}
+
+const model = Schema.Model({
+  status: Schema.Types.StringType().isRequired('This field is required.'),
+  attachments: Schema.Types.ArrayType().maxLength(4, "Can't attach over 5 files"),
+  poll: Schema.Types.ObjectType().shape({
+    options: Schema.Types.ArrayType().of(Schema.Types.StringType().isRequired('Required')).minLength(2, 'Minimum 2 choices required'),
+    expires_in: Schema.Types.NumberType().isRequired('Required'),
+    multiple: Schema.Types.BooleanType().isRequired('Required')
+  })
+})
 
 const Status: React.FC<Props> = props => {
   const [formValue, setFormValue] = useState<FormValue>({
     spoiler: '',
     status: ''
   })
+  const [formError, setFormError] = useState<any>({})
   const [customEmojis, setCustomEmojis] = useState<Array<CustomEmojiCategory>>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [visibility, setVisibility] = useState<'public' | 'unlisted' | 'private' | 'direct'>('public')
   const [cw, setCW] = useState<boolean>(false)
-  const [poll, setPoll] = useState<{ options: Array<string>; expires_in: number; multiple: boolean }>({
-    options: [],
-    expires_in: 86400,
-    multiple: false
-  })
 
   const formRef = useRef<any>()
   const statusRef = useRef<HTMLDivElement>()
@@ -97,11 +111,6 @@ const Status: React.FC<Props> = props => {
     }
   }, [props.in_reply_to])
 
-  const model = Schema.Model({
-    status: Schema.Types.StringType().isRequired('This field is required.'),
-    attachments: Schema.Types.ArrayType().maxLength(4, "Can't attach over 5 files")
-  })
-
   const handleSubmit = async () => {
     if (loading) {
       return
@@ -135,9 +144,9 @@ const Status: React.FC<Props> = props => {
             spoiler_text: formValue.spoiler
           })
         }
-        if (poll.options.length > 0) {
+        if (formValue.poll != undefined && formValue.poll.options.length > 0) {
           options = Object.assign({}, options, {
-            poll: poll
+            poll: formValue.poll
           })
         }
         await props.client.postStatus(formValue.status, options)
@@ -154,11 +163,6 @@ const Status: React.FC<Props> = props => {
     setFormValue({
       spoiler: '',
       status: ''
-    })
-    setPoll({
-      options: [],
-      expires_in: 86400,
-      multiple: false
     })
     if (props.onClose) {
       props.onClose()
@@ -232,47 +236,19 @@ const Status: React.FC<Props> = props => {
   }
 
   const togglePoll = () => {
-    console.log(poll)
-    if (poll.options.length > 0) {
-      setPoll({
-        options: [],
-        expires_in: 86400,
-        multiple: false
-      })
-    } else {
-      setPoll({
-        options: ['', ''],
-        expires_in: 86400,
-        multiple: false
-      })
-    }
-  }
-
-  const setOption = (value: string, index: number) => {
-    setPoll(current =>
-      Object.assign({}, current, {
-        options: current.options.map((v, i) => {
-          if (i === index) return value
-          return v
+    if (formValue.poll) {
+      setFormValue(current =>
+        Object.assign({}, current, {
+          poll: undefined
         })
-      })
-    )
-  }
-
-  const addOption = () => {
-    setPoll(current =>
-      Object.assign({}, current, {
-        options: [...current.options, '']
-      })
-    )
-  }
-
-  const removeOption = (index: number) => {
-    setPoll(current =>
-      Object.assign({}, current, {
-        options: current.options.filter((_, i) => i !== index)
-      })
-    )
+      )
+    } else {
+      setFormValue(current =>
+        Object.assign({}, current, {
+          poll: defaultPoll()
+        })
+      )
+    }
   }
 
   const EmojiPicker = forwardRef<HTMLDivElement>((props, ref) => (
@@ -309,7 +285,7 @@ const Status: React.FC<Props> = props => {
   }
 
   return (
-    <Form fluid model={model} ref={formRef} onChange={setFormValue} formValue={formValue}>
+    <Form fluid model={model} ref={formRef} onChange={setFormValue} onCheck={setFormError} formValue={formValue}>
       {cw && (
         <Form.Group controlId="spoiler">
           <Form.Control name="spoiler" placeholder="Write your warning here" />
@@ -325,56 +301,8 @@ const Status: React.FC<Props> = props => {
           </Button>
         </Whisper>
       </Form.Group>
-      {poll.options.length > 0 && (
-        <>
-          <Form.Group controlId="poll">
-            {poll.options.map((option, index) => (
-              <FlexboxGrid key={index} align="middle">
-                <FlexboxGrid.Item>{poll.multiple ? <Checkbox disabled /> : <Radio />}</FlexboxGrid.Item>
-                <FlexboxGrid.Item>
-                  <Input value={option} onChange={value => setOption(value, index)} />
-                </FlexboxGrid.Item>
-                <FlexboxGrid.Item>
-                  <Button appearance="link" onClick={() => removeOption(index)}>
-                    <Icon as={BsX} />
-                  </Button>
-                </FlexboxGrid.Item>
-              </FlexboxGrid>
-            ))}
-          </Form.Group>
-          <Form.Group controlId="meta">
-            <FlexboxGrid align="middle" justify="space-between">
-              <FlexboxGrid.Item>
-                <Toggle
-                  checkedChildren="multiple"
-                  unCheckedChildren="simple"
-                  onChange={value =>
-                    setPoll(current =>
-                      Object.assign({}, current, {
-                        multiple: value
-                      })
-                    )
-                  }
-                />
-              </FlexboxGrid.Item>
-              <FlexboxGrid.Item>
-                <Button appearance="ghost" onClick={addOption}>
-                  Add a choice
-                </Button>
-              </FlexboxGrid.Item>
-              <FlexboxGrid.Item>
-                <InputPicker
-                  data={expiresList}
-                  value={poll.expires_in}
-                  cleanable={false}
-                  onChange={value => setPoll(current => Object.assign({}, current, { expires_in: value }))}
-                  style={{ width: '100px' }}
-                />
-              </FlexboxGrid.Item>
-            </FlexboxGrid>
-          </Form.Group>
-        </>
-      )}
+      {formValue.poll && <Form.Control name="poll" accepter={PollInputControl} fieldError={formError.poll} />}
+
       <Form.Group controlId="actions" style={{ marginBottom: '4px' }}>
         <ButtonToolbar>
           <Input name="attachments" type="file" style={{ display: 'none' }} ref={uploaderRef} onChange={fileChanged} />
@@ -456,6 +384,12 @@ const privacyIcon = (visibility: 'public' | 'unlisted' | 'private' | 'direct') =
 
 const Textarea = forwardRef<HTMLTextAreaElement>((props, ref) => <Input {...props} as="textarea" ref={ref} />)
 
+const defaultPoll = () => ({
+  options: ['', ''],
+  expires_in: 86400,
+  multiple: false
+})
+
 const expiresList = [
   { label: '5 minutes', value: 300 },
   { label: '30 minutes', value: 1800 },
@@ -465,5 +399,98 @@ const expiresList = [
   { label: '3 days', value: 259200 },
   { label: '7 days', value: 604800 }
 ]
+
+const PollInputControl: FormControlProps<Poll, any> = ({ value, onChange, fieldError }) => {
+  const [poll, setPoll] = useState<Poll>(value)
+  const errors = fieldError ? fieldError.object : {}
+
+  const handleChangePoll = (nextPoll: Poll) => {
+    setPoll(nextPoll)
+    onChange(nextPoll)
+  }
+
+  const setOption = (value: string, index: number) => {
+    const current = poll
+    const next = Object.assign({}, current, {
+      options: current.options.map((v, i) => {
+        if (i === index) return value
+        return v
+      })
+    })
+    handleChangePoll(next)
+  }
+
+  const addOption = () => {
+    const current = poll
+    const next = Object.assign({}, current, {
+      options: [...current.options, '']
+    })
+    handleChangePoll(next)
+  }
+
+  const removeOption = (index: number) => {
+    const current = poll
+    const next = Object.assign({}, current, {
+      options: current.options.filter((_, i) => i !== index)
+    })
+    handleChangePoll(next)
+  }
+
+  return (
+    <>
+      <Form.Group controlId="poll">
+        {poll.options.map((option, index) => (
+          <div key={index}>
+            <FlexboxGrid align="middle">
+              <FlexboxGrid.Item>{poll.multiple ? <Checkbox disabled /> : <Radio />}</FlexboxGrid.Item>
+              <FlexboxGrid.Item>
+                <Input value={option} onChange={value => setOption(value, index)} />
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item>
+                <Button appearance="link" onClick={() => removeOption(index)}>
+                  <Icon as={BsX} />
+                </Button>
+              </FlexboxGrid.Item>
+            </FlexboxGrid>
+            {errors.options?.array[index] ? <ErrorMessage>{errors.options?.array[index].errorMessage}</ErrorMessage> : null}
+          </div>
+        ))}
+      </Form.Group>
+      <Form.Group controlId="meta">
+        <FlexboxGrid align="middle" justify="space-between">
+          <FlexboxGrid.Item>
+            <Toggle
+              checkedChildren="multiple"
+              unCheckedChildren="simple"
+              onChange={value =>
+                setPoll(current =>
+                  Object.assign({}, current, {
+                    multiple: value
+                  })
+                )
+              }
+            />
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item>
+            <Button appearance="ghost" onClick={addOption}>
+              Add a choice
+            </Button>
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item>
+            <InputPicker
+              data={expiresList}
+              value={poll.expires_in}
+              cleanable={false}
+              onChange={value => setPoll(current => Object.assign({}, current, { expires_in: value }))}
+              style={{ width: '100px' }}
+            />
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+      </Form.Group>
+    </>
+  )
+}
+
+const ErrorMessage = ({ children }) => <span style={{ color: 'red' }}>{children}</span>
 
 export default Status
