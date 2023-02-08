@@ -43,7 +43,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-virtuoso": "^4.1.0",
-    "rsuite": "^5.25.0",
+    "rsuite": "^5.26.0",
     "sanitize-html": "^2.9.0"
   },
   "devDependencies": {
