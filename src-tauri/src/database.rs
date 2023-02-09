@@ -410,6 +410,13 @@ pub(crate) async fn update_instruction(
 ) -> DBResult<entities::Instruction> {
     let mut tx = pool.begin().await?;
 
+    let exists = query_as::<_, entities::Instruction>("SELECT * FROM instructions")
+        .fetch_one(&mut tx)
+        .await?;
+    if exists.instruction >= step {
+        return Ok(exists);
+    }
+
     sqlx::query("UPDATE instructions SET instruction = ?")
         .bind(step)
         .execute(&mut tx)

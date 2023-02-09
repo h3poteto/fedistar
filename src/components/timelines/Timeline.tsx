@@ -46,7 +46,7 @@ const Timeline: React.FC<Props> = props => {
   const [loading, setLoading] = useState<boolean>(false)
   // This parameter is used only favourite. Because it is not receive streaming, and max_id in link header is required for favourite.
   const [nextMaxId, setNextMaxId] = useState<string | null>(null)
-  const [walkthrough, setWalkthrouh] = useState<boolean>(false)
+  const [walkthrough, setWalkthrough] = useState<boolean>(false)
 
   const scrollerRef = useRef<HTMLElement | null>(null)
   const triggerRef = useRef(null)
@@ -79,9 +79,9 @@ const Timeline: React.FC<Props> = props => {
 
       const instruction = await invoke<Instruction>('get_instruction')
       if (instruction.instruction == 1) {
-        setWalkthrouh(true)
+        setWalkthrough(true)
       } else {
-        setWalkthrouh(false)
+        setWalkthrough(false)
       }
     }
     f()
@@ -258,7 +258,7 @@ const Timeline: React.FC<Props> = props => {
   }
 
   const closeWalkthrough = async () => {
-    setWalkthrouh(false)
+    setWalkthrough(false)
     await invoke('update_instruction', { step: 2 })
   }
 

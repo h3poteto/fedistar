@@ -1,11 +1,13 @@
 import { invoke } from '@tauri-apps/api/tauri'
-import { ReactElement } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import { Icon } from '@rsuite/icons'
-import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge } from 'rsuite'
+import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge, FlexboxGrid } from 'rsuite'
 import { BsPlus, BsGear, BsPencilSquare } from 'react-icons/bs'
 import { Server } from 'src/entities/server'
 import FailoverImg from 'src/utils/failoverImg'
 import { Unread } from 'src/entities/unread'
+import { Instruction } from 'src/entities/instruction'
+import { listen } from '@tauri-apps/api/event'
 
 type NavigatorProps = {
   servers: Array<Server>
@@ -19,6 +21,31 @@ type NavigatorProps = {
 
 const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
   const { servers, openAuthorize, openThirdparty, openSettings } = props
+  const [walkthrough, setWalkthrough] = useState(false)
+
+  useEffect(() => {
+    const f = async () => {
+      const instruction = await invoke<Instruction>('get_instruction')
+      if (instruction.instruction == 2) {
+        setWalkthrough(true)
+      } else {
+        setWalkthrough(false)
+      }
+    }
+    f()
+    listen<Instruction>('updated-instruction', event => {
+      if (event.payload.instruction == 2) {
+        setWalkthrough(true)
+      } else {
+        setWalkthrough(false)
+      }
+    })
+  }, [])
+
+  const closeWalkthrough = async () => {
+    setWalkthrough(false)
+    await invoke('update_instruction', { step: 3 })
+  }
 
   return (
     <Sidebar
@@ -38,12 +65,26 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
           <Button appearance="link" size="lg" onClick={props.addNewServer} title="Add a new server">
             <Icon as={BsPlus} style={{ fontSize: '1.4em' }} />
           </Button>
+          <div style={{ position: 'relative' }}>
+            <Popover arrow={false} visible={walkthrough} style={{ left: 12, top: 'auto', bottom: 0 }}>
+              <div style={{ width: '120px' }}>
+                <h4 style={{ fontSize: '1.2em' }}>Servers</h4>
+                <p>You can remove or authorize servers, please right click.</p>
+              </div>
+              <FlexboxGrid justify="end">
+                <Button appearance="default" size="xs" onClick={closeWalkthrough}>
+                  OK
+                </Button>
+              </FlexboxGrid>
+            </Popover>
+          </div>
           {servers.map(server => (
             <div key={server.id}>
               <Whisper
                 placement="right"
                 controlId="control-id-context-menu"
                 trigger="contextMenu"
+                onOpen={closeWalkthrough}
                 speaker={({ className, left, top, onClose }, ref) =>
                   serverMenu({ className, left, top, onClose, server, openAuthorize }, ref)
                 }
