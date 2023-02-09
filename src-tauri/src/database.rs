@@ -370,3 +370,60 @@ pub(crate) async fn set_usual_account(pool: &SqlitePool, id: i64) -> DBResult<en
 
     Ok(account)
 }
+
+pub(crate) async fn get_instruction(pool: &SqlitePool) -> DBResult<entities::Instruction> {
+    let instruction = query_as::<_, entities::Instruction>("SELECT * FROM instructions")
+        .fetch_one(pool)
+        .await?;
+
+    Ok(instruction)
+}
+
+pub(crate) async fn init_instruction(pool: &SqlitePool) -> DBResult<entities::Instruction> {
+    let mut tx = pool.begin().await?;
+
+    let exists = query_as::<_, entities::Instruction>("SELECT * FROM instructions")
+        .fetch_one(&mut tx)
+        .await;
+    match exists {
+        Ok(instruction) => {
+            tx.commit().await?;
+            Ok(instruction)
+        }
+        Err(_) => {
+            let _ = sqlx::query("INSERT INTO instructions (instruction) VALUES (?)")
+                .bind(0)
+                .execute(&mut tx)
+                .await?;
+            let instruction = query_as::<_, entities::Instruction>("SELECT * FROM instructions")
+                .fetch_one(&mut tx)
+                .await?;
+            tx.commit().await?;
+            Ok(instruction)
+        }
+    }
+}
+
+pub(crate) async fn update_instruction(
+    pool: &SqlitePool,
+    step: u32,
+) -> DBResult<entities::Instruction> {
+    let mut tx = pool.begin().await?;
+
+    let exists = query_as::<_, entities::Instruction>("SELECT * FROM instructions")
+        .fetch_one(&mut tx)
+        .await?;
+    if exists.instruction >= step {
+        return Ok(exists);
+    }
+
+    sqlx::query("UPDATE instructions SET instruction = ?")
+        .bind(step)
+        .execute(&mut tx)
+        .await?;
+    let instruction = query_as::<_, entities::Instruction>("SELECT * FROM instructions")
+        .fetch_one(&mut tx)
+        .await?;
+    tx.commit().await?;
+    Ok(instruction)
+}
