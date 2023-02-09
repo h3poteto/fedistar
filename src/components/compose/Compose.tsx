@@ -100,7 +100,7 @@ const Compose: React.FC<Props> = props => {
           </FlexboxGrid.Item>
         </FlexboxGrid>
         <div style={{ fontSize: '1.2em', padding: '12px 0' }}>Status</div>
-        {fromAccount && <Status client={client} server={fromAccount[1]} />}
+        {fromAccount && <Status client={client} server={fromAccount[1]} account={fromAccount[0]} />}
       </Content>
     </Container>
   )

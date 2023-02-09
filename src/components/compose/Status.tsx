@@ -26,9 +26,11 @@ import { data } from 'src/utils/emojiData'
 import { Server } from 'src/entities/server'
 import { CustomEmojiCategory } from 'src/entities/emoji'
 import alert from 'src/components/utils/alert'
+import { Account } from 'src/entities/account'
 
 type Props = {
   server: Server
+  account: Account
   client: MegalodonInterface
   in_reply_to?: Entity.Status
   onClose?: () => void
@@ -106,10 +108,13 @@ const Status: React.FC<Props> = props => {
 
   useEffect(() => {
     if (props.in_reply_to) {
-      setFormValue({ spoiler: '', status: `@${props.in_reply_to.account.acct} ` })
+      const mentionAccounts = [props.in_reply_to.account.acct, ...props.in_reply_to.mentions.map(a => a.acct)]
+        .filter((a, i, self) => self.indexOf(a) === i)
+        .filter(a => a !== props.account.username)
+      setFormValue({ spoiler: '', status: `${mentionAccounts.map(m => `@${m}`).join(' ')} ` })
       setVisibility(props.in_reply_to.visibility)
     }
-  }, [props.in_reply_to])
+  }, [props.in_reply_to, props.account])
 
   const handleSubmit = async () => {
     if (loading) {
