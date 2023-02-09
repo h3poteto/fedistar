@@ -138,11 +138,15 @@ const New: React.FC<Props> = props => {
       }
     })
     const f = async () => {
-      const instruction = await invoke<Instruction>('get_instruction')
-      if (instruction.instruction < 1) {
-        setWalkthrough(true)
-      } else {
-        setWalkthrough(false)
+      try {
+        const instruction = await invoke<Instruction>('get_instruction')
+        if (instruction.instruction < 1) {
+          setWalkthrough(true)
+        } else {
+          setWalkthrough(false)
+        }
+      } catch (err) {
+        console.log(err)
       }
     }
     f()

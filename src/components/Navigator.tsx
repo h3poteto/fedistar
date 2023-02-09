@@ -25,11 +25,15 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
 
   useEffect(() => {
     const f = async () => {
-      const instruction = await invoke<Instruction>('get_instruction')
-      if (instruction.instruction == 2) {
-        setWalkthrough(true)
-      } else {
-        setWalkthrough(false)
+      try {
+        const instruction = await invoke<Instruction>('get_instruction')
+        if (instruction.instruction == 2) {
+          setWalkthrough(true)
+        } else {
+          setWalkthrough(false)
+        }
+      } catch (err) {
+        console.log(err)
       }
     }
     f()
