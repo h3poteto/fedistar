@@ -29,6 +29,7 @@ import { DeleteHomeStatusPayload, DeleteTimelineStatusPayload, ReceiveHomeStatus
 import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from 'src/defaults'
 import alert from 'src/components/utils/alert'
 import { useRouter } from 'next/router'
+import { Instruction } from 'src/entities/instruction'
 
 type Props = {
   timeline: Timeline
@@ -45,6 +46,7 @@ const Timeline: React.FC<Props> = props => {
   const [loading, setLoading] = useState<boolean>(false)
   // This parameter is used only favourite. Because it is not receive streaming, and max_id in link header is required for favourite.
   const [nextMaxId, setNextMaxId] = useState<string | null>(null)
+  const [walkthrough, setWalkthrouh] = useState<boolean>(false)
 
   const scrollerRef = useRef<HTMLElement | null>(null)
   const triggerRef = useRef(null)
@@ -73,6 +75,13 @@ const Timeline: React.FC<Props> = props => {
         toast.push(alert('error', `Failed to load ${props.timeline.name} timeline`), { placement: 'topStart' })
       } finally {
         setLoading(false)
+      }
+
+      const instruction = await invoke<Instruction>('get_instruction')
+      if (instruction.instruction == 1) {
+        setWalkthrouh(true)
+      } else {
+        setWalkthrouh(false)
       }
     }
     f()
@@ -248,6 +257,11 @@ const Timeline: React.FC<Props> = props => {
     }
   }
 
+  const closeWalkthrough = async () => {
+    setWalkthrouh(false)
+    await invoke('update_instruction', { step: 2 })
+  }
+
   const loadMore = useCallback(async () => {
     console.debug('appending')
     let maxId = null
@@ -321,11 +335,25 @@ const Timeline: React.FC<Props> = props => {
                 )}
 
                 <FlexboxGrid.Item>
+                  <div style={{ position: 'relative' }}>
+                    <Popover arrow={false} visible={walkthrough} style={{ left: 0, top: 30 }}>
+                      <div style={{ width: '120px' }}>
+                        <h4 style={{ fontSize: '1.2em' }}>Timeline settings</h4>
+                        <p>You can move and remove the timeline.</p>
+                      </div>
+                      <FlexboxGrid justify="end">
+                        <Button appearance="default" size="xs" onClick={closeWalkthrough}>
+                          OK
+                        </Button>
+                      </FlexboxGrid>
+                    </Popover>
+                  </div>
                   <Whisper
                     trigger="click"
                     placement="bottomEnd"
                     controlId="option-popover"
                     ref={triggerRef}
+                    onOpen={closeWalkthrough}
                     speaker={<OptionPopover timeline={props.timeline} close={closeOptionPopover} />}
                   >
                     <Button appearance="link" style={{ padding: '4px 8px 4px 4px' }} title="Settings">
