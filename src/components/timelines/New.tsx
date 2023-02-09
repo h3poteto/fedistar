@@ -20,6 +20,8 @@ import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity } from 'megalodon'
 import { Account } from 'src/entities/account'
 import { TimelineKind } from 'src/entities/timeline'
+import { Instruction } from 'src/entities/instruction'
+import { listen } from '@tauri-apps/api/event'
 
 type AuthorizedProps = {
   server: Server
@@ -125,6 +127,26 @@ type Props = {
 
 const New: React.FC<Props> = props => {
   const [server, setServer] = useState<Server | null>(null)
+  const [walkthrough, setWalkthrough] = useState<boolean>(false)
+
+  useEffect(() => {
+    listen<Instruction>('updated-instruction', event => {
+      if (event.payload.instruction < 1) {
+        setWalkthrough(true)
+      } else {
+        setWalkthrough(false)
+      }
+    })
+    const f = async () => {
+      const instruction = await invoke<Instruction>('get_instruction')
+      if (instruction.instruction < 1) {
+        setWalkthrough(true)
+      } else {
+        setWalkthrough(false)
+      }
+    }
+    f()
+  }, [])
 
   const addTimelineMenu = ({ onClose, left, top, className }, ref: any) => {
     const handleSelect = (eventKey: string) => {
@@ -145,6 +167,11 @@ const New: React.FC<Props> = props => {
     )
   }
 
+  const closeWalkthrough = async () => {
+    setWalkthrough(false)
+    await invoke('update_instruction', { step: 1 })
+  }
+
   const addButton = () => (
     <div
       className="add-timeline"
@@ -156,8 +183,21 @@ const New: React.FC<Props> = props => {
         alignItems: 'center'
       }}
     >
+      <div style={{ position: 'relative' }}>
+        <Popover arrow={false} visible={walkthrough} style={{ left: 0, top: 30 }}>
+          <div style={{ width: '120px' }}>
+            <h4 style={{ fontSize: '1.2em' }}>Add a timeline</h4>
+            <p>Click this button to add a timeline.</p>
+          </div>
+          <FlexboxGrid justify="end">
+            <Button appearance="default" size="xs" onClick={closeWalkthrough}>
+              OK
+            </Button>
+          </FlexboxGrid>
+        </Popover>
+      </div>
       <ButtonToolbar>
-        <Whisper placement="bottomStart" trigger="click" speaker={addTimelineMenu}>
+        <Whisper placement="bottomStart" trigger="click" speaker={addTimelineMenu} onOpen={closeWalkthrough}>
           <IconButton icon={<Icon as={BsPlus} />} size="lg" appearance="ghost" title="Add a new timeline" />
         </Whisper>
       </ButtonToolbar>

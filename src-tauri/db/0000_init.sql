@@ -29,3 +29,8 @@ CREATE TABLE IF NOT EXISTS timelines(
   list_id TEXT DEFAULT NULL,
   FOREIGN KEY (server_id) REFERENCES servers(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS instructions(
+  id INTEGER PRIMARY KEY,
+  instruction INTEGER NOT NULL
+)

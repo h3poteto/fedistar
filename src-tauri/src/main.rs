@@ -59,6 +59,7 @@ async fn add_server(
     app_handle
         .emit_all("updated-servers", ())
         .expect("Failed to send updated-servers event");
+
     Ok(created)
 }
 
@@ -216,6 +217,7 @@ async fn add_timeline(
 
     let cloned_handle = Arc::new(app_handle);
     start_timeline_streaming(cloned_handle, &sqlite_pool, server, timeline).await?;
+
     Ok(())
 }
 
@@ -332,7 +334,6 @@ fn save_settings(settings_path: State<'_, PathBuf>, obj: settings::Settings) -> 
     settings::save_settings(&settings_path, &obj)
 }
 
-// This method is not used now. In the future, it will be used.
 #[tauri::command]
 fn toggle_menu(app_handle: AppHandle) -> Result<(), String> {
     let menu_handle = app_handle
@@ -351,6 +352,48 @@ fn toggle_menu(app_handle: AppHandle) -> Result<(), String> {
         }
         Err(e) => Err(e.to_string()),
     }
+}
+
+#[tauri::command]
+async fn get_instruction(
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+) -> Result<entities::Instruction, String> {
+    let instruction = database::get_instruction(&sqlite_pool)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    Ok(instruction)
+}
+
+#[tauri::command]
+async fn init_instruction(
+    app_handle: AppHandle,
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+) -> Result<(), String> {
+    let instruction = database::init_instruction(&sqlite_pool)
+        .await
+        .map_err(|e| e.to_string())?;
+    app_handle
+        .emit_all("updated-instruction", instruction)
+        .expect("Failed to send updated-instruction event");
+
+    Ok(())
+}
+
+#[tauri::command]
+async fn update_instruction(
+    app_handle: AppHandle,
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+    step: u32,
+) -> Result<(), String> {
+    let instruction = database::update_instruction(&sqlite_pool, step)
+        .await
+        .map_err(|e| e.to_string())?;
+    app_handle
+        .emit_all("updated-instruction", instruction)
+        .expect("Failed to send updated-instruction event");
+
+    Ok(())
 }
 
 async fn start_timeline_streaming(
@@ -516,6 +559,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             toggle_menu,
             read_settings,
             save_settings,
+            get_instruction,
+            init_instruction,
+            update_instruction,
         ])
         .setup(|app| {
             let app_handle = app.handle();

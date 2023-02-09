@@ -57,8 +57,7 @@ const New: React.FC<Props> = props => {
     setLoading(true)
     try {
       await invoke('authorize_code', { server: server, app: app, code: code })
-      clear()
-      props.onClose()
+      finish()
     } catch (err) {
       console.error(err)
       toast.push(alert('error', 'Failed to authorize'), { placement: 'topCenter' })
@@ -73,6 +72,11 @@ const New: React.FC<Props> = props => {
     setLoading(false)
     setDomain('')
     setCode('')
+  }
+
+  const finish = async () => {
+    close()
+    await invoke('init_instruction')
   }
 
   const close = () => {
@@ -117,7 +121,7 @@ const New: React.FC<Props> = props => {
                 <Button appearance="primary" onClick={() => addApplication()}>
                   Sign In
                 </Button>
-                <Button appearance="link" onClick={() => close()}>
+                <Button appearance="link" onClick={() => finish()}>
                   Finish
                 </Button>
               </ButtonToolbar>
@@ -136,7 +140,7 @@ const New: React.FC<Props> = props => {
                 <Button appearance="primary" onClick={() => authorizeCode()}>
                   Authorize
                 </Button>
-                <Button appearance="link" onClick={() => close()}>
+                <Button appearance="link" onClick={() => finish()}>
                   Cancel
                 </Button>
               </ButtonToolbar>
