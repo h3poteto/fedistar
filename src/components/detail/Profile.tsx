@@ -53,6 +53,7 @@ const Profile: React.FC<Props> = props => {
       } else if (router.query.server_id) {
         const server = await invoke<Server>('get_server', { id: parseInt(router.query.server_id.toString()) })
         setAccount(null)
+        setServer(server)
         cli = generator(server.sns, server.base_url, undefined, 'Fedistar')
         setClient(cli)
       }
@@ -70,10 +71,10 @@ const Profile: React.FC<Props> = props => {
   }, [router.query.user_id, router.query.server_id, router.query.account_id, router.query.active_nav])
 
   useEffect(() => {
-    if (client && user) {
+    if (client && user && account) {
       loadRelationship(client, user)
     }
-  }, [user, client])
+  }, [user, client, account])
 
   const loadRelationship = async (client: MegalodonInterface, account: Entity.Account) => {
     const res = await client.getRelationship(account.id)
@@ -156,9 +157,9 @@ const Profile: React.FC<Props> = props => {
       case 'posts':
         return <PostsTab client={client} user={user} server={server} account={account} openMedia={props.openMedia} ref={postsRef} />
       case 'following':
-        return <FollowingTab client={client} user={user} ref={followingRef} />
+        return <FollowingTab client={client} user={user} account={account} ref={followingRef} />
       case 'followers':
-        return <FollowersTab client={client} user={user} ref={followersRef} />
+        return <FollowersTab client={client} user={user} account={account} ref={followersRef} />
     }
   }, [activeNav, client, user, server, account])
 
@@ -315,13 +316,17 @@ const profileMenu = (
     <Popover ref={ref} className={className} style={{ left, top, padding: '0 4px' }}>
       <Dropdown.Menu onSelect={handleSelect}>
         <Dropdown.Item eventKey="browser">Open original page</Dropdown.Item>
-        <Dropdown.Separator />
-        <Dropdown.Item eventKey="mute">
-          {relationship.muting ? 'Unmute' : 'Mute'} @{user.username}
-        </Dropdown.Item>
-        <Dropdown.Item eventKey="block">
-          {relationship.blocking ? 'Unblock' : 'Block'} @{user.username}
-        </Dropdown.Item>
+        {relationship && (
+          <>
+            <Dropdown.Separator />
+            <Dropdown.Item eventKey="mute">
+              {relationship.muting ? 'Unmute' : 'Mute'} @{user.username}
+            </Dropdown.Item>
+            <Dropdown.Item eventKey="block">
+              {relationship.blocking ? 'Unblock' : 'Block'} @{user.username}
+            </Dropdown.Item>
+          </>
+        )}
       </Dropdown.Menu>
     </Popover>
   )

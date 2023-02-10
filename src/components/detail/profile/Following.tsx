@@ -4,6 +4,7 @@ import { List, Loader } from 'rsuite'
 import parse from 'parse-link-header'
 import { TIMELINE_STATUSES_COUNT } from 'src/defaults'
 import User from './User'
+import { Account } from 'src/entities/account'
 
 export type FuncProps = {
   loadMore: () => Promise<void>
@@ -12,10 +13,11 @@ export type FuncProps = {
 type ArgProps = {
   client: MegalodonInterface
   user: Entity.Account
+  account: Account | null
 }
 
 const Following: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) => {
-  const { client, user } = props
+  const { client, user, account } = props
   const [following, setFollowing] = useState<Array<Entity.Account>>([])
   const [relationships, setRelationships] = useState<Array<Entity.Relationship>>([])
   const [loading, setLoading] = useState(false)
@@ -28,14 +30,16 @@ const Following: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, r
       try {
         const f = await loadFollowing(user, client)
         setFollowing(f)
-        const r = await loadRelationship(f, client)
-        setRelationships(r)
+        if (account) {
+          const r = await loadRelationship(f, client)
+          setRelationships(r)
+        }
       } finally {
         setLoading(false)
       }
     }
     f()
-  }, [client, user])
+  }, [client, user, account])
 
   useImperativeHandle(ref, () => ({
     async loadMore() {
@@ -46,8 +50,10 @@ const Following: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, r
         if (nextMaxId) {
           const f = await loadFollowing(user, client, nextMaxId)
           setFollowing(current => [...current, ...f])
-          const r = await loadRelationship(f, client)
-          setRelationships(current => [...current, ...r])
+          if (account) {
+            const r = await loadRelationship(f, client)
+            setRelationships(current => [...current, ...r])
+          }
         }
       } finally {
         setLoadingMore(false)
