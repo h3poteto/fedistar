@@ -335,19 +335,21 @@ const Timeline: React.FC<Props> = props => {
                 )}
 
                 <FlexboxGrid.Item>
-                  <div style={{ position: 'relative' }}>
-                    <Popover arrow={false} visible={walkthrough} style={{ left: 0, top: 30 }}>
-                      <div style={{ width: '120px' }}>
-                        <h4 style={{ fontSize: '1.2em' }}>Timeline settings</h4>
-                        <p>You can move and remove the timeline.</p>
-                      </div>
-                      <FlexboxGrid justify="end">
-                        <Button appearance="default" size="xs" onClick={closeWalkthrough}>
-                          OK
-                        </Button>
-                      </FlexboxGrid>
-                    </Popover>
-                  </div>
+                  {walkthrough && (
+                    <div style={{ position: 'relative' }}>
+                      <Popover arrow={false} visible={walkthrough} style={{ left: 0, top: 30 }}>
+                        <div style={{ width: '120px' }}>
+                          <h4 style={{ fontSize: '1.2em' }}>Timeline settings</h4>
+                          <p>You can move and remove the timeline.</p>
+                        </div>
+                        <FlexboxGrid justify="end">
+                          <Button appearance="default" size="xs" onClick={closeWalkthrough}>
+                            OK
+                          </Button>
+                        </FlexboxGrid>
+                      </Popover>
+                    </div>
+                  )}
                   <Whisper
                     trigger="click"
                     placement="bottomEnd"

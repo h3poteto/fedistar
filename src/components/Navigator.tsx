@@ -69,19 +69,21 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
           <Button appearance="link" size="lg" onClick={props.addNewServer} title="Add a new server">
             <Icon as={BsPlus} style={{ fontSize: '1.4em' }} />
           </Button>
-          <div style={{ position: 'relative' }}>
-            <Popover arrow={false} visible={walkthrough} style={{ left: 12, top: 'auto', bottom: 0 }}>
-              <div style={{ width: '120px' }}>
-                <h4 style={{ fontSize: '1.2em' }}>Servers</h4>
-                <p>You can remove or authorize servers, please right click.</p>
-              </div>
-              <FlexboxGrid justify="end">
-                <Button appearance="default" size="xs" onClick={closeWalkthrough}>
-                  OK
-                </Button>
-              </FlexboxGrid>
-            </Popover>
-          </div>
+          {walkthrough && (
+            <div style={{ position: 'relative' }}>
+              <Popover arrow={false} visible={walkthrough} style={{ left: 12, top: 'auto', bottom: 0 }}>
+                <div style={{ width: '120px' }}>
+                  <h4 style={{ fontSize: '1.2em' }}>Servers</h4>
+                  <p>You can remove or authorize servers, please right click.</p>
+                </div>
+                <FlexboxGrid justify="end">
+                  <Button appearance="default" size="xs" onClick={closeWalkthrough}>
+                    OK
+                  </Button>
+                </FlexboxGrid>
+              </Popover>
+            </div>
+          )}
           {servers.map(server => (
             <div key={server.id}>
               <Whisper
