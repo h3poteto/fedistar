@@ -187,19 +187,21 @@ const New: React.FC<Props> = props => {
         alignItems: 'center'
       }}
     >
-      <div style={{ position: 'relative' }}>
-        <Popover arrow={false} visible={walkthrough} style={{ left: 0, top: 30 }}>
-          <div style={{ width: '120px' }}>
-            <h4 style={{ fontSize: '1.2em' }}>Add a timeline</h4>
-            <p>Click this button to add a timeline.</p>
-          </div>
-          <FlexboxGrid justify="end">
-            <Button appearance="default" size="xs" onClick={closeWalkthrough}>
-              OK
-            </Button>
-          </FlexboxGrid>
-        </Popover>
-      </div>
+      {walkthrough && (
+        <div style={{ position: 'relative' }}>
+          <Popover arrow={false} visible={walkthrough} style={{ left: 0, top: 30 }}>
+            <div style={{ width: '120px' }}>
+              <h4 style={{ fontSize: '1.2em' }}>Add a timeline</h4>
+              <p>Click this button to add a timeline.</p>
+            </div>
+            <FlexboxGrid justify="end">
+              <Button appearance="default" size="xs" onClick={closeWalkthrough}>
+                OK
+              </Button>
+            </FlexboxGrid>
+          </Popover>
+        </div>
+      )}
       <ButtonToolbar>
         <Whisper placement="bottomStart" trigger="click" speaker={addTimelineMenu} onOpen={closeWalkthrough}>
           <IconButton icon={<Icon as={BsPlus} />} size="lg" appearance="ghost" title="Add a new timeline" />
