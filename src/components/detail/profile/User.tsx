@@ -32,15 +32,17 @@ const User: React.FC<Props> = props => {
       </FlexboxGrid.Item>
       {/** follow/unfollow **/}
       <FlexboxGrid.Item colspan={4}>
-        {relationship && relationship.following ? (
-          <Button appearance="link" size="lg" onClick={() => props.unfollow(user)}>
-            <Icon as={BsPersonX} style={{ fontSize: '1.2em' }} />
-          </Button>
-        ) : (
-          <Button appearance="link" size="lg" onClick={() => props.follow(user)}>
-            <Icon as={BsPersonPlus} style={{ fontSize: '1.2em', color: 'var(--rs-text-tertiary)' }} />
-          </Button>
-        )}
+        {relationship ? (
+          relationship.following ? (
+            <Button appearance="link" size="lg" onClick={() => props.unfollow(user)}>
+              <Icon as={BsPersonX} style={{ fontSize: '1.2em' }} />
+            </Button>
+          ) : (
+            <Button appearance="link" size="lg" onClick={() => props.follow(user)}>
+              <Icon as={BsPersonPlus} style={{ fontSize: '1.2em', color: 'var(--rs-text-tertiary)' }} />
+            </Button>
+          )
+        ) : null}
       </FlexboxGrid.Item>
     </FlexboxGrid>
   )

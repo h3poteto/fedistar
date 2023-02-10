@@ -15,7 +15,7 @@ type ArgProps = {
   client: MegalodonInterface
   user: Entity.Account
   server: Server
-  account: Account
+  account: Account | null
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
 }
 
