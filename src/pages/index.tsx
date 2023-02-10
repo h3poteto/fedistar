@@ -1,13 +1,13 @@
 import { useState, useEffect, useReducer, CSSProperties } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
-import { Container, Content, Message, useToaster, Animation } from 'rsuite'
+import { Container, Content, useToaster, Animation } from 'rsuite'
 import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/api/notification'
 
 import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
 import { Unread } from 'src/entities/unread'
-
+import alert from 'src/components/utils/alert'
 import NewTimeline from 'src/components/timelines/New'
 import ShowTimeline from 'src/components/timelines/Show'
 import NewServer from 'src/components/servers/New'
@@ -38,18 +38,12 @@ function App() {
     setTimelines(timelines)
   }
 
-  const message = (
-    <Message showIcon type="info">
-      There is no server, so please add it at first.
-    </Message>
-  )
-
   useEffect(() => {
     invoke<Array<Server>>('list_servers').then(res => {
       if (res.length === 0) {
         console.debug('There is no server')
         dispatch({ target: 'newServer', value: true })
-        toaster.push(message, { placement: 'topCenter' })
+        toaster.push(alert('info', 'There is no server, so please add it at first.'), { placement: 'topCenter' })
       } else {
         setServers(res)
       }
@@ -104,7 +98,11 @@ function App() {
   }
 
   const toggleCompose = () => {
-    setComposeOpened(previous => !previous)
+    if (servers.find(s => s.account_id !== null)) {
+      setComposeOpened(previous => !previous)
+    } else {
+      toaster.push(alert('info', 'You need to authorize a server'), { placement: 'topStart' })
+    }
   }
 
   return (
