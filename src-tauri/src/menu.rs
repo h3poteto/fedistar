@@ -1,3 +1,4 @@
+use rust_i18n::t;
 use tauri::{AboutMetadata, Menu, MenuItem, Submenu};
 
 const APP_NAME: &str = "Fedistar";
@@ -34,7 +35,7 @@ pub fn menu() -> Menu {
     #[cfg(not(target_os = "macos"))]
     {
         let file_menu = Menu::new().add_native_item(MenuItem::Quit);
-        menu = menu.add_submenu(Submenu::new("File", file_menu));
+        menu = menu.add_submenu(Submenu::new(t!("app_menu.file"), file_menu));
     }
 
     #[cfg(not(target_os = "linux"))]
@@ -53,7 +54,7 @@ pub fn menu() -> Menu {
             .add_native_item(MenuItem::Copy)
             .add_native_item(MenuItem::Paste);
 
-        menu = menu.add_submenu(Submenu::new("Edit", edit_menu));
+        menu = menu.add_submenu(Submenu::new(t!("app_menu.edit"), edit_menu));
     }
 
     #[cfg(not(target_os = "linux"))]
@@ -68,13 +69,13 @@ pub fn menu() -> Menu {
     }
     #[cfg(not(target_os = "linux"))]
     {
-        menu = menu.add_submenu(Submenu::new("Window", window_menu));
+        menu = menu.add_submenu(Submenu::new(t!("app_menu.window"), window_menu));
     }
 
     #[cfg(not(target_os = "macos"))]
     {
         let help_menu = Menu::new().add_native_item(about);
-        menu = menu.add_submenu(Submenu::new("Help", help_menu));
+        menu = menu.add_submenu(Submenu::new(t!("app_menu.help"), help_menu));
     }
     menu
 }

@@ -15,6 +15,8 @@ mod menu;
 mod settings;
 mod streaming;
 
+rust_i18n::i18n!("locales");
+
 #[tauri::command]
 async fn list_servers(
     sqlite_pool: State<'_, sqlx::SqlitePool>,
