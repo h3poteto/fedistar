@@ -2,206 +2,206 @@
   "alert": {
     "no_server": "まずはサーバを登録してください。",
     "need_auth": "いずれかのサーバにログインする必要があります。",
-    "failed_add_server": "Failed to add server.",
-    "failed_add_application": "Failed to add application.",
-    "failed_authorize": "Failed to authorize.",
-    "failed_post": "Failed to post status.",
-    "failed_load": "Failed to load {{timeline}}.",
-    "failed_mark": "Failed to mark as read",
-    "failed_unreblog": "Failed to unboost",
-    "failed_reblog": "Failed to boost",
-    "failed_unfavourite": "Failed to unfavourite",
-    "failed_favourite": "Failed to favourite",
-    "failed_unbookmark": "Failed to unbookmark",
-    "failed_bookmark": "Failed to bookmark",
-    "failed_follow": "Failed to follow",
-    "failed_unfollow": "Failed to unfollow",
-    "validation_error": "Validation error.",
-    "validation_attachments_length": "You can't attach over {{limit}} files.",
-    "validation_attachments_type": "You can attach only images or videos",
-    "upload_error": "Failed to upload your file"
+    "failed_add_server": "サーバーの追加に失敗しました。",
+    "failed_add_application": "アプリケーションの追加に失敗しました。",
+    "failed_authorize": "認証に失敗しました。",
+    "failed_post": "投稿に失敗しました。",
+    "failed_load": "{{timeline}} の読み込みに失敗しました。",
+    "failed_mark": "通知を既読にできませんでした。",
+    "failed_unreblog": "ブーストの取り消しに失敗しました。",
+    "failed_reblog": "ブーストに失敗しました。",
+    "failed_unfavourite": "お気に入り解除に失敗しました。",
+    "failed_favourite": "お気に入りに追加できませんでした。",
+    "failed_unbookmark": "ブックマークの取り消しに失敗しました。",
+    "failed_bookmark": "ブックマークの追加に失敗しました。",
+    "failed_follow": "フォローに失敗しました。",
+    "failed_unfollow": "フォロー解除に失敗しました。",
+    "validation_error": "検証エラー",
+    "validation_attachments_length": "{{limit}} 個以上のファイルを添付できません。",
+    "validation_attachments_type": "画像または動画のみ添付できます",
+    "upload_error": "ファイルのアップロードに失敗しました"
   },
   "walkthrough": {
     "navigator": {
       "servers": {
-        "title": "Servers",
-        "description": "You can remove or authorize servers, please right click.",
-        "ok": "OK"
+        "title": "サーバー",
+        "description": "サーバーを削除または認証することができます。右クリックしてください。",
+        "ok": "閉じる"
       }
     },
     "timeline": {
       "settings": {
-        "title": "Timeline settings",
-        "description": "You can move and remove the timeline.",
-        "ok": "Ok"
+        "title": "タイムラインの設定",
+        "description": "タイムラインを移動および削除できます。",
+        "ok": "閉じる"
       },
       "new": {
-        "title": "Add a timeline",
-        "description": "Click this button to add a timeline.",
-        "ok": "OK"
+        "title": "タイムラインを追加",
+        "description": "ボタンをクリックして、タイムラインを追加します。",
+        "ok": "閉じる"
       }
     }
   },
   "navigator": {
     "add_server": {
-      "title": "Add a new server"
+      "title": "新しいサーバーを追加"
     },
     "settings": {
-      "title": "Settings",
-      "app_menu": "Toggle app menu",
-      "settings": "Settings",
-      "thirdparty": "Third-party licenses"
+      "title": "設定",
+      "app_menu": "メニューを表示 / 非表示",
+      "settings": "設定",
+      "thirdparty": "サードパーティのライセンス"
     },
     "servers": {
-      "authorize": "Authorize",
-      "remove": "Remove"
+      "authorize": "認証",
+      "remove": "削除"
     }
   },
   "servers": {
     "new": {
-      "title": "Add Server",
-      "domain": "Domain",
-      "add": "Add",
-      "cancel": "Cancel",
-      "server_description": "You can also quit without signing in. If that case, you can see only Federated and Local timelines.",
-      "sign_in": "Sign In",
-      "finish": "Finish",
-      "authorization_code": "Authorization Code",
-      "authorization_help": "Please paste the authorization code from your browser",
-      "authorize": "Authorize",
-      "loading": "Loading"
+      "title": "サーバーを追加",
+      "domain": "ドメイン",
+      "add": "追加",
+      "cancel": "キャンセル",
+      "server_description": "サインインせずに終了することもできます。その場合は、連合タイムラインとローカルタイムラインのみを閲覧できます。",
+      "sign_in": "ログイン",
+      "finish": "完了",
+      "authorization_code": "認証コード",
+      "authorization_help": "ブラウザに表示された認証コードを貼り付けてください",
+      "authorize": "認証",
+      "loading": "読み込み中"
     }
   },
   "settings": {
     "settings": {
-      "title": "Settings",
+      "title": "設定",
       "appearance": {
-        "title": "Appearance",
-        "font_size": "Font size"
+        "title": "外観",
+        "font_size": "フォントサイズ"
       },
-      "save": "Save",
-      "close": "Close",
+      "save": "保存",
+      "close": "閉じる",
       "validation": {
         "font_size": {
-          "type": "Please enter a valid number",
-          "range": "Please enter a number from {{from}} to {{to}}",
-          "required": "Font size is required"
+          "type": "有効な数値を入力してください",
+          "range": "{{from}} から {{to}} までの数字を入力してください",
+          "required": "フォントサイズは必須です"
         }
       }
     },
     "thirdparty": {
-      "title": "Third-party licenses"
+      "title": "サードパーティのライセンス"
     }
   },
   "compose": {
-    "title": "New Post",
-    "from": "From",
+    "title": "新しい投稿",
+    "from": "差出人:",
     "visibility": {
-      "public": "Public",
-      "unlisted": "Unlisted",
-      "private": "Private",
-      "direct": "Direct"
+      "public": "公開",
+      "unlisted": "未収載",
+      "private": "フォロワーのみ",
+      "direct": "指定された相手のみ"
     },
     "spoiler": {
-      "placeholder": "Write your warning here"
+      "placeholder": "ここに警告を書いてください"
     },
     "status": {
-      "title": "Status",
-      "placeholder": "What's on your mind?"
+      "title": "ステータス",
+      "placeholder": "今なにしてる?"
     },
     "nsfw": {
-      "sensitive": "Sensitive",
-      "not_sensitive": "Not sensitive"
+      "sensitive": "閲覧注意にする",
+      "not_sensitive": "閲覧注意にしない"
     },
-    "cancel": "Cancel",
-    "post": "Post",
+    "cancel": "キャンセル",
+    "post": "投稿",
     "poll": {
-      "add_choice": "Add a choice"
+      "add_choice": "選択肢を追加"
     }
   },
   "timeline": {
-    "reload": "Reload",
+    "reload": "再読み込み",
     "settings": {
-      "title": "Settings",
-      "unpin": "Unpin"
+      "title": "設定",
+      "unpin": "ピン留め解除"
     },
-    "mark_as_read": "Mark as read",
+    "mark_as_read": "全て既読にする",
     "notification": {
       "follow": {
-        "title": "Follow",
-        "body": "{{user}} followed you"
+        "title": "フォロー",
+        "body": "{{user}} があなたをフォローしました"
       },
       "follow_request": {
-        "title": "Follow Request",
-        "body": "{{user}} requested to follow you"
+        "title": "フォローリクエスト",
+        "body": "{{user}} からフォローリクエストを受け取りました"
       },
       "favourite": {
-        "title": "Favourite",
-        "body": "{{user}} favourited your post"
+        "title": "お気に入り",
+        "body": "{{user}} があなたの投稿をお気に入りに登録しました"
       },
       "reblog": {
-        "title": "Boost",
-        "body": "{{user}} boosted your post"
+        "title": "ブースト",
+        "body": "{{user}} があなたの投稿をブーストしました"
       },
       "poll_expired": {
-        "title": "Poll",
-        "body": "{{user}}'s poll is expired"
+        "title": "アンケート",
+        "body": "{{user}} のアンケートが終了しました"
       },
       "poll_vote": {
-        "title": "Poll",
-        "body": "{{user}} voted your poll"
+        "title": "アンケート",
+        "body": "{{user}} があなたのアンケートに投票しました"
       },
       "quote": {
-        "title": "Quote",
-        "body": "{{user}} quoted your post"
+        "title": "引用",
+        "body": "{{user}} があなたの投稿を引用しました"
       },
       "status": {
-        "title": "Status",
-        "body": "{{user}} just post"
+        "title": "ステータス",
+        "body": "{{user}} が投稿しました"
       },
       "emoji_reaction": {
-        "title": "Reaction",
-        "body": "{{user}} reacted your post"
+        "title": "リアクション",
+        "body": "{{user}} があなたの投稿をリアクションしました"
       }
     },
     "actions": {
-      "reply": "Reply",
-      "reblog": "Boost",
-      "favourite": "Favourite",
-      "emoji_reaction": "Emoji reaction",
-      "bookmark": "Bookmark",
-      "detail": "Detail"
+      "reply": "返信",
+      "reblog": "ブースト",
+      "favourite": "お気に入り",
+      "emoji_reaction": "絵文字リアクション",
+      "bookmark": "ブックマーク",
+      "detail": "詳細"
     },
     "status": {
-      "show_more": "Show more",
-      "show_less": "Show less",
-      "media_hidden": "Media hidden"
+      "show_more": "もっと見る",
+      "show_less": "隠す",
+      "media_hidden": "非表示のメディア"
     },
-    "new": "Add a new timeline",
-    "home": "Home",
-    "notifications": "Notifications",
-    "favourites": "Favourites",
-    "bookmarks": "Bookmarks",
-    "direct": "Direct messages",
-    "local": "Local",
-    "public": "Federated",
-    "back": "Back"
+    "new": "タイムラインを追加",
+    "home": "ホーム",
+    "notifications": "通知",
+    "favourites": "お気に入り",
+    "bookmarks": "ブックマーク",
+    "direct": "ダイレクトメッセージ",
+    "local": "ローカル",
+    "public": "連合",
+    "back": "戻る"
   },
   "detail": {
-    "back": "Back",
+    "back": "戻る",
     "profile": {
-      "follow": "Follow",
-      "unfollow": "Unfollow",
-      "follow_requested": "Follow Requested",
-      "follows_you": "FOLLOWS YOU",
-      "posts": "Posts",
-      "following": "Following",
-      "followers": "Followers",
-      "open_page": "Open original page",
-      "mute": "Mute",
-      "unmute": "Unmute",
-      "block": "Block",
-      "unblock": "Unblock"
+      "follow": "フォロー",
+      "unfollow": "フォローを解除",
+      "follow_requested": "フォローリクエスト",
+      "follows_you": "フォローされています",
+      "posts": "投稿",
+      "following": "フォロー",
+      "followers": "フォロワー",
+      "open_page": "元のページを開く",
+      "mute": "ミュート",
+      "unmute": "ミュートを解除",
+      "block": "ブロック",
+      "unblock": "ブロックを解除"
     }
   }
 }
