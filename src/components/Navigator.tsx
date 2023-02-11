@@ -8,6 +8,7 @@ import FailoverImg from 'src/utils/failoverImg'
 import { Unread } from 'src/entities/unread'
 import { Instruction } from 'src/entities/instruction'
 import { listen } from '@tauri-apps/api/event'
+import { useTranslation } from 'react-i18next'
 
 type NavigatorProps = {
   servers: Array<Server>
@@ -20,6 +21,7 @@ type NavigatorProps = {
 }
 
 const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
+  const { t } = useTranslation()
   const { servers, openAuthorize, openThirdparty, openSettings } = props
   const [walkthrough, setWalkthrough] = useState(false)
 
@@ -66,19 +68,19 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
       </Sidenav>
       <Sidenav expanded={false}>
         <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Button appearance="link" size="lg" onClick={props.addNewServer} title="Add a new server">
+          <Button appearance="link" size="lg" onClick={props.addNewServer} title={t('navigator.add_server.title')}>
             <Icon as={BsPlus} style={{ fontSize: '1.4em' }} />
           </Button>
           {walkthrough && (
             <div style={{ position: 'relative' }}>
               <Popover arrow={false} visible={walkthrough} style={{ left: 12, top: 'auto', bottom: 0 }}>
                 <div style={{ width: '120px' }}>
-                  <h4 style={{ fontSize: '1.2em' }}>Servers</h4>
-                  <p>You can remove or authorize servers, please right click.</p>
+                  <h4 style={{ fontSize: '1.2em' }}>{t('walkthrouh.navigator.servers.title')}</h4>
+                  <p>{t('walkthrouh.navigator.servers.description')}</p>
                 </div>
                 <FlexboxGrid justify="end">
                   <Button appearance="default" size="xs" onClick={closeWalkthrough}>
-                    OK
+                    {t('walkthrough.navigator.servers.ok')}
                   </Button>
                 </FlexboxGrid>
               </Popover>
@@ -111,7 +113,7 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
               settingsMenu({ className, left, top, onClose, openThirdparty, openSettings }, ref)
             }
           >
-            <Button appearance="link" size="lg" title="Settings">
+            <Button appearance="link" size="lg" title={t('navigator.settings.title')}>
               <Icon as={BsGear} style={{ fontSize: '1.4em' }} />
             </Button>
           </Whisper>
@@ -134,6 +136,8 @@ const serverMenu = (
   { className, left, top, onClose, server, openAuthorize }: ServerMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
+  const { t } = useTranslation()
+
   const handleSelect = (eventKey: string) => {
     onClose()
     switch (eventKey) {
@@ -148,8 +152,8 @@ const serverMenu = (
   return (
     <Popover ref={ref} className={className} style={{ left, top, padding: 0 }}>
       <Dropdown.Menu onSelect={handleSelect}>
-        {server.account_id === null && <Dropdown.Item eventKey="0">Authorize</Dropdown.Item>}
-        <Dropdown.Item eventKey="1">Remove</Dropdown.Item>
+        {server.account_id === null && <Dropdown.Item eventKey="0">{t('navigator.servers.authorize')}</Dropdown.Item>}
+        <Dropdown.Item eventKey="1">{t('navigator.servers.remove')}</Dropdown.Item>
       </Dropdown.Menu>
     </Popover>
   )
@@ -168,6 +172,8 @@ const settingsMenu = (
   { className, left, top, onClose, openThirdparty, openSettings }: SettingsMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
+  const { t } = useTranslation()
+
   const handleSelect = async (eventKey: string) => {
     onClose()
     switch (eventKey) {
@@ -189,9 +195,9 @@ const settingsMenu = (
   return (
     <Popover ref={ref} className={className} style={{ left, top, padding: 0 }}>
       <Dropdown.Menu onSelect={handleSelect}>
-        <Dropdown.Item eventKey="menu">Toggle app menu</Dropdown.Item>
-        <Dropdown.Item eventKey="settings">Settings</Dropdown.Item>
-        <Dropdown.Item eventKey="thirdparty">Third-party licenses</Dropdown.Item>
+        <Dropdown.Item eventKey="menu">{t('navigator.settings.app_menu')}</Dropdown.Item>
+        <Dropdown.Item eventKey="settings">{t('navigator.settings.settings')}</Dropdown.Item>
+        <Dropdown.Item eventKey="thirdparty">{t('navigator.settings.thirdparty')}</Dropdown.Item>
       </Dropdown.Menu>
     </Popover>
   )

@@ -5,6 +5,8 @@ import moment from 'moment'
 import '../style.css'
 import '../App.css'
 
+import '../i18n'
+
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({ Component, pageProps }: AppProps) {
   moment.updateLocale('en', {

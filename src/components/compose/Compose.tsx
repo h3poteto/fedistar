@@ -10,6 +10,7 @@ import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import failoverImg from 'src/utils/failoverImg'
 import Status from './Status'
+import { useTranslation } from 'react-i18next'
 
 const renderAccountIcon = (props: any, ref: any, account: [Account, Server] | undefined) => {
   if (account && account.length > 0) {
@@ -41,6 +42,8 @@ type Props = {
 }
 
 const Compose: React.FC<Props> = props => {
+  const { t } = useTranslation()
+
   const [accounts, setAccounts] = useState<Array<[Account, Server]>>([])
   const [fromAccount, setFromAccount] = useState<[Account, Server]>()
   const [client, setClient] = useState<MegalodonInterface>()
@@ -78,7 +81,7 @@ const Compose: React.FC<Props> = props => {
     <Container style={{ backgroundColor: 'var(--rs-gray-700)', height: '100%' }}>
       <Header style={{ borderBottom: '1px solid var(--rs-divider-border)', backgroundColor: 'var(--rs-gray-600)' }}>
         <FlexboxGrid justify="space-between" align="middle">
-          <FlexboxGrid.Item style={{ lineHeight: '53px', paddingLeft: '12px', fontSize: '18px' }}>New Status</FlexboxGrid.Item>
+          <FlexboxGrid.Item style={{ lineHeight: '53px', paddingLeft: '12px', fontSize: '18px' }}>{t('compose.title')}</FlexboxGrid.Item>
           <FlexboxGrid.Item>
             <Button appearance="link" onClick={() => props.setOpened(false)}>
               <Icon as={BsX} style={{ fontSize: '1.4em' }} />
@@ -87,7 +90,7 @@ const Compose: React.FC<Props> = props => {
         </FlexboxGrid>
       </Header>
       <Content style={{ height: '100%', margin: '12px', backgroundColor: 'var(--rs-gray-700)' }}>
-        <div style={{ fontSize: '1.2em', padding: '12px 0' }}>From</div>
+        <div style={{ fontSize: '1.2em', padding: '12px 0' }}>{t('compose.from')}</div>
         <FlexboxGrid>
           <FlexboxGrid.Item>
             <Dropdown renderToggle={(props, ref) => renderAccountIcon(props, ref, fromAccount)} onSelect={selectAccount}>
@@ -99,7 +102,7 @@ const Compose: React.FC<Props> = props => {
             </Dropdown>
           </FlexboxGrid.Item>
         </FlexboxGrid>
-        <div style={{ fontSize: '1.2em', padding: '12px 0' }}>Status</div>
+        <div style={{ fontSize: '1.2em', padding: '12px 0' }}>{t('compose.status.title')}</div>
         {fromAccount && <Status client={client} server={fromAccount[1]} account={fromAccount[0]} />}
       </Content>
     </Container>

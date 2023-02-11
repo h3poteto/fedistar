@@ -1,5 +1,6 @@
 import { invoke } from '@tauri-apps/api/tauri'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { InputNumber, Modal, Panel, Form, Schema, ButtonToolbar, Button } from 'rsuite'
 import { Settings } from 'src/entities/settings'
 
@@ -14,14 +15,16 @@ type FormValue = {
 }
 
 const Settings: React.FC<Props> = props => {
+  const { t } = useTranslation()
+
   const [formValue, setFormValue] = useState<FormValue>({
     font_size: 14
   })
 
   const model = Schema.Model<FormValue>({
-    font_size: Schema.Types.NumberType('Please enter a valid number')
-      .range(1, 30, 'Please enter a number from 1 to 30')
-      .isRequired('Font size is required')
+    font_size: Schema.Types.NumberType(t('settings.settings.validation.font_size.type'))
+      .range(1, 30, t('settings.settings.validation.font_size.range', { from: 1, to: 30 }))
+      .isRequired(t('settings.settings.validation.font_size.required'))
   })
 
   useEffect(() => {
@@ -45,22 +48,22 @@ const Settings: React.FC<Props> = props => {
   return (
     <Modal backdrop="static" keyboard={true} open={props.open} onClose={props.onClose}>
       <Modal.Header>
-        <Modal.Title>Settings</Modal.Title>
+        <Modal.Title>{t('settings.settings.title')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form layout="horizontal" formValue={formValue} onChange={setFormValue} model={model}>
-          <Panel header="Appearance">
+          <Panel header={t('settings.settings.appearance.title')}>
             <Form.Group controlId="font_size">
-              <Form.ControlLabel>Font size</Form.ControlLabel>
+              <Form.ControlLabel>{t('settings.settings.appearance.font_size')}</Form.ControlLabel>
               <Form.Control name="font_size" accepter={InputNumber} postfix="px" />
             </Form.Group>
           </Panel>
           <Form.Group>
             <ButtonToolbar style={{ justifyContent: 'flex-end' }}>
               <Button appearance="primary" type="submit" onClick={handleSubmit}>
-                Save
+                {t('settings.settings.save')}
               </Button>
-              <Button onClick={props.onClose}>Close</Button>
+              <Button onClick={props.onClose}>{t('settings.settings.close')}</Button>
             </ButtonToolbar>
           </Form.Group>
         </Form>

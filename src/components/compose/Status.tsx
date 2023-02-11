@@ -27,6 +27,7 @@ import { Server } from 'src/entities/server'
 import { CustomEmojiCategory } from 'src/entities/emoji'
 import alert from 'src/components/utils/alert'
 import { Account } from 'src/entities/account'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   server: Server
@@ -61,6 +62,8 @@ const model = Schema.Model({
 })
 
 const Status: React.FC<Props> = props => {
+  const { t } = useTranslation()
+
   const [formValue, setFormValue] = useState<FormValue>({
     spoiler: '',
     status: ''
@@ -123,7 +126,7 @@ const Status: React.FC<Props> = props => {
     if (formRef === undefined || formRef.current === undefined) {
       return
     } else if (!formRef.current.check()) {
-      toast.push(alert('error', 'Validation error'), { placement: 'topStart' })
+      toast.push(alert('error', t('alert.validation_error')), { placement: 'topStart' })
       return
     } else {
       setLoading(true)
@@ -157,7 +160,7 @@ const Status: React.FC<Props> = props => {
         await props.client.postStatus(formValue.status, options)
         clear()
       } catch {
-        toast.push(alert('error', 'Failed to post status'), { placement: 'topStart' })
+        toast.push(alert('error', t('alert.failed_post')), { placement: 'topStart' })
       } finally {
         setLoading(false)
       }
@@ -201,8 +204,8 @@ const Status: React.FC<Props> = props => {
   }
 
   const fileChanged = async (_filepath: string, event: ChangeEvent<HTMLInputElement>) => {
-    if (formValue.attachments && formValue.attachments.length >= 4) {
-      toast.push(alert('error', "You can't attach over 5 files"), { placement: 'topStart' })
+    if (formValue.attachments && formValue.attachments.length > 4) {
+      toast.push(alert('error', t('alert.validation_attachments_length', { limit: 5 })), { placement: 'topStart' })
       return
     }
 
@@ -211,7 +214,7 @@ const Status: React.FC<Props> = props => {
       return
     }
     if (!file.type.includes('image') && !file.type.includes('video')) {
-      toast.push(alert('error', 'You can attach only images or videos'), { placement: 'topStart' })
+      toast.push(alert('error', t('alert.validation_attachments_type')), { placement: 'topStart' })
       return
     }
 
@@ -226,7 +229,7 @@ const Status: React.FC<Props> = props => {
         return Object.assign({}, current, { attachments: [res.data] })
       })
     } catch {
-      toast.push(alert('error', 'Failed to upload your file'), { placement: 'topStart' })
+      toast.push(alert('error', t('alert.upload_error')), { placement: 'topStart' })
     } finally {
       setLoading(false)
     }
@@ -273,16 +276,16 @@ const Status: React.FC<Props> = props => {
       <Popover ref={ref} className={className} style={{ left, top }} full>
         <Dropdown.Menu onSelect={handleSelect}>
           <Dropdown.Item eventKey={'public'} icon={<Icon as={BsGlobe} />}>
-            Public
+            {t('compose.visibility.public')}
           </Dropdown.Item>
           <Dropdown.Item eventKey={'unlisted'} icon={<Icon as={BsUnlock} />}>
-            Unlisted
+            {t('compose.visibility.unlisted')}
           </Dropdown.Item>
           <Dropdown.Item eventKey={'private'} icon={<Icon as={BsLock} />}>
-            Private
+            {t('compose.visibility.private')}
           </Dropdown.Item>
           <Dropdown.Item eventKey={'direct'} icon={<Icon as={BsEnvelope} />}>
-            Direct
+            {t('compose.visibility.direct')}
           </Dropdown.Item>
         </Dropdown.Menu>
       </Popover>
@@ -293,13 +296,13 @@ const Status: React.FC<Props> = props => {
     <Form fluid model={model} ref={formRef} onChange={setFormValue} onCheck={setFormError} formValue={formValue}>
       {cw && (
         <Form.Group controlId="spoiler">
-          <Form.Control name="spoiler" placeholder="Write your warning here" />
+          <Form.Control name="spoiler" placeholder={t('compose.spiler.placeholder')} />
         </Form.Group>
       )}
 
       <Form.Group controlId="status" style={{ position: 'relative', marginBottom: '4px' }}>
         {/** @ts-ignore **/}
-        <Form.Control rows={5} name="status" accepter={Textarea} ref={statusRef} placeholder="What's on your mind?" />
+        <Form.Control rows={5} name="status" accepter={Textarea} ref={statusRef} placeholder={t('compose.status.placeholder')} />
         <Whisper trigger="click" placement="bottomStart" ref={emojiPickerRef} speaker={<EmojiPicker />}>
           <Button appearance="link" style={{ position: 'absolute', top: '4px', right: '8px', padding: 0 }}>
             <Icon as={BsEmojiLaughing} style={{ fontSize: '1.2em' }} />
@@ -329,7 +332,12 @@ const Status: React.FC<Props> = props => {
       </Form.Group>
       {formValue.attachments?.length > 0 && (
         <Form.Group controlId="nsfw" style={{ marginBottom: '4px' }}>
-          <Form.Control name="nsfw" accepter={Toggle} checkedChildren="Sensitive" unCheckedChildren="Not sensitive" />
+          <Form.Control
+            name="nsfw"
+            accepter={Toggle}
+            checkedChildren={t('compose.nsfw.sensitive')}
+            unCheckedChildren={t('compose.nsfw.not_sensitive')}
+          />
         </Form.Group>
       )}
 
@@ -362,9 +370,9 @@ const Status: React.FC<Props> = props => {
       </Form.Group>
       <Form.Group>
         <ButtonToolbar style={{ justifyContent: 'flex-end' }}>
-          {props.in_reply_to && <Button onClick={clear}>Cancel</Button>}
+          {props.in_reply_to && <Button onClick={clear}>{t('compose.cancel')}</Button>}
           <Button appearance="primary" type="submit" onClick={handleSubmit} loading={loading}>
-            Post
+            {t('compose.post')}
           </Button>
         </ButtonToolbar>
       </Form.Group>
@@ -406,6 +414,8 @@ const expiresList = [
 ]
 
 const PollInputControl: FormControlProps<Poll, any> = ({ value, onChange, fieldError }) => {
+  const { t } = useTranslation()
+
   const [poll, setPoll] = useState<Poll>(value)
   const errors = fieldError ? fieldError.object : {}
 
@@ -478,7 +488,7 @@ const PollInputControl: FormControlProps<Poll, any> = ({ value, onChange, fieldE
           </FlexboxGrid.Item>
           <FlexboxGrid.Item>
             <Button appearance="ghost" onClick={addOption}>
-              Add a choice
+              {t('compose.poll.add_choice')}
             </Button>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item>

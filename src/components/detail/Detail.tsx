@@ -6,6 +6,7 @@ import { Icon } from '@rsuite/icons'
 
 import Status from './Status'
 import Profile from './Profile'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   dispatch: Dispatch<{ target: string; value: boolean; object?: any; index?: number }>
@@ -13,6 +14,8 @@ type Props = {
 }
 
 const Detail: React.FC<Props> = props => {
+  const { t } = useTranslation()
+
   const [target, setTarget] = useState<'status' | 'profile' | null>(null)
   const router = useRouter()
 
@@ -50,7 +53,7 @@ const Detail: React.FC<Props> = props => {
                 <FlexboxGrid.Item>
                   <Button appearance="link" onClick={back}>
                     <Icon as={BsChevronLeft} style={{ fontSize: '1.4em' }} />
-                    Back
+                    {t('detail.back')}
                   </Button>
                 </FlexboxGrid.Item>
                 <FlexboxGrid.Item>

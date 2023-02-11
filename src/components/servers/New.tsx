@@ -4,6 +4,7 @@ import { invoke } from '@tauri-apps/api/tauri'
 import { Server } from 'src/entities/server'
 import { OAuth } from 'megalodon'
 import alert from '../utils/alert'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   open: boolean
@@ -12,6 +13,8 @@ type Props = {
 }
 
 const New: React.FC<Props> = props => {
+  const { t } = useTranslation()
+
   const [server, setServer] = useState<Server>()
   const [app, setApp] = useState<OAuth.AppDataFromServer>()
   const [loading, setLoading] = useState<boolean>(false)
@@ -34,7 +37,7 @@ const New: React.FC<Props> = props => {
       setServer(res)
     } catch (err) {
       console.error(err)
-      toast.push(alert('error', 'Failed to add server'), { placement: 'topCenter' })
+      toast.push(alert('error', t('alert.failed_add_server')), { placement: 'topCenter' })
     } finally {
       setLoading(false)
     }
@@ -47,7 +50,7 @@ const New: React.FC<Props> = props => {
       setApp(res)
     } catch (err) {
       console.error(err)
-      toast.push(alert('error', 'Failed to add application'), { placement: 'topCenter' })
+      toast.push(alert('error', t('alert.failed_add_application')), { placement: 'topCenter' })
     } finally {
       setLoading(false)
     }
@@ -60,7 +63,7 @@ const New: React.FC<Props> = props => {
       finish()
     } catch (err) {
       console.error(err)
-      toast.push(alert('error', 'Failed to authorize'), { placement: 'topCenter' })
+      toast.push(alert('error', t('alert.failed_authorize')), { placement: 'topCenter' })
     } finally {
       setLoading(false)
     }
@@ -87,22 +90,22 @@ const New: React.FC<Props> = props => {
   return (
     <Modal backdrop="static" keyboard={true} open={props.open} onClose={() => close()}>
       <Modal.Header>
-        <Modal.Title>Add Server</Modal.Title>
+        <Modal.Title>{t('servers.new.title')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {server === undefined && (
           <Form fluid onChange={o => setDomain(o.domain)}>
             <Form.Group>
-              <Form.ControlLabel>Domain</Form.ControlLabel>
+              <Form.ControlLabel>{t('servers.new.domain')}</Form.ControlLabel>
               <Form.Control name="domain" />
             </Form.Group>
             <Form.Group>
               <ButtonToolbar>
                 <Button appearance="primary" onClick={() => addServer()}>
-                  Add
+                  {t('servers.new.add')}
                 </Button>
                 <Button appearance="link" onClick={() => close()}>
-                  Cancel
+                  {t('servers.new.cancel')}
                 </Button>
               </ButtonToolbar>
             </Form.Group>
@@ -111,7 +114,7 @@ const New: React.FC<Props> = props => {
         {server !== undefined && app === undefined && (
           <Form fluid>
             <Form.Group>
-              <p>You can also quit without signing in. If that case, you can see only Federated and Local timelines.</p>
+              <p>{t('servers.new.server_description')}</p>
             </Form.Group>
             <Form.Group>
               <Input value={domain} readOnly />
@@ -119,10 +122,10 @@ const New: React.FC<Props> = props => {
             <Form.Group>
               <ButtonToolbar>
                 <Button appearance="primary" onClick={() => addApplication()}>
-                  Sign In
+                  {t('servers.new.sign_in')}
                 </Button>
                 <Button appearance="link" onClick={() => finish()}>
-                  Finish
+                  {t('servers.new.finish')}
                 </Button>
               </ButtonToolbar>
             </Form.Group>
@@ -131,23 +134,23 @@ const New: React.FC<Props> = props => {
         {app !== undefined && (
           <Form fluid onChange={o => setCode(o.code)}>
             <Form.Group>
-              <Form.ControlLabel>Authorization Code</Form.ControlLabel>
+              <Form.ControlLabel>{t('servers.new.authorization_code')}</Form.ControlLabel>
               <Form.Control name="code" />
-              <Form.HelpText>Please paste the authorization code from your browser</Form.HelpText>
+              <Form.HelpText>{t('servers.new.authorization_help')}</Form.HelpText>
             </Form.Group>
             <Form.Group>
               <ButtonToolbar>
                 <Button appearance="primary" onClick={() => authorizeCode()}>
-                  Authorize
+                  {t('servers.new.authorize')}
                 </Button>
                 <Button appearance="link" onClick={() => finish()}>
-                  Cancel
+                  {t('servers.new.cancel')}
                 </Button>
               </ButtonToolbar>
             </Form.Group>
           </Form>
         )}
-        {loading && <Loader center backdrop content="loading" />}
+        {loading && <Loader center backdrop content={t('servers.new.loading')} />}
       </Modal.Body>
     </Modal>
   )
