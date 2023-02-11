@@ -17,6 +17,8 @@ import { Unread } from 'src/entities/unread'
 import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from 'src/defaults'
 import alert from 'src/components/utils/alert'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'react-i18next'
+import timelineName from 'src/utils/timelineName'
 
 type Props = {
   timeline: Timeline
@@ -34,6 +36,8 @@ type Marker = {
 }
 
 const Notifications: React.FC<Props> = props => {
+  const { t } = useTranslation()
+
   const [account, setAccount] = useState<Account>()
   const [client, setClient] = useState<MegalodonInterface>()
   const [notifications, setNotifications] = useState<Array<Entity.Notification>>([])
@@ -61,7 +65,7 @@ const Notifications: React.FC<Props> = props => {
         setNotifications(res)
         notifications = res
       } catch {
-        toast.push(alert('error', 'Failed to load notifications'), { placement: 'topStart' })
+        toast.push(alert('error', t('alert.failed_load', { timeline: 'notifications' })), { placement: 'topStart' })
       } finally {
         setLoading(false)
       }
@@ -188,7 +192,7 @@ const Notifications: React.FC<Props> = props => {
         setMarker(marker.notifications)
       }
     } catch {
-      toast.push(alert('error', 'Failed to mark as read'), { placement: 'topStart' })
+      toast.push(alert('error', t('falert.failed_mark')), { placement: 'topStart' })
     }
   }
 
@@ -233,9 +237,9 @@ const Notifications: React.FC<Props> = props => {
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap'
                   }}
-                  title={props.timeline.name + '' + props.server.domain}
+                  title={timelineName(props.timeline.kind, props.timeline.name, t) + '@' + props.server.domain}
                 >
-                  {props.timeline.name}
+                  {timelineName(props.timeline.kind, props.timeline.name, t)}
                   <span style={{ fontSize: '14px', color: 'var(--rs-text-secondary)' }}>@{props.server.domain}</span>
                 </FlexboxGrid.Item>
               </FlexboxGrid>
@@ -245,7 +249,7 @@ const Notifications: React.FC<Props> = props => {
                 <FlexboxGrid.Item>
                   <Button
                     appearance="link"
-                    title="Mark as read"
+                    title={t('timeline.mark_as_read')}
                     disabled={props.unreads.find(u => u.server_id === props.server.id && u.count > 0) ? false : true}
                     onClick={read}
                     style={{ padding: '4px' }}
@@ -261,7 +265,7 @@ const Notifications: React.FC<Props> = props => {
                     ref={triggerRef}
                     speaker={<OptionPopover timeline={props.timeline} close={closeOptionPopover} />}
                   >
-                    <Button appearance="link" style={{ padding: '4px 8px 4px 4px' }} title="Settings">
+                    <Button appearance="link" style={{ padding: '4px 8px 4px 4px' }} title={t('timeline.settings.title')}>
                       <Icon as={BsSliders} />
                     </Button>
                   </Whisper>
@@ -330,6 +334,8 @@ const Notifications: React.FC<Props> = props => {
 }
 
 const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
+  const { t } = useTranslation()
+
   const removeTimeline = async (timeline: Timeline) => {
     await invoke('remove_timeline', { id: timeline.id })
   }
@@ -351,7 +357,7 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
           <FlexboxGrid.Item>
             <Button appearance="link" size="xs" onClick={() => removeTimeline(props.timeline)}>
               <Icon as={BsX} style={{ paddingBottom: '2px', fontSize: '1.4em' }} />
-              <span>Unpin</span>
+              <span>{t('timeline.settings.unpin')}</span>
             </Button>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item>

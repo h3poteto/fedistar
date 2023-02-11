@@ -1,0 +1,207 @@
+{
+  "alert": {
+    "no_server": "There is no server, so please add it at first.",
+    "need_auth": "You need to authorize a server.",
+    "failed_add_server": "Failed to add server.",
+    "failed_add_application": "Failed to add application.",
+    "failed_authorize": "Failed to authorize.",
+    "failed_post": "Failed to post status.",
+    "failed_load": "Failed to load {{timeline}}.",
+    "failed_mark": "Failed to mark as read",
+    "failed_unreblog": "Failed to unboost",
+    "failed_reblog": "Failed to boost",
+    "failed_unfavourite": "Failed to unfavourite",
+    "failed_favourite": "Failed to favourite",
+    "failed_unbookmark": "Failed to unbookmark",
+    "failed_bookmark": "Failed to bookmark",
+    "failed_follow": "Failed to follow",
+    "failed_unfollow": "Failed to unfollow",
+    "validation_error": "Validation error.",
+    "validation_attachments_length": "You can't attach over {{limit}} files.",
+    "validation_attachments_type": "You can attach only images or videos",
+    "upload_error": "Failed to upload your file"
+  },
+  "walkthrough": {
+    "navigator": {
+      "servers": {
+        "title": "Servers",
+        "description": "You can remove or authorize servers, please right click.",
+        "ok": "OK"
+      }
+    },
+    "timeline": {
+      "settings": {
+        "title": "Timeline settings",
+        "description": "You can move and remove the timeline.",
+        "ok": "Ok"
+      },
+      "new": {
+        "title": "Add a timeline",
+        "description": "Click this button to add a timeline.",
+        "ok": "OK"
+      }
+    }
+  },
+  "navigator": {
+    "add_server": {
+      "title": "Add a new server"
+    },
+    "settings": {
+      "title": "Settings",
+      "app_menu": "Toggle app menu",
+      "settings": "Settings",
+      "thirdparty": "Third-party licenses"
+    },
+    "servers": {
+      "authorize": "Authorize",
+      "remove": "Remove"
+    }
+  },
+  "servers": {
+    "new": {
+      "title": "Add Server",
+      "domain": "Domain",
+      "add": "Add",
+      "cancel": "Cancel",
+      "server_description": "You can also quit without signing in. If that case, you can see only Federated and Local timelines.",
+      "sign_in": "Sign In",
+      "finish": "Finish",
+      "authorization_code": "Authorization Code",
+      "authorization_help": "Please paste the authorization code from your browser",
+      "authorize": "Authorize",
+      "loading": "Loading"
+    }
+  },
+  "settings": {
+    "settings": {
+      "title": "Settings",
+      "appearance": {
+        "title": "Appearance",
+        "font_size": "Font size"
+      },
+      "save": "Save",
+      "close": "Close",
+      "validation": {
+        "font_size": {
+          "type": "Please enter a valid number",
+          "range": "Please enter a number from {{from}} to {{to}}",
+          "required": "Font size is required"
+        }
+      }
+    },
+    "thirdparty": {
+      "title": "Third-party licenses"
+    }
+  },
+  "compose": {
+    "title": "New Post",
+    "from": "From",
+    "visibility": {
+      "public": "Public",
+      "unlisted": "Unlisted",
+      "private": "Private",
+      "direct": "Direct"
+    },
+    "spoiler": {
+      "placeholder": "Write your warning here"
+    },
+    "status": {
+      "title": "Status",
+      "placeholder": "What's on your mind?"
+    },
+    "nsfw": {
+      "sensitive": "Sensitive",
+      "not_sensitive": "Not sensitive"
+    },
+    "cancel": "Cancel",
+    "post": "Post",
+    "poll": {
+      "add_choice": "Add a choice"
+    }
+  },
+  "timeline": {
+    "reload": "Reload",
+    "settings": {
+      "title": "Settings",
+      "unpin": "Unpin"
+    },
+    "mark_as_read": "Mark as read",
+    "notification": {
+      "follow": {
+        "title": "Follow",
+        "body": "{{user}} followed you"
+      },
+      "follow_request": {
+        "title": "Follow Request",
+        "body": "{{user}} requested to follow you"
+      },
+      "favourite": {
+        "title": "Favourite",
+        "body": "{{user}} favourited your post"
+      },
+      "reblog": {
+        "title": "Boost",
+        "body": "{{user}} boosted your post"
+      },
+      "poll_expired": {
+        "title": "Poll",
+        "body": "{{user}}'s poll is expired"
+      },
+      "poll_vote": {
+        "title": "Poll",
+        "body": "{{user}} voted your poll"
+      },
+      "quote": {
+        "title": "Quote",
+        "body": "{{user}} quoted your post"
+      },
+      "status": {
+        "title": "Status",
+        "body": "{{user}} just post"
+      },
+      "emoji_reaction": {
+        "title": "Reaction",
+        "body": "{{user}} reacted your post"
+      }
+    },
+    "actions": {
+      "reply": "Reply",
+      "reblog": "Boost",
+      "favourite": "Favourite",
+      "emoji_reaction": "Emoji reaction",
+      "bookmark": "Bookmark",
+      "detail": "Detail"
+    },
+    "status": {
+      "show_more": "Show more",
+      "show_less": "Show less",
+      "media_hidden": "Media hidden"
+    },
+    "new": "Add a new timeline",
+    "home": "Home",
+    "notifications": "Notifications",
+    "favourites": "Favourites",
+    "bookmarks": "Bookmarks",
+    "direct": "Direct messages",
+    "local": "Local",
+    "public": "Federated",
+    "back": "Back"
+  },
+  "detail": {
+    "back": "Back",
+    "profile": {
+      "follow": "Follow",
+      "unfollow": "Unfollow",
+      "follow_requested": "Follow Requested",
+      "follows_you": "FOLLOWS YOU",
+      "posts": "Posts",
+      "following": "Following",
+      "followers": "Followers",
+      "open_page": "Open original page",
+      "mute": "Mute",
+      "unmute": "Unmute",
+      "block": "Block",
+      "unblock": "Unblock"
+    }
+  }
+}

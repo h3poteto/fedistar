@@ -10,6 +10,7 @@ import emojify from 'src/utils/emojify'
 import { findLink } from 'src/utils/statusParser'
 import Body from '../status/Body'
 import Poll from '../status/Poll'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   notification: Entity.Notification
@@ -39,13 +40,18 @@ const actionIcon = (notification: Entity.Notification) => {
 }
 
 const actionText = (notification: Entity.Notification) => {
+  const { t } = useTranslation()
+
   switch (notification.type) {
     case 'favourite':
       return (
         <span
           style={{ color: 'var(--rs-text-secondary)' }}
           dangerouslySetInnerHTML={{
-            __html: emojify(`${notification.account.display_name} favourited your post`, notification.account.emojis)
+            __html: emojify(
+              t('timeline.notification.favourite.body', { user: notification.account.display_name }),
+              notification.account.emojis
+            )
           }}
         />
       )
@@ -54,7 +60,10 @@ const actionText = (notification: Entity.Notification) => {
         <span
           style={{ color: 'var(--rs-text-secondary)' }}
           dangerouslySetInnerHTML={{
-            __html: emojify(`${notification.account.display_name} reblogged your post`, notification.account.emojis)
+            __html: emojify(
+              t('timeline.notification.reblog.body', { user: notification.account.display_name }),
+              notification.account.emojis
+            )
           }}
         />
       )
@@ -63,7 +72,10 @@ const actionText = (notification: Entity.Notification) => {
         <span
           style={{ color: 'var(--rs-text-secondary)' }}
           dangerouslySetInnerHTML={{
-            __html: emojify(`${notification.account.display_name}'s poll is expired`, notification.account.emojis)
+            __html: emojify(
+              t('timeline.notification.poll_expired.body', { user: notification.account.display_name }),
+              notification.account.emojis
+            )
           }}
         />
       )
@@ -72,7 +84,10 @@ const actionText = (notification: Entity.Notification) => {
         <span
           style={{ color: 'var(--rs-text-secondary)' }}
           dangerouslySetInnerHTML={{
-            __html: emojify(`${notification.account.display_name} voted your poll`, notification.account.emojis)
+            __html: emojify(
+              t('timeline.notification.poll_vote.body', { user: notification.account.display_name }),
+              notification.account.emojis
+            )
           }}
         />
       )
@@ -81,7 +96,7 @@ const actionText = (notification: Entity.Notification) => {
         <span
           style={{ color: 'var(--rs-text-secondary)' }}
           dangerouslySetInnerHTML={{
-            __html: emojify(`${notification.account.display_name} quoted your post`, notification.account.emojis)
+            __html: emojify(t('timeline.notification.quote.body', { user: notification.account.display_name }), notification.account.emojis)
           }}
         />
       )
@@ -90,7 +105,10 @@ const actionText = (notification: Entity.Notification) => {
         <span
           style={{ color: 'var(--rs-text-secondary)' }}
           dangerouslySetInnerHTML={{
-            __html: emojify(`${notification.account.display_name} just post`, notification.account.emojis)
+            __html: emojify(
+              t('timeline.notification.status.body', { user: notification.account.display_name }),
+              notification.account.emojis
+            )
           }}
         />
       )
@@ -99,7 +117,10 @@ const actionText = (notification: Entity.Notification) => {
         <span
           style={{ color: 'var(--rs-text-secondary)' }}
           dangerouslySetInnerHTML={{
-            __html: emojify(`${notification.account.display_name} reacted your post`, notification.account.emojis)
+            __html: emojify(
+              t('timeline.notification.emoji_reaction.body', { user: notification.account.display_name }),
+              notification.account.emojis
+            )
           }}
         />
       )

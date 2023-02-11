@@ -1,26 +1,39 @@
 import sanitizeHtml from 'sanitize-html'
 import { Entity } from 'megalodon'
+import { TFunction } from 'i18next'
 
-const generateNotification = (notification: Entity.Notification): [string, string] => {
+const generateNotification = (
+  notification: Entity.Notification,
+  t: TFunction<'translation', undefined, 'translation'>
+): [string, string] => {
   switch (notification.type) {
     case 'follow':
-      return ['Follow', `${notification.account.acct} followed you`]
+      return [t('timeline.notification.follow.title'), t('timeline.notification.follow.body', { user: notification.account.acct })]
     case 'follow_request':
-      return ['Follow Request', `${notification.account.acct} requested to follow you`]
+      return [
+        t('timeline.notification.follow_request.title'),
+        t('timeline.notification.follow_requested.body', { user: notification.account.acct })
+      ]
     case 'favourite':
-      return ['Favourite', `${notification.account.acct} favourited your post`]
+      return [t('timeline.notification.favourite.title'), t('timeline.notification.favourite.body', { user: notification.account.acct })]
     case 'reblog':
-      return ['Reblog', `${notification.account.acct} reblogged your post`]
+      return [t('timeline.notification.reblog.title'), t('timeline.notification.reblog.body', { user: notification.account.acct })]
     case 'poll_expired':
-      return ['Poll', `${notification.account.acct}'s poll is expired`]
-    case 'poll':
-      return ['Poll', `${notification.account.acct} voted your poll`]
+      return [
+        t('timeline.notification.poll_expired.title'),
+        t('timeline.notification.poll_expired.body', { user: notification.account.acct })
+      ]
+    case 'poll_vote':
+      return [t('timeline.notification.poll_vote.title'), t('timeline.notification.poll_vote.body', { user: notification.account.acct })]
     case 'quote':
-      return ['Quote', `${notification.account.acct} quoted your post`]
+      return [t('timeline.notification.quote.title'), t('timeline.notification.quote.body', { user: notification.account.acct })]
     case 'status':
-      return ['Status', `${notification.account.acct} just post`]
+      return [t('timeline.notification.status.title'), t('timeline.notification.status.body', { user: notification.account.acct })]
     case 'emoji_reaction':
-      return ['Reaction', `${notification.account.acct} reacted your post`]
+      return [
+        t('timeline.notification.emoji_reaction.title'),
+        t('timeline.notification.emoji_reaction.body', { user: notification.account.acct })
+      ]
     case 'mention':
       return [
         `${notification.account.acct}`,

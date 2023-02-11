@@ -14,6 +14,7 @@ import { useRouter } from 'next/router'
 import Posts, { FuncProps as PostsFunc } from './profile/Posts'
 import Following, { FuncProps as FollowingFunc } from './profile/Following'
 import Followers, { FuncProps as FollowersFunc } from './profile/Followers'
+import { useTranslation } from 'react-i18next'
 
 const PostsTab = forwardRef(Posts)
 const FollowingTab = forwardRef(Following)
@@ -24,6 +25,8 @@ type Props = {
 }
 
 const Profile: React.FC<Props> = props => {
+  const { t } = useTranslation()
+
   const [client, setClient] = useState<MegalodonInterface | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
   const [server, setServer] = useState<Server | null>(null)
@@ -88,15 +91,15 @@ const Profile: React.FC<Props> = props => {
     if (relationship.following) {
       return (
         <Button appearance="primary" onClick={unfollow}>
-          Unfollow
+          {t('detail.profile.unfollow')}
         </Button>
       )
     } else if (relationship.requested) {
-      return <Button appearance="primary">Follow Requested</Button>
+      return <Button appearance="primary">{t('detail.profile.follow_requested')}</Button>
     } else {
       return (
         <Button appearance="primary" onClick={follow}>
-          Follow
+          {t('detail.profile.follow')}
         </Button>
       )
     }
@@ -108,7 +111,7 @@ const Profile: React.FC<Props> = props => {
       setRelationship(res.data)
     } catch (err) {
       console.error(err)
-      toaster.push(alert('error', 'Failed to follow'), { placement: 'topEnd' })
+      toaster.push(alert('error', t('alert.failed_follow')), { placement: 'topEnd' })
     }
   }, [client, account, user])
 
@@ -118,7 +121,7 @@ const Profile: React.FC<Props> = props => {
       setRelationship(res.data)
     } catch (err) {
       console.error(err)
-      toaster.push(alert('error', 'Failed to unfollow'), { placement: 'topEnd' })
+      toaster.push(alert('error', t('alert.failed_unfollow')), { placement: 'topEnd' })
     }
   }, [client, account, user])
 
@@ -182,7 +185,7 @@ const Profile: React.FC<Props> = props => {
               borderRadius: '4px'
             }}
           >
-            FOLLOWS YOU
+            {t('detail.profile.follows_you')}
           </div>
         )}
         <div className="profile-header-image" style={{ width: '100%', backgroundColor: 'var(--rs-body)' }}>
@@ -255,13 +258,13 @@ const Profile: React.FC<Props> = props => {
         </div>
         <Nav appearance="subtle" activeKey={activeNav} onSelect={changeNav} justified>
           <Nav.Item eventKey="posts" style={{ fontWeight: 'bold', padding: '6px 8px' }}>
-            {precision(user.statuses_count)} Posts
+            {precision(user.statuses_count)} {t('detail.profile.posts')}
           </Nav.Item>
           <Nav.Item eventKey="following" style={{ fontWeight: 'bold', padding: '6px 8px' }}>
-            {precision(user.following_count)} Following
+            {precision(user.following_count)} {t('detail.profile.following')}
           </Nav.Item>
           <Nav.Item eventKey="followers" style={{ fontWeight: 'bold', padding: '6px 8px' }}>
-            {precision(user.followers_count)} Followers
+            {precision(user.followers_count)} {t('detail.profile.followers')}
           </Nav.Item>
         </Nav>
         {timeline()}
@@ -285,6 +288,8 @@ const profileMenu = (
   { className, left, top, onClose, client, user, relationship, onChange }: ProfileMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
+  const { t } = useTranslation()
+
   const handleSelect = async (eventKey: string) => {
     onClose()
     switch (eventKey) {
@@ -315,15 +320,15 @@ const profileMenu = (
   return (
     <Popover ref={ref} className={className} style={{ left, top, padding: '0 4px' }}>
       <Dropdown.Menu onSelect={handleSelect}>
-        <Dropdown.Item eventKey="browser">Open original page</Dropdown.Item>
+        <Dropdown.Item eventKey="browser">{t('detail.profile.open_page')}</Dropdown.Item>
         {relationship && (
           <>
             <Dropdown.Separator />
             <Dropdown.Item eventKey="mute">
-              {relationship.muting ? 'Unmute' : 'Mute'} @{user.username}
+              {relationship.muting ? t('detail.profile.unmute') : t('detail.profile.mute')} @{user.username}
             </Dropdown.Item>
             <Dropdown.Item eventKey="block">
-              {relationship.blocking ? 'Unblock' : 'Block'} @{user.username}
+              {relationship.blocking ? t('detail.profile.unblock') : t('detail.profile.block')} @{user.username}
             </Dropdown.Item>
           </>
         )}

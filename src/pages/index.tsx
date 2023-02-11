@@ -21,8 +21,11 @@ import Thirdparty from 'src/components/settings/Thirdparty'
 import { Settings } from 'src/entities/settings'
 import SettingsPage from 'src/components/settings/Settings'
 import Detail from 'src/components/detail/Detail'
+import { useTranslation } from 'react-i18next'
 
 function App() {
+  const { t } = useTranslation()
+
   const [servers, setServers] = useState<Array<Server>>([])
   const [timelines, setTimelines] = useState<Array<[Timeline, Server]>>([])
   const [unreads, setUnreads] = useState<Array<Unread>>([])
@@ -43,7 +46,7 @@ function App() {
       if (res.length === 0) {
         console.debug('There is no server')
         dispatch({ target: 'newServer', value: true })
-        toaster.push(alert('info', 'There is no server, so please add it at first.'), { placement: 'topCenter' })
+        toaster.push(alert('info', t('alert.no_server')), { placement: 'topCenter' })
       } else {
         setServers(res)
       }
@@ -81,7 +84,7 @@ function App() {
         permissionGranted = permission === 'granted'
       }
       if (permissionGranted) {
-        const [title, body] = generateNotification(ev.payload.notification)
+        const [title, body] = generateNotification(ev.payload.notification, t)
         if (title.length > 0) {
           sendNotification({ title, body })
         }
@@ -101,7 +104,7 @@ function App() {
     if (servers.find(s => s.account_id !== null)) {
       setComposeOpened(previous => !previous)
     } else {
-      toaster.push(alert('info', 'You need to authorize a server'), { placement: 'topStart' })
+      toaster.push(alert('info', t('alert.need_auth')), { placement: 'topStart' })
     }
   }
 

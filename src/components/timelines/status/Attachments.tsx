@@ -4,6 +4,7 @@ import { Button, IconButton, Tag } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsCameraVideo, BsVolumeUp, BsEyeSlash } from 'react-icons/bs'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   attachments: Array<Entity.Attachment>
@@ -30,6 +31,8 @@ type AttachmentProps = {
 }
 
 const Attachment: React.FC<AttachmentProps> = props => {
+  const { t } = useTranslation()
+
   const { media } = props
   const [sensitive, setSensitive] = useState<boolean>(props.sensitive)
 
@@ -40,7 +43,7 @@ const Attachment: React.FC<AttachmentProps> = props => {
   if (sensitive) {
     return (
       <Button appearance="default" block onClick={changeSensitive}>
-        Media hidden
+        {t('timeline.status.media_hidden')}
       </Button>
     )
   }
