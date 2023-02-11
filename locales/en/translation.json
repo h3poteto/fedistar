@@ -33,7 +33,7 @@
       "settings": {
         "title": "Timeline settings",
         "description": "You can move and remove the timeline.",
-        "ok": "Ok"
+        "ok": "OK"
       },
       "new": {
         "title": "Add a timeline",
