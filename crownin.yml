@@ -1,0 +1,11 @@
+files:
+  - source: /locales/en/translation.json
+    translation: /locales/%locale%/translation.json
+    languages_mapping:
+      locale:
+        ja: ja
+  - source: /src-tauri/locales/en.yml
+    translation: /src-tauri/locales/%locale%.yml
+    languages_mapping:
+      locale:
+        ja: ja
