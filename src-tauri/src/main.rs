@@ -541,6 +541,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let sqlite_pool = block_on(database::create_sqlite_pool(&database_url))?;
     block_on(database::migrate_database(&sqlite_pool))?;
 
+    let res = settings::read_settings(&settings_path)?;
+    rust_i18n::set_locale(res.appearance.language.to_string().as_str());
+
     tauri::Builder::default()
         .menu(menu::menu())
         .invoke_handler(tauri::generate_handler![
