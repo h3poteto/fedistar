@@ -1,5 +1,5 @@
 app_menu:
-  file: File
-  edit: Edit
-  help: Help
-  window: Window
+  file: ファイル
+  edit: 編集
+  help: ヘルプ
+  window: ウィンドウ
