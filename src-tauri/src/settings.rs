@@ -10,6 +10,15 @@ pub struct Settings {
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct Appearance {
     pub font_size: u32,
+    pub language: LocaleType,
+}
+
+#[derive(Debug, Serialize, Deserialize, sqlx::Type, Clone, PartialEq, Eq)]
+#[sqlx(rename = "locale_type", rename_all = "lowercase")]
+#[serde(rename_all = "lowercase")]
+pub enum LocaleType {
+    EN,
+    JA,
 }
 
 pub(crate) fn read_settings(filepath: &PathBuf) -> Result<Settings, String> {
@@ -17,7 +26,8 @@ pub(crate) fn read_settings(filepath: &PathBuf) -> Result<Settings, String> {
         // Default settings
         return Ok(Settings {
             appearance: Appearance {
-                font_size: 14
+                font_size: 14,
+                language: LocaleType::EN,
             }
         })
     };

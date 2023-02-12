@@ -1,5 +1,6 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button, Checkbox, CheckboxGroup, Progress, Radio, RadioGroup } from 'rsuite'
 import Time from 'src/components/utils/Time'
 
@@ -22,6 +23,7 @@ const Poll: React.FC<Props> = props => {
 }
 
 const SimplePoll: React.FC<Props> = props => {
+  const { t } = useTranslation()
   const [pollRadio, setPollRadio] = useState<number | null>(null)
 
   const post = async () => {
@@ -41,15 +43,16 @@ const SimplePoll: React.FC<Props> = props => {
         ))}
       </RadioGroup>
       <Button appearance="ghost" size="sm" style={{ marginLeft: '10px' }} onClick={post}>
-        Vote
+        {t('timeline.poll.vote')}
       </Button>
-      <span style={{ paddingLeft: '8px' }}>{props.poll.votes_count} people</span>
-      <Time time={props.poll.expires_at} style={{ paddingLeft: '8px' }} /> left
+      <span style={{ paddingLeft: '8px' }}>{t('timeline.poll.people', { count: props.poll.votes_count })}</span>
+      <Time time={props.poll.expires_at} style={{ paddingLeft: '8px' }} /> {t('timeline.poll.left')}
     </>
   )
 }
 
 const MultiplePoll: React.FC<Props> = props => {
+  const { t } = useTranslation()
   const [pollCheck, setPollCheck] = useState<Array<number>>([])
 
   const post = async () => {
@@ -69,15 +72,17 @@ const MultiplePoll: React.FC<Props> = props => {
         ))}
       </CheckboxGroup>
       <Button appearance="ghost" size="sm" style={{ marginLeft: '10px' }} onClick={post}>
-        Vote
+        {t('timeline.poll.vote')}
       </Button>
-      <span style={{ paddingLeft: '8px' }}>{props.poll.votes_count} people</span>
-      <Time time={props.poll.expires_at} style={{ paddingLeft: '8px' }} /> left
+      <span style={{ paddingLeft: '8px' }}>{t('timeline.poll.people', { count: props.poll.votes_count })}</span>
+      <Time time={props.poll.expires_at} style={{ paddingLeft: '8px' }} /> {t('timeline.poll.left')}
     </>
   )
 }
 
 const PollResult: React.FC<Props> = props => {
+  const { t } = useTranslation()
+
   return (
     <>
       {props.poll.options.map((option, index) => (
@@ -87,14 +92,14 @@ const PollResult: React.FC<Props> = props => {
         </div>
       ))}
       <Button appearance="subtle" size="sm" onClick={props.pollUpdated}>
-        Refresh
+        {t('timeline.poll.refresh')}
       </Button>
-      <span style={{ paddingLeft: '8px' }}>{props.poll.votes_count} people</span>
+      <span style={{ paddingLeft: '8px' }}>{t('timeline.poll.people', { count: props.poll.votes_count })}</span>
       {props.poll.expired ? (
-        <span style={{ paddingLeft: '8px' }}>Closed</span>
+        <span style={{ paddingLeft: '8px' }}>{t('timeline.poll.closed')}</span>
       ) : (
         <>
-          <Time time={props.poll.expires_at} style={{ paddingLeft: '8px' }} /> left
+          <Time time={props.poll.expires_at} style={{ paddingLeft: '8px' }} /> {t('timeline.poll.left')}
         </>
       )}
     </>
