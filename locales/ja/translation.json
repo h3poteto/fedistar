@@ -77,7 +77,8 @@
       "title": "設定",
       "appearance": {
         "title": "外観",
-        "font_size": "フォントサイズ"
+        "font_size": "フォントサイズ",
+        "language": "言語"
       },
       "save": "保存",
       "close": "閉じる",
@@ -86,6 +87,9 @@
           "type": "有効な数値を入力してください",
           "range": "{{from}} から {{to}} までの数字を入力してください",
           "required": "フォントサイズは必須です"
+        },
+        "language": {
+          "required": "言語は必須項目です"
         }
       }
     },
@@ -176,6 +180,13 @@
       "show_more": "もっと見る",
       "show_less": "隠す",
       "media_hidden": "非表示のメディア"
+    },
+    "poll": {
+      "vote": "投票",
+      "refresh": "更新",
+      "people": "{{count}} 人",
+      "closed": "終了",
+      "left": "残り"
     },
     "new": "タイムラインを追加",
     "home": "ホーム",
