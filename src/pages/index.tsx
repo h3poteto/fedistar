@@ -3,6 +3,7 @@ import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
 import { Container, Content, useToaster, Animation } from 'rsuite'
 import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/api/notification'
+import dayjs from 'dayjs'
 
 import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
@@ -99,6 +100,7 @@ function App() {
         fontSize: res.appearance.font_size
       })
       i18n.changeLanguage(res.appearance.language)
+      dayjs.locale(res.appearance.language)
     })
   }
 
