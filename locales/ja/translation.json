@@ -33,7 +33,7 @@
       "settings": {
         "title": "タイムラインの設定",
         "description": "タイムラインを移動および削除できます。",
-        "ok": "OK"
+        "ok": "閉じる"
       },
       "new": {
         "title": "タイムラインを追加",
@@ -78,7 +78,7 @@
       "appearance": {
         "title": "外観",
         "font_size": "フォントサイズ",
-        "language": "Language"
+        "language": "言語"
       },
       "save": "保存",
       "close": "閉じる",
@@ -89,7 +89,7 @@
           "required": "フォントサイズは必須です"
         },
         "language": {
-          "required": "Language is required"
+          "required": "言語は必須項目です"
         }
       }
     },
@@ -182,11 +182,11 @@
       "media_hidden": "非表示のメディア"
     },
     "poll": {
-      "vote": "Vote",
-      "refresh": "Refresh",
-      "people": "{{count}} people",
-      "closed": "Closed",
-      "left": "left"
+      "vote": "投票",
+      "refresh": "更新",
+      "people": "{{count}} 人",
+      "closed": "終了",
+      "left": "残り"
     },
     "new": "タイムラインを追加",
     "home": "ホーム",
