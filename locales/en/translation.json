@@ -77,7 +77,8 @@
       "title": "Settings",
       "appearance": {
         "title": "Appearance",
-        "font_size": "Font size"
+        "font_size": "Font size",
+        "language": "Language"
       },
       "save": "Save",
       "close": "Close",
@@ -86,6 +87,9 @@
           "type": "Please enter a valid number",
           "range": "Please enter a number from {{from}} to {{to}}",
           "required": "Font size is required"
+        },
+        "language": {
+          "required": "Language is required"
         }
       }
     },
@@ -176,6 +180,13 @@
       "show_more": "Show more",
       "show_less": "Show less",
       "media_hidden": "Media hidden"
+    },
+    "poll": {
+      "vote": "Vote",
+      "refresh": "Refresh",
+      "people": "{{count}} people",
+      "closed": "Closed",
+      "left": "left"
     },
     "new": "Add a new timeline",
     "home": "Home",

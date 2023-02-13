@@ -26,4 +26,6 @@ i18n
     }
   })
 
+export type localeType = 'en' | 'ja'
+
 export default i18n

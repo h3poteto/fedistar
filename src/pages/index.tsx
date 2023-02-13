@@ -24,7 +24,7 @@ import Detail from 'src/components/detail/Detail'
 import { useTranslation } from 'react-i18next'
 
 function App() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   const [servers, setServers] = useState<Array<Server>>([])
   const [timelines, setTimelines] = useState<Array<[Timeline, Server]>>([])
@@ -42,6 +42,7 @@ function App() {
   }
 
   useEffect(() => {
+    loadAppearance()
     invoke<Array<Server>>('list_servers').then(res => {
       if (res.length === 0) {
         console.debug('There is no server')
@@ -97,6 +98,7 @@ function App() {
       setStyle({
         fontSize: res.appearance.font_size
       })
+      i18n.changeLanguage(res.appearance.language)
     })
   }
 
