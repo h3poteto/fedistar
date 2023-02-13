@@ -1,4 +1,5 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
 import { HTMLAttributes } from 'react'
 
 type Props = {
@@ -7,14 +8,15 @@ type Props = {
 } & HTMLAttributes<HTMLElement>
 
 const parseDatetime = (timestamp: string) => {
-  return moment(timestamp).fromNow(true)
+  dayjs.extend(relativeTime)
+  return dayjs(timestamp).fromNow(true)
 }
 
 const Time: React.FC<Props> = props => {
   return (
     <time
-      dateTime={moment(props.time).format('YYYY-MM-DD HH:mm:ss')}
-      title={moment(props.time).format('LLLL')}
+      dateTime={dayjs(props.time).format('YYYY-MM-DD HH:mm:ss')}
+      title={dayjs(props.time).format('MM/DD HH:mm:ss')}
       style={props.style}
       onClick={props.onClick}
     >
