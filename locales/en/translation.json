@@ -117,11 +117,20 @@
       "sensitive": "Sensitive",
       "not_sensitive": "Not sensitive"
     },
-    "cancel": "Cancel",
-    "post": "Post",
     "poll": {
-      "add_choice": "Add a choice"
-    }
+      "add_choice": "Add a choice",
+      "multiple": "multiple",
+      "simple": "simple",
+      "5min": "5 minutes",
+      "30min": "30 minutes",
+      "1h": "1 hour",
+      "6h": "6 hours",
+      "1d": "1 day",
+      "3d": "3 days",
+      "7d": "7 days"
+    },
+    "cancel": "Cancel",
+    "post": "Post"
   },
   "timeline": {
     "reload": "Reload",

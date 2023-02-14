@@ -296,7 +296,7 @@ const Status: React.FC<Props> = props => {
     <Form fluid model={model} ref={formRef} onChange={setFormValue} onCheck={setFormError} formValue={formValue}>
       {cw && (
         <Form.Group controlId="spoiler">
-          <Form.Control name="spoiler" placeholder={t('compose.spiler.placeholder')} />
+          <Form.Control name="spoiler" placeholder={t('compose.spoiler.placeholder')} />
         </Form.Group>
       )}
 
@@ -403,21 +403,21 @@ const defaultPoll = () => ({
   multiple: false
 })
 
-const expiresList = [
-  { label: '5 minutes', value: 300 },
-  { label: '30 minutes', value: 1800 },
-  { label: '1 hour', value: 3600 },
-  { label: '6 hour', value: 21600 },
-  { label: '1 day', value: 86400 },
-  { label: '3 days', value: 259200 },
-  { label: '7 days', value: 604800 }
-]
-
 const PollInputControl: FormControlProps<Poll, any> = ({ value, onChange, fieldError }) => {
   const { t } = useTranslation()
 
   const [poll, setPoll] = useState<Poll>(value)
   const errors = fieldError ? fieldError.object : {}
+
+  const expiresList = [
+    { label: t('compose.poll.5min'), value: 300 },
+    { label: t('compose.poll.30min'), value: 1800 },
+    { label: t('compose.poll.1h'), value: 3600 },
+    { label: t('compose.poll.6h'), value: 21600 },
+    { label: t('compose.poll.1d'), value: 86400 },
+    { label: t('compose.poll.3d'), value: 259200 },
+    { label: t('compose.poll.7d'), value: 604800 }
+  ]
 
   const handleChangePoll = (nextPoll: Poll) => {
     setPoll(nextPoll)
@@ -475,8 +475,8 @@ const PollInputControl: FormControlProps<Poll, any> = ({ value, onChange, fieldE
         <FlexboxGrid align="middle" justify="space-between">
           <FlexboxGrid.Item>
             <Toggle
-              checkedChildren="multiple"
-              unCheckedChildren="simple"
+              checkedChildren={t('compose.poll.multiple')}
+              unCheckedChildren={t('compose.poll.simple')}
               onChange={value =>
                 setPoll(current =>
                   Object.assign({}, current, {
