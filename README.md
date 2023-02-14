@@ -59,6 +59,12 @@ Please be careful when using.
     - [x] Video
     - [x] Audio
 
+## Translation
+
+If you can speak multiple languages, could you please help with translation in [Crowdin](https://crowdin.com/project/fedistar)?
+
+Or if you want add new language, please create an issue. I will add it.
+
 ## Development
 ### Prereqisites
 At first, install system dependencies.
