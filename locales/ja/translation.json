@@ -119,15 +119,15 @@
     },
     "poll": {
       "add_choice": "選択肢を追加",
-      "multiple": "multiple",
-      "simple": "simple",
-      "5min": "5 minutes",
-      "30min": "30 minutes",
-      "1h": "1 hour",
-      "6h": "6 hours",
-      "1d": "1 day",
-      "3d": "3 days",
-      "7d": "7 days"
+      "multiple": "複数選択",
+      "simple": "単一選択",
+      "5min": "5分",
+      "30min": "30分",
+      "1h": "1時間",
+      "6h": "6時間",
+      "1d": "1日",
+      "3d": "3日",
+      "7d": "7日"
     },
     "cancel": "キャンセル",
     "post": "投稿"
@@ -184,10 +184,10 @@
       "emoji_reaction": "絵文字リアクション",
       "bookmark": "ブックマーク",
       "detail": {
-        "title": "Detail",
-        "browser": "Open original page",
-        "edit": "Edit",
-        "delete": "Delete"
+        "title": "詳細",
+        "browser": "元のページを開く",
+        "edit": "編集",
+        "delete": "削除"
       }
     },
     "status": {
