@@ -20,6 +20,7 @@ type Props = {
   status: Entity.Status
   client: MegalodonInterface
   setShowReply: Dispatch<SetStateAction<boolean>>
+  setShowEdit: Dispatch<SetStateAction<boolean>>
   updateStatus: (status: Entity.Status) => void
 }
 
@@ -176,6 +177,9 @@ const Actions: React.FC<Props> = props => {
                   openBrowser: () => {
                     open(status.url)
                   },
+                  openEdit: () => {
+                    props.setShowEdit(current => !current)
+                  },
                   onDelete: () => {
                     // After after deleted, streaming will receive a delete event.
                     // So we don't need update parent timelines, the delete event will be handled.
@@ -230,6 +234,7 @@ type DetailMenuProps = {
   own: boolean
   openBrowser: () => void
   onDelete: () => void
+  openEdit: () => void
   onClose: (delay?: number) => NodeJS.Timeout | void
 }
 
@@ -241,6 +246,9 @@ const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>)
     switch (eventKey) {
       case 'browser':
         props.openBrowser()
+        return
+      case 'edit':
+        props.openEdit()
         return
       case 'delete':
         props.onDelete()
