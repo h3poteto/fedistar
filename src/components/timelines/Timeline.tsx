@@ -25,7 +25,14 @@ import { Server } from 'src/entities/server'
 import { Timeline, TimelineKind } from 'src/entities/timeline'
 import Status from './status/Status'
 import FailoverImg from 'src/utils/failoverImg'
-import { DeleteHomeStatusPayload, DeleteTimelineStatusPayload, ReceiveHomeStatusPayload, ReceiveTimelineStatusPayload } from 'src/payload'
+import {
+  DeleteHomeStatusPayload,
+  DeleteTimelineStatusPayload,
+  ReceiveHomeStatusPayload,
+  ReceiveHomeStatusUpdatePayload,
+  ReceiveTimelineStatusPayload,
+  ReceiveTimelineStatusUpdatePayload
+} from 'src/payload'
 import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from 'src/defaults'
 import alert from 'src/components/utils/alert'
 import { useRouter } from 'next/router'
@@ -104,6 +111,15 @@ const Timeline: React.FC<Props> = props => {
         setStatuses(last => appendStatus(last, ev.payload.status))
       })
 
+      listen<ReceiveHomeStatusUpdatePayload>('receive-home-status-update', ev => {
+        if (ev.payload.server_id !== props.server.id) {
+          return
+        }
+
+        setUnreadStatuses(last => updateStatus(last, ev.payload.status))
+        setStatuses(last => updateStatus(last, ev.payload.status))
+      })
+
       listen<DeleteHomeStatusPayload>('delete-home-status', ev => {
         if (ev.payload.server_id !== props.server.id) {
           return
@@ -123,6 +139,15 @@ const Timeline: React.FC<Props> = props => {
         }
 
         setStatuses(last => appendStatus(last, ev.payload.status))
+      })
+
+      listen<ReceiveTimelineStatusUpdatePayload>('receive-timeline-status-update', ev => {
+        if (ev.payload.timeline_id !== props.timeline.id) {
+          return
+        }
+
+        setUnreadStatuses(last => updateStatus(last, ev.payload.status))
+        setStatuses(last => updateStatus(last, ev.payload.status))
       })
 
       listen<DeleteTimelineStatusPayload>('delete-timeline-status', ev => {
@@ -228,8 +253,8 @@ const Timeline: React.FC<Props> = props => {
 
   const closeOptionPopover = () => triggerRef?.current.close()
 
-  const updateStatus = (status: Entity.Status) => {
-    const renew = statuses.map(s => {
+  const updateStatus = (current: Array<Entity.Status>, status: Entity.Status) => {
+    const renew = current.map(s => {
       if (s.id === status.id) {
         return status
       } else if (s.reblog && s.reblog.id === status.id) {
@@ -242,7 +267,7 @@ const Timeline: React.FC<Props> = props => {
         return s
       }
     })
-    setStatuses(renew)
+    return renew
   }
 
   const setStatusDetail = (statusId: string, serverId: number, accountId?: number) => {
@@ -402,7 +427,7 @@ const Timeline: React.FC<Props> = props => {
                       client={client}
                       server={props.server}
                       account={account}
-                      updateStatus={updateStatus}
+                      updateStatus={status => setStatuses(current => updateStatus(current, status))}
                       openMedia={props.openMedia}
                       setReplyOpened={opened => (replyOpened.current = opened)}
                       setStatusDetail={setStatusDetail}

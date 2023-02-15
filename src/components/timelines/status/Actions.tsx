@@ -240,6 +240,7 @@ type DetailMenuProps = {
 
 const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>) => {
   const { t } = useTranslation()
+  const { left, top, className } = props
 
   const handleSelect = async (eventKey: string) => {
     props.onClose()
@@ -257,7 +258,7 @@ const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>)
   }
 
   return (
-    <Popover ref={ref} {...props} style={{ padding: 0 }}>
+    <Popover className={className} ref={ref} style={{ left, top, padding: 0 }}>
       <Dropdown.Menu onSelect={handleSelect}>
         <Dropdown.Item eventKey="browser">{t('timeline.actions.detail.browser')}</Dropdown.Item>
         {props.own && <Dropdown.Item eventKey="edit">{t('timeline.actions.detail.edit')}</Dropdown.Item>}
