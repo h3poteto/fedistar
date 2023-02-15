@@ -13,6 +13,12 @@ pub struct ReceiveHomeStatusPayload {
 }
 
 #[derive(Clone, Serialize)]
+pub struct ReceiveHomeStatusUpdatePayload {
+    server_id: i64,
+    status: megalodon::entities::Status,
+}
+
+#[derive(Clone, Serialize)]
 pub struct DeleteHomeStatusPayload {
     server_id: i64,
     status_id: String,
@@ -26,6 +32,12 @@ pub struct ReceiveNotificationPayload {
 
 #[derive(Clone, Serialize)]
 pub struct ReceiveTimelineStatusPayload {
+    timeline_id: i64,
+    status: megalodon::entities::Status,
+}
+
+#[derive(Clone, Serialize)]
+pub struct ReceiveTimelineStatusUpdatePayload {
     timeline_id: i64,
     status: megalodon::entities::Status,
 }
@@ -94,6 +106,18 @@ pub async fn start_user(
                     },
                 )
                 .expect("Failed to send receive-notification event");
+        }
+        Message::StatusUpdate(mes) => {
+            log::debug!("receive status updated");
+            app_handle
+                .emit_all(
+                    "receive-home-status-update",
+                    ReceiveHomeStatusUpdatePayload {
+                        server_id,
+                        status: mes,
+                    },
+                )
+                .expect("Failed to send receive-home-status-update event");
         }
         Message::Delete(status_id) => {
             log::debug!("receive delete");
@@ -183,6 +207,18 @@ pub async fn start(
                     },
                 )
                 .expect("Failed to receive-timeline-status event");
+        }
+        Message::StatusUpdate(mes) => {
+            log::debug!("receive status update");
+            app_handle
+                .emit_all(
+                    "receive-timeline-status-update",
+                    ReceiveTimelineStatusUpdatePayload {
+                        timeline_id,
+                        status: mes,
+                    },
+                )
+                .expect("Failed to receive-timeline-status-update event");
         }
         Message::Delete(status_id) => {
             log::debug!("receive delete");
