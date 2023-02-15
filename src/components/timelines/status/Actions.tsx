@@ -1,4 +1,5 @@
-import { FlexboxGrid, useToaster, Popover, Whisper, IconButton } from 'rsuite'
+import { open } from '@tauri-apps/api/shell'
+import { FlexboxGrid, useToaster, Popover, Whisper, IconButton, Dropdown } from 'rsuite'
 import { BsChat, BsEmojiSmile, BsThreeDots, BsStar, BsStarFill, BsBookmark, BsFillBookmarkFill, BsArrowRepeat } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 import { Dispatch, SetStateAction, ReactElement, useState, forwardRef, useRef } from 'react'
@@ -10,10 +11,12 @@ import alert from 'src/components/utils/alert'
 import { Server } from 'src/entities/server'
 import { data } from 'src/utils/emojiData'
 import { useTranslation } from 'react-i18next'
+import { Account } from 'src/entities/account'
 
 type Props = {
   disabled: boolean
   server: Server
+  account: Account | null
   status: Entity.Status
   client: MegalodonInterface
   setShowReply: Dispatch<SetStateAction<boolean>>
@@ -159,7 +162,37 @@ const Actions: React.FC<Props> = props => {
           </Whisper>
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
-          <ActionButton icon={<Icon as={BsThreeDots} />} disabled title={t('timeline.actions.detail')} />
+          <Whisper
+            trigger="click"
+            placement="bottom"
+            speaker={({ className, left, top, onClose }, ref) =>
+              detailMenu(
+                {
+                  className,
+                  left,
+                  top,
+                  onClose,
+                  own: props.account && props.account.account_id === props.status.account.id,
+                  openBrowser: () => {
+                    open(status.url)
+                  },
+                  onDelete: () => {
+                    // After after deleted, streaming will receive a delete event.
+                    // So we don't need update parent timelines, the delete event will be handled.
+                    client.deleteStatus(props.status.id)
+                  }
+                },
+                ref
+              )
+            }
+          >
+            <IconButton
+              appearance="link"
+              icon={<Icon as={BsThreeDots} />}
+              disabled={props.disabled}
+              title={t('timeline.actions.detail.title')}
+            />
+          </Whisper>
         </FlexboxGrid.Item>
       </FlexboxGrid>
     </div>
@@ -188,6 +221,42 @@ const bookmarkIcon = (status: Entity.Status): ReactElement => {
   } else {
     return <Icon as={BsBookmark} />
   }
+}
+
+type DetailMenuProps = {
+  className: string
+  left?: number
+  top?: number
+  own: boolean
+  openBrowser: () => void
+  onDelete: () => void
+  onClose: (delay?: number) => NodeJS.Timeout | void
+}
+
+const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>) => {
+  const { t } = useTranslation()
+
+  const handleSelect = async (eventKey: string) => {
+    props.onClose()
+    switch (eventKey) {
+      case 'browser':
+        props.openBrowser()
+        return
+      case 'delete':
+        props.onDelete()
+        return
+    }
+  }
+
+  return (
+    <Popover ref={ref} {...props} style={{ padding: 0 }}>
+      <Dropdown.Menu onSelect={handleSelect}>
+        <Dropdown.Item eventKey="browser">{t('timeline.actions.detail.browser')}</Dropdown.Item>
+        {props.own && <Dropdown.Item eventKey="edit">{t('timeline.actions.detail.edit')}</Dropdown.Item>}
+        {props.own && <Dropdown.Item eventKey="delete">{t('timeline.actions.detail.delete')}</Dropdown.Item>}
+      </Dropdown.Menu>
+    </Popover>
+  )
 }
 
 export default Actions

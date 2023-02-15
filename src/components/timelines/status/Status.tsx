@@ -120,6 +120,7 @@ const Status: React.FC<Props> = props => {
           <Actions
             disabled={props.server.account_id === null}
             server={props.server}
+            account={props.account}
             status={status}
             client={client}
             setShowReply={setShowReply}
