@@ -1,5 +1,7 @@
 import dayjs from 'dayjs'
+import 'dayjs/locale/ja'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import updateLocale from 'dayjs/plugin/updateLocale'
 import { HTMLAttributes } from 'react'
 
 type Props = {
@@ -8,6 +10,24 @@ type Props = {
 } & HTMLAttributes<HTMLElement>
 
 const parseDatetime = (timestamp: string) => {
+  dayjs.extend(updateLocale)
+  dayjs.updateLocale('en', {
+    relativeTime: {
+      future: 'in %s',
+      past: '%s ago',
+      s: 'now',
+      m: '%ds',
+      mm: '%dm',
+      h: '%dm',
+      hh: '%dh',
+      d: '%dh',
+      dd: '%dd',
+      M: 'a month',
+      MM: '%d months',
+      y: 'a year',
+      yy: '%d years'
+    }
+  })
   dayjs.extend(relativeTime)
   return dayjs(timestamp).fromNow(true)
 }
