@@ -34,6 +34,7 @@ type Props = {
   account: Account
   client: MegalodonInterface
   in_reply_to?: Entity.Status
+  edit_target?: Entity.Status
   onClose?: () => void
 }
 
@@ -119,6 +120,29 @@ const Status: React.FC<Props> = props => {
     }
   }, [props.in_reply_to, props.account])
 
+  useEffect(() => {
+    if (props.edit_target) {
+      const target = props.edit_target
+      let value = {
+        spoiler: target.spoiler_text,
+        status: target.plain_content ? target.plain_content : target.content
+      }
+
+      if (target.sensitive) {
+        value = Object.assign(value, {
+          nsfw: target.sensitive
+        })
+      }
+      if (target.media_attachments.length > 0) {
+        value = Object.assign(value, {
+          attachments: target.media_attachments
+        })
+      }
+      setFormValue(value)
+      setVisibility(target.visibility)
+    }
+  }, [props.edit_target])
+
   const handleSubmit = async () => {
     if (loading) {
       return
@@ -157,7 +181,16 @@ const Status: React.FC<Props> = props => {
             poll: formValue.poll
           })
         }
-        await props.client.postStatus(formValue.status, options)
+        if (props.edit_target) {
+          await props.client.editStatus(
+            props.edit_target.id,
+            Object.assign({}, options, {
+              status: formValue.status
+            })
+          )
+        } else {
+          await props.client.postStatus(formValue.status, options)
+        }
         clear()
       } catch {
         toast.push(alert('error', t('alert.failed_post')), { placement: 'topStart' })
@@ -370,7 +403,7 @@ const Status: React.FC<Props> = props => {
       </Form.Group>
       <Form.Group>
         <ButtonToolbar style={{ justifyContent: 'flex-end' }}>
-          {props.in_reply_to && <Button onClick={clear}>{t('compose.cancel')}</Button>}
+          {(props.in_reply_to || props.edit_target) && <Button onClick={clear}>{t('compose.cancel')}</Button>}
           <Button appearance="primary" type="submit" onClick={handleSubmit} loading={loading}>
             {t('compose.post')}
           </Button>

@@ -31,14 +31,23 @@ type Props = {
 const Status: React.FC<Props> = props => {
   const { client } = props
   const [showReply, setShowReply] = useState<boolean>(false)
+  const [showEdit, setShowEdit] = useState<boolean>(false)
 
   const status = originalStatus(props.status)
 
   useEffect(() => {
     if (props.setReplyOpened) {
-      props.setReplyOpened(showReply)
+      if (showReply) {
+        props.setReplyOpened(showReply)
+        setShowEdit(false)
+      } else if (showEdit) {
+        props.setReplyOpened(showEdit)
+        setShowReply(false)
+      } else {
+        props.setReplyOpened(false)
+      }
     }
-  }, [showReply])
+  }, [showReply, showEdit])
 
   const statusClicked: MouseEventHandler<HTMLDivElement> = e => {
     const url = findLink(e.target as HTMLElement, 'status-body')
@@ -124,6 +133,7 @@ const Status: React.FC<Props> = props => {
             status={status}
             client={client}
             setShowReply={setShowReply}
+            setShowEdit={setShowEdit}
             updateStatus={props.updateStatus}
           />
         </FlexboxGrid.Item>
@@ -131,6 +141,11 @@ const Status: React.FC<Props> = props => {
       {showReply && (
         <div style={{ padding: '8px 12px' }}>
           <Reply client={client} server={props.server} account={props.account} in_reply_to={status} onClose={() => setShowReply(false)} />
+        </div>
+      )}
+      {showEdit && (
+        <div style={{ padding: '8px 12px' }}>
+          <Reply client={client} server={props.server} account={props.account} edit_target={status} onClose={() => setShowEdit(false)} />
         </div>
       )}
     </div>
