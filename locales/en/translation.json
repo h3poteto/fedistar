@@ -183,7 +183,12 @@
       "favourite": "Favourite",
       "emoji_reaction": "Emoji reaction",
       "bookmark": "Bookmark",
-      "detail": "Detail"
+      "detail": {
+        "title": "Detail",
+        "browser": "Open original page",
+        "edit": "Edit",
+        "delete": "Delete"
+      }
     },
     "status": {
       "show_more": "Show more",
