@@ -123,25 +123,32 @@ const Status: React.FC<Props> = props => {
   useEffect(() => {
     if (props.edit_target) {
       const target = props.edit_target
-      let value = {
-        spoiler: target.spoiler_text,
-        status: target.plain_content ? target.plain_content : target.content
-      }
 
-      if (target.sensitive) {
-        value = Object.assign(value, {
-          nsfw: target.sensitive
-        })
+      const f = async () => {
+        // The content is wrapped with HTML, so we want plain content.
+        const res = await props.client.getStatusSource(target.id)
+
+        let value = {
+          spoiler: res.data.spoiler_text,
+          status: res.data.text
+        }
+
+        if (target.sensitive) {
+          value = Object.assign(value, {
+            nsfw: target.sensitive
+          })
+        }
+        if (target.media_attachments.length > 0) {
+          value = Object.assign(value, {
+            attachments: target.media_attachments
+          })
+        }
+        setFormValue(value)
+        setVisibility(target.visibility)
       }
-      if (target.media_attachments.length > 0) {
-        value = Object.assign(value, {
-          attachments: target.media_attachments
-        })
-      }
-      setFormValue(value)
-      setVisibility(target.visibility)
+      f()
     }
-  }, [props.edit_target])
+  }, [props.edit_target, props.client])
 
   const handleSubmit = async () => {
     if (loading) {
