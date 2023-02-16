@@ -3107,10 +3107,10 @@ makeerror@1.0.12:
   dependencies:
     tmpl "1.0.5"
 
-megalodon@^5.1.2:
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-5.1.2.tgz#38abbb16c88855483de6732153eef3ff18cb6370"
-  integrity sha512-LHN94o0+4z0+L1XmVLMT6couG4iMHsOHxsY43gUZx3pRadGVHqb7kaOapmNxCSIiv1pqV2K/IcvIuLI6653NGw==
+megalodon@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-5.2.0.tgz#6ed748bbb6398469fce496a4082d60c2b11ed796"
+  integrity sha512-xyuLgcV1hw58a6+tlSiiS0ZW2NAFIOOD302zyXUjscxrjGW/KQ2ue25gm/WECsgEzUJ1TtHJo42vsqUuw4NDNg==
   dependencies:
     "@types/oauth" "^0.9.0"
     "@types/ws" "^8.5.4"
