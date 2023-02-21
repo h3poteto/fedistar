@@ -28,6 +28,7 @@ import { CustomEmojiCategory } from 'src/entities/emoji'
 import alert from 'src/components/utils/alert'
 import { Account } from 'src/entities/account'
 import { useTranslation } from 'react-i18next'
+import AutoCompleteTextarea from './AutoCompleteTextarea'
 
 type Props = {
   server: Server
@@ -435,7 +436,7 @@ const privacyIcon = (visibility: 'public' | 'unlisted' | 'private' | 'direct') =
   }
 }
 
-const Textarea = forwardRef<HTMLTextAreaElement>((props, ref) => <Input {...props} as="textarea" ref={ref} />)
+const Textarea = forwardRef<HTMLTextAreaElement>(AutoCompleteTextarea)
 
 const defaultPoll = () => ({
   options: ['', ''],
