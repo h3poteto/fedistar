@@ -343,7 +343,14 @@ const Status: React.FC<Props> = props => {
 
       <Form.Group controlId="status" style={{ position: 'relative', marginBottom: '4px' }}>
         {/** @ts-ignore **/}
-        <Form.Control rows={5} name="status" accepter={Textarea} ref={statusRef} placeholder={t('compose.status.placeholder')} />
+        <Form.Control
+          rows={5}
+          name="status"
+          accepter={Textarea}
+          ref={statusRef}
+          placeholder={t('compose.status.placeholder')}
+          emojis={customEmojis}
+        />
         <Whisper trigger="click" placement="bottomStart" ref={emojiPickerRef} speaker={<EmojiPicker />}>
           <Button appearance="link" style={{ position: 'absolute', top: '4px', right: '8px', padding: 0 }}>
             <Icon as={BsEmojiLaughing} style={{ fontSize: '1.2em' }} />

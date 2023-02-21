@@ -3,8 +3,10 @@ import { Input, Popover, Whisper } from 'rsuite'
 import { PrependParameters } from 'rsuite/esm/@types/utils'
 import { init, SearchIndex } from 'emoji-mart'
 import { data } from 'src/utils/emojiData'
+import { CustomEmojiCategory } from 'src/entities/emoji'
 
 export type ArgProps = {
+  emojis: Array<CustomEmojiCategory>
   onChange: (value: string) => void
 }
 
@@ -32,7 +34,6 @@ const AutoCompleteTextarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, 
       closeSuggestion()
     } else {
       openSuggestion(start, token)
-      console.log(start, token)
     }
     setCurrentValue(value)
     props.onChange(value)
@@ -44,7 +45,7 @@ const AutoCompleteTextarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, 
   }
   const openSuggestion = async (start: number, token: string) => {
     switch (token.charAt(0)) {
-      case ':':
+      case ':': {
         const res = await SearchIndex.search(token.replace(':', ''))
         const emojis = res
           .map(emoji =>
@@ -54,10 +55,21 @@ const AutoCompleteTextarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, 
             }))
           )
           .flatMap(e => e)
-        setSuggestList(emojis)
+        const custom = props.emojis
+          .map(d => d.emojis.filter(e => e.name.includes(token.replace(':', ''))))
+          .flatMap(e => e)
+          .map(emoji =>
+            emoji.skins.map(skin => ({
+              name: skin.shortcodes,
+              icon: skin.src
+            }))
+          )
+          .flatMap(e => e)
+        setSuggestList([...emojis, ...custom])
         setStartIndex(start)
         setMatchWord(token)
         triggerRef.current.open()
+      }
     }
   }
 
@@ -110,6 +122,11 @@ const AutoCompleteList = forwardRef<HTMLDivElement, AutoCompleteListProps>((prop
             style={{ padding: '4px', backgroundColor: highlight === index ? 'var(--rs-primary-900)' : 'inherit' }}
           >
             {d.code && <span style={{ paddingRight: '4px' }}>{d.code}</span>}
+            {d.icon && (
+              <span style={{ paddingRight: '4px' }}>
+                <img src={d.icon} style={{ width: '1.2em' }} />
+              </span>
+            )}
             <span>{d.name}</span>
           </li>
         ))}
@@ -122,8 +139,8 @@ const AutoCompleteList = forwardRef<HTMLDivElement, AutoCompleteListProps>((prop
 const textAtCursorMatchesToken = (str: string, caretPosition: number): [number | null, string | null] => {
   let word: string
 
-  let left = str.slice(0, caretPosition).search(/\S+$/)
-  let right = str.slice(caretPosition).search(/\s/)
+  const left = str.slice(0, caretPosition).search(/\S+$/)
+  const right = str.slice(caretPosition).search(/\s/)
 
   if (right < 0) {
     word = str.slice(left)
