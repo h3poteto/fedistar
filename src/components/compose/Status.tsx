@@ -28,7 +28,7 @@ import { CustomEmojiCategory } from 'src/entities/emoji'
 import alert from 'src/components/utils/alert'
 import { Account } from 'src/entities/account'
 import { useTranslation } from 'react-i18next'
-import AutoCompleteTextarea from './AutoCompleteTextarea'
+import AutoCompleteTextarea, { ArgProps as AutoCompleteTextareaProps } from './AutoCompleteTextarea'
 
 type Props = {
   server: Server
@@ -103,7 +103,7 @@ const Status: React.FC<Props> = props => {
               id: e.name,
               name: e.name,
               keywords: [e.name],
-              skins: [{ src: e.image }]
+              skins: [{ src: e.image, shortcodes: `:${e.name}:` }]
             }))
         }
       ])
@@ -436,7 +436,7 @@ const privacyIcon = (visibility: 'public' | 'unlisted' | 'private' | 'direct') =
   }
 }
 
-const Textarea = forwardRef<HTMLTextAreaElement>(AutoCompleteTextarea)
+const Textarea = forwardRef<HTMLTextAreaElement, AutoCompleteTextareaProps>(AutoCompleteTextarea)
 
 const defaultPoll = () => ({
   options: ['', ''],
