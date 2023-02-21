@@ -77,21 +77,27 @@ const AutoCompleteTextarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, 
     if (item.code) {
       const str = `${currentValue.slice(0, startIndex - 1)}${item.code} ${currentValue.slice(startIndex + matchWord.length)}`
       props.onChange(str)
+    } else {
+      const str = `${currentValue.slice(0, startIndex - 1)}${item.name} ${currentValue.slice(startIndex + matchWord.length)}`
+      props.onChange(str)
     }
     closeSuggestion()
   }
 
   return (
-    <Whisper
-      placement="bottomStart"
-      speaker={({ className, left, top }, ref) => (
-        <AutoCompleteList className={className} left={left} top={top} data={suggestList} onSelect={insertItem} ref={ref} />
-      )}
-      ref={triggerRef}
-      trigger="none"
-    >
+    <>
       <Input {...props} as="textarea" ref={ref} onChange={onChange} />
-    </Whisper>
+      <Whisper
+        placement="bottomStart"
+        speaker={({ className, left, top }, ref) => (
+          <AutoCompleteList className={className} left={left} top={top} data={suggestList} onSelect={insertItem} ref={ref} />
+        )}
+        ref={triggerRef}
+        trigger="click"
+      >
+        <div></div>
+      </Whisper>
+    </>
   )
 }
 
