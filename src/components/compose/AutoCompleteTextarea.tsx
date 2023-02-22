@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, forwardRef } from 'react'
+import { useEffect, useRef, useState, forwardRef, KeyboardEventHandler, Dispatch, SetStateAction } from 'react'
 import { Input, Popover, Whisper } from 'rsuite'
 import { PrependParameters } from 'rsuite/esm/@types/utils'
 import { init, SearchIndex } from 'emoji-mart'
@@ -18,6 +18,8 @@ type SuggestItem = {
 
 const AutoCompleteTextarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, ArgProps> = (props, ref) => {
   const [suggestList, setSuggestList] = useState<Array<SuggestItem>>([])
+  const [opened, setOpened] = useState(false)
+  const [highlight, setHighlight] = useState(0)
   const [currentValue, setCurrentValue] = useState<string>('')
   const [startIndex, setStartIndex] = useState(0)
   const [matchWord, setMatchWord] = useState('')
@@ -41,6 +43,9 @@ const AutoCompleteTextarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, 
 
   const closeSuggestion = () => {
     setSuggestList([])
+    setHighlight(0)
+    setStartIndex(0)
+    setMatchWord('')
     triggerRef.current.close()
   }
   const openSuggestion = async (start: number, token: string) => {
@@ -84,16 +89,48 @@ const AutoCompleteTextarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, 
     closeSuggestion()
   }
 
+  const onKeyDown: KeyboardEventHandler<HTMLInputElement> = e => {
+    if (opened) {
+      if (e.code === 'ArrowDown') {
+        setHighlight(prev => (prev + 1 < suggestList.length ? prev + 1 : prev))
+        e.preventDefault()
+      }
+      if (e.code === 'ArrowUp') {
+        setHighlight(prev => (prev > 0 ? prev - 1 : 0))
+        e.preventDefault()
+      }
+      if (e.code === 'Enter') {
+        insertItem(suggestList[highlight])
+        e.preventDefault()
+      }
+      if (e.code === 'Escape') {
+        closeSuggestion()
+        e.preventDefault()
+      }
+    }
+  }
+
   return (
     <>
-      <Input {...props} as="textarea" ref={ref} onChange={onChange} />
+      <Input {...props} as="textarea" ref={ref} onChange={onChange} onKeyDown={onKeyDown} />
       <Whisper
         placement="bottomStart"
         speaker={({ className, left, top }, ref) => (
-          <AutoCompleteList className={className} left={left} top={top} data={suggestList} onSelect={insertItem} ref={ref} />
+          <AutoCompleteList
+            className={className}
+            left={left}
+            top={top}
+            data={suggestList}
+            onSelect={insertItem}
+            highlight={highlight}
+            setHighlight={setHighlight}
+            ref={ref}
+          />
         )}
         ref={triggerRef}
         trigger="click"
+        onOpen={() => setOpened(true)}
+        onClose={() => setOpened(false)}
       >
         <div></div>
       </Whisper>
@@ -107,11 +144,12 @@ type AutoCompleteListProps = {
   top?: number
   data: Array<SuggestItem>
   onSelect: (item: SuggestItem) => void
+  highlight: number
+  setHighlight: Dispatch<SetStateAction<number>>
 }
 
 const AutoCompleteList = forwardRef<HTMLDivElement, AutoCompleteListProps>((props, ref) => {
-  const { left, top, className, data } = props
-  const [highlight, setHighlight] = useState(0)
+  const { left, top, className, data, highlight } = props
 
   const select = (index: number) => {
     props.onSelect(data[index])
@@ -123,7 +161,7 @@ const AutoCompleteList = forwardRef<HTMLDivElement, AutoCompleteListProps>((prop
         {data.map((d, index) => (
           <li
             key={index}
-            onMouseOver={() => setHighlight(index)}
+            onMouseOver={() => props.setHighlight(index)}
             onClick={() => select(index)}
             style={{ padding: '4px', backgroundColor: highlight === index ? 'var(--rs-primary-900)' : 'inherit' }}
           >
