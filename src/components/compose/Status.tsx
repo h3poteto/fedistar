@@ -28,6 +28,7 @@ import { CustomEmojiCategory } from 'src/entities/emoji'
 import alert from 'src/components/utils/alert'
 import { Account } from 'src/entities/account'
 import { useTranslation } from 'react-i18next'
+import AutoCompleteTextarea, { ArgProps as AutoCompleteTextareaProps } from './AutoCompleteTextarea'
 
 type Props = {
   server: Server
@@ -102,7 +103,7 @@ const Status: React.FC<Props> = props => {
               id: e.name,
               name: e.name,
               keywords: [e.name],
-              skins: [{ src: e.image }]
+              skins: [{ src: e.image, shortcodes: `:${e.name}:` }]
             }))
         }
       ])
@@ -342,7 +343,14 @@ const Status: React.FC<Props> = props => {
 
       <Form.Group controlId="status" style={{ position: 'relative', marginBottom: '4px' }}>
         {/** @ts-ignore **/}
-        <Form.Control rows={5} name="status" accepter={Textarea} ref={statusRef} placeholder={t('compose.status.placeholder')} />
+        <Form.Control
+          rows={5}
+          name="status"
+          accepter={Textarea}
+          ref={statusRef}
+          placeholder={t('compose.status.placeholder')}
+          emojis={customEmojis}
+        />
         <Whisper trigger="click" placement="bottomStart" ref={emojiPickerRef} speaker={<EmojiPicker />}>
           <Button appearance="link" style={{ position: 'absolute', top: '4px', right: '8px', padding: 0 }}>
             <Icon as={BsEmojiLaughing} style={{ fontSize: '1.2em' }} />
@@ -435,7 +443,7 @@ const privacyIcon = (visibility: 'public' | 'unlisted' | 'private' | 'direct') =
   }
 }
 
-const Textarea = forwardRef<HTMLTextAreaElement>((props, ref) => <Input {...props} as="textarea" ref={ref} />)
+const Textarea = forwardRef<HTMLTextAreaElement, AutoCompleteTextareaProps>(AutoCompleteTextarea)
 
 const defaultPoll = () => ({
   options: ['', ''],

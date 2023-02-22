@@ -8,5 +8,5 @@ export type CustomEmoji = {
   id: string
   name: string
   keywords: Array<string>
-  skins: Array<{ src: string }>
+  skins: Array<{ src: string; shortcodes: string }>
 }
