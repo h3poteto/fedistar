@@ -90,6 +90,17 @@ const AutoCompleteTextarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, 
         triggerRef.current.open()
         return
       }
+      case '#': {
+        const res = await props.client.search(token, 'hashtags')
+        setSuggestList(
+          res.data.hashtags.map(tag => ({
+            name: `#${tag.name}`
+          }))
+        )
+        setStartIndex(start)
+        setMatchWord(token)
+        triggerRef.current.open()
+      }
     }
   }
 
