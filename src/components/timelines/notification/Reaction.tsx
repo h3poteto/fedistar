@@ -39,89 +39,96 @@ const actionIcon = (notification: Entity.Notification) => {
   }
 }
 
-const actionText = (notification: Entity.Notification) => {
+const actionText = (notification: Entity.Notification, setAccountDetail: (account: Entity.Account) => void) => {
   const { t } = useTranslation()
 
   switch (notification.type) {
     case 'favourite':
       return (
         <span
-          style={{ color: 'var(--rs-text-secondary)' }}
+          style={{ color: 'var(--rs-text-secondary)', cursor: 'pointer' }}
           dangerouslySetInnerHTML={{
             __html: emojify(
               t('timeline.notification.favourite.body', { user: notification.account.display_name }),
               notification.account.emojis
             )
           }}
+          onClick={() => setAccountDetail(notification.account)}
         />
       )
     case 'reblog':
       return (
         <span
-          style={{ color: 'var(--rs-text-secondary)' }}
+          style={{ color: 'var(--rs-text-secondary)', cursor: 'pointer' }}
           dangerouslySetInnerHTML={{
             __html: emojify(
               t('timeline.notification.reblog.body', { user: notification.account.display_name }),
               notification.account.emojis
             )
           }}
+          onClick={() => setAccountDetail(notification.account)}
         />
       )
     case 'poll_expired':
       return (
         <span
-          style={{ color: 'var(--rs-text-secondary)' }}
+          style={{ color: 'var(--rs-text-secondary)', cursor: 'pointer' }}
           dangerouslySetInnerHTML={{
             __html: emojify(
               t('timeline.notification.poll_expired.body', { user: notification.account.display_name }),
               notification.account.emojis
             )
           }}
+          onClick={() => setAccountDetail(notification.account)}
         />
       )
     case 'poll_vote':
       return (
         <span
-          style={{ color: 'var(--rs-text-secondary)' }}
+          style={{ color: 'var(--rs-text-secondary)', cursor: 'pointer' }}
           dangerouslySetInnerHTML={{
             __html: emojify(
               t('timeline.notification.poll_vote.body', { user: notification.account.display_name }),
               notification.account.emojis
             )
           }}
+          onClick={() => setAccountDetail(notification.account)}
         />
       )
     case 'quote':
       return (
         <span
-          style={{ color: 'var(--rs-text-secondary)' }}
+          style={{ color: 'var(--rs-text-secondary)', cursor: 'pointer' }}
           dangerouslySetInnerHTML={{
             __html: emojify(t('timeline.notification.quote.body', { user: notification.account.display_name }), notification.account.emojis)
           }}
+          onClick={() => setAccountDetail(notification.account)}
         />
       )
     case 'status':
       return (
         <span
-          style={{ color: 'var(--rs-text-secondary)' }}
+          style={{ color: 'var(--rs-text-secondary)', cursor: 'pointer' }}
           dangerouslySetInnerHTML={{
             __html: emojify(
               t('timeline.notification.status.body', { user: notification.account.display_name }),
               notification.account.emojis
             )
           }}
+          onClick={() => setAccountDetail(notification.account)}
         />
       )
     case 'emoji_reaction':
       return (
         <span
-          style={{ color: 'var(--rs-text-secondary)' }}
+          style={{ color: 'var(--rs-text-secondary)', cursor: 'pointer' }}
           dangerouslySetInnerHTML={{
             __html: emojify(
               t('timeline.notification.emoji_reaction.body', { user: notification.account.display_name }),
               notification.account.emojis
             )
           }}
+          onClick={() => setAccountDetail(notification.account)}
         />
       )
     default:
@@ -146,7 +153,7 @@ const Reaction: React.FC<Props> = props => {
           {actionIcon(props.notification)}
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={14} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-          {actionText(props.notification)}
+          {actionText(props.notification, props.setAccountDetail)}
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', color: 'var(--rs-text-secondary)' }}>
           <Time time={props.notification.created_at} />
