@@ -46,7 +46,7 @@ const actionText = (notification: Entity.Notification) => {
 
 const Follow: React.FC<Props> = props => {
   return (
-    <div>
+    <div onClick={() => props.setAccountDetail(props.notification.account)} style={{ cursor: 'pointer' }}>
       {/** action **/}
       <FlexboxGrid align="middle" style={{ paddingRight: '8px' }}>
         {/** icon **/}
@@ -67,7 +67,6 @@ const Follow: React.FC<Props> = props => {
             <Avatar
               src={props.notification.account.avatar}
               onClick={() => props.setAccountDetail(props.notification.account)}
-              style={{ cursor: 'pointer' }}
               title={props.notification.account.acct}
               alt={props.notification.account.acct}
             />
