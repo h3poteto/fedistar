@@ -45,15 +45,15 @@ Please be careful when using.
     - [x] Show the thread
     - [x] Link preview
     - [x] Show and vote polls
-- [ ] Post statuses
+- [x] Post statuses
     - [x] Post statuses
     - [x] Add emoji
     - [x] Attach media
     - [x] Change visibility
     - [x] Specify NSFW and CW
     - [x] Add poll
-    - [ ] Suggest emojis
-    - [ ] Suggest hashtags
+    - [x] Suggest emojis
+    - [x] Suggest hashtags
 - [x] See media
     - [x] Image
     - [x] Video
