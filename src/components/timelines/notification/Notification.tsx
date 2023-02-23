@@ -36,6 +36,7 @@ const notification = (props: Props) => {
     case 'emoji_reaction':
       return (
         <Reaction
+          server={props.server}
           notification={props.notification}
           updateStatus={props.updateStatus}
           client={props.client}

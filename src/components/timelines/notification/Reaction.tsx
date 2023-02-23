@@ -1,18 +1,20 @@
 import { MouseEventHandler } from 'react'
 import { Entity, MegalodonInterface } from 'megalodon'
-import { Avatar, Button, FlexboxGrid } from 'rsuite'
+import { Avatar, Button, FlexboxGrid, toaster, Notification } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsStar, BsArrowRepeat, BsMenuUp, BsHouseDoor, BsPaperclip } from 'react-icons/bs'
 import { open } from '@tauri-apps/api/shell'
 
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
-import { findLink } from 'src/utils/statusParser'
+import { findLink, findAccount, accountMatch, ParsedAccount } from 'src/utils/statusParser'
 import Body from '../status/Body'
 import Poll from '../status/Poll'
 import { useTranslation } from 'react-i18next'
+import { Server } from 'src/entities/server'
 
 type Props = {
+  server: Server
   notification: Entity.Notification
   client: MegalodonInterface
   updateStatus: (status: Entity.Status) => void
@@ -137,11 +139,49 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
 }
 
 const Reaction: React.FC<Props> = props => {
+  const { t } = useTranslation()
   const status = props.notification.status
 
   const refresh = async () => {
     const res = await props.client.getStatus(status.id)
     props.updateStatus(res.data)
+  }
+
+  const statusClicked: MouseEventHandler<HTMLDivElement> = async e => {
+    // Check username
+    const parsedAccount = findAccount(e.target as HTMLElement, 'status-body')
+    if (parsedAccount) {
+      e.preventDefault()
+
+      const account = await searchAccount(parsedAccount, status, props.client, props.server)
+      if (account) {
+        props.setAccountDetail(account)
+      } else {
+        let confirmToaster: any
+        /*  eslint prefer-const: 0 */
+        confirmToaster = toaster.push(
+          notification(
+            'info',
+            t('dialog.account_not_found.title'),
+            t('dialog.account_not_found.message'),
+            t('dialog.account_not_found.button'),
+            () => {
+              open(parsedAccount.url)
+              toaster.remove(confirmToaster)
+            }
+          ),
+          { placement: 'topCenter', duration: 0 }
+        )
+      }
+      return
+    }
+
+    // Check link
+    const url = findLink(e.target as HTMLElement, 'status-body')
+    if (url) {
+      open(url)
+      e.preventDefault()
+    }
   }
 
   return (
@@ -205,12 +245,42 @@ const Reaction: React.FC<Props> = props => {
   )
 }
 
-const statusClicked: MouseEventHandler<HTMLDivElement> = e => {
-  const url = findLink(e.target as HTMLElement, 'status-body')
-  if (url) {
-    open(url)
-    e.preventDefault()
+async function searchAccount(account: ParsedAccount, status: Entity.Status, client: MegalodonInterface, server: Server) {
+  if (status.in_reply_to_account_id) {
+    const res = await client.getAccount(status.in_reply_to_account_id)
+    if (res.status === 200) {
+      const user = accountMatch([res.data], account, server.domain)
+      if (user) return user
+    }
   }
+  if (status.in_reply_to_id) {
+    const res = await client.getStatusContext(status.id)
+    if (res.status === 200) {
+      const accounts: Array<Entity.Account> = res.data.ancestors.map(s => s.account).concat(res.data.descendants.map(s => s.account))
+      const user = accountMatch(accounts, account, server.domain)
+      if (user) return user
+    }
+  }
+  const res = await client.searchAccount(account.url, { resolve: true })
+  if (res.data.length === 0) return null
+  const user = accountMatch(res.data, account, server.domain)
+  if (user) return user
+  return null
+}
+
+function notification(
+  type: 'info' | 'success' | 'warning' | 'error',
+  title: string,
+  message: string,
+  button: string,
+  callback: () => void
+) {
+  return (
+    <Notification type={type} header={title} closable>
+      <p>{message}</p>
+      <Button onClick={callback}>{button}</Button>
+    </Notification>
+  )
 }
 
 export default Reaction

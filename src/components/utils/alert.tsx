@@ -1,9 +1,11 @@
 import { Message } from 'rsuite'
 
-const alert = (type: 'info' | 'success' | 'warning' | 'error', message: string) => (
-  <Message showIcon type={type} duration={5000}>
-    {message}
-  </Message>
-)
+function alert(type: 'info' | 'success' | 'warning' | 'error', message: string) {
+  return (
+    <Message showIcon type={type}>
+      {message}
+    </Message>
+  )
+}
 
 export default alert
