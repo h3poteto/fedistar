@@ -53,6 +53,7 @@ const Status: React.FC<Props> = props => {
   }, [showReply, showEdit])
 
   const statusClicked: MouseEventHandler<HTMLDivElement> = async e => {
+    // Check username
     const parsedAccount = findAccount(e.target as HTMLElement, 'status-body')
     if (parsedAccount) {
       e.preventDefault()
@@ -79,6 +80,7 @@ const Status: React.FC<Props> = props => {
       return
     }
 
+    // Check link
     const url = findLink(e.target as HTMLElement, 'status-body')
     if (url) {
       open(url)
