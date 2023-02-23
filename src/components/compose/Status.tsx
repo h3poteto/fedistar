@@ -350,6 +350,7 @@ const Status: React.FC<Props> = props => {
           ref={statusRef}
           placeholder={t('compose.status.placeholder')}
           emojis={customEmojis}
+          client={props.client}
         />
         <Whisper trigger="click" placement="bottomStart" ref={emojiPickerRef} speaker={<EmojiPicker />}>
           <Button appearance="link" style={{ position: 'absolute', top: '4px', right: '8px', padding: 0 }}>

@@ -4,8 +4,10 @@ import { PrependParameters } from 'rsuite/esm/@types/utils'
 import { init, SearchIndex } from 'emoji-mart'
 import { data } from 'src/utils/emojiData'
 import { CustomEmojiCategory } from 'src/entities/emoji'
+import { MegalodonInterface } from 'megalodon'
 
 export type ArgProps = {
+  client: MegalodonInterface
   emojis: Array<CustomEmojiCategory>
   onChange: (value: string) => void
 }
@@ -74,6 +76,19 @@ const AutoCompleteTextarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, 
         setStartIndex(start)
         setMatchWord(token)
         triggerRef.current.open()
+        return
+      }
+      case '@': {
+        const res = await props.client.searchAccount(token.replace('@', ''))
+        setSuggestList(
+          res.data.map(a => ({
+            name: `@${a.acct}`
+          }))
+        )
+        setStartIndex(start)
+        setMatchWord(token)
+        triggerRef.current.open()
+        return
       }
     }
   }
