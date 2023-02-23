@@ -63,6 +63,7 @@ const Status: React.FC<Props> = props => {
         props.setAccountDetail(account.id, props.server.id, props.account?.id)
       } else {
         let confirmToaster: any
+        /*  eslint prefer-const: 0 */
         confirmToaster = toaster.push(
           notification(
             'info',
