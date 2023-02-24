@@ -21,6 +21,13 @@
     "validation_attachments_type": "画像または動画のみ添付できます",
     "upload_error": "ファイルのアップロードに失敗しました"
   },
+  "dialog": {
+    "account_not_found": {
+      "title": "Account not found",
+      "message": "The account does not exist in the server, do you want to open the account in your browser?",
+      "button": "Open"
+    }
+  },
   "walkthrough": {
     "navigator": {
       "servers": {
