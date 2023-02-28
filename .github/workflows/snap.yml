@@ -42,6 +42,7 @@ jobs:
 
       - name: Build snap
         run: |
+          sudo chown runner:sudo /var/snap/multipass/common/multipass_socket
           yarn tauri build
           yarn run build-snap
 
