@@ -1,4 +1,4 @@
-# fedistar
+# Fedistar
 [![Test](https://github.com/h3poteto/fedistar/actions/workflows/test.yml/badge.svg)](https://github.com/h3poteto/fedistar/actions/workflows/test.yml)
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/h3poteto/fedistar)](https://github.com/h3poteto/fedistar/releases)
 ![GitHub](https://img.shields.io/github/license/h3poteto/fedistar)
