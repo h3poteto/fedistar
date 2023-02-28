@@ -7,7 +7,7 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "fedistar",
+    "productName": "Fedistar",
     "version": "1.0.0"
   },
   "tauri": {
@@ -41,7 +41,7 @@
       "identifier": "net.fedistar",
       "longDescription": "Multi-column Mastodon and Pleroma client for desktop",
       "macOS": {
-        "entitlements": null,
+        "entitlements": "../entitlements.plist",
         "exceptionDomain": "",
         "frameworks": [],
         "providerShortName": null,
@@ -67,7 +67,7 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "fedistar",
+        "title": "Fedistar",
         "width": 800
       }
     ]

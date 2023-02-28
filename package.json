@@ -1,5 +1,5 @@
 {
-  "name": "fedistar",
+  "name": "Fedistar",
   "private": true,
   "version": "1.0.0",
   "scripts": {
@@ -9,7 +9,8 @@
     "lint": "eslint src --ext ts,tsx",
     "typecheck": "tsc -p . --noEmit",
     "test": "NODE_ENV=test jest -u --maxWorkers=3",
-    "thirdparty": "cd src-tauri && cargo bundle-licenses --format json --output thirdparty.json && cd ../ && license-checker --production --json > thirdparty.json && node scripts/thirdparty.js"
+    "thirdparty": "cd src-tauri && cargo bundle-licenses --format json --output thirdparty.json && cd ../ && license-checker --production --json > thirdparty.json && node scripts/thirdparty.js",
+    "clean": "rm -rf src-tauri/target"
   },
   "jest": {
     "moduleFileExtensions": [
