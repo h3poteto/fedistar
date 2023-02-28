@@ -6,6 +6,7 @@ on:
 env:
   CARGO_TERM_COLOR: always
 
+permissions: read-all|write-all
 
 jobs:
   snap:
