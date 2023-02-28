@@ -75,8 +75,8 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
             <div style={{ position: 'relative' }}>
               <Popover arrow={false} visible={walkthrough} style={{ left: 12, top: 'auto', bottom: 0 }}>
                 <div style={{ width: '120px' }}>
-                  <h4 style={{ fontSize: '1.2em' }}>{t('walkthrouh.navigator.servers.title')}</h4>
-                  <p>{t('walkthrouh.navigator.servers.description')}</p>
+                  <h4 style={{ fontSize: '1.2em' }}>{t('walkthrough.navigator.servers.title')}</h4>
+                  <p>{t('walkthrough.navigator.servers.description')}</p>
                 </div>
                 <FlexboxGrid justify="end">
                   <Button appearance="default" size="xs" onClick={closeWalkthrough}>
