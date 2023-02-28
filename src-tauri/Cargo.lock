@@ -3,6 +3,29 @@
 version = 3
 
 [[package]]
+name = "Fedistar"
+version = "0.0.0"
+dependencies = [
+ "directories",
+ "futures",
+ "log",
+ "megalodon",
+ "once_cell",
+ "open",
+ "reqwest",
+ "rust-i18n",
+ "scraper",
+ "serde",
+ "serde_json",
+ "simplelog",
+ "sqlx",
+ "tauri",
+ "tauri-build",
+ "tokio",
+ "url",
+]
+
+[[package]]
 name = "adler"
 version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -788,29 +811,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a7a407cfaa3385c4ae6b23e84623d48c2798d06e3e6a1878f7f59f17b3f86499"
 dependencies = [
  "instant",
-]
-
-[[package]]
-name = "fedistar"
-version = "0.0.0"
-dependencies = [
- "directories",
- "futures",
- "log",
- "megalodon",
- "once_cell",
- "open",
- "reqwest",
- "rust-i18n",
- "scraper",
- "serde",
- "serde_json",
- "simplelog",
- "sqlx",
- "tauri",
- "tauri-build",
- "tokio",
- "url",
 ]
 
 [[package]]
