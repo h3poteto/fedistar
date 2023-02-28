@@ -9,8 +9,8 @@ pub fn menu() -> Menu {
     let about = MenuItem::About(
         APP_NAME.to_string(),
         AboutMetadata::new()
-            .authors(vec!["h3poteto".to_string()])
-            .copyright("2022 h3poteto")
+            .authors(vec!["Akira Fukushima".to_string()])
+            .copyright("2022 Akira Fukushima, Haruka Kurosaki")
             .license("GPL")
             .website("https://fedistar.net"),
     );
