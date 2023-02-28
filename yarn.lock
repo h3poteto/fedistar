@@ -3989,6 +3989,13 @@ symbol-tree@^3.2.4:
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
   integrity sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==
 
+tauri-snap-packager@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/tauri-snap-packager/-/tauri-snap-packager-0.1.0.tgz#07215f67cf4691806f2c649e1b4da8bdfa608f6d"
+  integrity sha512-cVO1MuS9r/IaCzKtVIII4FUoIV7HLMcISOwHv0D3DSDGotWRx8bLOwpWAIwdN08Tj6+tu9AXw1CJylrA7vb3LA==
+  dependencies:
+    js-yaml "^4.1.0"
+
 test-exclude@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/test-exclude/-/test-exclude-6.0.0.tgz#04a8698661d805ea6fa293b6cb9e63ac044ef15e"

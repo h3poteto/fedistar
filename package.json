@@ -10,7 +10,8 @@
     "typecheck": "tsc -p . --noEmit",
     "test": "NODE_ENV=test jest -u --maxWorkers=3",
     "thirdparty": "cd src-tauri && cargo bundle-licenses --format json --output thirdparty.json && cd ../ && license-checker --production --json > thirdparty.json && node scripts/thirdparty.js",
-    "clean": "rm -rf src-tauri/target"
+    "clean": "rm -rf src-tauri/target",
+    "build-snap": "tauri-snap-packager"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -63,6 +64,7 @@
     "eslint-plugin-react": "^7.32.2",
     "jest": "^29.4.3",
     "jsdom": "^21.1.0",
+    "tauri-snap-packager": "^0.1.0",
     "ts-jest": "^29.0.5",
     "typescript": "^4.9.5"
   }
