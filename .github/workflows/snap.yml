@@ -35,8 +35,6 @@ jobs:
         run: |
           sudo snap install snapcraft --classic
           sudo snap install multipass
-          # To avoid https://github.com/canonical/multipass/issues/2620
-          sudo chown
       - name: Install app dependencies and build web
         run: yarn && yarn build
 
