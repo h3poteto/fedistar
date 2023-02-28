@@ -35,18 +35,15 @@ jobs:
         run: |
           sudo snap install snapcraft --classic
           sudo snap install multipass
+          # To avoid: https://github.com/canonical/multipass/issues/2620
+          sudo chwon runner:sudo /var/snap/multipass/common/multipass_socket
       - name: Install app dependencies and build web
         run: yarn && yarn build
 
-      - name: Confirm
+      - name: Build snap
         run: |
-          ls -lha /var/snap/multipass/common/
-          cat /etc/passwd
-          cat /etc/group
-      # - name: Build snap
-      #   run: |
-      #     yarn tauri build
-      #     yarn run build-snap
+          yarn tauri build
+          yarn run build-snap
 
       - name: Confirm
         run: tree src-tauri/target/snap
