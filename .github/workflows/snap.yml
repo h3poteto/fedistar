@@ -36,7 +36,9 @@ jobs:
         run: yarn && yarn build
 
       - name: Build snap
-        run: yarn run build-snap
+        run: |
+          yarn tauri build
+          yarn run build-snap
 
       - name: Confirm
         run: tree src-tauri/target/snap
