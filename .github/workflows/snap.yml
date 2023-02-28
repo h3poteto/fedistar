@@ -41,7 +41,7 @@ jobs:
       - name: Confirm
         run: |
           ls -lha /var/snap/multipass/common/
-          cat /ets/passwd
+          cat /etc/passwd
           cat /etc/group
       # - name: Build snap
       #   run: |
