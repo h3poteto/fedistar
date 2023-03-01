@@ -39,7 +39,7 @@
     "emoji-mart": "^5.5.2",
     "i18next": "^22.4.10",
     "megalodon": "^5.2.0",
-    "next": "^13.1.6",
+    "next": "^13.2.1",
     "parse-link-header": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
