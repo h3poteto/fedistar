@@ -106,6 +106,10 @@ const Following: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, r
     )
   }
 
+  const targetRelationship = (user: Entity.Account) => {
+    return relationships.find(r => r.id === user.id)
+  }
+
   return (
     <div style={{ width: '100%' }}>
       {loading ? (
@@ -114,9 +118,9 @@ const Following: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, r
         </div>
       ) : (
         <List>
-          {following.map((account, index) => (
+          {following.map(account => (
             <List.Item key={account.id} style={{ padding: '4px 0', backgroundColor: 'var(rs-gary-800)' }}>
-              <User user={account} relationship={relationships[index]} follow={follow} unfollow={unfollow} />
+              <User user={account} relationship={targetRelationship(account)} follow={follow} unfollow={unfollow} />
             </List.Item>
           ))}
         </List>
