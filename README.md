@@ -14,7 +14,7 @@ This is a Mastodon and Pleroma client application for desktop.
 Or `.dmg` is available from [release page](https://github.com/h3poteto/fedistar/releases).
 
 ### Windows
-Please download `.exe` file from [release page](https://github.com/h3poteto/fedistar/releases).
+Please download `.msi` file from [release page](https://github.com/h3poteto/fedistar/releases).
 
 ### Linux
 Please use `.AppImage` or `.deb` in [release page](https://github.com/h3poteto/fedistar/releases).
