@@ -1,7 +1,10 @@
 # Fedistar
 [![Test](https://github.com/h3poteto/fedistar/actions/workflows/test.yml/badge.svg)](https://github.com/h3poteto/fedistar/actions/workflows/test.yml)
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/h3poteto/fedistar)](https://github.com/h3poteto/fedistar/releases)
-![GitHub](https://img.shields.io/github/license/h3poteto/fedistar)
+[![iTunes App Store](https://img.shields.io/itunes/v/6445863996)](https://apps.apple.com/us/app/fedistar/id6445863996)
+[![AUR version](https://img.shields.io/aur/version/fedistar-bin)](https://aur.archlinux.org/packages/fedistar-bin)
+![License](https://img.shields.io/github/license/h3poteto/fedistar)
+[![Crowdin](https://badges.crowdin.net/fedistar/localized.svg)](https://crowdin.com/project/fedistar)
 
 This is a Mastodon and Pleroma client application for desktop.
 
