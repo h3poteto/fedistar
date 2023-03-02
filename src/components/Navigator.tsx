@@ -3,7 +3,7 @@ import { ReactElement, useEffect, useState } from 'react'
 import { Icon } from '@rsuite/icons'
 import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge, FlexboxGrid } from 'rsuite'
 import { BsPlus, BsGear, BsPencilSquare } from 'react-icons/bs'
-import { Server } from 'src/entities/server'
+import { Server, ServerSet } from 'src/entities/server'
 import FailoverImg from 'src/utils/failoverImg'
 import { Unread } from 'src/entities/unread'
 import { Instruction } from 'src/entities/instruction'
@@ -11,7 +11,7 @@ import { listen } from '@tauri-apps/api/event'
 import { useTranslation } from 'react-i18next'
 
 type NavigatorProps = {
-  servers: Array<Server>
+  servers: Array<ServerSet>
   unreads: Array<Unread>
   addNewServer: () => void
   openAuthorize: (server: Server) => void
@@ -87,19 +87,30 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
             </div>
           )}
           {servers.map(server => (
-            <div key={server.id}>
+            <div key={server.server.id}>
               <Whisper
                 placement="right"
                 controlId="control-id-context-menu"
                 trigger="contextMenu"
                 onOpen={closeWalkthrough}
                 speaker={({ className, left, top, onClose }, ref) =>
-                  serverMenu({ className, left, top, onClose, server, openAuthorize }, ref)
+                  serverMenu({ className, left, top, onClose, server: server.server, openAuthorize }, ref)
                 }
               >
-                <Button appearance="link" size="xs" style={{ padding: '8px' }} title={server.domain}>
-                  <Badge content={props.unreads.find(u => u.server_id === server.id && u.count > 0) ? true : false}>
-                    <Avatar size="sm" src={FailoverImg(server.favicon)} className="server-icon" alt={server.domain} key={server.id} />
+                <Button
+                  appearance="link"
+                  size="xs"
+                  style={{ padding: '8px' }}
+                  title={server.account ? server.account.username + '@' + server.server.domain : server.server.domain}
+                >
+                  <Badge content={props.unreads.find(u => u.server_id === server.server.id && u.count > 0) ? true : false}>
+                    <Avatar
+                      size="sm"
+                      src={FailoverImg(server.server.favicon)}
+                      className="server-icon"
+                      alt={server.server.domain}
+                      key={server.server.id}
+                    />
                   </Badge>
                 </Button>
               </Whisper>

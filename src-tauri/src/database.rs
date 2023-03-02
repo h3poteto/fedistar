@@ -28,8 +28,40 @@ pub(crate) async fn migrate_database(pool: &SqlitePool) -> DBResult<()> {
     Ok(())
 }
 
-pub(crate) async fn list_servers(pool: &SqlitePool) -> DBResult<Vec<entities::Server>> {
-    let servers = query_as::<_, entities::Server>("select * from servers")
+pub(crate) async fn list_servers(
+    pool: &SqlitePool,
+) -> DBResult<Vec<(entities::Server, Option<entities::Account>)>> {
+    let servers = sqlx::query(
+        r#"
+SELECT servers.id, servers.domain, servers.base_url, servers.sns, servers.favicon, servers.account_id,
+       accounts.id, accounts.username, accounts.account_id, accounts.avatar, accounts.client_id, accounts.client_secret,
+       accounts.access_token, accounts.refresh_token, accounts.usual
+FROM servers LEFT JOIN accounts ON servers.account_id = accounts.id"#,
+    ).map(|row: SqliteRow| {
+        let server = entities::Server {
+                id: row.get(0),
+                domain: row.get(1),
+                base_url: row.get(2),
+                sns: row.get(3),
+                favicon: row.get(4),
+                account_id: row.get(5),
+        };
+        if row.get(6) {
+            (server, Some(entities::Account {
+                    id: row.get(6),
+                    username: row.get(7),
+                    account_id: row.get(8),
+                    avatar: row.get(9),
+                    client_id: row.get(10),
+                    client_secret: row.get(11),
+                    access_token: row.get(12),
+                    refresh_token: row.get(13),
+                    usual: row.get(14),
+            }))
+        } else {
+            (server, None)
+        }
+        })
         .fetch_all(pool)
         .await?;
 

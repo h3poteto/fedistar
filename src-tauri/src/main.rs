@@ -20,7 +20,7 @@ rust_i18n::i18n!("locales");
 #[tauri::command]
 async fn list_servers(
     sqlite_pool: State<'_, sqlx::SqlitePool>,
-) -> Result<Vec<entities::Server>, String> {
+) -> Result<Vec<(entities::Server, Option<entities::Account>)>, String> {
     let servers = database::list_servers(&sqlite_pool)
         .await
         .map_err(|e| e.to_string())?;
