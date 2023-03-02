@@ -14,7 +14,7 @@ import {
 } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsPlus, BsHouseDoor, BsBell, BsPeople, BsGlobe2, BsStar, BsListUl, BsChevronLeft, BsBookmark, BsEnvelope } from 'react-icons/bs'
-import { Server } from '../../entities/server'
+import { Server, ServerSet } from '../../entities/server'
 import { useEffect, useState } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity } from 'megalodon'
@@ -125,7 +125,7 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
 }
 
 type Props = {
-  servers: Array<Server>
+  servers: Array<ServerSet>
 }
 
 const New: React.FC<Props> = props => {
@@ -160,15 +160,15 @@ const New: React.FC<Props> = props => {
   const addTimelineMenu = ({ onClose, left, top, className }, ref: any) => {
     const handleSelect = (eventKey: string) => {
       onClose()
-      const target = props.servers.find(s => s.id === parseInt(eventKey))
-      setServer(target)
+      const target = props.servers.find(s => s.server.id === parseInt(eventKey))
+      setServer(target.server)
     }
     return (
       <Popover ref={ref} className={className} style={{ left, top }} full>
         <Dropdown.Menu onSelect={handleSelect}>
           {props.servers.map(server => (
-            <Dropdown.Item eventKey={server.id} key={server.id}>
-              {server.domain}
+            <Dropdown.Item eventKey={server.server.id} key={server.server.id}>
+              {server.account ? server.account.username + '@' + server.server.domain : server.server.domain}
             </Dropdown.Item>
           ))}
         </Dropdown.Menu>

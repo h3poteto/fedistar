@@ -5,7 +5,7 @@ import { Container, Content, useToaster, Animation } from 'rsuite'
 import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/api/notification'
 import dayjs from 'dayjs'
 
-import { Server } from 'src/entities/server'
+import { Server, ServerSet } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
 import { Unread } from 'src/entities/unread'
 import alert from 'src/components/utils/alert'
@@ -23,11 +23,12 @@ import { Settings } from 'src/entities/settings'
 import SettingsPage from 'src/components/settings/Settings'
 import Detail from 'src/components/detail/Detail'
 import { useTranslation } from 'react-i18next'
+import { Account } from 'src/entities/account'
 
 function App() {
   const { t, i18n } = useTranslation()
 
-  const [servers, setServers] = useState<Array<Server>>([])
+  const [servers, setServers] = useState<Array<ServerSet>>([])
   const [timelines, setTimelines] = useState<Array<[Timeline, Server]>>([])
   const [unreads, setUnreads] = useState<Array<Unread>>([])
   const [composeOpened, setComposeOpened] = useState<boolean>(false)
@@ -44,13 +45,19 @@ function App() {
 
   useEffect(() => {
     loadAppearance()
-    invoke<Array<Server>>('list_servers').then(res => {
+    invoke<Array<[Server, Account | null]>>('list_servers').then(res => {
       if (res.length === 0) {
         console.debug('There is no server')
         dispatch({ target: 'newServer', value: true })
         toaster.push(alert('info', t('alert.no_server')), { placement: 'topCenter' })
       } else {
-        setServers(res)
+        console.debug('list_servers: ', res)
+        setServers(
+          res.map(r => ({
+            server: r[0],
+            account: r[1]
+          }))
+        )
       }
     })
 
@@ -60,8 +67,13 @@ function App() {
       loadTimelines()
     })
     listen('updated-servers', async () => {
-      const res = await invoke<Array<Server>>('list_servers')
-      setServers(res)
+      const res = await invoke<Array<[Server, Account | null]>>('list_servers')
+      setServers(
+        res.map(r => ({
+          server: r[0],
+          account: r[1]
+        }))
+      )
     })
 
     listen<ReceiveNotificationPayload>('receive-notification', async ev => {
@@ -105,7 +117,7 @@ function App() {
   }
 
   const toggleCompose = () => {
-    if (servers.find(s => s.account_id !== null)) {
+    if (servers.find(s => s.account !== null)) {
       setComposeOpened(previous => !previous)
     } else {
       toaster.push(alert('info', t('alert.need_auth')), { placement: 'topStart' })

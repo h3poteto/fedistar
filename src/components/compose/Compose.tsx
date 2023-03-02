@@ -6,7 +6,7 @@ import { invoke } from '@tauri-apps/api/tauri'
 import generator, { MegalodonInterface } from 'megalodon'
 
 import { USER_AGENT } from 'src/defaults'
-import { Server } from 'src/entities/server'
+import { Server, ServerSet } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import failoverImg from 'src/utils/failoverImg'
 import Status from './Status'
@@ -38,7 +38,7 @@ const renderAccountIcon = (props: any, ref: any, account: [Account, Server] | un
 
 type Props = {
   setOpened: (value: boolean) => void
-  servers: Array<Server>
+  servers: Array<ServerSet>
 }
 
 const Compose: React.FC<Props> = props => {
