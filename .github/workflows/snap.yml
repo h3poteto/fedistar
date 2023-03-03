@@ -37,6 +37,8 @@ jobs:
           sudo snap install multipass
           # To avoid: https://github.com/canonical/multipass/issues/2620
           sudo gpasswd -a $USER sudo
+          sudo adduser $USER kvm
+          sudo chown -R $USER /dev/kvm
       - name: Install app dependencies and build web
         run: yarn && yarn build
 
