@@ -197,6 +197,17 @@
   cursor: pointer;
 }
 
+.status-body img {
+  max-width: 240px;
+}
+
+.status-body  blockquote {
+  padding-left: 10px;
+  border-left: 3px solid #9baec8;
+  color: #9baec8;
+  margin: 0;
+}
+
 .status-detail .status .body {
   cursor: default;
 }
