@@ -2802,9 +2802,9 @@ dependencies = [
 
 [[package]]
 name = "rust-i18n"
-version = "1.1.1"
+version = "1.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e99913232afabc7678c569e252f896f6cbc5bac0ce5298771e53dd22d7ac26c9"
+checksum = "c33c2bd60f1cf6f7e94e162f41d4416045049250ded963ae62bd273a395bb9f6"
 dependencies = [
  "anyhow",
  "clap",
