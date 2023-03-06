@@ -22,7 +22,6 @@ const FollowersTab = forwardRef(Followers)
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  openReport: (status: Entity.Status) => void
 }
 
 const Profile: React.FC<Props> = props => {
@@ -159,17 +158,7 @@ const Profile: React.FC<Props> = props => {
     if (!user) return <></>
     switch (activeNav) {
       case 'posts':
-        return (
-          <PostsTab
-            client={client}
-            user={user}
-            server={server}
-            account={account}
-            openMedia={props.openMedia}
-            openReport={props.openReport}
-            ref={postsRef}
-          />
-        )
+        return <PostsTab client={client} user={user} server={server} account={account} openMedia={props.openMedia} ref={postsRef} />
       case 'following':
         return <FollowingTab client={client} user={user} account={account} ref={followingRef} />
       case 'followers':

@@ -44,7 +44,6 @@ type Props = {
   timeline: Timeline
   server: Server
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  openReport: (status: Entity.Status) => void
 }
 
 const Timeline: React.FC<Props> = props => {
@@ -433,7 +432,6 @@ const Timeline: React.FC<Props> = props => {
                       setReplyOpened={opened => (replyOpened.current = opened)}
                       setStatusDetail={setStatusDetail}
                       setAccountDetail={setAccountDetail}
-                      openReport={props.openReport}
                     />
                   </List.Item>
                 )}

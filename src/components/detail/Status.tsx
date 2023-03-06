@@ -9,7 +9,6 @@ import Status from '../timelines/status/Status'
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  openReport: (status: Entity.Status) => void
 }
 
 const StatusDetail: React.FC<Props> = props => {
@@ -133,7 +132,6 @@ const StatusDetail: React.FC<Props> = props => {
                 openMedia={props.openMedia}
                 setReplyOpened={() => null}
                 setAccountDetail={setAccountDetail}
-                openReport={props.openReport}
               />
             </List.Item>
           ))}

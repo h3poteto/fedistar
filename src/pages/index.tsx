@@ -24,7 +24,6 @@ import SettingsPage from 'src/components/settings/Settings'
 import Detail from 'src/components/detail/Detail'
 import { useTranslation } from 'react-i18next'
 import { Account } from 'src/entities/account'
-import Report from 'src/components/Report'
 
 function App() {
   const { t, i18n } = useTranslation()
@@ -148,11 +147,6 @@ function App() {
         onClose={() => dispatch({ target: 'settings', value: false })}
         reloadAppearance={loadAppearance}
       />
-      <Report
-        opened={modalState.report.opened}
-        status={modalState.report.object}
-        close={() => dispatch({ target: 'report', value: false, object: null })}
-      />
 
       <Container style={{ height: '100%' }}>
         <Navigator
@@ -188,7 +182,6 @@ function App() {
               openMedia={(media: Array<Entity.Attachment>, index: number) =>
                 dispatch({ target: 'media', value: true, object: media, index: index })
               }
-              openReport={(status: Entity.Status) => dispatch({ target: 'report', value: true, object: status })}
             />
           ))}
           <NewTimeline servers={servers} />
@@ -198,7 +191,6 @@ function App() {
           openMedia={(media: Array<Entity.Attachment>, index: number) =>
             dispatch({ target: 'media', value: true, object: media, index: index })
           }
-          openReport={(status: Entity.Status) => dispatch({ target: 'report', value: true, object: status })}
         />
       </Container>
     </div>
@@ -221,10 +213,6 @@ type ModalState = {
   settings: {
     opened: boolean
   }
-  report: {
-    opened: boolean
-    object: Entity.Status | null
-  }
 }
 
 const initialModalState: ModalState = {
@@ -242,10 +230,6 @@ const initialModalState: ModalState = {
   },
   settings: {
     opened: false
-  },
-  report: {
-    opened: false,
-    object: null
   }
 }
 
@@ -259,8 +243,6 @@ const modalReducer = (current: ModalState, action: { target: string; value: bool
       return { ...current, thirdparty: { opened: action.value } }
     case 'settings':
       return { ...current, settings: { opened: action.value } }
-    case 'report':
-      return { ...current, report: { opened: action.value, object: action.object } }
     default:
       return current
   }

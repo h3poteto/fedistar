@@ -194,8 +194,7 @@
         "title": "Detail",
         "browser": "Open original page",
         "edit": "Edit",
-        "delete": "Delete",
-        "report": "Report"
+        "delete": "Delete"
       }
     },
     "status": {
@@ -235,13 +234,6 @@
       "unmute": "Unmute",
       "block": "Block",
       "unblock": "Unblock"
-    }
-  },
-  "report": {
-    "title": "Report {{user}}",
-    "category": {
-      "title": "Tell us what's going on with this post",
-      "description": "Choose the best match"
     }
   }
 }
