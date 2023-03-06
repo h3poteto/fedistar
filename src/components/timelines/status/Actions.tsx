@@ -22,7 +22,6 @@ type Props = {
   setShowReply: Dispatch<SetStateAction<boolean>>
   setShowEdit: Dispatch<SetStateAction<boolean>>
   updateStatus: (status: Entity.Status) => void
-  openReport: () => void
 }
 
 const Actions: React.FC<Props> = props => {
@@ -185,9 +184,6 @@ const Actions: React.FC<Props> = props => {
                     // After after deleted, streaming will receive a delete event.
                     // So we don't need update parent timelines, the delete event will be handled.
                     client.deleteStatus(props.status.id)
-                  },
-                  onReport: () => {
-                    props.openReport()
                   }
                 },
                 ref
@@ -240,7 +236,6 @@ type DetailMenuProps = {
   onDelete: () => void
   openEdit: () => void
   onClose: (delay?: number) => NodeJS.Timeout | void
-  onReport: () => void
 }
 
 const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>) => {
@@ -259,9 +254,6 @@ const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>)
       case 'delete':
         props.onDelete()
         return
-      case 'report':
-        props.onReport()
-        return
     }
   }
 
@@ -271,8 +263,6 @@ const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>)
         <Dropdown.Item eventKey="browser">{t('timeline.actions.detail.browser')}</Dropdown.Item>
         {props.own && <Dropdown.Item eventKey="edit">{t('timeline.actions.detail.edit')}</Dropdown.Item>}
         {props.own && <Dropdown.Item eventKey="delete">{t('timeline.actions.detail.delete')}</Dropdown.Item>}
-        <Dropdown.Separator />
-        <Dropdown.Item eventKey="report">{t('timeline.actions.detail.report')}</Dropdown.Item>
       </Dropdown.Menu>
     </Popover>
   )

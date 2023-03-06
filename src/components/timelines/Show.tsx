@@ -12,7 +12,6 @@ type Props = {
   unreads: Array<Unread>
   setUnreads: (a: Array<Unread>) => void
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  openReport: (status: Entity.Status) => void
 }
 
 const Show: React.FC<Props> = props => {
@@ -24,13 +23,12 @@ const Show: React.FC<Props> = props => {
         unreads={props.unreads}
         setUnreads={props.setUnreads}
         openMedia={props.openMedia}
-        openReport={props.openReport}
       />
     )
   } else if (props.timeline.kind === 'direct') {
     return <ShowConversations server={props.server} timeline={props.timeline} openMedia={props.openMedia} />
   } else {
-    return <ShowTimeline timeline={props.timeline} server={props.server} openMedia={props.openMedia} openReport={props.openReport} />
+    return <ShowTimeline timeline={props.timeline} server={props.server} openMedia={props.openMedia} />
   }
 }
 

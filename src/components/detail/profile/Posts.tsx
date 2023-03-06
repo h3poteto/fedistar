@@ -17,7 +17,6 @@ type ArgProps = {
   server: Server
   account: Account | null
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  openReport: (status: Entity.Status) => void
 }
 
 const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) => {
@@ -103,7 +102,6 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
                 updateStatus={updateStatus}
                 openMedia={props.openMedia}
                 setAccountDetail={setAccountDetail}
-                openReport={props.openReport}
               />
             </List.Item>
           ))}
@@ -117,7 +115,6 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
                 updateStatus={updateStatus}
                 openMedia={props.openMedia}
                 setAccountDetail={setAccountDetail}
-                openReport={props.openReport}
               />
             </List.Item>
           ))}
