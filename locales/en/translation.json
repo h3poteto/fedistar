@@ -252,6 +252,12 @@
       "description": "Select all that apply",
       "no_rules": "There is not rule in this server.",
       "next": "Next"
+    },
+    "statuses": {
+      "title": "Are there any posts that back up this report?",
+      "description": "Select all that apply",
+      "no_status": "There is not status.",
+      "next": "Next"
     }
   }
 }

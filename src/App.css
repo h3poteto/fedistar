@@ -223,3 +223,9 @@
 .media-dialog .rs-modal-content {
   height: 100%;
 }
+
+.report-statuses .rs-checkbox-wrapper .rs-checkbox-inner:after,
+.report-statuses .rs-checkbox-wrapper .rs-checkbox-inner:before,
+.report-statuses .rs-checkbox-wrapper:before {
+  margin-top: 30px;
+}
