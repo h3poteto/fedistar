@@ -27,7 +27,7 @@ type Props = {
   setReplyOpened?: (opened: boolean) => void
   setStatusDetail?: (statusId: string, serverId: number, accountId?: number) => void
   setAccountDetail: (userId: string, serverId: number, accountId?: number) => void
-  openReport: (status: Entity.Status) => void
+  openReport: (status: Entity.Status, client: MegalodonInterface) => void
 } & HTMLAttributes<HTMLElement>
 
 const Status: React.FC<Props> = props => {
@@ -168,7 +168,7 @@ const Status: React.FC<Props> = props => {
             setShowReply={setShowReply}
             setShowEdit={setShowEdit}
             updateStatus={props.updateStatus}
-            openReport={() => props.openReport(status)}
+            openReport={() => props.openReport(status, props.client)}
           />
         </FlexboxGrid.Item>
       </FlexboxGrid>

@@ -241,7 +241,17 @@
     "title": "Report {{user}}",
     "category": {
       "title": "Tell us what's going on with this post",
-      "description": "Choose the best match"
+      "description": "Choose the best match",
+      "spam": "It's spam",
+      "violation": "It violates server rules",
+      "other": "It's something else",
+      "next": "Next"
+    },
+    "rules": {
+      "title": "Which rules are being violated?",
+      "description": "Select all that apply",
+      "no_rules": "There is not rule in this server.",
+      "next": "Next"
     }
   }
 }

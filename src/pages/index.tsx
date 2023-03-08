@@ -17,7 +17,7 @@ import Compose from 'src/components/compose/Compose'
 import Media from 'src/components/Media'
 import generateNotification from 'src/utils/notification'
 import { ReceiveNotificationPayload } from 'src/payload'
-import { Entity } from 'megalodon'
+import { Entity, MegalodonInterface } from 'megalodon'
 import Thirdparty from 'src/components/settings/Thirdparty'
 import { Settings } from 'src/entities/settings'
 import SettingsPage from 'src/components/settings/Settings'
@@ -151,7 +151,8 @@ function App() {
       <Report
         opened={modalState.report.opened}
         status={modalState.report.object}
-        close={() => dispatch({ target: 'report', value: false, object: null })}
+        client={modalState.report.client}
+        close={() => dispatch({ target: 'report', value: false, object: null, client: null })}
       />
 
       <Container style={{ height: '100%' }}>
@@ -188,7 +189,9 @@ function App() {
               openMedia={(media: Array<Entity.Attachment>, index: number) =>
                 dispatch({ target: 'media', value: true, object: media, index: index })
               }
-              openReport={(status: Entity.Status) => dispatch({ target: 'report', value: true, object: status })}
+              openReport={(status: Entity.Status, client: MegalodonInterface) =>
+                dispatch({ target: 'report', value: true, object: status, client: client })
+              }
             />
           ))}
           <NewTimeline servers={servers} />
@@ -198,7 +201,9 @@ function App() {
           openMedia={(media: Array<Entity.Attachment>, index: number) =>
             dispatch({ target: 'media', value: true, object: media, index: index })
           }
-          openReport={(status: Entity.Status) => dispatch({ target: 'report', value: true, object: status })}
+          openReport={(status: Entity.Status, client: MegalodonInterface) =>
+            dispatch({ target: 'report', value: true, object: status, client: client })
+          }
         />
       </Container>
     </div>
@@ -224,6 +229,7 @@ type ModalState = {
   report: {
     opened: boolean
     object: Entity.Status | null
+    client: MegalodonInterface | null
   }
 }
 
@@ -245,11 +251,15 @@ const initialModalState: ModalState = {
   },
   report: {
     opened: false,
-    object: null
+    object: null,
+    client: null
   }
 }
 
-const modalReducer = (current: ModalState, action: { target: string; value: boolean; object?: any; index?: number }) => {
+const modalReducer = (
+  current: ModalState,
+  action: { target: string; value: boolean; object?: any; index?: number; client?: MegalodonInterface | null }
+) => {
   switch (action.target) {
     case 'newServer':
       return { ...current, newServer: { opened: action.value, object: action.object } }
@@ -260,7 +270,7 @@ const modalReducer = (current: ModalState, action: { target: string; value: bool
     case 'settings':
       return { ...current, settings: { opened: action.value } }
     case 'report':
-      return { ...current, report: { opened: action.value, object: action.object } }
+      return { ...current, report: { opened: action.value, object: action.object, client: action.client } }
     default:
       return current
   }

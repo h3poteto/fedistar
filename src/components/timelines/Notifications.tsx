@@ -26,7 +26,7 @@ type Props = {
   unreads: Array<Unread>
   setUnreads: Dispatch<SetStateAction<Array<Unread>>>
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  openReport: (status: Entity.Status) => void
+  openReport: (status: Entity.Status, client: MegalodonInterface) => void
 }
 
 type Marker = {

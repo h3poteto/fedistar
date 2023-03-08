@@ -1,4 +1,4 @@
-import { Entity } from 'megalodon'
+import { Entity, MegalodonInterface } from 'megalodon'
 import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
 import ShowTimeline from 'src/components/timelines/Timeline'
@@ -12,7 +12,7 @@ type Props = {
   unreads: Array<Unread>
   setUnreads: (a: Array<Unread>) => void
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  openReport: (status: Entity.Status) => void
+  openReport: (status: Entity.Status, client: MegalodonInterface) => void
 }
 
 const Show: React.FC<Props> = props => {

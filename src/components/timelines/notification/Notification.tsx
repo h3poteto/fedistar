@@ -15,7 +15,7 @@ type Props = {
   setReplyOpened: (opened: boolean) => void
   setStatusDetail: (statusId: string, serverId: number, accountId?: number) => void
   setAccountDetail: (userId: string, serverId: number, accountId?: number) => void
-  openReport: (status: Entity.Status) => void
+  openReport: (status: Entity.Status, client: MegalodonInterface) => void
 }
 
 const notification = (props: Props) => {

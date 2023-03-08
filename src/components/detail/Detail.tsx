@@ -7,11 +7,12 @@ import { Icon } from '@rsuite/icons'
 import Status from './Status'
 import Profile from './Profile'
 import { useTranslation } from 'react-i18next'
+import { MegalodonInterface } from 'megalodon'
 
 type Props = {
   dispatch: Dispatch<{ target: string; value: boolean; object?: any; index?: number }>
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  openReport: (status: Entity.Status) => void
+  openReport: (status: Entity.Status, client: MegalodonInterface) => void
 }
 
 const Detail: React.FC<Props> = props => {

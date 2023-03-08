@@ -22,7 +22,7 @@ const FollowersTab = forwardRef(Followers)
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  openReport: (status: Entity.Status) => void
+  openReport: (status: Entity.Status, client: MegalodonInterface) => void
 }
 
 const Profile: React.FC<Props> = props => {
