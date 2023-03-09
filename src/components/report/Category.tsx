@@ -9,7 +9,7 @@ type Props = {
 
 export default function Category(props: Props) {
   const { t } = useTranslation()
-  const [value, setValue] = useState<Entity.Category>()
+  const [value, setValue] = useState<Entity.Category | null>(null)
 
   return (
     <>
@@ -18,14 +18,26 @@ export default function Category(props: Props) {
         <p>{t('report.category.description')}</p>
         <div style={{ paddingTop: '2em' }}>
           <RadioGroup name="category" value={value} onChange={v => setValue(v as Entity.Category)}>
-            <Radio value="spam">{t('report.category.spam')}</Radio>
-            <Radio value="violation">{t('report.category.violation')}</Radio>
-            <Radio value="other">{t('report.category.other')}</Radio>
+            <Radio defaultChecked={false} value="spam">
+              {t('report.category.spam')}
+            </Radio>
+            <Radio defaultChecked={false} value="violation">
+              {t('report.category.violation')}
+            </Radio>
+            <Radio defaultChecked={false} value="other">
+              {t('report.category.other')}
+            </Radio>
           </RadioGroup>
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button appearance="primary" block onClick={() => props.next(value)}>
+        <Button
+          appearance="primary"
+          block
+          onClick={() => {
+            if (value) props.next(value)
+          }}
+        >
           {t('report.category.next')}
         </Button>
       </Modal.Footer>

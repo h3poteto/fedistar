@@ -24,7 +24,7 @@ import SettingsPage from 'src/components/settings/Settings'
 import Detail from 'src/components/detail/Detail'
 import { useTranslation } from 'react-i18next'
 import { Account } from 'src/entities/account'
-import Report from 'src/components/Report'
+import Report from 'src/components/report/Report'
 
 function App() {
   const { t, i18n } = useTranslation()

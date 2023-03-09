@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Button, Form, Input, Modal, Toggle } from 'rsuite'
+import { Button, Input, Modal, Toggle } from 'rsuite'
 
 type Props = {
   next: (comment: string, forward: boolean) => void
