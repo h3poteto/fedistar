@@ -5,6 +5,7 @@ import { Modal } from 'rsuite'
 import Category from './report/Category'
 import Rules from './report/Rules'
 import Statuses from './report/Statuses'
+import Comment from './report/Comment'
 
 type Props = {
   opened: boolean
@@ -18,11 +19,15 @@ export default function Report(props: Props) {
   const [category, setCategory] = useState<Entity.Category>()
   const [rules, setRules] = useState<Array<string>>()
   const [statuses, setStatuses] = useState<Array<string>>()
+  const [comment, setComment] = useState<string>()
+  const [forward, setForward] = useState(true)
 
   const reset = () => {
     setRules(undefined)
     setCategory(undefined)
     setStatuses(undefined)
+    setComment(undefined)
+    setForward(true)
   }
 
   const body = () => {
@@ -32,6 +37,16 @@ export default function Report(props: Props) {
       return <Rules client={props.client} next={(rules: Array<string>) => setRules(rules)} />
     } else if (statuses === undefined) {
       return <Statuses account={props.status.account} client={props.client} next={(statuses: Array<string>) => setStatuses(statuses)} />
+    } else if (comment === undefined) {
+      return (
+        <Comment
+          next={(comment: string, forward: boolean) => {
+            setForward(forward)
+            setComment(comment)
+            console.log('submit')
+          }}
+        />
+      )
     }
   }
 

@@ -258,6 +258,12 @@
       "description": "Select all that apply",
       "no_status": "There is not status.",
       "next": "Next"
+    },
+    "comment": {
+      "title": "Is there anything else you think we should know?",
+      "placeholder": "Additional comments",
+      "forward": "Forward to the original server",
+      "next": "Submit"
     }
   }
 }
