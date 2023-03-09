@@ -1,7 +1,7 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Avatar, Button, Checkbox, CheckboxGroup, FlexboxGrid, Modal } from 'rsuite'
+import { Avatar, Button, Checkbox, CheckboxGroup, FlexboxGrid, Loader, Modal, Placeholder } from 'rsuite'
 import emojify from 'src/utils/emojify'
 import Time from 'src/components/utils/Time'
 
@@ -15,11 +15,17 @@ export default function Statuses(props: Props) {
   const { t } = useTranslation()
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [values, setValues] = useState<Array<string>>([])
+  const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
     const f = async () => {
-      const res = await props.client.getAccountStatuses(props.account.id, { exclude_reblogs: true })
-      setStatuses(res.data)
+      setLoading(true)
+      try {
+        const res = await props.client.getAccountStatuses(props.account.id, { exclude_reblogs: true })
+        setStatuses(res.data)
+      } finally {
+        setLoading(false)
+      }
     }
     f()
   }, [props.account, props.client])
@@ -30,8 +36,15 @@ export default function Statuses(props: Props) {
         <Modal.Title>{t('report.statuses.title')}</Modal.Title>
         <p>{t('report.statuses.description')}</p>
         <div style={{ paddingTop: '2em' }}>
+          {loading ? (
+            <>
+              <Placeholder.Paragraph rows={3} />
+              <Loader center />
+            </>
+          ) : (
+            statuses.length === 0 && <p>{t('report.statuses.no_status')}</p>
+          )}
           <CheckboxGroup name="statuses" value={values} onChange={value => setValues(value.map(v => v.toString()))}>
-            {statuses.length === 0 && <p>{t('report.statuses.no_status')}</p>}
             {statuses.map(s => (
               <Checkbox className="report-statuses" key={s.id} value={s.id}>
                 <Status status={s} />
