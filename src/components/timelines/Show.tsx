@@ -1,4 +1,4 @@
-import { Entity } from 'megalodon'
+import { Entity, MegalodonInterface } from 'megalodon'
 import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
 import ShowTimeline from 'src/components/timelines/Timeline'
@@ -12,6 +12,7 @@ type Props = {
   unreads: Array<Unread>
   setUnreads: (a: Array<Unread>) => void
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
+  openReport: (status: Entity.Status, client: MegalodonInterface) => void
 }
 
 const Show: React.FC<Props> = props => {
@@ -23,12 +24,13 @@ const Show: React.FC<Props> = props => {
         unreads={props.unreads}
         setUnreads={props.setUnreads}
         openMedia={props.openMedia}
+        openReport={props.openReport}
       />
     )
   } else if (props.timeline.kind === 'direct') {
     return <ShowConversations server={props.server} timeline={props.timeline} openMedia={props.openMedia} />
   } else {
-    return <ShowTimeline timeline={props.timeline} server={props.server} openMedia={props.openMedia} />
+    return <ShowTimeline timeline={props.timeline} server={props.server} openMedia={props.openMedia} openReport={props.openReport} />
   }
 }
 

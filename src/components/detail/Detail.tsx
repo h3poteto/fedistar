@@ -7,10 +7,12 @@ import { Icon } from '@rsuite/icons'
 import Status from './Status'
 import Profile from './Profile'
 import { useTranslation } from 'react-i18next'
+import { MegalodonInterface } from 'megalodon'
 
 type Props = {
   dispatch: Dispatch<{ target: string; value: boolean; object?: any; index?: number }>
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
+  openReport: (status: Entity.Status, client: MegalodonInterface) => void
 }
 
 const Detail: React.FC<Props> = props => {
@@ -68,9 +70,10 @@ const Detail: React.FC<Props> = props => {
                 openMedia={(media: Array<Entity.Attachment>, index: number) =>
                   props.dispatch({ target: 'media', value: true, object: media, index: index })
                 }
+                openReport={props.openReport}
               />
             )}
-            {target === 'profile' && <Profile openMedia={props.openMedia} />}
+            {target === 'profile' && <Profile openMedia={props.openMedia} openReport={props.openReport} />}
           </Container>
         </div>
       )}

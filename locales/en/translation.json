@@ -19,7 +19,8 @@
     "validation_error": "Validation error.",
     "validation_attachments_length": "You can't attach over {{limit}} files.",
     "validation_attachments_type": "You can attach only images or videos",
-    "upload_error": "Failed to upload your file"
+    "upload_error": "Failed to upload your file",
+    "failed_to_report": "Faild to send the report"
   },
   "dialog": {
     "account_not_found": {
@@ -194,7 +195,8 @@
         "title": "Detail",
         "browser": "Open original page",
         "edit": "Edit",
-        "delete": "Delete"
+        "delete": "Delete",
+        "report": "Report"
       }
     },
     "status": {
@@ -234,6 +236,35 @@
       "unmute": "Unmute",
       "block": "Block",
       "unblock": "Unblock"
+    }
+  },
+  "report": {
+    "title": "Report {{user}}",
+    "category": {
+      "title": "Tell us what's going on with this post",
+      "description": "Choose the best match",
+      "spam": "It's spam",
+      "violation": "It violates server rules",
+      "other": "It's something else",
+      "next": "Next"
+    },
+    "rules": {
+      "title": "Which rules are being violated?",
+      "description": "Select all that apply",
+      "no_rules": "There is not rule in this server.",
+      "next": "Next"
+    },
+    "statuses": {
+      "title": "Are there any posts that back up this report?",
+      "description": "Select all that apply",
+      "no_status": "There is not status.",
+      "next": "Next"
+    },
+    "comment": {
+      "title": "Is there anything else you think we should know?",
+      "placeholder": "Additional comments",
+      "forward": "Forward to the original server",
+      "next": "Submit"
     }
   }
 }
