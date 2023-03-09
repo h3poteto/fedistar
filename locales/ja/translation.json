@@ -19,13 +19,14 @@
     "validation_error": "検証エラー",
     "validation_attachments_length": "{{limit}} 個以上のファイルを添付できません。",
     "validation_attachments_type": "画像または動画のみ添付できます",
-    "upload_error": "ファイルのアップロードに失敗しました"
+    "upload_error": "ファイルのアップロードに失敗しました",
+    "failed_to_report": "Faild to send the report"
   },
   "dialog": {
     "account_not_found": {
-      "title": "Account not found",
-      "message": "The account does not exist in the server, do you want to open the account in your browser?",
-      "button": "Open"
+      "title": "アカウントが見つかりません",
+      "message": "アカウントがサーバーに存在しません。ブラウザでアカウントを開きますか？",
+      "button": "開く"
     }
   },
   "walkthrough": {
@@ -194,7 +195,8 @@
         "title": "詳細",
         "browser": "元のページを開く",
         "edit": "編集",
-        "delete": "削除"
+        "delete": "削除",
+        "report": "Report"
       }
     },
     "status": {
@@ -234,6 +236,35 @@
       "unmute": "ミュートを解除",
       "block": "ブロック",
       "unblock": "ブロックを解除"
+    }
+  },
+  "report": {
+    "title": "Report {{user}}",
+    "category": {
+      "title": "Tell us what's going on with this post",
+      "description": "Choose the best match",
+      "spam": "It's spam",
+      "violation": "It violates server rules",
+      "other": "It's something else",
+      "next": "Next"
+    },
+    "rules": {
+      "title": "Which rules are being violated?",
+      "description": "Select all that apply",
+      "no_rules": "There is not rule in this server.",
+      "next": "Next"
+    },
+    "statuses": {
+      "title": "Are there any posts that back up this report?",
+      "description": "Select all that apply",
+      "no_status": "There is not status.",
+      "next": "Next"
+    },
+    "comment": {
+      "title": "Is there anything else you think we should know?",
+      "placeholder": "Additional comments",
+      "forward": "Forward to the original server",
+      "next": "Submit"
     }
   }
 }
