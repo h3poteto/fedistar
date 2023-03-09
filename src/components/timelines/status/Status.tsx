@@ -142,7 +142,7 @@ const Status: React.FC<Props> = props => {
               <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', color: 'var(--rs-text-tertiary)' }}>
                 <Time
                   time={status.created_at}
-                  onClick={() => props.setStatusDetail && props.setStatusDetail(props.status.id, props.server.id, props.account.id)}
+                  onClick={() => props.setStatusDetail && props.setStatusDetail(props.status.id, props.server.id, props.account?.id)}
                 />
               </FlexboxGrid.Item>
             </FlexboxGrid>
