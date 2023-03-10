@@ -20,7 +20,7 @@
     "validation_attachments_length": "{{limit}} 個以上のファイルを添付できません。",
     "validation_attachments_type": "画像または動画のみ添付できます",
     "upload_error": "ファイルのアップロードに失敗しました",
-    "failed_to_report": "Faild to send the report"
+    "failed_to_report": "通報の送信に失敗しました"
   },
   "dialog": {
     "account_not_found": {
@@ -196,7 +196,7 @@
         "browser": "元のページを開く",
         "edit": "編集",
         "delete": "削除",
-        "report": "Report"
+        "report": "通報"
       }
     },
     "status": {
@@ -239,32 +239,32 @@
     }
   },
   "report": {
-    "title": "Report {{user}}",
+    "title": "{{user}} を通報",
     "category": {
-      "title": "Tell us what's going on with this post",
-      "description": "Choose the best match",
-      "spam": "It's spam",
-      "violation": "It violates server rules",
-      "other": "It's something else",
-      "next": "Next"
+      "title": "この投稿のについて教えてください",
+      "description": "近いものを選択してください",
+      "spam": "これはスパムです",
+      "violation": "サーバーのルールに違反しています",
+      "other": "その他",
+      "next": "次へ"
     },
     "rules": {
-      "title": "Which rules are being violated?",
-      "description": "Select all that apply",
-      "no_rules": "There is not rule in this server.",
-      "next": "Next"
+      "title": "どのルールに違反していますか？",
+      "description": "当てはまるものをすべて選んでください",
+      "no_rules": "このサーバーにはルールがありません。",
+      "next": "次へ"
     },
     "statuses": {
-      "title": "Are there any posts that back up this report?",
-      "description": "Select all that apply",
-      "no_status": "There is not status.",
-      "next": "Next"
+      "title": "この通報を裏付けるような投稿はありますか？",
+      "description": "当てはまるものをすべて選んでください",
+      "no_status": "投稿がありません。",
+      "next": "次へ"
     },
     "comment": {
-      "title": "Is there anything else you think we should know?",
-      "placeholder": "Additional comments",
-      "forward": "Forward to the original server",
-      "next": "Submit"
+      "title": "その他に私たちに伝えておくべき事はありますか？",
+      "placeholder": "追加コメント",
+      "forward": "投稿元のサーバーに転送する",
+      "next": "送信"
     }
   }
 }
