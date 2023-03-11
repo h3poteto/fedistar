@@ -196,7 +196,8 @@
         "browser": "元のページを開く",
         "edit": "編集",
         "delete": "削除",
-        "report": "通報"
+        "report": "通報",
+        "from_other_account": "React from other accounts"
       }
     },
     "status": {
@@ -265,6 +266,19 @@
       "placeholder": "追加コメント",
       "forward": "投稿元のサーバーに転送する",
       "next": "送信"
+    }
+  },
+  "from_other_account": {
+    "title": "React from other accounts",
+    "accounts": {
+      "title": "Which account do you want react from?",
+      "next": "Next"
+    },
+    "status": {
+      "title": "React on the status",
+      "searching": "Searching",
+      "not_found": "Sorry, the status is not found in {{server}}",
+      "next": "Close"
     }
   }
 }
