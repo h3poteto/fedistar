@@ -49,6 +49,7 @@ export default function FromOtherAccount(props: Props) {
       return (
         <Status
           client={client}
+          account={account}
           server={server}
           target={props.status}
           next={() => {

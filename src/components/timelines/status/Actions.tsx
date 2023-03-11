@@ -14,16 +14,25 @@ import { useTranslation } from 'react-i18next'
 import { Account } from 'src/entities/account'
 
 type Props = {
-  disabled: boolean
+  disabled:
+    | boolean
+    | {
+        reply: boolean
+        reblog: boolean
+        favourite: boolean
+        bookmark: boolean
+        emoji: boolean
+        detail: boolean
+      }
   server: Server
   account: Account | null
   status: Entity.Status
   client: MegalodonInterface
-  setShowReply: Dispatch<SetStateAction<boolean>>
-  setShowEdit: Dispatch<SetStateAction<boolean>>
+  setShowReply?: Dispatch<SetStateAction<boolean>>
+  setShowEdit?: Dispatch<SetStateAction<boolean>>
   updateStatus: (status: Entity.Status) => void
-  openReport: () => void
-  openFromOtherAccount: () => void
+  openReport?: () => void
+  openFromOtherAccount?: () => void
 }
 
 const Actions: React.FC<Props> = props => {
@@ -118,7 +127,7 @@ const Actions: React.FC<Props> = props => {
       <FlexboxGrid>
         <FlexboxGrid.Item>
           <ActionButton
-            disabled={props.disabled}
+            disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.reply}
             icon={<Icon as={BsChat} />}
             onClick={() => props.setShowReply(current => !current)}
             title={t('timeline.actions.reply')}
@@ -126,7 +135,11 @@ const Actions: React.FC<Props> = props => {
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
           <ActionButton
-            disabled={props.disabled || status.visibility === 'direct' || status.visibility === 'private'}
+            disabled={
+              (typeof props.disabled === 'boolean' ? props.disabled : props.disabled.reblog) ||
+              status.visibility === 'direct' ||
+              status.visibility === 'private'
+            }
             className="reblog-action"
             activating={reblogActivating}
             deactivating={reblogDeactivating}
@@ -137,7 +150,7 @@ const Actions: React.FC<Props> = props => {
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
           <ActionButton
-            disabled={props.disabled}
+            disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.favourite}
             className="favourite-action"
             activating={favouriteActivating}
             deactivating={favouriteDeactivating}
@@ -148,7 +161,7 @@ const Actions: React.FC<Props> = props => {
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
           <ActionButton
-            disabled={props.disabled}
+            disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.bookmark}
             icon={bookmarkIcon(props.status)}
             onClick={bookmark}
             title={t('timeline.actions.bookmark')}
@@ -159,7 +172,7 @@ const Actions: React.FC<Props> = props => {
             <IconButton
               appearance="link"
               icon={<Icon as={BsEmojiSmile} />}
-              disabled={props.disabled || props.server.sns === 'mastodon'}
+              disabled={(typeof props.disabled === 'boolean' ? props.disabled : props.disabled.emoji) || props.server.sns === 'mastodon'}
               title={t('timeline.actions.emoji_reaction')}
             />
           </Whisper>
@@ -201,7 +214,7 @@ const Actions: React.FC<Props> = props => {
             <IconButton
               appearance="link"
               icon={<Icon as={BsThreeDots} />}
-              disabled={props.disabled}
+              disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.detail}
               title={t('timeline.actions.detail.title')}
             />
           </Whisper>
