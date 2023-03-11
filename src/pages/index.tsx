@@ -25,6 +25,7 @@ import Detail from 'src/components/detail/Detail'
 import { useTranslation } from 'react-i18next'
 import { Account } from 'src/entities/account'
 import Report from 'src/components/report/Report'
+import FromOtherAccount from 'src/components/fromOtherAccount/FromOtherAccount'
 
 function App() {
   const { t, i18n } = useTranslation()
@@ -154,6 +155,11 @@ function App() {
         client={modalState.report.client}
         close={() => dispatch({ target: 'report', value: false, object: null, client: null })}
       />
+      <FromOtherAccount
+        opened={modalState.fromOtherAccount.opened}
+        status={modalState.fromOtherAccount.object}
+        close={() => dispatch({ target: 'fromOtherAccount', value: false, object: null })}
+      />
 
       <Container style={{ height: '100%' }}>
         <Navigator
@@ -192,6 +198,7 @@ function App() {
               openReport={(status: Entity.Status, client: MegalodonInterface) =>
                 dispatch({ target: 'report', value: true, object: status, client: client })
               }
+              openFromOtherAccount={(status: Entity.Status) => dispatch({ target: 'fromOtherAccount', value: true, object: status })}
             />
           ))}
           <NewTimeline servers={servers} />
@@ -204,6 +211,7 @@ function App() {
           openReport={(status: Entity.Status, client: MegalodonInterface) =>
             dispatch({ target: 'report', value: true, object: status, client: client })
           }
+          openFromOtherAccount={(status: Entity.Status) => dispatch({ target: 'fromOtherAccount', value: true, object: status })}
         />
       </Container>
     </div>
@@ -231,6 +239,10 @@ type ModalState = {
     object: Entity.Status | null
     client: MegalodonInterface | null
   }
+  fromOtherAccount: {
+    opened: boolean
+    object: Entity.Status | null
+  }
 }
 
 const initialModalState: ModalState = {
@@ -253,6 +265,10 @@ const initialModalState: ModalState = {
     opened: false,
     object: null,
     client: null
+  },
+  fromOtherAccount: {
+    opened: false,
+    object: null
   }
 }
 
@@ -271,6 +287,8 @@ const modalReducer = (
       return { ...current, settings: { opened: action.value } }
     case 'report':
       return { ...current, report: { opened: action.value, object: action.object, client: action.client } }
+    case 'fromOtherAccount':
+      return { ...current, fromOtherAccount: { opened: action.value, object: action.object } }
     default:
       return current
   }

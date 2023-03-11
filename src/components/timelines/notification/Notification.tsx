@@ -16,6 +16,7 @@ type Props = {
   setStatusDetail: (statusId: string, serverId: number, accountId?: number) => void
   setAccountDetail: (userId: string, serverId: number, accountId?: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
+  openFromOtherAccount: (status: Entity.Status) => void
 }
 
 const notification = (props: Props) => {
@@ -58,6 +59,7 @@ const notification = (props: Props) => {
           setStatusDetail={props.setStatusDetail}
           setAccountDetail={props.setAccountDetail}
           openReport={props.openReport}
+          openFromOtherAccount={props.openFromOtherAccount}
         />
       )
     default:

@@ -196,7 +196,8 @@
         "browser": "Open original page",
         "edit": "Edit",
         "delete": "Delete",
-        "report": "Report"
+        "report": "Report",
+        "from_other_account": "React from other accounts"
       }
     },
     "status": {
@@ -265,6 +266,19 @@
       "placeholder": "Additional comments",
       "forward": "Forward to the original server",
       "next": "Submit"
+    }
+  },
+  "from_other_account": {
+    "title": "React from other accounts",
+    "accounts": {
+      "title": "Which account do you want react from?",
+      "next": "Next"
+    },
+    "status": {
+      "title": "React on the status",
+      "searching": "Searching",
+      "not_found": "Sorry, the status is not found in {{server}}",
+      "next": "Close"
     }
   }
 }

@@ -23,6 +23,7 @@ const FollowersTab = forwardRef(Followers)
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
+  openFromOtherAccount: (status: Entity.Status) => void
 }
 
 const Profile: React.FC<Props> = props => {
@@ -167,6 +168,7 @@ const Profile: React.FC<Props> = props => {
             account={account}
             openMedia={props.openMedia}
             openReport={props.openReport}
+            openFromOtherAccount={props.openFromOtherAccount}
             ref={postsRef}
           />
         )

@@ -7,7 +7,7 @@ import LinkPreview from './LinkPreview'
 
 type Props = {
   status: Entity.Status
-  onClick: (e: any) => void
+  onClick?: (e: any) => void
 } & HTMLAttributes<HTMLElement>
 
 const Body: React.FC<Props> = props => {

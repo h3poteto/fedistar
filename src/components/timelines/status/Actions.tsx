@@ -25,15 +25,25 @@ import { useTranslation } from 'react-i18next'
 import { Account } from 'src/entities/account'
 
 type Props = {
-  disabled: boolean
+  disabled:
+    | boolean
+    | {
+        reply: boolean
+        reblog: boolean
+        favourite: boolean
+        bookmark: boolean
+        emoji: boolean
+        detail: boolean
+      }
   server: Server
   account: Account | null
   status: Entity.Status
   client: MegalodonInterface
-  setShowReply: Dispatch<SetStateAction<boolean>>
-  setShowEdit: Dispatch<SetStateAction<boolean>>
+  setShowReply?: Dispatch<SetStateAction<boolean>>
+  setShowEdit?: Dispatch<SetStateAction<boolean>>
   updateStatus: (status: Entity.Status) => void
-  openReport: () => void
+  openReport?: () => void
+  openFromOtherAccount?: () => void
 }
 
 const Actions: React.FC<Props> = props => {
@@ -128,7 +138,7 @@ const Actions: React.FC<Props> = props => {
       <FlexboxGrid>
         <FlexboxGrid.Item>
           <ActionButton
-            disabled={props.disabled}
+            disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.reply}
             icon={<Icon as={BsChat} />}
             onClick={() => props.setShowReply(current => !current)}
             title={t('timeline.actions.reply')}
@@ -136,7 +146,11 @@ const Actions: React.FC<Props> = props => {
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
           <ActionButton
-            disabled={props.disabled || status.visibility === 'direct' || status.visibility === 'private'}
+            disabled={
+              (typeof props.disabled === 'boolean' ? props.disabled : props.disabled.reblog) ||
+              status.visibility === 'direct' ||
+              status.visibility === 'private'
+            }
             className="reblog-action"
             activating={reblogActivating}
             deactivating={reblogDeactivating}
@@ -147,7 +161,7 @@ const Actions: React.FC<Props> = props => {
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
           <ActionButton
-            disabled={props.disabled}
+            disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.favourite}
             className="favourite-action"
             activating={favouriteActivating}
             deactivating={favouriteDeactivating}
@@ -158,7 +172,7 @@ const Actions: React.FC<Props> = props => {
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
           <ActionButton
-            disabled={props.disabled}
+            disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.bookmark}
             icon={bookmarkIcon(props.status)}
             onClick={bookmark}
             title={t('timeline.actions.bookmark')}
@@ -169,7 +183,7 @@ const Actions: React.FC<Props> = props => {
             <IconButton
               appearance="link"
               icon={<Icon as={BsEmojiSmile} />}
-              disabled={props.disabled || props.server.sns === 'mastodon'}
+              disabled={(typeof props.disabled === 'boolean' ? props.disabled : props.disabled.emoji) || props.server.sns === 'mastodon'}
               title={t('timeline.actions.emoji_reaction')}
             />
           </Whisper>
@@ -199,6 +213,9 @@ const Actions: React.FC<Props> = props => {
                   },
                   onReport: () => {
                     props.openReport()
+                  },
+                  onFromOtherAccount: () => {
+                    props.openFromOtherAccount()
                   }
                 },
                 ref
@@ -208,7 +225,7 @@ const Actions: React.FC<Props> = props => {
             <IconButton
               appearance="link"
               icon={<Icon as={BsThreeDots} />}
-              disabled={props.disabled}
+              disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.detail}
               title={t('timeline.actions.detail.title')}
             />
           </Whisper>
@@ -259,6 +276,7 @@ type DetailMenuProps = {
   openEdit: () => void
   onClose: (delay?: number) => NodeJS.Timeout | void
   onReport: () => void
+  onFromOtherAccount: () => void
 }
 
 const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>) => {
@@ -280,6 +298,9 @@ const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>)
       case 'report':
         props.onReport()
         return
+      case 'from_other_account':
+        props.onFromOtherAccount()
+        return
     }
   }
 
@@ -291,6 +312,8 @@ const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>)
         {props.own && <Dropdown.Item eventKey="delete">{t('timeline.actions.detail.delete')}</Dropdown.Item>}
         <Dropdown.Separator />
         <Dropdown.Item eventKey="report">{t('timeline.actions.detail.report')}</Dropdown.Item>
+        <Dropdown.Separator />
+        <Dropdown.Item eventKey="from_other_account">{t('timeline.actions.detail.from_other_account')}</Dropdown.Item>
       </Dropdown.Menu>
     </Popover>
   )
