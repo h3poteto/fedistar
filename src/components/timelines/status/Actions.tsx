@@ -23,6 +23,7 @@ type Props = {
   setShowEdit: Dispatch<SetStateAction<boolean>>
   updateStatus: (status: Entity.Status) => void
   openReport: () => void
+  openFromOtherAccount: () => void
 }
 
 const Actions: React.FC<Props> = props => {
@@ -188,6 +189,9 @@ const Actions: React.FC<Props> = props => {
                   },
                   onReport: () => {
                     props.openReport()
+                  },
+                  onFromOtherAccount: () => {
+                    props.openFromOtherAccount()
                   }
                 },
                 ref
@@ -241,6 +245,7 @@ type DetailMenuProps = {
   openEdit: () => void
   onClose: (delay?: number) => NodeJS.Timeout | void
   onReport: () => void
+  onFromOtherAccount: () => void
 }
 
 const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>) => {
@@ -262,6 +267,9 @@ const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>)
       case 'report':
         props.onReport()
         return
+      case 'from_other_account':
+        props.onFromOtherAccount()
+        return
     }
   }
 
@@ -273,6 +281,8 @@ const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>)
         {props.own && <Dropdown.Item eventKey="delete">{t('timeline.actions.detail.delete')}</Dropdown.Item>}
         <Dropdown.Separator />
         <Dropdown.Item eventKey="report">{t('timeline.actions.detail.report')}</Dropdown.Item>
+        <Dropdown.Separator />
+        <Dropdown.Item eventKey="from_other_account">{t('timeline.actions.detail.from_other_account')}</Dropdown.Item>
       </Dropdown.Menu>
     </Popover>
   )

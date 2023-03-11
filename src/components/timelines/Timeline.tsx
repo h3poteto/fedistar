@@ -45,6 +45,7 @@ type Props = {
   server: Server
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
+  openFromOtherAccount: (status: Entity.Status) => void
 }
 
 const Timeline: React.FC<Props> = props => {
@@ -434,6 +435,7 @@ const Timeline: React.FC<Props> = props => {
                       setStatusDetail={setStatusDetail}
                       setAccountDetail={setAccountDetail}
                       openReport={props.openReport}
+                      openFromOtherAccount={props.openFromOtherAccount}
                     />
                   </List.Item>
                 )}

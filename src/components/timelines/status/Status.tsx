@@ -28,6 +28,7 @@ type Props = {
   setStatusDetail?: (statusId: string, serverId: number, accountId?: number) => void
   setAccountDetail: (userId: string, serverId: number, accountId?: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
+  openFromOtherAccount: (status: Entity.Status) => void
 } & HTMLAttributes<HTMLElement>
 
 const Status: React.FC<Props> = props => {
@@ -169,6 +170,7 @@ const Status: React.FC<Props> = props => {
             setShowEdit={setShowEdit}
             updateStatus={props.updateStatus}
             openReport={() => props.openReport(status, props.client)}
+            openFromOtherAccount={() => props.openFromOtherAccount(status)}
           />
         </FlexboxGrid.Item>
       </FlexboxGrid>

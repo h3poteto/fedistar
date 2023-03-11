@@ -13,6 +13,7 @@ type Props = {
   setUnreads: (a: Array<Unread>) => void
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
+  openFromOtherAccount: (status: Entity.Status) => void
 }
 
 const Show: React.FC<Props> = props => {
@@ -25,12 +26,21 @@ const Show: React.FC<Props> = props => {
         setUnreads={props.setUnreads}
         openMedia={props.openMedia}
         openReport={props.openReport}
+        openFromOtherAccount={props.openFromOtherAccount}
       />
     )
   } else if (props.timeline.kind === 'direct') {
     return <ShowConversations server={props.server} timeline={props.timeline} openMedia={props.openMedia} />
   } else {
-    return <ShowTimeline timeline={props.timeline} server={props.server} openMedia={props.openMedia} openReport={props.openReport} />
+    return (
+      <ShowTimeline
+        timeline={props.timeline}
+        server={props.server}
+        openMedia={props.openMedia}
+        openReport={props.openReport}
+        openFromOtherAccount={props.openFromOtherAccount}
+      />
+    )
   }
 }
 

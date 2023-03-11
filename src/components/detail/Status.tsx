@@ -10,6 +10,7 @@ import Status from '../timelines/status/Status'
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
+  openFromOtherAccount: (status: Entity.Status) => void
 }
 
 const StatusDetail: React.FC<Props> = props => {
@@ -134,6 +135,7 @@ const StatusDetail: React.FC<Props> = props => {
                 setReplyOpened={() => null}
                 setAccountDetail={setAccountDetail}
                 openReport={props.openReport}
+                openFromOtherAccount={props.openFromOtherAccount}
               />
             </List.Item>
           ))}

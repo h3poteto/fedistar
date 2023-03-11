@@ -13,6 +13,7 @@ type Props = {
   dispatch: Dispatch<{ target: string; value: boolean; object?: any; index?: number }>
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
+  openFromOtherAccount: (status: Entity.Status) => void
 }
 
 const Detail: React.FC<Props> = props => {
@@ -71,9 +72,12 @@ const Detail: React.FC<Props> = props => {
                   props.dispatch({ target: 'media', value: true, object: media, index: index })
                 }
                 openReport={props.openReport}
+                openFromOtherAccount={props.openFromOtherAccount}
               />
             )}
-            {target === 'profile' && <Profile openMedia={props.openMedia} openReport={props.openReport} />}
+            {target === 'profile' && (
+              <Profile openMedia={props.openMedia} openReport={props.openReport} openFromOtherAccount={props.openFromOtherAccount} />
+            )}
           </Container>
         </div>
       )}
