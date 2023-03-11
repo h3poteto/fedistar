@@ -1,6 +1,17 @@
 import { open } from '@tauri-apps/api/shell'
 import { FlexboxGrid, useToaster, Popover, Whisper, IconButton, Dropdown } from 'rsuite'
-import { BsChat, BsEmojiSmile, BsThreeDots, BsStar, BsStarFill, BsBookmark, BsFillBookmarkFill, BsArrowRepeat } from 'react-icons/bs'
+import {
+  BsChat,
+  BsEmojiSmile,
+  BsThreeDots,
+  BsStar,
+  BsStarFill,
+  BsBookmark,
+  BsFillBookmarkFill,
+  BsArrowRepeat,
+  BsEnvelope,
+  BsLock
+} from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 import { Dispatch, SetStateAction, ReactElement, useState, forwardRef, useRef } from 'react'
 import { Entity, MegalodonInterface, Response } from 'megalodon'
@@ -211,7 +222,14 @@ const reblogIcon = (status: Entity.Status): ReactElement => {
   if (status.reblogged) {
     return <Icon as={BsArrowRepeat} color="green" />
   } else {
-    return <Icon as={BsArrowRepeat} />
+    switch (status.visibility) {
+      case 'direct':
+        return <Icon as={BsEnvelope} />
+      case 'private':
+        return <Icon as={BsLock} />
+      default:
+        return <Icon as={BsArrowRepeat} />
+    }
   }
 }
 
