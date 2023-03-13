@@ -333,6 +333,16 @@ const Status: React.FC<Props> = props => {
     )
   }
 
+  const targetId = () => {
+    if (props.in_reply_to) {
+      return `emoji-picker-reply-${props.in_reply_to.id}`
+    } else if (props.edit_target) {
+      return `emoji-picker-edit-${props.edit_target.id}`
+    } else {
+      return `emoji-picker-compose`
+    }
+  }
+
   return (
     <Form fluid model={model} ref={formRef} onChange={setFormValue} onCheck={setFormError} formValue={formValue}>
       {cw && (
@@ -352,7 +362,16 @@ const Status: React.FC<Props> = props => {
           emojis={customEmojis}
           client={props.client}
         />
-        <Whisper trigger="click" placement="bottomStart" ref={emojiPickerRef} speaker={<EmojiPicker />}>
+        {/** delay is required to fix popover position **/}
+        <Whisper
+          trigger="click"
+          placement="bottomEnd"
+          controlId={targetId()}
+          delay={100}
+          preventOverflow={false}
+          ref={emojiPickerRef}
+          speaker={<EmojiPicker />}
+        >
           <Button appearance="link" style={{ position: 'absolute', top: '4px', right: '8px', padding: 0 }}>
             <Icon as={BsEmojiLaughing} style={{ fontSize: '1.2em' }} />
           </Button>

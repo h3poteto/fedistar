@@ -129,7 +129,7 @@ const Actions: React.FC<Props> = props => {
 
   const EmojiPicker = forwardRef<HTMLDivElement>((props, ref) => (
     <Popover ref={ref} {...props}>
-      <Picker data={data} onEmojiSelect={onEmojiSelect} previewPosition="none" set="native" perLine="7" />
+      <Picker data={data} onEmojiSelect={onEmojiSelect} previewPosition="none" set="native" perLine="6" />
     </Popover>
   ))
 
@@ -179,7 +179,8 @@ const Actions: React.FC<Props> = props => {
           />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
-          <Whisper trigger="click" placement="bottomStart" ref={emojiPickerRef} speaker={<EmojiPicker />}>
+          {/** delay is required to fix popover position **/}
+          <Whisper trigger="click" placement="bottomEnd" delay={100} ref={emojiPickerRef} speaker={<EmojiPicker />}>
             <IconButton
               appearance="link"
               icon={<Icon as={BsEmojiSmile} />}
