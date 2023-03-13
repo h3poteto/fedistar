@@ -197,7 +197,7 @@
         "edit": "編集",
         "delete": "削除",
         "report": "通報",
-        "from_other_account": "React from other accounts"
+        "from_other_account": "他のアカウントからリアクション"
       }
     },
     "status": {
@@ -269,16 +269,16 @@
     }
   },
   "from_other_account": {
-    "title": "React from other accounts",
+    "title": "他のアカウントからリアクション",
     "accounts": {
-      "title": "Which account do you want react from?",
-      "next": "Next"
+      "title": "どのアカウントからリアクションしますか？",
+      "next": "次へ"
     },
     "status": {
-      "title": "React on the status",
-      "searching": "Searching",
-      "not_found": "Sorry, the status is not found in {{server}}",
-      "next": "Close"
+      "title": "投稿にブースト、お気に入り、ブックマークができます",
+      "searching": "検索中…",
+      "not_found": "投稿が {{server}} 内で見つかりませんでした。",
+      "next": "閉じる"
     }
   }
 }
