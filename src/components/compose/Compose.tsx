@@ -46,6 +46,8 @@ const Compose: React.FC<Props> = props => {
 
   const [accounts, setAccounts] = useState<Array<[Account, Server]>>([])
   const [fromAccount, setFromAccount] = useState<[Account, Server]>()
+  const [defaultVisibility, setDefaultVisibility] = useState<'public' | 'unlisted' | 'private' | 'direct'>('public')
+  const [defaultNSFW, setDefaultNSFW] = useState(false)
   const [client, setClient] = useState<MegalodonInterface>()
 
   useEffect(() => {
@@ -69,6 +71,12 @@ const Compose: React.FC<Props> = props => {
     }
     const client = generator(fromAccount[1].sns, fromAccount[1].base_url, fromAccount[0].access_token, USER_AGENT)
     setClient(client)
+    const f = async () => {
+      const res = await client.verifyAccountCredentials()
+      setDefaultVisibility(res.data.source.privacy as 'public' | 'unlisted' | 'private' | 'direct')
+      setDefaultNSFW(res.data.source.sensitive)
+    }
+    f()
   }, [fromAccount])
 
   const selectAccount = async (eventKey: string) => {
@@ -103,7 +111,15 @@ const Compose: React.FC<Props> = props => {
           </FlexboxGrid.Item>
         </FlexboxGrid>
         <div style={{ fontSize: '1.2em', padding: '12px 0' }}>{t('compose.status.title')}</div>
-        {fromAccount && <Status client={client} server={fromAccount[1]} account={fromAccount[0]} />}
+        {fromAccount && (
+          <Status
+            client={client}
+            server={fromAccount[1]}
+            account={fromAccount[0]}
+            defaultVisibility={defaultVisibility}
+            defaultNSFW={defaultNSFW}
+          />
+        )}
       </Content>
     </Container>
   )
