@@ -7,7 +7,7 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "Fedistar",
+    "productName": "fedistar",
     "version": "1.1.0"
   },
   "tauri": {
