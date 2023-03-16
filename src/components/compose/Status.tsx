@@ -36,6 +36,8 @@ type Props = {
   client: MegalodonInterface
   in_reply_to?: Entity.Status
   edit_target?: Entity.Status
+  defaultVisibility?: 'public' | 'unlisted' | 'private' | 'direct'
+  defaultNSFW?: boolean
   onClose?: () => void
 }
 
@@ -150,6 +152,22 @@ const Status: React.FC<Props> = props => {
       f()
     }
   }, [props.edit_target, props.client])
+
+  useEffect(() => {
+    if (props.defaultVisibility) {
+      setVisibility(props.defaultVisibility)
+    }
+  }, [props.defaultVisibility])
+
+  useEffect(() => {
+    if (props.defaultNSFW) {
+      setFormValue(current =>
+        Object.assign({}, current, {
+          nsfw: props.defaultNSFW
+        })
+      )
+    }
+  }, [props.defaultNSFW])
 
   const handleSubmit = async () => {
     if (loading) {
