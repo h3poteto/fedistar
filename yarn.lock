@@ -3601,10 +3601,10 @@ rrweb-cssom@^0.6.0:
   resolved "https://registry.yarnpkg.com/rrweb-cssom/-/rrweb-cssom-0.6.0.tgz#ed298055b97cbddcdeb278f904857629dec5e0e1"
   integrity sha512-APM0Gt1KoXBz0iIkkdB/kfvGOwC4UuJFeG/c+yV7wSc7q96cG/kJ0HiYCnzivD9SB53cLV1MlHFNfOuPaadYSw==
 
-rsuite-table@^5.9.0:
-  version "5.9.0"
-  resolved "https://registry.yarnpkg.com/rsuite-table/-/rsuite-table-5.9.0.tgz#72a24e8fae8d6f04da1ce5bc0ef55321a80ce0c9"
-  integrity sha512-1zA7o9e2vEFbz1Z/2Ud5bGK73ixHE/A2BYA/WYxODc+QyzxiOxJvve1vw70Q7V7iDl7paQ0aIutUhOHKw1KcKw==
+rsuite-table@^5.10.1:
+  version "5.10.1"
+  resolved "https://registry.yarnpkg.com/rsuite-table/-/rsuite-table-5.10.1.tgz#69a5828a38edfb586651b434a58f973b819a85f5"
+  integrity sha512-95vB4mPhxPKkq+EfYgQFVJ3BWDbRIVUs59hMwnYXZhiLKY1fY/cJd+ETeB725Qqcj7/AN3tDySo+CIKWLp1FAA==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@juggle/resize-observer" "^3.3.1"
@@ -3614,10 +3614,10 @@ rsuite-table@^5.9.0:
     lodash "^4.17.21"
     react-is "^17.0.2"
 
-rsuite@^5.28.2:
-  version "5.28.2"
-  resolved "https://registry.yarnpkg.com/rsuite/-/rsuite-5.28.2.tgz#e7bad90bc0159d6d87783e492473926585b82e0b"
-  integrity sha512-IYfpCRMQChoDfeO96r3i2r7nucKpDQYhDSEk8lfVz9B5uOd9W4jlERXwvv8oC06VzRF67XYv27sFvc8lkccF5g==
+rsuite@^5.28.3:
+  version "5.28.3"
+  resolved "https://registry.yarnpkg.com/rsuite/-/rsuite-5.28.3.tgz#2ebc3f8eff9b080a17989ec352df0771763f19a4"
+  integrity sha512-1zOlIdb84zzhtguZwqs/efyB4tqOXFwURiBb4c+mPAu1TiG91FyvWwclaBdcxc5mPv/GMvd/4hcEGfQKuLIodg==
   dependencies:
     "@babel/runtime" "^7.20.1"
     "@juggle/resize-observer" "^3.4.0"
@@ -3632,8 +3632,8 @@ rsuite@^5.28.2:
     lodash "^4.17.11"
     prop-types "^15.8.1"
     react-window "^1.8.8"
-    rsuite-table "^5.9.0"
-    schema-typed "^2.1.0"
+    rsuite-table "^5.10.1"
+    schema-typed "^2.1.2"
 
 run-parallel@^1.1.9:
   version "1.2.0"
@@ -3682,7 +3682,7 @@ scheduler@^0.23.0:
   dependencies:
     loose-envify "^1.1.0"
 
-schema-typed@^2.1.0:
+schema-typed@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/schema-typed/-/schema-typed-2.1.2.tgz#d2b013d356f4f422e4990f82dd0374b92493f03b"
   integrity sha512-5BCduF1qt9ch2kEqc3/4Jj0mZfUzh+E8iIto5AViOwgReCho2yiT1LlQJ/5KQ1MTkthD8EDokLA/BlhbYow7Bw==
