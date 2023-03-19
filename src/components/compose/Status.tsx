@@ -29,6 +29,7 @@ import alert from 'src/components/utils/alert'
 import { Account } from 'src/entities/account'
 import { useTranslation } from 'react-i18next'
 import AutoCompleteTextarea, { ArgProps as AutoCompleteTextareaProps } from './AutoCompleteTextarea'
+import languages from 'src/utils/languages'
 
 type Props = {
   server: Server
@@ -38,6 +39,7 @@ type Props = {
   edit_target?: Entity.Status
   defaultVisibility?: 'public' | 'unlisted' | 'private' | 'direct'
   defaultNSFW?: boolean
+  defaultLanguage?: string | null
   onClose?: () => void
 }
 
@@ -77,6 +79,7 @@ const Status: React.FC<Props> = props => {
   const [loading, setLoading] = useState<boolean>(false)
   const [visibility, setVisibility] = useState<'public' | 'unlisted' | 'private' | 'direct'>('public')
   const [cw, setCW] = useState<boolean>(false)
+  const [language, setLanguage] = useState<string>('en')
 
   const formRef = useRef<any>()
   const statusRef = useRef<HTMLDivElement>()
@@ -120,6 +123,9 @@ const Status: React.FC<Props> = props => {
         .filter(a => a !== props.account.username)
       setFormValue({ spoiler: '', status: `${mentionAccounts.map(m => `@${m}`).join(' ')} ` })
       setVisibility(props.in_reply_to.visibility)
+      if (props.in_reply_to.language) {
+        setLanguage(props.in_reply_to.language)
+      }
     }
   }, [props.in_reply_to, props.account])
 
@@ -148,6 +154,9 @@ const Status: React.FC<Props> = props => {
         }
         setFormValue(value)
         setVisibility(target.visibility)
+        if (target.language) {
+          setLanguage(target.language)
+        }
       }
       f()
     }
@@ -168,6 +177,12 @@ const Status: React.FC<Props> = props => {
       )
     }
   }, [props.defaultNSFW])
+
+  useEffect(() => {
+    if (props.defaultLanguage) {
+      setLanguage(props.defaultLanguage)
+    }
+  }, [props.defaultLanguage])
 
   const handleSubmit = async () => {
     if (loading) {
@@ -195,6 +210,11 @@ const Status: React.FC<Props> = props => {
         if (formValue.nsfw !== undefined) {
           options = Object.assign({}, options, {
             sensitive: formValue.nsfw
+          })
+        }
+        if (language) {
+          options = Object.assign({}, options, {
+            language: language
           })
         }
         if (formValue.spoiler.length > 0) {
@@ -351,6 +371,25 @@ const Status: React.FC<Props> = props => {
     )
   }
 
+  const LanguageDropdown = ({ onClose, left, top, className }, ref: any) => {
+    const handleSelect = (key: string) => {
+      setLanguage(key)
+      onClose()
+    }
+
+    return (
+      <Popover ref={ref} className={className} style={{ left, top }} full>
+        <Dropdown.Menu onSelect={handleSelect} style={{ maxHeight: '300px', overflowX: 'scroll' }}>
+          {languages.map((l, index) => (
+            <Dropdown.Item key={index} eventKey={l.value}>
+              {l.label}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Popover>
+    )
+  }
+
   const targetId = () => {
     if (props.in_reply_to) {
       return `emoji-picker-reply-${props.in_reply_to.id}`
@@ -414,6 +453,11 @@ const Status: React.FC<Props> = props => {
           <Button appearance="subtle" onClick={() => setCW(previous => !previous)}>
             <span style={{ fontSize: '0.8em' }}>CW</span>
           </Button>
+          <Whisper placement="bottomEnd" delay={100} trigger="click" speaker={LanguageDropdown} preventOverflow>
+            <Button appearance="subtle">
+              <span style={{ fontSize: '0.8em' }}>{language.toUpperCase()}</span>
+            </Button>
+          </Whisper>
         </ButtonToolbar>
       </Form.Group>
       {formValue.attachments?.length > 0 && (
