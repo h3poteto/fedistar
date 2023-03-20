@@ -48,6 +48,7 @@ const Compose: React.FC<Props> = props => {
   const [fromAccount, setFromAccount] = useState<[Account, Server]>()
   const [defaultVisibility, setDefaultVisibility] = useState<'public' | 'unlisted' | 'private' | 'direct'>('public')
   const [defaultNSFW, setDefaultNSFW] = useState(false)
+  const [defaultLanguage, setDefaultLanguage] = useState<string | null>(null)
   const [client, setClient] = useState<MegalodonInterface>()
 
   useEffect(() => {
@@ -75,6 +76,7 @@ const Compose: React.FC<Props> = props => {
       const res = await client.verifyAccountCredentials()
       setDefaultVisibility(res.data.source.privacy as 'public' | 'unlisted' | 'private' | 'direct')
       setDefaultNSFW(res.data.source.sensitive)
+      setDefaultLanguage(res.data.source.language)
     }
     f()
   }, [fromAccount])
@@ -118,6 +120,7 @@ const Compose: React.FC<Props> = props => {
             account={fromAccount[0]}
             defaultVisibility={defaultVisibility}
             defaultNSFW={defaultNSFW}
+            defaultLanguage={defaultLanguage}
           />
         )}
       </Content>
