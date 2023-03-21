@@ -47,21 +47,25 @@ const notification = (props: Props) => {
         />
       )
     case 'mention':
-      return (
-        <Status
-          client={props.client}
-          status={props.notification.status}
-          server={props.server}
-          account={props.account}
-          updateStatus={props.updateStatus}
-          openMedia={props.openMedia}
-          setReplyOpened={props.setReplyOpened}
-          setStatusDetail={props.setStatusDetail}
-          setAccountDetail={props.setAccountDetail}
-          openReport={props.openReport}
-          openFromOtherAccount={props.openFromOtherAccount}
-        />
-      )
+      if (props.notification.status) {
+        return (
+          <Status
+            client={props.client}
+            status={props.notification.status}
+            server={props.server}
+            account={props.account}
+            updateStatus={props.updateStatus}
+            openMedia={props.openMedia}
+            setReplyOpened={props.setReplyOpened}
+            setStatusDetail={props.setStatusDetail}
+            setAccountDetail={props.setAccountDetail}
+            openReport={props.openReport}
+            openFromOtherAccount={props.openFromOtherAccount}
+          />
+        )
+      } else {
+        return null
+      }
     default:
       return null
   }
