@@ -110,6 +110,14 @@ const StatusDetail: React.FC<Props> = props => {
     }
   }
 
+  const setTagDetail = (tag: string, serverId: number, accountId?: number) => {
+    if (accountId) {
+      router.push({ query: { tag: tag, server_id: serverId, account_id: accountId } })
+    } else {
+      router.push({ query: { tag: tag, server_id: serverId } })
+    }
+  }
+
   return (
     <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'scroll' }}>
       <List hover style={{ width: '340px' }}>
@@ -134,6 +142,7 @@ const StatusDetail: React.FC<Props> = props => {
                 openMedia={props.openMedia}
                 setReplyOpened={() => null}
                 setAccountDetail={setAccountDetail}
+                setTagDetail={setTagDetail}
                 openReport={props.openReport}
                 openFromOtherAccount={props.openFromOtherAccount}
               />

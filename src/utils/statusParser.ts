@@ -21,6 +21,35 @@ export function findLink(target: HTMLElement | null, parentClassName: string): s
   return findLink(parent, parentClassName)
 }
 
+export function findTag(target: HTMLElement, parentClass = 'toot'): string | null {
+  const targetClass = target.getAttribute('class')
+  if (targetClass && targetClass.includes('hashtag')) {
+    return parseTag((target as HTMLLinkElement).href)
+  }
+  // In Pleroma, link does not have class.
+  // So I have to check URL.
+  const link = target as HTMLLinkElement
+  if (link.href && link.href.match(/^https:\/\/[a-zA-Z0-9-.]+\/(tag|tags)\/.+/)) {
+    return parseTag(link.href)
+  }
+  if (target.parentNode === undefined || target.parentNode === null) {
+    return null
+  }
+  const parent = target.parentNode as HTMLElement
+  if (parent.getAttribute('class') === parentClass) {
+    return null
+  }
+  return findTag(parent, parentClass)
+}
+
+function parseTag(tagURL: string): string | null {
+  const res = tagURL.match(/^https:\/\/([a-zA-Z0-9-.]+)\/(tag|tags)\/(.+)/)
+  if (!res) {
+    return null
+  }
+  return res[3]
+}
+
 export function findAccount(target: HTMLElement | null, parentClassName: string): ParsedAccount | null {
   if (!target) {
     return null
