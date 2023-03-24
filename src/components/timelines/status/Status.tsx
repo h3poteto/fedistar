@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
 import Attachments from './Attachments'
-import { accountMatch, findAccount, findLink, ParsedAccount } from 'src/utils/statusParser'
+import { accountMatch, findAccount, findLink, findTag, ParsedAccount } from 'src/utils/statusParser'
 import Reply from 'src/components/compose/Status'
 import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
@@ -27,6 +27,7 @@ type Props = {
   setReplyOpened?: (opened: boolean) => void
   setStatusDetail?: (statusId: string, serverId: number, accountId?: number) => void
   setAccountDetail: (userId: string, serverId: number, accountId?: number) => void
+  setTagDetail: (tag: string, serverId: number, accountId?: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
 } & HTMLAttributes<HTMLElement>
@@ -80,6 +81,14 @@ const Status: React.FC<Props> = props => {
           { placement: 'topCenter', duration: 0 }
         )
       }
+      return
+    }
+
+    // Check hashtag
+    const parsedTag = findTag(e.target as HTMLElement, 'status-body')
+    if (parsedTag) {
+      e.preventDefault()
+      props.setTagDetail(parsedTag, props.server.id, props.account?.id)
       return
     }
 

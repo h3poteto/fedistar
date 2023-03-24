@@ -288,6 +288,14 @@ const Timeline: React.FC<Props> = props => {
     }
   }
 
+  const setTagDetail = (tag: string, serverId: number, accountId?: number) => {
+    if (accountId) {
+      router.push({ query: { tag: tag, server_id: serverId, account_id: accountId } })
+    } else {
+      router.push({ query: { tag: tag, server_id: serverId } })
+    }
+  }
+
   const closeWalkthrough = async () => {
     setWalkthrough(false)
     await invoke('update_instruction', { step: 2 })
@@ -434,6 +442,7 @@ const Timeline: React.FC<Props> = props => {
                       setReplyOpened={opened => (replyOpened.current = opened)}
                       setStatusDetail={setStatusDetail}
                       setAccountDetail={setAccountDetail}
+                      setTagDetail={setTagDetail}
                       openReport={props.openReport}
                       openFromOtherAccount={props.openFromOtherAccount}
                     />

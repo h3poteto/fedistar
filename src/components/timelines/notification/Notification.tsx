@@ -15,6 +15,7 @@ type Props = {
   setReplyOpened: (opened: boolean) => void
   setStatusDetail: (statusId: string, serverId: number, accountId?: number) => void
   setAccountDetail: (userId: string, serverId: number, accountId?: number) => void
+  setTagDetail: (tag: string, serverId: number, accountId?: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
 }
@@ -59,6 +60,7 @@ const notification = (props: Props) => {
             setReplyOpened={props.setReplyOpened}
             setStatusDetail={props.setStatusDetail}
             setAccountDetail={props.setAccountDetail}
+            setTagDetail={props.setTagDetail}
             openReport={props.openReport}
             openFromOtherAccount={props.openFromOtherAccount}
           />

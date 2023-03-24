@@ -85,6 +85,14 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
     }
   }
 
+  const setTagDetail = (tag: string, serverId: number, accountId?: number) => {
+    if (accountId) {
+      router.push({ query: { tag: tag, server_id: serverId, account_id: accountId } })
+    } else {
+      router.push({ query: { tag: tag, server_id: serverId } })
+    }
+  }
+
   return (
     <div style={{ width: '100%' }}>
       {loading ? (
@@ -104,6 +112,7 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
                 updateStatus={updateStatus}
                 openMedia={props.openMedia}
                 setAccountDetail={setAccountDetail}
+                setTagDetail={setTagDetail}
                 openReport={props.openReport}
                 openFromOtherAccount={props.openFromOtherAccount}
               />
@@ -119,6 +128,7 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
                 updateStatus={updateStatus}
                 openMedia={props.openMedia}
                 setAccountDetail={setAccountDetail}
+                setTagDetail={setTagDetail}
                 openReport={props.openReport}
                 openFromOtherAccount={props.openFromOtherAccount}
               />

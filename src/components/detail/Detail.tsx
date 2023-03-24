@@ -8,6 +8,7 @@ import Status from './Status'
 import Profile from './Profile'
 import { useTranslation } from 'react-i18next'
 import { MegalodonInterface } from 'megalodon'
+import TagDetail from './Tag'
 
 type Props = {
   dispatch: Dispatch<{ target: string; value: boolean; object?: any; index?: number }>
@@ -19,7 +20,7 @@ type Props = {
 const Detail: React.FC<Props> = props => {
   const { t } = useTranslation()
 
-  const [target, setTarget] = useState<'status' | 'profile' | null>(null)
+  const [target, setTarget] = useState<'status' | 'profile' | 'tag' | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -27,6 +28,8 @@ const Detail: React.FC<Props> = props => {
       setTarget('status')
     } else if (router.query.user_id) {
       setTarget('profile')
+    } else if (router.query.tag) {
+      setTarget('tag')
     } else {
       setTarget(null)
     }
@@ -77,6 +80,9 @@ const Detail: React.FC<Props> = props => {
             )}
             {target === 'profile' && (
               <Profile openMedia={props.openMedia} openReport={props.openReport} openFromOtherAccount={props.openFromOtherAccount} />
+            )}
+            {target === 'tag' && (
+              <TagDetail openMedia={props.openMedia} openReport={props.openReport} openFromOtherAccount={props.openFromOtherAccount} />
             )}
           </Container>
         </div>

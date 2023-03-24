@@ -1,10 +1,11 @@
 import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Content, List } from 'rsuite'
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
+import { Virtuoso } from 'react-virtuoso'
 import Status from '../timelines/status/Status'
 
 type Props = {
@@ -13,14 +14,12 @@ type Props = {
   openFromOtherAccount: (status: Entity.Status) => void
 }
 
-const StatusDetail: React.FC<Props> = props => {
+export default function TagDetail(props: Props) {
   const [client, setClient] = useState<MegalodonInterface | null>(null)
   const [server, setServer] = useState<Server | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
-  const [status, setStatus] = useState<Entity.Status | null>(null)
-  const [ancestors, setAncestors] = useState<Array<Entity.Status>>([])
-  const [descendants, setDescendants] = useState<Array<Entity.Status>>([])
-
+  const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
+  const [tag, setTag] = useState('')
   const router = useRouter()
 
   useEffect(() => {
@@ -41,66 +40,39 @@ const StatusDetail: React.FC<Props> = props => {
         cli = generator(server.sns, server.base_url, undefined, 'Fedistar')
         setClient(cli)
       }
-      if (router.query.status_id) {
-        const res = await cli.getStatus(router.query.status_id.toString())
-        setStatus(res.data)
-      } else {
-        setStatus(null)
+      if (router.query.tag) {
+        setTag(router.query.tag.toString())
       }
     }
     f()
-  }, [router.query.status_id, router.query.server_id, router.query.account_id])
+  }, [router.query.tag, router.query.server_id, router.query.account_id])
 
   useEffect(() => {
-    setAncestors([])
-    setDescendants([])
-    if (status) {
+    if (tag && client) {
       const f = async () => {
-        const c = await client.getStatusContext(status.id)
-        setAncestors(c.data.ancestors)
-        setDescendants(c.data.descendants)
+        const res = await client.getTagTimeline(tag)
+        setStatuses(res.data)
       }
       f()
     }
-  }, [status, client])
+  }, [tag, client])
 
-  const updateStatus = useCallback(
-    (updated: Entity.Status) => {
-      if (status.id === updated.id) {
-        setStatus(updated)
-      } else if (status.reblog && status.reblog.id === updated.id) {
-        setStatus(Object.assign({}, status, { reblog: updated }))
-      } else if (status.reblog && updated.reblog && status.reblog.id === updated.reblog.id) {
-        setStatus(Object.assign({}, status, { reblog: updated.reblog }))
+  const updateStatus = (status: Entity.Status) => {
+    const renew = statuses.map(s => {
+      if (s.id === status.id) {
+        return status
+      } else if (s.reblog && s.reblog.id === status.id) {
+        return Object.assign({}, s, { reblog: status })
+      } else if (status.reblog && s.id === status.reblog.id) {
+        return status.reblog
+      } else if (status.reblog && s.reblog && s.reblog.id === status.reblog.id) {
+        return Object.assign({}, s, { reblog: status.reblog })
+      } else {
+        return s
       }
-      setAncestors(last =>
-        last.map(status => {
-          if (status.id === updated.id) {
-            return updated
-          } else if (status.reblog && status.reblog.id === updated.id) {
-            return Object.assign({}, status, { reblog: updated })
-          } else if (status.reblog && updated.reblog && status.reblog.id === updated.reblog.id) {
-            return Object.assign({}, status, { reblog: updated.reblog })
-          }
-          return status
-        })
-      )
-
-      setDescendants(last =>
-        last.map(status => {
-          if (status.id === updated.id) {
-            return updated
-          } else if (status.reblog && status.reblog.id === updated.id) {
-            return Object.assign({}, status, { reblog: updated })
-          } else if (status.reblog && updated.reblog && status.reblog.id === updated.reblog.id) {
-            return Object.assign({}, status, { reblog: updated.reblog })
-          }
-          return status
-        })
-      )
-    },
-    [status, setStatus, ancestors, setAncestors, descendants, setDescendants]
-  )
+    })
+    setStatuses(renew)
+  }
 
   const setAccountDetail = (userId: string, serverId: number, accountId?: number) => {
     if (accountId) {
@@ -120,19 +92,12 @@ const StatusDetail: React.FC<Props> = props => {
 
   return (
     <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'scroll' }}>
-      <List hover style={{ width: '340px' }}>
-        {[...ancestors, status, ...descendants]
-          .filter(s => s !== null)
-          .map(status => (
-            <List.Item
-              key={status.id}
-              style={{
-                paddingTop: '2px',
-                paddingBottom: '2px',
-                backgroundColor: 'var(--rs-gray-700)',
-                boxShadow: '0 -1px 0 var(--rs-gray-900),0 1px 0 var(--rs-gray-900)'
-              }}
-            >
+      <List style={{ height: '100%' }}>
+        <Virtuoso
+          style={{ height: '100%' }}
+          data={statuses}
+          itemContent={(_, status) => (
+            <List.Item key={status.id} style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-gray-800)' }}>
               <Status
                 status={status}
                 client={client}
@@ -147,10 +112,9 @@ const StatusDetail: React.FC<Props> = props => {
                 openFromOtherAccount={props.openFromOtherAccount}
               />
             </List.Item>
-          ))}
+          )}
+        />
       </List>
     </Content>
   )
 }
-
-export default StatusDetail
