@@ -81,7 +81,9 @@ const Detail: React.FC<Props> = props => {
             {target === 'profile' && (
               <Profile openMedia={props.openMedia} openReport={props.openReport} openFromOtherAccount={props.openFromOtherAccount} />
             )}
-            {target === 'tag' && <TagDetail />}
+            {target === 'tag' && (
+              <TagDetail openMedia={props.openMedia} openReport={props.openReport} openFromOtherAccount={props.openFromOtherAccount} />
+            )}
           </Container>
         </div>
       )}
