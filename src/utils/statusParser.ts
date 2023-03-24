@@ -22,6 +22,9 @@ export function findLink(target: HTMLElement | null, parentClassName: string): s
 }
 
 export function findTag(target: HTMLElement, parentClass = 'toot'): string | null {
+  if (!target || !target.getAttribute) {
+    return null
+  }
   const targetClass = target.getAttribute('class')
   if (targetClass && targetClass.includes('hashtag')) {
     return parseTag((target as HTMLLinkElement).href)
@@ -36,7 +39,7 @@ export function findTag(target: HTMLElement, parentClass = 'toot'): string | nul
     return null
   }
   const parent = target.parentNode as HTMLElement
-  if (parent.getAttribute('class') === parentClass) {
+  if (parent.getAttribute && parent.getAttribute('class') === parentClass) {
     return null
   }
   return findTag(parent, parentClass)
@@ -51,7 +54,7 @@ function parseTag(tagURL: string): string | null {
 }
 
 export function findAccount(target: HTMLElement | null, parentClassName: string): ParsedAccount | null {
-  if (!target) {
+  if (!target || !target.getAttribute) {
     return null
   }
 
@@ -77,7 +80,7 @@ export function findAccount(target: HTMLElement | null, parentClassName: string)
     return null
   }
   const parent = target.parentNode as HTMLElement
-  if (parent.getAttribute('class') === parentClassName) {
+  if (parent.getAttribute && parent.getAttribute('class') === parentClassName) {
     return null
   }
   return findAccount(parent, parentClassName)
