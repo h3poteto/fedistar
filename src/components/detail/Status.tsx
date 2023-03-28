@@ -2,10 +2,14 @@ import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
-import { Content, List } from 'rsuite'
+import { Content, List, Header, FlexboxGrid, Button } from 'rsuite'
+import { Icon } from '@rsuite/icons'
+import { BsX, BsChevronLeft } from 'react-icons/bs'
+
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import Status from '../timelines/status/Status'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
@@ -14,6 +18,7 @@ type Props = {
 }
 
 const StatusDetail: React.FC<Props> = props => {
+  const { t } = useTranslation()
   const [client, setClient] = useState<MegalodonInterface | null>(null)
   const [server, setServer] = useState<Server | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
@@ -63,6 +68,14 @@ const StatusDetail: React.FC<Props> = props => {
       f()
     }
   }, [status, client])
+
+  const back = () => {
+    router.back()
+  }
+
+  const close = () => {
+    router.push({ query: {} })
+  }
 
   const updateStatus = useCallback(
     (updated: Entity.Status) => {
@@ -119,37 +132,54 @@ const StatusDetail: React.FC<Props> = props => {
   }
 
   return (
-    <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'scroll' }}>
-      <List hover style={{ width: '340px' }}>
-        {[...ancestors, status, ...descendants]
-          .filter(s => s !== null)
-          .map(status => (
-            <List.Item
-              key={status.id}
-              style={{
-                paddingTop: '2px',
-                paddingBottom: '2px',
-                backgroundColor: 'var(--rs-gray-700)',
-                boxShadow: '0 -1px 0 var(--rs-gray-900),0 1px 0 var(--rs-gray-900)'
-              }}
-            >
-              <Status
-                status={status}
-                client={client}
-                server={server}
-                account={account}
-                updateStatus={updateStatus}
-                openMedia={props.openMedia}
-                setReplyOpened={() => null}
-                setAccountDetail={setAccountDetail}
-                setTagDetail={setTagDetail}
-                openReport={props.openReport}
-                openFromOtherAccount={props.openFromOtherAccount}
-              />
-            </List.Item>
-          ))}
-      </List>
-    </Content>
+    <>
+      <Header style={{ backgroundColor: 'var(--rs-gray-700)' }}>
+        <FlexboxGrid justify="space-between">
+          <FlexboxGrid.Item>
+            <Button appearance="link" onClick={back}>
+              <Icon as={BsChevronLeft} style={{ fontSize: '1.4em' }} />
+              {t('detail.back')}
+            </Button>
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item>
+            <Button appearance="link" onClick={close} title={t('detail.close')}>
+              <Icon as={BsX} style={{ fontSize: '1.4em' }} />
+            </Button>
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+      </Header>
+      <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'scroll' }}>
+        <List hover style={{ width: '340px' }}>
+          {[...ancestors, status, ...descendants]
+            .filter(s => s !== null)
+            .map(status => (
+              <List.Item
+                key={status.id}
+                style={{
+                  paddingTop: '2px',
+                  paddingBottom: '2px',
+                  backgroundColor: 'var(--rs-gray-700)',
+                  boxShadow: '0 -1px 0 var(--rs-gray-900),0 1px 0 var(--rs-gray-900)'
+                }}
+              >
+                <Status
+                  status={status}
+                  client={client}
+                  server={server}
+                  account={account}
+                  updateStatus={updateStatus}
+                  openMedia={props.openMedia}
+                  setReplyOpened={() => null}
+                  setAccountDetail={setAccountDetail}
+                  setTagDetail={setTagDetail}
+                  openReport={props.openReport}
+                  openFromOtherAccount={props.openFromOtherAccount}
+                />
+              </List.Item>
+            ))}
+        </List>
+      </Content>
+    </>
   )
 }
 

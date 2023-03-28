@@ -2,11 +2,15 @@ import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { Content, List } from 'rsuite'
+import { Content, List, Header, FlexboxGrid, Button } from 'rsuite'
+import { BsX, BsChevronLeft, BsPin } from 'react-icons/bs'
+import { Icon } from '@rsuite/icons'
+
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import { Virtuoso } from 'react-virtuoso'
 import Status from '../timelines/status/Status'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
@@ -15,6 +19,8 @@ type Props = {
 }
 
 export default function TagDetail(props: Props) {
+  const { t } = useTranslation()
+
   const [client, setClient] = useState<MegalodonInterface | null>(null)
   const [server, setServer] = useState<Server | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
@@ -57,6 +63,14 @@ export default function TagDetail(props: Props) {
     }
   }, [tag, client])
 
+  const back = () => {
+    router.back()
+  }
+
+  const close = () => {
+    router.push({ query: {} })
+  }
+
   const updateStatus = (status: Entity.Status) => {
     const renew = statuses.map(s => {
       if (s.id === status.id) {
@@ -91,30 +105,50 @@ export default function TagDetail(props: Props) {
   }
 
   return (
-    <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'scroll' }}>
-      <List style={{ height: '100%' }}>
-        <Virtuoso
-          style={{ height: '100%' }}
-          data={statuses}
-          itemContent={(_, status) => (
-            <List.Item key={status.id} style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-gray-800)' }}>
-              <Status
-                status={status}
-                client={client}
-                server={server}
-                account={account}
-                updateStatus={updateStatus}
-                openMedia={props.openMedia}
-                setReplyOpened={() => null}
-                setAccountDetail={setAccountDetail}
-                setTagDetail={setTagDetail}
-                openReport={props.openReport}
-                openFromOtherAccount={props.openFromOtherAccount}
-              />
-            </List.Item>
-          )}
-        />
-      </List>
-    </Content>
+    <>
+      <Header style={{ backgroundColor: 'var(--rs-gray-700)' }}>
+        <FlexboxGrid justify="space-between">
+          <FlexboxGrid.Item>
+            <Button appearance="link" onClick={back}>
+              <Icon as={BsChevronLeft} style={{ fontSize: '1.4em' }} />
+              {t('detail.back')}
+            </Button>
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item>
+            <Button appearance="link" title={t('detail.pin')}>
+              <Icon as={BsPin} style={{ fontSize: '1.2em' }} />
+            </Button>
+            <Button appearance="link" onClick={close} title={t('detail.close')}>
+              <Icon as={BsX} style={{ fontSize: '1.4em' }} />
+            </Button>
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+      </Header>
+      <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'scroll' }}>
+        <List style={{ height: '100%' }}>
+          <Virtuoso
+            style={{ height: '100%' }}
+            data={statuses}
+            itemContent={(_, status) => (
+              <List.Item key={status.id} style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-gray-800)' }}>
+                <Status
+                  status={status}
+                  client={client}
+                  server={server}
+                  account={account}
+                  updateStatus={updateStatus}
+                  openMedia={props.openMedia}
+                  setReplyOpened={() => null}
+                  setAccountDetail={setAccountDetail}
+                  setTagDetail={setTagDetail}
+                  openReport={props.openReport}
+                  openFromOtherAccount={props.openFromOtherAccount}
+                />
+              </List.Item>
+            )}
+          />
+        </List>
+      </Content>
+    </>
   )
 }
