@@ -224,8 +224,8 @@
   },
   "detail": {
     "back": "戻る",
-    "close": "Close",
-    "pin": "Pin",
+    "close": "閉じる",
+    "pin": "ピン留めする",
     "profile": {
       "follow": "フォロー",
       "unfollow": "フォローを解除",
