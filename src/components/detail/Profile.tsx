@@ -1,8 +1,8 @@
 import { open } from '@tauri-apps/api/shell'
 import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
-import { BsThreeDotsVertical } from 'react-icons/bs'
-import { Button, Content, Dropdown, FlexboxGrid, IconButton, Nav, Popover, useToaster, Whisper } from 'rsuite'
+import { BsThreeDotsVertical, BsChevronLeft, BsX } from 'react-icons/bs'
+import { Button, Content, Dropdown, FlexboxGrid, IconButton, Nav, Popover, useToaster, Whisper, Header } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import Image from 'next/image'
 import emojify from 'src/utils/emojify'
@@ -85,6 +85,14 @@ const Profile: React.FC<Props> = props => {
   const loadRelationship = async (client: MegalodonInterface, account: Entity.Account) => {
     const res = await client.getRelationship(account.id)
     setRelationship(res.data)
+  }
+
+  const back = () => {
+    router.back()
+  }
+
+  const close = () => {
+    router.push({ query: {} })
   }
 
   const followButton = () => {
@@ -189,110 +197,132 @@ const Profile: React.FC<Props> = props => {
   }
 
   return (
-    user && (
-      <Content
-        style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'auto', overflowX: 'hidden', position: 'relative' }}
-        onScroll={onScroll}
-        ref={scrollerRef}
-      >
-        {relationship && relationship.followed_by && (
-          <div
-            className="followed-status"
-            style={{
-              position: 'absolute',
-              top: '10px',
-              left: '10px',
-              backgroundColor: 'rgba(0, 0, 0, 0.7)',
-              padding: '4px',
-              borderRadius: '4px'
-            }}
-          >
-            {t('detail.profile.follows_you')}
+    <>
+      <Header style={{ backgroundColor: 'var(--rs-gray-700)' }}>
+        <FlexboxGrid justify="space-between">
+          <FlexboxGrid.Item>
+            <Button appearance="link" onClick={back}>
+              <Icon as={BsChevronLeft} style={{ fontSize: '1.4em' }} />
+              {t('detail.back')}
+            </Button>
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item>
+            <Button appearance="link" onClick={close} title={t('detail.close')}>
+              <Icon as={BsX} style={{ fontSize: '1.4em' }} />
+            </Button>
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+      </Header>
+
+      {user && (
+        <Content
+          style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'auto', overflowX: 'hidden', position: 'relative' }}
+          onScroll={onScroll}
+          ref={scrollerRef}
+        >
+          {relationship && relationship.followed_by && (
+            <div
+              className="followed-status"
+              style={{
+                position: 'absolute',
+                top: '10px',
+                left: '10px',
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                padding: '4px',
+                borderRadius: '4px'
+              }}
+            >
+              {t('detail.profile.follows_you')}
+            </div>
+          )}
+          <div className="profile-header-image" style={{ width: '100%', backgroundColor: 'var(--rs-body)' }}>
+            <img src={user.header} alt="header image" style={{ objectFit: 'cover', width: '100%', height: '146px' }} />
           </div>
-        )}
-        <div className="profile-header-image" style={{ width: '100%', backgroundColor: 'var(--rs-body)' }}>
-          <img src={user.header} alt="header image" style={{ objectFit: 'cover', width: '100%', height: '146px' }} />
-        </div>
-        <div className="profile-header-body" style={{ padding: '0 20px' }}>
-          <FlexboxGrid justify="space-between" align="bottom" style={{ marginTop: '-50px' }}>
-            <FlexboxGrid.Item>
-              <Image src={user.avatar} alt={user.acct} width={94} height={94} style={{ borderRadius: '4px' }} />
-            </FlexboxGrid.Item>
-            <FlexboxGrid.Item>
-              <FlexboxGrid style={{ gap: '8px' }}>
-                <FlexboxGrid.Item>{followButton()}</FlexboxGrid.Item>
-                <FlexboxGrid.Item>
-                  <Whisper
-                    placement="bottomEnd"
-                    controlId="control-id-profile-detail"
-                    trigger="click"
-                    speaker={({ className, left, top, onClose }, ref) =>
-                      profileMenu(
-                        {
-                          className,
-                          left,
-                          top,
-                          onClose,
-                          client,
-                          user,
-                          relationship,
-                          onChange: () => {
-                            loadRelationship(client, user)
-                          }
-                        },
-                        ref
-                      )
-                    }
-                  >
-                    <IconButton icon={<Icon as={BsThreeDotsVertical} />} />
-                  </Whisper>
-                </FlexboxGrid.Item>
-              </FlexboxGrid>
-            </FlexboxGrid.Item>
-          </FlexboxGrid>
-          <div className="username" style={{ margin: '16px 0' }}>
-            <span
-              style={{ fontSize: '1.2em', fontWeight: 'bold', display: 'block' }}
-              dangerouslySetInnerHTML={{ __html: emojify(user.display_name, user.emojis) }}
-            ></span>
-            <span style={{ display: 'block', color: 'var(--rs-text-secondary)' }}>@{user.acct}</span>
+          <div className="profile-header-body" style={{ padding: '0 20px' }}>
+            <FlexboxGrid justify="space-between" align="bottom" style={{ marginTop: '-50px' }}>
+              <FlexboxGrid.Item>
+                <Image src={user.avatar} alt={user.acct} width={94} height={94} style={{ borderRadius: '4px' }} />
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item>
+                <FlexboxGrid style={{ gap: '8px' }}>
+                  <FlexboxGrid.Item>{followButton()}</FlexboxGrid.Item>
+                  <FlexboxGrid.Item>
+                    <Whisper
+                      placement="bottomEnd"
+                      controlId="control-id-profile-detail"
+                      trigger="click"
+                      speaker={({ className, left, top, onClose }, ref) =>
+                        profileMenu(
+                          {
+                            className,
+                            left,
+                            top,
+                            onClose,
+                            client,
+                            user,
+                            relationship,
+                            onChange: () => {
+                              loadRelationship(client, user)
+                            }
+                          },
+                          ref
+                        )
+                      }
+                    >
+                      <IconButton icon={<Icon as={BsThreeDotsVertical} />} />
+                    </Whisper>
+                  </FlexboxGrid.Item>
+                </FlexboxGrid>
+              </FlexboxGrid.Item>
+            </FlexboxGrid>
+            <div className="username" style={{ margin: '16px 0' }}>
+              <span
+                style={{ fontSize: '1.2em', fontWeight: 'bold', display: 'block' }}
+                dangerouslySetInnerHTML={{ __html: emojify(user.display_name, user.emojis) }}
+              ></span>
+              <span style={{ display: 'block', color: 'var(--rs-text-secondary)' }}>@{user.acct}</span>
+            </div>
+            <div className="bio">
+              <div
+                dangerouslySetInnerHTML={{ __html: user.note }}
+                style={{ overflow: 'hidden', wordBreak: 'break-all' }}
+                onClick={onClick}
+              />
+            </div>
+            <div
+              className="fields"
+              style={{
+                backgroundColor: 'var(--rs-body)',
+                borderRadius: '4px',
+                margin: '16px 0',
+                overflow: 'hidden',
+                wordBreak: 'break-all'
+              }}
+              onClick={onClick}
+            >
+              {user.fields.map((data, index) => (
+                <dl key={index} style={{ padding: '8px 16px', margin: 0, borderBottom: '1px solid var(--rs-bg-card)' }}>
+                  <dt>{data.name}</dt>
+                  <dd dangerouslySetInnerHTML={{ __html: emojify(data.value, user.emojis) }} style={{ margin: 0 }} />
+                </dl>
+              ))}
+            </div>
           </div>
-          <div className="bio">
-            <div dangerouslySetInnerHTML={{ __html: user.note }} style={{ overflow: 'hidden', wordBreak: 'break-all' }} onClick={onClick} />
-          </div>
-          <div
-            className="fields"
-            style={{
-              backgroundColor: 'var(--rs-body)',
-              borderRadius: '4px',
-              margin: '16px 0',
-              overflow: 'hidden',
-              wordBreak: 'break-all'
-            }}
-            onClick={onClick}
-          >
-            {user.fields.map((data, index) => (
-              <dl key={index} style={{ padding: '8px 16px', margin: 0, borderBottom: '1px solid var(--rs-bg-card)' }}>
-                <dt>{data.name}</dt>
-                <dd dangerouslySetInnerHTML={{ __html: emojify(data.value, user.emojis) }} style={{ margin: 0 }} />
-              </dl>
-            ))}
-          </div>
-        </div>
-        <Nav appearance="subtle" activeKey={activeNav} onSelect={changeNav} justified>
-          <Nav.Item eventKey="posts" style={{ fontWeight: 'bold', padding: '6px 8px' }}>
-            {precision(user.statuses_count)} {t('detail.profile.posts')}
-          </Nav.Item>
-          <Nav.Item eventKey="following" style={{ fontWeight: 'bold', padding: '6px 8px' }}>
-            {precision(user.following_count)} {t('detail.profile.following')}
-          </Nav.Item>
-          <Nav.Item eventKey="followers" style={{ fontWeight: 'bold', padding: '6px 8px' }}>
-            {precision(user.followers_count)} {t('detail.profile.followers')}
-          </Nav.Item>
-        </Nav>
-        {timeline()}
-      </Content>
-    )
+          <Nav appearance="subtle" activeKey={activeNav} onSelect={changeNav} justified>
+            <Nav.Item eventKey="posts" style={{ fontWeight: 'bold', padding: '6px 8px' }}>
+              {precision(user.statuses_count)} {t('detail.profile.posts')}
+            </Nav.Item>
+            <Nav.Item eventKey="following" style={{ fontWeight: 'bold', padding: '6px 8px' }}>
+              {precision(user.following_count)} {t('detail.profile.following')}
+            </Nav.Item>
+            <Nav.Item eventKey="followers" style={{ fontWeight: 'bold', padding: '6px 8px' }}>
+              {precision(user.followers_count)} {t('detail.profile.followers')}
+            </Nav.Item>
+          </Nav>
+          {timeline()}
+        </Content>
+      )}
+    </>
   )
 }
 

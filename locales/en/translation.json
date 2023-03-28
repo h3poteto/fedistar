@@ -224,6 +224,8 @@
   },
   "detail": {
     "back": "Back",
+    "close": "Close",
+    "pin": "Pin",
     "profile": {
       "follow": "Follow",
       "unfollow": "Unfollow",
