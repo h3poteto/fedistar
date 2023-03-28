@@ -44,6 +44,7 @@ const notification = (props: Props) => {
           updateStatus={props.updateStatus}
           client={props.client}
           openMedia={props.openMedia}
+          setTagDetail={(tag, serverId) => props.setTagDetail(tag, serverId, props.account?.id)}
           setAccountDetail={account => props.setAccountDetail(account.id, props.server.id, props.account?.id)}
         />
       )
