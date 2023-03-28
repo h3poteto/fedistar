@@ -7,7 +7,7 @@ import { open } from '@tauri-apps/api/shell'
 
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
-import { findLink, findAccount, accountMatch, ParsedAccount } from 'src/utils/statusParser'
+import { findLink, findAccount, findTag, accountMatch, ParsedAccount } from 'src/utils/statusParser'
 import Body from '../status/Body'
 import Poll from '../status/Poll'
 import { useTranslation } from 'react-i18next'
@@ -20,6 +20,7 @@ type Props = {
   updateStatus: (status: Entity.Status) => void
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setAccountDetail: (account: Entity.Account) => void
+  setTagDetail: (tag: string, serverId: number) => void
 }
 
 const actionIcon = (notification: Entity.Notification) => {
@@ -173,6 +174,14 @@ const Reaction: React.FC<Props> = props => {
           { placement: 'topCenter', duration: 0 }
         )
       }
+      return
+    }
+
+    // Check hashtag
+    const parsedTag = findTag(e.target as HTMLElement, 'status-body')
+    if (parsedTag) {
+      e.preventDefault()
+      props.setTagDetail(parsedTag, props.server.id)
       return
     }
 
