@@ -6,7 +6,7 @@ import { Button, Content, Dropdown, FlexboxGrid, IconButton, Nav, Popover, useTo
 import { Icon } from '@rsuite/icons'
 import Image from 'next/image'
 import emojify from 'src/utils/emojify'
-import { forwardRef, ReactElement, useCallback, useEffect, useRef, useState } from 'react'
+import { forwardRef, MouseEventHandler, ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import alert from '../utils/alert'
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
@@ -15,6 +15,7 @@ import Posts, { FuncProps as PostsFunc } from './profile/Posts'
 import Following, { FuncProps as FollowingFunc } from './profile/Following'
 import Followers, { FuncProps as FollowersFunc } from './profile/Followers'
 import { useTranslation } from 'react-i18next'
+import { findLink } from 'src/utils/statusParser'
 
 const PostsTab = forwardRef(Posts)
 const FollowingTab = forwardRef(Following)
@@ -179,6 +180,14 @@ const Profile: React.FC<Props> = props => {
     }
   }, [activeNav, client, user, server, account])
 
+  const onClick: MouseEventHandler<HTMLDivElement> = async e => {
+    const url = findLink(e.target as HTMLElement, 'status-body')
+    if (url) {
+      open(url)
+      e.preventDefault()
+    }
+  }
+
   return (
     user && (
       <Content
@@ -249,7 +258,7 @@ const Profile: React.FC<Props> = props => {
             <span style={{ display: 'block', color: 'var(--rs-text-secondary)' }}>@{user.acct}</span>
           </div>
           <div className="bio">
-            <div dangerouslySetInnerHTML={{ __html: user.note }} style={{ overflow: 'hidden', wordBreak: 'break-all' }} />
+            <div dangerouslySetInnerHTML={{ __html: user.note }} style={{ overflow: 'hidden', wordBreak: 'break-all' }} onClick={onClick} />
           </div>
           <div
             className="fields"
@@ -260,6 +269,7 @@ const Profile: React.FC<Props> = props => {
               overflow: 'hidden',
               wordBreak: 'break-all'
             }}
+            onClick={onClick}
           >
             {user.fields.map((data, index) => (
               <dl key={index} style={{ padding: '8px 16px', margin: 0, borderBottom: '1px solid var(--rs-bg-card)' }}>
