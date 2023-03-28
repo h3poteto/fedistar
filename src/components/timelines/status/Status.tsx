@@ -60,6 +60,7 @@ const Status: React.FC<Props> = props => {
     const parsedAccount = findAccount(e.target as HTMLElement, 'status-body')
     if (parsedAccount) {
       e.preventDefault()
+      e.stopPropagation()
 
       const account = await searchAccount(parsedAccount, props.status, props.client, props.server)
       if (account) {
@@ -88,6 +89,7 @@ const Status: React.FC<Props> = props => {
     const parsedTag = findTag(e.target as HTMLElement, 'status-body')
     if (parsedTag) {
       e.preventDefault()
+      e.stopPropagation()
       props.setTagDetail(parsedTag, props.server.id, props.account?.id)
       return
     }
@@ -97,6 +99,7 @@ const Status: React.FC<Props> = props => {
     if (url) {
       open(url)
       e.preventDefault()
+      e.stopPropagation()
     } else {
       if (props.setStatusDetail) {
         props.setStatusDetail(props.status.id, props.server.id, props.account?.id)

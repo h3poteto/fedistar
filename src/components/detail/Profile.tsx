@@ -185,7 +185,9 @@ const Profile: React.FC<Props> = props => {
     if (url) {
       open(url)
       e.preventDefault()
+      e.stopPropagation()
     }
+    return false
   }
 
   return (

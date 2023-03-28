@@ -152,6 +152,7 @@ const Reaction: React.FC<Props> = props => {
     const parsedAccount = findAccount(e.target as HTMLElement, 'status-body')
     if (parsedAccount) {
       e.preventDefault()
+      e.stopPropagation()
 
       const account = await searchAccount(parsedAccount, status, props.client, props.server)
       if (account) {
@@ -181,6 +182,7 @@ const Reaction: React.FC<Props> = props => {
     if (url) {
       open(url)
       e.preventDefault()
+      e.stopPropagation()
     }
   }
 
