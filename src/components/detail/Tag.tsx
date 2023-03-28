@@ -71,6 +71,13 @@ export default function TagDetail(props: Props) {
     router.push({ query: {} })
   }
 
+  const addTimeline = async () => {
+    if (tag.length <= 0) {
+      return
+    }
+    await invoke('add_timeline', { server: server, kind: 'tag', name: tag, listId: null })
+  }
+
   const updateStatus = (status: Entity.Status) => {
     const renew = statuses.map(s => {
       if (s.id === status.id) {
@@ -115,7 +122,7 @@ export default function TagDetail(props: Props) {
             </Button>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item>
-            <Button appearance="link" title={t('detail.pin')}>
+            <Button appearance="link" onClick={addTimeline} title={t('detail.pin')}>
               <Icon as={BsPin} style={{ fontSize: '1.2em' }} />
             </Button>
             <Button appearance="link" onClick={close} title={t('detail.close')}>

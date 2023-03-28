@@ -175,6 +175,9 @@ pub async fn start(
                 streaming = client.list_streaming(streaming_url, list_id.to_string());
             }
         },
+        entities::timeline::Kind::Tag => {
+            streaming = client.tag_streaming(streaming_url, timeline.name.clone());
+        }
         _ => return Err(format!("{} is not supported", timeline.name)),
     }
 

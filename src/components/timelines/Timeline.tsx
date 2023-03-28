@@ -14,7 +14,8 @@ import {
   BsStar,
   BsListUl,
   BsBookmark,
-  BsArrowClockwise
+  BsArrowClockwise,
+  BsHash
 } from 'react-icons/bs'
 import { listen } from '@tauri-apps/api/event'
 import { Virtuoso } from 'react-virtuoso'
@@ -209,6 +210,10 @@ const Timeline: React.FC<Props> = props => {
         }
         return res.data
       }
+      case 'tag': {
+        const res = await client.getTagTimeline(tl.name, options)
+        return res.data
+      }
       default:
     }
   }
@@ -240,6 +245,8 @@ const Timeline: React.FC<Props> = props => {
         return <Icon as={BsListUl} />
       case 'bookmarks':
         return <Icon as={BsBookmark} />
+      case 'tag':
+        return <Icon as={BsHash} />
     }
   }
 
