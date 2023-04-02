@@ -131,7 +131,7 @@ export default function TagDetail(props: Props) {
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </Header>
-      <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'scroll' }}>
+      <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)' }}>
         <List style={{ height: '100%' }}>
           <Virtuoso
             style={{ height: '100%' }}
