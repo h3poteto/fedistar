@@ -2,7 +2,7 @@ import type { AppProps } from 'next/app'
 import { CustomProvider } from 'rsuite'
 
 import '../style.css'
-import '../App.css'
+import '../App.scss'
 
 import '../i18n'
 
