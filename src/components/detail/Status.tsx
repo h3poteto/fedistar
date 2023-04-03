@@ -148,8 +148,8 @@ const StatusDetail: React.FC<Props> = props => {
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </Header>
-      <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'scroll' }}>
-        <List hover style={{ width: '340px' }}>
+      <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'auto' }} className="timeline-scrollable">
+        <List hover style={{ width: 'calc(340px - 6px)' }}>
           {[...ancestors, status, ...descendants]
             .filter(s => s !== null)
             .map(status => (

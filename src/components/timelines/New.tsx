@@ -99,7 +99,7 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
             <Icon as={BsEnvelope} />
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={20}>
-            <div>{t('timeline.dm')}</div>
+            <div>{t('timeline.direct')}</div>
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </List.Item>
@@ -208,7 +208,7 @@ const New: React.FC<Props> = props => {
         </div>
       )}
       <ButtonToolbar>
-        <Whisper placement="bottomStart" trigger="click" speaker={addTimelineMenu} onOpen={closeWalkthrough}>
+        <Whisper placement="bottom" delay={100} preventOverflow trigger="click" speaker={addTimelineMenu} onOpen={closeWalkthrough}>
           <IconButton icon={<Icon as={BsPlus} />} size="lg" appearance="ghost" title={t('timeline.new')} />
         </Whisper>
       </ButtonToolbar>
@@ -238,7 +238,7 @@ const New: React.FC<Props> = props => {
             </FlexboxGrid.Item>
           </FlexboxGrid>
         </Header>
-        <Content>
+        <Content className="timeline-scrollable">
           <List hover>
             <List.Item index={1} onClick={() => select('local', 'Local', null)} style={{ cursor: 'pointer' }}>
               <FlexboxGrid align="middle">

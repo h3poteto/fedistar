@@ -184,7 +184,7 @@ function App() {
             </div>
           )}
         </Animation.Transition>
-        <Content style={{ display: 'flex', overflowX: 'auto' }}>
+        <Content className="timeline-space" style={{ display: 'flex' }}>
           {timelines.map(timeline => (
             <ShowTimeline
               timeline={timeline[0]}
