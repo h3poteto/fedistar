@@ -190,6 +190,7 @@ const Conversations: React.FC<Props> = props => {
                 scrollerRef={ref => {
                   scrollerRef.current = ref as HTMLElement
                 }}
+                className="timeline-scrollable"
                 firstItemIndex={firstItemIndex}
                 atTopStateChange={prependUnreads}
                 endReached={loadMore}

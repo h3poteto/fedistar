@@ -219,6 +219,7 @@ const Profile: React.FC<Props> = props => {
       {user && (
         <Content
           style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'auto', overflowX: 'hidden', position: 'relative' }}
+          className="timeline-scrollable"
           onScroll={onScroll}
           ref={scrollerRef}
         >

@@ -136,6 +136,7 @@ export default function TagDetail(props: Props) {
           <Virtuoso
             style={{ height: '100%' }}
             data={statuses}
+            className="timeline-scrollable"
             itemContent={(_, status) => (
               <List.Item key={status.id} style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-gray-800)' }}>
                 <Status
