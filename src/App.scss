@@ -240,7 +240,7 @@
 
 .timeline-space {
   overflow-x: auto;
-  overflow-y: hide;
+  overflow-y: hidden;
 
   &::-webkit-scrollbar {
     height: 7px !important;

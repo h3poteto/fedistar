@@ -52,7 +52,7 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
   }, [server])
 
   return (
-    <div>
+    <>
       <List.Item index={3} onClick={() => select('home', 'Home', null)} style={{ cursor: 'pointer' }}>
         <FlexboxGrid align="middle">
           <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -120,7 +120,7 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
           </FlexboxGrid>
         </List.Item>
       ))}
-    </div>
+    </>
   )
 }
 
@@ -225,8 +225,8 @@ const New: React.FC<Props> = props => {
   }
 
   const selectTimeline = () => (
-    <div className="add-timeline" style={{ width: '240px', minWidth: '240px', display: 'flex', flexDirection: 'column' }}>
-      <Container>
+    <div className="add-timeline" style={{ width: '240px', minWidth: '240px', display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <Container style={{ height: '100%' }}>
         <Header style={{ backgroundColor: 'var(--rs-gray-700)' }}>
           <FlexboxGrid align="middle" justify="space-between">
             <FlexboxGrid.Item style={{ paddingLeft: '8px', lineHeight: '52px' }}>@{server.domain}</FlexboxGrid.Item>
@@ -238,7 +238,7 @@ const New: React.FC<Props> = props => {
             </FlexboxGrid.Item>
           </FlexboxGrid>
         </Header>
-        <Content className="timeline-scrollable">
+        <Content className="timeline-scrollable" style={{ height: 'calc(100% - 54px)' }}>
           <List hover>
             <List.Item index={1} onClick={() => select('local', 'Local', null)} style={{ cursor: 'pointer' }}>
               <FlexboxGrid align="middle">
