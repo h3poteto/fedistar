@@ -14,6 +14,7 @@ type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  highlighted: Timeline | null
 }
 
 const Show: React.FC<Props> = props => {
@@ -23,6 +24,7 @@ const Show: React.FC<Props> = props => {
         timeline={props.timeline}
         server={props.server}
         unreads={props.unreads}
+        highlighted={props.highlighted}
         setUnreads={props.setUnreads}
         openMedia={props.openMedia}
         openReport={props.openReport}

@@ -35,6 +35,7 @@ function App() {
   const [unreads, setUnreads] = useState<Array<Unread>>([])
   const [composeOpened, setComposeOpened] = useState<boolean>(false)
   const [style, setStyle] = useState<CSSProperties>({})
+  const [highlighted, setHighlighted] = useState<Timeline | null>(null)
 
   const [modalState, dispatch] = useReducer(modalReducer, initialModalState)
 
@@ -170,6 +171,7 @@ function App() {
           openThirdparty={() => dispatch({ target: 'thirdparty', value: true })}
           openSettings={() => dispatch({ target: 'settings', value: true })}
           toggleCompose={toggleCompose}
+          setHighlighted={setHighlighted}
         />
         <Animation.Transition
           in={composeOpened}
@@ -191,6 +193,7 @@ function App() {
               server={timeline[1]}
               unreads={unreads}
               setUnreads={setUnreads}
+              highlighted={highlighted}
               key={timeline[0].id}
               openMedia={(media: Array<Entity.Attachment>, index: number) =>
                 dispatch({ target: 'media', value: true, object: media, index: index })
