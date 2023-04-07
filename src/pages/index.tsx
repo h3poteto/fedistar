@@ -1,7 +1,7 @@
-import { useState, useEffect, useReducer, CSSProperties } from 'react'
+import { useState, useEffect, useReducer, CSSProperties, useRef } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
-import { Container, Content, useToaster, Animation } from 'rsuite'
+import { Container, Content, useToaster, Animation, DOMHelper } from 'rsuite'
 import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/api/notification'
 import dayjs from 'dayjs'
 
@@ -27,6 +27,8 @@ import { Account } from 'src/entities/account'
 import Report from 'src/components/report/Report'
 import FromOtherAccount from 'src/components/fromOtherAccount/FromOtherAccount'
 
+const { scrollLeft } = DOMHelper
+
 function App() {
   const { t, i18n } = useTranslation()
 
@@ -35,8 +37,10 @@ function App() {
   const [unreads, setUnreads] = useState<Array<Unread>>([])
   const [composeOpened, setComposeOpened] = useState<boolean>(false)
   const [style, setStyle] = useState<CSSProperties>({})
+  const [highlighted, setHighlighted] = useState<Timeline | null>(null)
 
   const [modalState, dispatch] = useReducer(modalReducer, initialModalState)
+  const spaceRef = useRef<HTMLDivElement>()
 
   const toaster = useToaster()
 
@@ -108,6 +112,14 @@ function App() {
     })
   }, [])
 
+  useEffect(() => {
+    if (!highlighted) return
+    if (!spaceRef.current) return
+    // TODO: get current position of target column
+    const node = document.getElementById(highlighted.id.toString())
+    scrollLeft(spaceRef.current, node.offsetLeft)
+  }, [highlighted])
+
   const loadAppearance = () => {
     invoke<Settings>('read_settings').then(res => {
       setStyle({
@@ -170,6 +182,7 @@ function App() {
           openThirdparty={() => dispatch({ target: 'thirdparty', value: true })}
           openSettings={() => dispatch({ target: 'settings', value: true })}
           toggleCompose={toggleCompose}
+          setHighlighted={setHighlighted}
         />
         <Animation.Transition
           in={composeOpened}
@@ -184,13 +197,14 @@ function App() {
             </div>
           )}
         </Animation.Transition>
-        <Content className="timeline-space" style={{ display: 'flex' }}>
+        <Content className="timeline-space" style={{ display: 'flex', position: 'relative' }} ref={spaceRef}>
           {timelines.map(timeline => (
             <ShowTimeline
               timeline={timeline[0]}
               server={timeline[1]}
               unreads={unreads}
               setUnreads={setUnreads}
+              highlighted={highlighted}
               key={timeline[0].id}
               openMedia={(media: Array<Entity.Attachment>, index: number) =>
                 dispatch({ target: 'media', value: true, object: media, index: index })

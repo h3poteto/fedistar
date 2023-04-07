@@ -1,9 +1,10 @@
 import { invoke } from '@tauri-apps/api/tauri'
-import { ReactElement, useEffect, useState } from 'react'
+import { Dispatch, ReactElement, SetStateAction, useEffect, useState } from 'react'
 import { Icon } from '@rsuite/icons'
 import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge, FlexboxGrid } from 'rsuite'
 import { BsPlus, BsGear, BsPencilSquare } from 'react-icons/bs'
 import { Server, ServerSet } from 'src/entities/server'
+import { Timeline } from 'src/entities/timeline'
 import FailoverImg from 'src/utils/failoverImg'
 import { Unread } from 'src/entities/unread'
 import { Instruction } from 'src/entities/instruction'
@@ -18,6 +19,7 @@ type NavigatorProps = {
   toggleCompose: () => void
   openThirdparty: () => void
   openSettings: () => void
+  setHighlighted: Dispatch<SetStateAction<Timeline>>
 }
 
 const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
@@ -51,6 +53,25 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
   const closeWalkthrough = async () => {
     setWalkthrough(false)
     await invoke('update_instruction', { step: 3 })
+  }
+
+  const openNotification = async (set: ServerSet) => {
+    if (!props.unreads.find(u => u.server_id === set.server.id && u.count > 0)) return
+    const timelines = await invoke<Array<[Timeline, Server]>>('list_timelines')
+    const target = timelines.find(t => t[1].id === set.server.id && t[0].kind === 'notifications')
+    if (target === undefined || target === null) return
+
+    props.setHighlighted(current => {
+      if (current && current.id === target[0].id) {
+        return current
+      }
+      setTimeout(() => {
+        props.setHighlighted(null)
+      }, 5000)
+      return target[0]
+    })
+
+    return
   }
 
   return (
@@ -102,6 +123,7 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
                   size="xs"
                   style={{ padding: '8px' }}
                   title={server.account ? server.account.username + '@' + server.server.domain : server.server.domain}
+                  onClick={() => openNotification(server)}
                 >
                   <Badge content={props.unreads.find(u => u.server_id === server.server.id && u.count > 0) ? true : false}>
                     <Avatar
