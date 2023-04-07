@@ -115,7 +115,6 @@ function App() {
   useEffect(() => {
     if (!highlighted) return
     if (!spaceRef.current) return
-    // TODO: get current position of target column
     const node = document.getElementById(highlighted.id.toString())
     scrollLeft(spaceRef.current, node.offsetLeft)
   }, [highlighted])
@@ -204,7 +203,6 @@ function App() {
               server={timeline[1]}
               unreads={unreads}
               setUnreads={setUnreads}
-              highlighted={highlighted}
               key={timeline[0].id}
               openMedia={(media: Array<Entity.Attachment>, index: number) =>
                 dispatch({ target: 'media', value: true, object: media, index: index })

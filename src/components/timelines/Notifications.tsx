@@ -1,4 +1,4 @@
-import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, useToaster, Animation } from 'rsuite'
+import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, useToaster } from 'rsuite'
 import { BsBell, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsCheck2 } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
@@ -24,7 +24,6 @@ type Props = {
   timeline: Timeline
   server: Server
   unreads: Array<Unread>
-  highlighted: Timeline | null
   setUnreads: Dispatch<SetStateAction<Array<Unread>>>
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
@@ -48,7 +47,6 @@ const Notifications: React.FC<Props> = props => {
   const [firstItemIndex, setFirstItemIndex] = useState(TIMELINE_MAX_STATUSES)
   const [loading, setLoading] = useState<boolean>(false)
   const [marker, setMarker] = useState<Marker | null>(null)
-  const [highlighted, setHighlighted] = useState<boolean>(false)
 
   const scrollerRef = useRef<HTMLElement | null>(null)
   const triggerRef = useRef(null)
@@ -130,14 +128,6 @@ const Notifications: React.FC<Props> = props => {
       prependUnreads()
     }
   }, [replyOpened.current])
-
-  useEffect(() => {
-    if (props.highlighted && props.highlighted.id === props.timeline.id) {
-      setHighlighted(true)
-    } else {
-      setHighlighted(false)
-    }
-  }, [props.highlighted, props.timeline])
 
   const loadNotifications = async (client: MegalodonInterface, maxId?: string): Promise<Array<Entity.Notification>> => {
     let options = { limit: TIMELINE_STATUSES_COUNT }
@@ -238,134 +228,125 @@ const Notifications: React.FC<Props> = props => {
       className="timeline notifications"
       id={props.timeline.id.toString()}
     >
-      <Animation.Transition
-        in={highlighted}
-        exitedClassName="highlighted-exited"
-        exitingClassName="highlighted-exiting"
-        enteredClassName="highlighted-entered"
-        enteringClassName="highlighted-entering"
-        timeout={6000}
-      >
-        <Container style={{ height: '100%' }} className={highlighted ? 'highlighted' : ''}>
-          <Header style={{ backgroundColor: 'var(--rs-gray-800)' }}>
-            <FlexboxGrid align="middle" justify="space-between">
-              <FlexboxGrid.Item colspan={16}>
-                <FlexboxGrid align="middle">
-                  {/** icon **/}
-                  <FlexboxGrid.Item
-                    colspan={4}
-                    style={{ lineHeight: '48px', fontSize: '18px', paddingRight: '8px', paddingLeft: '8px', paddingBottom: '6px' }}
+      <Container style={{ height: '100%' }}>
+        <Header style={{ backgroundColor: 'var(--rs-gray-800)' }}>
+          <FlexboxGrid align="middle" justify="space-between">
+            <FlexboxGrid.Item colspan={16}>
+              <FlexboxGrid align="middle">
+                {/** icon **/}
+                <FlexboxGrid.Item
+                  colspan={4}
+                  style={{ lineHeight: '48px', fontSize: '18px', paddingRight: '8px', paddingLeft: '8px', paddingBottom: '6px' }}
+                >
+                  <Icon as={BsBell} />
+                </FlexboxGrid.Item>
+                {/** name **/}
+                <FlexboxGrid.Item
+                  colspan={20}
+                  style={{
+                    lineHeight: '48px',
+                    fontSize: '18px',
+                    verticalAlign: 'middle',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  }}
+                  title={timelineName(props.timeline.kind, props.timeline.name, t) + '@' + props.server.domain}
+                >
+                  {timelineName(props.timeline.kind, props.timeline.name, t)}
+                  <span style={{ fontSize: '14px', color: 'var(--rs-text-secondary)' }}>@{props.server.domain}</span>
+                </FlexboxGrid.Item>
+              </FlexboxGrid>
+            </FlexboxGrid.Item>
+            <FlexboxGrid.Item colspan={8}>
+              <FlexboxGrid align="middle" justify="end">
+                <FlexboxGrid.Item>
+                  <Button
+                    appearance="link"
+                    title={t('timeline.mark_as_read')}
+                    disabled={props.unreads.find(u => u.server_id === props.server.id && u.count > 0) ? false : true}
+                    onClick={read}
+                    style={{ padding: '4px' }}
                   >
-                    <Icon as={BsBell} />
-                  </FlexboxGrid.Item>
-                  {/** name **/}
-                  <FlexboxGrid.Item
-                    colspan={20}
-                    style={{
-                      lineHeight: '48px',
-                      fontSize: '18px',
-                      verticalAlign: 'middle',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap'
-                    }}
-                    title={timelineName(props.timeline.kind, props.timeline.name, t) + '@' + props.server.domain}
+                    <Icon as={BsCheck2} />
+                  </Button>
+                </FlexboxGrid.Item>
+                <FlexboxGrid.Item>
+                  <Whisper
+                    trigger="click"
+                    placement="bottomEnd"
+                    controlId="option-popover"
+                    ref={triggerRef}
+                    speaker={<OptionPopover timeline={props.timeline} close={closeOptionPopover} />}
                   >
-                    {timelineName(props.timeline.kind, props.timeline.name, t)}
-                    <span style={{ fontSize: '14px', color: 'var(--rs-text-secondary)' }}>@{props.server.domain}</span>
-                  </FlexboxGrid.Item>
-                </FlexboxGrid>
-              </FlexboxGrid.Item>
-              <FlexboxGrid.Item colspan={8}>
-                <FlexboxGrid align="middle" justify="end">
-                  <FlexboxGrid.Item>
-                    <Button
-                      appearance="link"
-                      title={t('timeline.mark_as_read')}
-                      disabled={props.unreads.find(u => u.server_id === props.server.id && u.count > 0) ? false : true}
-                      onClick={read}
-                      style={{ padding: '4px' }}
-                    >
-                      <Icon as={BsCheck2} />
+                    <Button appearance="link" style={{ padding: '4px 8px 4px 4px' }} title={t('timeline.settings.title')}>
+                      <Icon as={BsSliders} />
                     </Button>
-                  </FlexboxGrid.Item>
-                  <FlexboxGrid.Item>
-                    <Whisper
-                      trigger="click"
-                      placement="bottomEnd"
-                      controlId="option-popover"
-                      ref={triggerRef}
-                      speaker={<OptionPopover timeline={props.timeline} close={closeOptionPopover} />}
-                    >
-                      <Button appearance="link" style={{ padding: '4px 8px 4px 4px' }} title={t('timeline.settings.title')}>
-                        <Icon as={BsSliders} />
-                      </Button>
-                    </Whisper>
-                  </FlexboxGrid.Item>
-                  <FlexboxGrid.Item style={{ paddingRight: '8px', height: '20px' }}>
-                    <Avatar circle src={FailoverImg(account ? account.avatar : null)} size="xs" title={account ? account.username : ''} />
-                  </FlexboxGrid.Item>
-                </FlexboxGrid>
-              </FlexboxGrid.Item>
-            </FlexboxGrid>
-          </Header>
+                  </Whisper>
+                </FlexboxGrid.Item>
+                <FlexboxGrid.Item style={{ paddingRight: '8px', height: '20px' }}>
+                  <Avatar circle src={FailoverImg(account ? account.avatar : null)} size="xs" title={account ? account.username : ''} />
+                </FlexboxGrid.Item>
+              </FlexboxGrid>
+            </FlexboxGrid.Item>
+          </FlexboxGrid>
+        </Header>
 
-          {loading ? (
-            <Loader style={{ margin: '10em auto' }} />
-          ) : (
-            <Content style={{ height: 'calc(100% - 54px)' }}>
-              <List hover style={{ width: '340px', height: '100%' }}>
-                <Virtuoso
-                  style={{ height: '100%' }}
-                  data={notifications}
-                  scrollerRef={ref => {
-                    scrollerRef.current = ref as HTMLElement
-                  }}
-                  className="timeline-scrollable"
-                  firstItemIndex={firstItemIndex}
-                  atTopStateChange={prependUnreads}
-                  endReached={loadMore}
-                  overscan={TIMELINE_STATUSES_COUNT}
-                  itemContent={(index, notification) => {
-                    let shadow = {}
-                    if (marker && (parseInt(marker.last_read_id) < parseInt(notification.id) || index < marker.unread_count)) {
-                      shadow = { boxShadow: '2px 0 1px var(--rs-primary-700) inset' }
-                    }
-                    return (
-                      <List.Item
-                        key={notification.id}
-                        style={Object.assign(
-                          {
-                            paddingTop: '2px',
-                            paddingBottom: '2px',
-                            backgroundColor: 'var(--rs-gray-800)'
-                          },
-                          shadow
-                        )}
-                      >
-                        <Notification
-                          notification={notification}
-                          client={client}
-                          server={props.server}
-                          account={account}
-                          updateStatus={updateStatus}
-                          openMedia={props.openMedia}
-                          setReplyOpened={opened => (replyOpened.current = opened)}
-                          setStatusDetail={setStatusDetail}
-                          setAccountDetail={setAccountDetail}
-                          setTagDetail={setTagDetail}
-                          openReport={props.openReport}
-                          openFromOtherAccount={props.openFromOtherAccount}
-                        />
-                      </List.Item>
-                    )
-                  }}
-                />
-              </List>
-            </Content>
-          )}
-        </Container>
-      </Animation.Transition>
+        {loading ? (
+          <Loader style={{ margin: '10em auto' }} />
+        ) : (
+          <Content style={{ height: 'calc(100% - 54px)' }}>
+            <List hover style={{ width: '340px', height: '100%' }}>
+              <Virtuoso
+                style={{ height: '100%' }}
+                data={notifications}
+                scrollerRef={ref => {
+                  scrollerRef.current = ref as HTMLElement
+                }}
+                className="timeline-scrollable"
+                firstItemIndex={firstItemIndex}
+                atTopStateChange={prependUnreads}
+                endReached={loadMore}
+                overscan={TIMELINE_STATUSES_COUNT}
+                itemContent={(index, notification) => {
+                  let shadow = {}
+                  if (marker && (parseInt(marker.last_read_id) < parseInt(notification.id) || index < marker.unread_count)) {
+                    shadow = { boxShadow: '2px 0 1px var(--rs-primary-700) inset' }
+                  }
+                  return (
+                    <List.Item
+                      key={notification.id}
+                      style={Object.assign(
+                        {
+                          paddingTop: '2px',
+                          paddingBottom: '2px',
+                          backgroundColor: 'var(--rs-gray-800)'
+                        },
+                        shadow
+                      )}
+                    >
+                      <Notification
+                        notification={notification}
+                        client={client}
+                        server={props.server}
+                        account={account}
+                        updateStatus={updateStatus}
+                        openMedia={props.openMedia}
+                        setReplyOpened={opened => (replyOpened.current = opened)}
+                        setStatusDetail={setStatusDetail}
+                        setAccountDetail={setAccountDetail}
+                        setTagDetail={setTagDetail}
+                        openReport={props.openReport}
+                        openFromOtherAccount={props.openFromOtherAccount}
+                      />
+                    </List.Item>
+                  )
+                }}
+              />
+            </List>
+          </Content>
+        )}
+      </Container>
     </div>
   )
 }
