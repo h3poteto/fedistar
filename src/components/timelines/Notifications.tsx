@@ -19,6 +19,7 @@ import alert from 'src/components/utils/alert'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
 import timelineName from 'src/utils/timelineName'
+import { Marker } from 'src/entities/marker'
 
 type Props = {
   timeline: Timeline
@@ -28,13 +29,6 @@ type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
-}
-
-type Marker = {
-  last_read_id: string
-  version: number
-  updated_at: string
-  unread_count?: number
 }
 
 const Notifications: React.FC<Props> = props => {
@@ -61,11 +55,9 @@ const Notifications: React.FC<Props> = props => {
       setAccount(account)
       const client = generator(props.server.sns, props.server.base_url, account.access_token, 'Fedistar')
       setClient(client)
-      let notifications = []
       try {
         const res = await loadNotifications(client)
         setNotifications(res)
-        notifications = res
       } catch {
         toast.push(alert('error', t('alert.failed_load', { timeline: 'notifications' })), { placement: 'topStart' })
       } finally {
@@ -76,22 +68,6 @@ const Notifications: React.FC<Props> = props => {
         const marker = res.data as Entity.Marker
         if (marker.notifications) {
           setMarker(marker.notifications)
-
-          const count = unreadCount(marker.notifications, notifications)
-
-          const target = props.unreads.find(u => u.server_id === props.server.id)
-          if (target) {
-            props.setUnreads(unreads =>
-              unreads.map(u => {
-                if (u.server_id === props.server.id) {
-                  return Object.assign({}, u, { count: count })
-                }
-                return u
-              })
-            )
-          } else {
-            props.setUnreads(unreads => unreads.concat({ server_id: props.server.id, count: count }))
-          }
         }
       } catch (err) {
         console.error(err)
@@ -391,12 +367,5 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
     </Popover>
   )
 })
-
-const unreadCount = (marker: Marker, notifications: Array<Entity.Notification>): number => {
-  if (marker.unread_count !== undefined) {
-    return marker.unread_count
-  }
-  return notifications.filter(n => parseInt(n.id) > parseInt(marker.last_read_id)).length
-}
 
 export default Notifications

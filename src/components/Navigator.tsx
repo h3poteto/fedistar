@@ -7,10 +7,12 @@ import { Server, ServerSet } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
 import FailoverImg from 'src/utils/failoverImg'
 import { Unread } from 'src/entities/unread'
+import { Marker } from 'src/entities/marker'
 import { Instruction } from 'src/entities/instruction'
 import { listen } from '@tauri-apps/api/event'
 import { useTranslation } from 'react-i18next'
 import alert from 'src/components/utils/alert'
+import generator, { Entity } from 'megalodon'
 
 type NavigatorProps = {
   servers: Array<ServerSet>
@@ -21,6 +23,7 @@ type NavigatorProps = {
   openThirdparty: () => void
   openSettings: () => void
   setHighlighted: Dispatch<SetStateAction<Timeline>>
+  setUnreads: Dispatch<SetStateAction<Array<Unread>>>
 }
 
 const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
@@ -51,6 +54,38 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
       }
     })
   }, [])
+
+  useEffect(() => {
+    props.servers.map(async set => {
+      if (!set.account) return set
+      const client = generator(set.server.sns, set.server.base_url, set.account.access_token, 'Fedistar')
+      try {
+        const notifications = (await client.getNotifications()).data
+        const res = await client.getMarkers(['notifications'])
+        const marker = res.data as Entity.Marker
+        if (marker.notifications) {
+          const count = unreadCount(marker.notifications, notifications)
+
+          const target = props.unreads.find(u => u.server_id === set.server.id)
+          if (target) {
+            props.setUnreads(unreads =>
+              unreads.map(u => {
+                if (u.server_id === set.server.id) {
+                  return Object.assign({}, u, { count: count })
+                }
+                return u
+              })
+            )
+          } else {
+            props.setUnreads(unreads => unreads.concat({ server_id: set.server.id, count: count }))
+          }
+        }
+      } catch (err) {
+        console.error(err)
+      }
+      return set
+    })
+  }, [props.servers])
 
   const closeWalkthrough = async () => {
     setWalkthrough(false)
@@ -243,6 +278,13 @@ const settingsMenu = (
       </Dropdown.Menu>
     </Popover>
   )
+}
+
+const unreadCount = (marker: Marker, notifications: Array<Entity.Notification>): number => {
+  if (marker.unread_count !== undefined) {
+    return marker.unread_count
+  }
+  return notifications.filter(n => parseInt(n.id) > parseInt(marker.last_read_id)).length
 }
 
 export default Navigator
