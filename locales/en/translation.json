@@ -20,7 +20,8 @@
     "validation_attachments_length": "You can't attach over {{limit}} files.",
     "validation_attachments_type": "You can attach only images or videos",
     "upload_error": "Failed to upload your file",
-    "failed_to_report": "Faild to send the report"
+    "failed_to_report": "Faild to send the report",
+    "notifications_not_found": "Failed to find notifications"
   },
   "dialog": {
     "account_not_found": {

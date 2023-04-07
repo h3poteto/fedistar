@@ -1,7 +1,7 @@
 import { invoke } from '@tauri-apps/api/tauri'
 import { Dispatch, ReactElement, SetStateAction, useEffect, useState } from 'react'
 import { Icon } from '@rsuite/icons'
-import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge, FlexboxGrid } from 'rsuite'
+import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge, FlexboxGrid, useToaster } from 'rsuite'
 import { BsPlus, BsGear, BsPencilSquare } from 'react-icons/bs'
 import { Server, ServerSet } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
@@ -10,6 +10,7 @@ import { Unread } from 'src/entities/unread'
 import { Instruction } from 'src/entities/instruction'
 import { listen } from '@tauri-apps/api/event'
 import { useTranslation } from 'react-i18next'
+import alert from 'src/components/utils/alert'
 
 type NavigatorProps = {
   servers: Array<ServerSet>
@@ -26,6 +27,7 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
   const { t } = useTranslation()
   const { servers, openAuthorize, openThirdparty, openSettings } = props
   const [walkthrough, setWalkthrough] = useState(false)
+  const toaster = useToaster()
 
   useEffect(() => {
     const f = async () => {
@@ -58,8 +60,15 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
   const openNotification = async (set: ServerSet) => {
     if (!props.unreads.find(u => u.server_id === set.server.id && u.count > 0)) return
     const timelines = await invoke<Array<[Timeline, Server]>>('list_timelines')
-    const target = timelines.find(t => t[1].id === set.server.id && t[0].kind === 'notifications')
-    if (target === undefined || target === null) return
+    let target = timelines.find(t => t[1].id === set.server.id && t[0].kind === 'notifications')
+    if (target === undefined || target === null) {
+      await invoke('add_timeline', { server: set.server, kind: 'notifications', name: 'Notifications' })
+      const timelines = await invoke<Array<[Timeline, Server]>>('list_timelines')
+      target = timelines.find(t => t[1].id === set.server.id && t[0].kind === 'notifications')
+      if (target === undefined || target === null) {
+        toaster.push(alert('error', t('alert.notifications_not_found')), { placement: 'topStart' })
+      }
+    }
 
     props.setHighlighted(current => {
       if (current && current.id === target[0].id) {
