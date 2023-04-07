@@ -20,7 +20,8 @@
     "validation_attachments_length": "{{limit}} 個以上のファイルを添付できません。",
     "validation_attachments_type": "画像または動画のみ添付できます",
     "upload_error": "ファイルのアップロードに失敗しました",
-    "failed_to_report": "通報の送信に失敗しました"
+    "failed_to_report": "通報の送信に失敗しました",
+    "notifications_not_found": "Failed to find notifications"
   },
   "dialog": {
     "account_not_found": {
