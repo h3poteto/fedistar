@@ -60,10 +60,17 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
     const timelines = await invoke<Array<[Timeline, Server]>>('list_timelines')
     const target = timelines.find(t => t[1].id === set.server.id && t[0].kind === 'notifications')
     if (target === undefined || target === null) return
-    props.setHighlighted(target[0])
-    setTimeout(() => {
-      props.setHighlighted(null)
-    }, 10000)
+
+    props.setHighlighted(current => {
+      if (current && current.id === target[0].id) {
+        return current
+      }
+      setTimeout(() => {
+        props.setHighlighted(null)
+      }, 5000)
+      return target[0]
+    })
+
     return
   }
 

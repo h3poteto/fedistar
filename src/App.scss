@@ -348,7 +348,7 @@
 .notifications {
 
   .highlighted-entering {
-    animation: .5s liner;
+    animation: .1s liner;
     animation-fill-mode: forwards;
   }
 
@@ -370,6 +370,6 @@
   }
 
   .highlighted-exited {
-    box-shadow: 0;
+    box-shadow: none;
   }
 }

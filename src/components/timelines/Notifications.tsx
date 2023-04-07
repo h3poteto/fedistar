@@ -233,14 +233,18 @@ const Notifications: React.FC<Props> = props => {
   }, [firstItemIndex, notifications, setNotifications, unreadNotifications])
 
   return (
-    <div style={{ width: '340px', minWidth: '340px', margin: '0 4px' }} className="timeline notifications">
+    <div
+      style={{ width: '340px', minWidth: '340px', margin: '0 4px' }}
+      className="timeline notifications"
+      id={props.timeline.id.toString()}
+    >
       <Animation.Transition
         in={highlighted}
         exitedClassName="highlighted-exited"
         exitingClassName="highlighted-exiting"
         enteredClassName="highlighted-entered"
         enteringClassName="highlighted-entering"
-        timeout={10000}
+        timeout={6000}
       >
         <Container style={{ height: '100%' }} className={highlighted ? 'highlighted' : ''}>
           <Header style={{ backgroundColor: 'var(--rs-gray-800)' }}>
