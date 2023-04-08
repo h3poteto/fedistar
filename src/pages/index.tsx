@@ -182,6 +182,7 @@ function App() {
           openSettings={() => dispatch({ target: 'settings', value: true })}
           toggleCompose={toggleCompose}
           setHighlighted={setHighlighted}
+          setUnreads={setUnreads}
         />
         <Animation.Transition
           in={composeOpened}
