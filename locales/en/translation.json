@@ -184,6 +184,10 @@
       "emoji_reaction": {
         "title": "Reaction",
         "body": "{{user}} reacted your post"
+      },
+      "move": {
+        "title": "Move",
+        "body": "{{user}} migrated to"
       }
     },
     "actions": {

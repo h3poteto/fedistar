@@ -4,6 +4,7 @@ import Reaction from './Reaction'
 import Status from '../status/Status'
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
+import Move from './Move'
 
 type Props = {
   notification: Entity.Notification
@@ -26,6 +27,13 @@ const notification = (props: Props) => {
     case 'follow_request':
       return (
         <Follow
+          notification={props.notification}
+          setAccountDetail={account => props.setAccountDetail(account.id, props.server.id, props.account?.id)}
+        />
+      )
+    case 'move':
+      return (
+        <Move
           notification={props.notification}
           setAccountDetail={account => props.setAccountDetail(account.id, props.server.id, props.account?.id)}
         />
