@@ -186,8 +186,8 @@
         "body": "{{user}} があなたの投稿をリアクションしました"
       },
       "move": {
-        "title": "Move",
-        "body": "{{user}} migrated to"
+        "title": "引越し",
+        "body": "{{user}} が引越しました"
       }
     },
     "actions": {
