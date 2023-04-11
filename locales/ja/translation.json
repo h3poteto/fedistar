@@ -184,6 +184,10 @@
       "emoji_reaction": {
         "title": "リアクション",
         "body": "{{user}} があなたの投稿をリアクションしました"
+      },
+      "move": {
+        "title": "Move",
+        "body": "{{user}} migrated to"
       }
     },
     "actions": {
