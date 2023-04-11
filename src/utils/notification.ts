@@ -9,6 +9,8 @@ const generateNotification = (
   switch (notification.type) {
     case 'follow':
       return [t('timeline.notification.follow.title'), t('timeline.notification.follow.body', { user: notification.account.acct })]
+    case 'move':
+      return [t('timeline.notification.move.title'), t('timeline.notification.move.body', { user: notification.account.acct })]
     case 'follow_request':
       return [
         t('timeline.notification.follow_request.title'),
