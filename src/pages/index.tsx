@@ -4,6 +4,7 @@ import { listen } from '@tauri-apps/api/event'
 import { Container, Content, useToaster, Animation, DOMHelper } from 'rsuite'
 import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/api/notification'
 import dayjs from 'dayjs'
+import { register } from '@tauri-apps/api/globalShortcut'
 
 import { Server, ServerSet } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
@@ -51,6 +52,13 @@ function App() {
 
   useEffect(() => {
     loadAppearance()
+    const f = async () => {
+      await register('CommandOrControl+Shift+I', async () => {
+        await invoke('switch_devtools')
+      })
+    }
+    f()
+
     invoke<Array<[Server, Account | null]>>('list_servers').then(res => {
       if (res.length === 0) {
         console.debug('There is no server')

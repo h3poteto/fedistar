@@ -383,6 +383,19 @@ async fn init_instruction(
 }
 
 #[tauri::command]
+async fn switch_devtools(app_handle: AppHandle) -> () {
+    #[cfg(debug_assertions)]
+    {
+        let window = app_handle
+            .get_window("main")
+            .expect("Failed to get main window");
+        window.open_devtools();
+        window.close_devtools();
+    }
+    ()
+}
+
+#[tauri::command]
 async fn update_instruction(
     app_handle: AppHandle,
     sqlite_pool: State<'_, sqlx::SqlitePool>,
@@ -567,6 +580,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             get_instruction,
             init_instruction,
             update_instruction,
+            switch_devtools,
         ])
         .setup(|app| {
             let app_handle = app.handle();
