@@ -139,7 +139,12 @@
       "7d": "7 days"
     },
     "cancel": "Cancel",
-    "post": "Post"
+    "post": "Post",
+    "edit_attachment": {
+      "title": "Edit media",
+      "label": "Describe for people who are blind or have low vision",
+      "submit": "Apply"
+    }
   },
   "timeline": {
     "reload": "Reload",

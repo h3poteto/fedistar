@@ -85,6 +85,7 @@ const Attachment: React.FC<AttachmentProps> = props => {
             height={128}
             src={media.preview_url}
             alt={media.description ? media.description : media.id}
+            title={media.description ? media.description : media.id}
             onClick={() => props.openMedia(media)}
             style={{ objectFit: 'cover', cursor: 'pointer', borderRadius: '4px' }}
           />

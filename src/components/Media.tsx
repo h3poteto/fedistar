@@ -82,7 +82,15 @@ const mediaComponent = (media: Entity.Attachment): ReactElement => {
         </div>
       )
     default:
-      return <Image src={media.url} fill alt={media.description ? media.description : media.id} style={{ objectFit: 'contain' }} />
+      return (
+        <Image
+          src={media.url}
+          fill
+          alt={media.description ? media.description : media.id}
+          title={media.description ? media.description : media.id}
+          style={{ objectFit: 'contain' }}
+        />
+      )
   }
 }
 
