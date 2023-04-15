@@ -139,7 +139,12 @@
       "7d": "7日"
     },
     "cancel": "キャンセル",
-    "post": "投稿"
+    "post": "投稿",
+    "edit_attachment": {
+      "title": "Edit media",
+      "label": "Describe for people who are blind or have low vision",
+      "submit": "Apply"
+    }
   },
   "timeline": {
     "reload": "再読み込み",
