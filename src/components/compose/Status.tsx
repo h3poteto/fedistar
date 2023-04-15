@@ -18,7 +18,18 @@ import {
 } from 'rsuite'
 import { useState, useEffect, useRef, forwardRef, ChangeEvent } from 'react'
 import { Icon } from '@rsuite/icons'
-import { BsEmojiLaughing, BsPaperclip, BsMenuButtonWide, BsGlobe, BsUnlock, BsLock, BsEnvelope, BsXCircle, BsX } from 'react-icons/bs'
+import {
+  BsEmojiLaughing,
+  BsPaperclip,
+  BsMenuButtonWide,
+  BsGlobe,
+  BsUnlock,
+  BsLock,
+  BsEnvelope,
+  BsXCircle,
+  BsX,
+  BsPencil
+} from 'react-icons/bs'
 import { Entity, MegalodonInterface } from 'megalodon'
 import Picker from '@emoji-mart/react'
 
@@ -30,6 +41,7 @@ import { Account } from 'src/entities/account'
 import { useTranslation } from 'react-i18next'
 import AutoCompleteTextarea, { ArgProps as AutoCompleteTextareaProps } from './AutoCompleteTextarea'
 import languages from 'src/utils/languages'
+import EditMedia from './EditMedia'
 
 type Props = {
   server: Server
@@ -80,6 +92,8 @@ const Status: React.FC<Props> = props => {
   const [visibility, setVisibility] = useState<'public' | 'unlisted' | 'private' | 'direct'>('public')
   const [cw, setCW] = useState<boolean>(false)
   const [language, setLanguage] = useState<string>('en')
+  const [editMediaModal, setEditMediaModal] = useState(false)
+  const [editMedia, setEditMedia] = useState<Entity.Attachment | null>(null)
 
   const formRef = useRef<any>()
   const statusRef = useRef<HTMLDivElement>()
@@ -322,6 +336,11 @@ const Status: React.FC<Props> = props => {
     )
   }
 
+  const openAttachment = (index: number) => {
+    setEditMedia(formValue.attachments[index])
+    setEditMediaModal(true)
+  }
+
   const togglePoll = () => {
     if (formValue.poll) {
       setFormValue(current =>
@@ -401,112 +420,130 @@ const Status: React.FC<Props> = props => {
   }
 
   return (
-    <Form fluid model={model} ref={formRef} onChange={setFormValue} onCheck={setFormError} formValue={formValue}>
-      {cw && (
-        <Form.Group controlId="spoiler">
-          <Form.Control name="spoiler" placeholder={t('compose.spoiler.placeholder')} />
-        </Form.Group>
-      )}
+    <>
+      <Form fluid model={model} ref={formRef} onChange={setFormValue} onCheck={setFormError} formValue={formValue}>
+        {cw && (
+          <Form.Group controlId="spoiler">
+            <Form.Control name="spoiler" placeholder={t('compose.spoiler.placeholder')} />
+          </Form.Group>
+        )}
 
-      <Form.Group controlId="status" style={{ position: 'relative', marginBottom: '4px' }}>
-        {/** @ts-ignore **/}
-        <Form.Control
-          rows={5}
-          name="status"
-          accepter={Textarea}
-          ref={statusRef}
-          placeholder={t('compose.status.placeholder')}
-          emojis={customEmojis}
-          client={props.client}
-        />
-        {/** delay is required to fix popover position **/}
-        <Whisper
-          trigger="click"
-          placement="bottomEnd"
-          controlId={targetId()}
-          delay={100}
-          preventOverflow={false}
-          ref={emojiPickerRef}
-          speaker={<EmojiPicker />}
-        >
-          <Button appearance="link" style={{ position: 'absolute', top: '4px', right: '8px', padding: 0 }}>
-            <Icon as={BsEmojiLaughing} style={{ fontSize: '1.2em' }} />
-          </Button>
-        </Whisper>
-      </Form.Group>
-      {formValue.poll && <Form.Control name="poll" accepter={PollInputControl} fieldError={formError.poll} />}
-
-      <Form.Group controlId="actions" style={{ marginBottom: '4px' }}>
-        <ButtonToolbar>
-          <Input name="attachments" type="file" style={{ display: 'none' }} ref={uploaderRef} onChange={fileChanged} />
-          <Button appearance="subtle" onClick={selectFile}>
-            <Icon as={BsPaperclip} style={{ fontSize: '1.1em' }} />
-          </Button>
-          <Button appearance="subtle" onClick={togglePoll}>
-            <Icon as={BsMenuButtonWide} style={{ fontSize: '1.1em' }} />
-          </Button>
-          <Whisper placement="bottomStart" trigger="click" speaker={VisibilityDropdown}>
-            <Button appearance="subtle">
-              <Icon as={privacyIcon(visibility)} style={{ fontSize: '1.1em' }} />
-            </Button>
-          </Whisper>
-          <Button appearance="subtle" onClick={() => setCW(previous => !previous)}>
-            <span style={{ fontSize: '0.8em' }}>CW</span>
-          </Button>
-          <Whisper placement="bottomEnd" delay={100} trigger="click" speaker={LanguageDropdown} preventOverflow>
-            <Button appearance="subtle">
-              <span style={{ fontSize: '0.8em' }}>{language.toUpperCase()}</span>
-            </Button>
-          </Whisper>
-        </ButtonToolbar>
-      </Form.Group>
-      {formValue.attachments?.length > 0 && (
-        <Form.Group controlId="nsfw" style={{ marginBottom: '4px' }}>
+        <Form.Group controlId="status" style={{ position: 'relative', marginBottom: '4px' }}>
+          {/** @ts-ignore **/}
           <Form.Control
-            name="nsfw"
-            accepter={Toggle}
-            checkedChildren={t('compose.nsfw.sensitive')}
-            unCheckedChildren={t('compose.nsfw.not_sensitive')}
+            rows={5}
+            name="status"
+            accepter={Textarea}
+            ref={statusRef}
+            placeholder={t('compose.status.placeholder')}
+            emojis={customEmojis}
+            client={props.client}
           />
+          {/** delay is required to fix popover position **/}
+          <Whisper
+            trigger="click"
+            placement="bottomEnd"
+            controlId={targetId()}
+            delay={100}
+            preventOverflow={false}
+            ref={emojiPickerRef}
+            speaker={<EmojiPicker />}
+          >
+            <Button appearance="link" style={{ position: 'absolute', top: '4px', right: '8px', padding: 0 }}>
+              <Icon as={BsEmojiLaughing} style={{ fontSize: '1.2em' }} />
+            </Button>
+          </Whisper>
         </Form.Group>
-      )}
+        {formValue.poll && <Form.Control name="poll" accepter={PollInputControl} fieldError={formError.poll} />}
 
-      <Form.Group controlId="attachments-preview" style={{ marginBottom: '4px' }}>
-        <div>
-          {formValue.attachments?.map((media, index) => (
-            <div key={index} style={{ position: 'relative' }}>
-              <IconButton
-                icon={<Icon as={BsXCircle} style={{ fontSize: '1.0em' }} />}
-                appearance="subtle"
-                size="sm"
-                style={{ position: 'absolute', top: 4, left: 4 }}
-                onClick={() => removeAttachment(index)}
-              />
+        <Form.Group controlId="actions" style={{ marginBottom: '4px' }}>
+          <ButtonToolbar>
+            <Input name="attachments" type="file" style={{ display: 'none' }} ref={uploaderRef} onChange={fileChanged} />
+            <Button appearance="subtle" onClick={selectFile}>
+              <Icon as={BsPaperclip} style={{ fontSize: '1.1em' }} />
+            </Button>
+            <Button appearance="subtle" onClick={togglePoll}>
+              <Icon as={BsMenuButtonWide} style={{ fontSize: '1.1em' }} />
+            </Button>
+            <Whisper placement="bottomStart" trigger="click" speaker={VisibilityDropdown}>
+              <Button appearance="subtle">
+                <Icon as={privacyIcon(visibility)} style={{ fontSize: '1.1em' }} />
+              </Button>
+            </Whisper>
+            <Button appearance="subtle" onClick={() => setCW(previous => !previous)}>
+              <span style={{ fontSize: '0.8em' }}>CW</span>
+            </Button>
+            <Whisper placement="bottomEnd" delay={100} trigger="click" speaker={LanguageDropdown} preventOverflow>
+              <Button appearance="subtle">
+                <span style={{ fontSize: '0.8em' }}>{language.toUpperCase()}</span>
+              </Button>
+            </Whisper>
+          </ButtonToolbar>
+        </Form.Group>
+        {formValue.attachments?.length > 0 && (
+          <Form.Group controlId="nsfw" style={{ marginBottom: '4px' }}>
+            <Form.Control
+              name="nsfw"
+              accepter={Toggle}
+              checkedChildren={t('compose.nsfw.sensitive')}
+              unCheckedChildren={t('compose.nsfw.not_sensitive')}
+            />
+          </Form.Group>
+        )}
 
-              <img
-                src={media.preview_url}
-                style={{
-                  width: '100%',
-                  height: '140px',
-                  objectFit: 'cover',
-                  borderRadius: '8px',
-                  boxSizing: 'border-box',
-                  marginBottom: '4px'
-                }}
-              />
-            </div>
-          ))}
-        </div>
-      </Form.Group>
-      <Form.Group>
-        <ButtonToolbar style={{ justifyContent: 'flex-end' }}>
-          {(props.in_reply_to || props.edit_target) && <Button onClick={clear}>{t('compose.cancel')}</Button>}
-          <Button appearance="primary" type="submit" onClick={handleSubmit} loading={loading}>
-            {t('compose.post')}
-          </Button>
-        </ButtonToolbar>
-      </Form.Group>
-    </Form>
+        <Form.Group controlId="attachments-preview" style={{ marginBottom: '4px' }}>
+          <div>
+            {formValue.attachments?.map((media, index) => (
+              <div key={index} style={{ position: 'relative' }}>
+                <IconButton
+                  icon={<Icon as={BsXCircle} style={{ fontSize: '1.0em' }} />}
+                  appearance="subtle"
+                  size="sm"
+                  style={{ position: 'absolute', top: 4, left: 4 }}
+                  onClick={() => removeAttachment(index)}
+                />
+                <IconButton
+                  icon={<Icon as={BsPencil} style={{ fontSize: '1.0em' }} />}
+                  appearance="subtle"
+                  size="sm"
+                  style={{ position: 'absolute', top: 4, right: 4 }}
+                  onClick={() => openAttachment(index)}
+                />
+
+                <img
+                  src={media.preview_url}
+                  style={{
+                    width: '100%',
+                    height: '140px',
+                    objectFit: 'cover',
+                    borderRadius: '8px',
+                    boxSizing: 'border-box',
+                    marginBottom: '4px'
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </Form.Group>
+        <Form.Group>
+          <ButtonToolbar style={{ justifyContent: 'flex-end' }}>
+            {(props.in_reply_to || props.edit_target) && <Button onClick={clear}>{t('compose.cancel')}</Button>}
+            <Button appearance="primary" type="submit" onClick={handleSubmit} loading={loading}>
+              {t('compose.post')}
+            </Button>
+          </ButtonToolbar>
+        </Form.Group>
+      </Form>
+      <EditMedia
+        opened={editMediaModal}
+        attachment={editMedia}
+        client={props.client}
+        close={() => {
+          setEditMedia(null)
+          setEditMediaModal(false)
+        }}
+      />
+    </>
   )
 }
 
