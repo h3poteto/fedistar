@@ -141,9 +141,9 @@
     "cancel": "キャンセル",
     "post": "投稿",
     "edit_attachment": {
-      "title": "Edit media",
-      "label": "Describe for people who are blind or have low vision",
-      "submit": "Apply"
+      "title": "メディアを編集",
+      "label": "視覚的に閲覧が難しいユーザーへの説明",
+      "submit": "適用"
     }
   },
   "timeline": {
