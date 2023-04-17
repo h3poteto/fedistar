@@ -411,6 +411,17 @@ async fn update_instruction(
     Ok(())
 }
 
+#[tauri::command]
+async fn frontend_log(message: String, level: String) -> () {
+    match level.as_str() {
+        "error" => log::error!("[front] {}", message),
+        "warn" => log::warn!("[front] {}", message),
+        "info" => log::info!("[front] {}", message),
+        _ => log::debug!("[front] {}", message),
+    }
+    ()
+}
+
 async fn start_timeline_streaming(
     app_handle: Arc<AppHandle>,
     sqlite_pool: &sqlx::SqlitePool,
@@ -581,6 +592,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             init_instruction,
             update_instruction,
             switch_devtools,
+            frontend_log,
         ])
         .setup(|app| {
             let app_handle = app.handle();
