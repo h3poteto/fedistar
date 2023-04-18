@@ -15,7 +15,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       invoke('frontend_log', { level: 'error', message: event.reason.toString() })
     })
     window.addEventListener('error', (event: ErrorEvent) => {
-      console.log(event)
       invoke('frontend_log', { level: 'error', message: event.message.toString() })
     })
   }, [])
