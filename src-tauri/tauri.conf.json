@@ -44,6 +44,7 @@
         "entitlements": "../entitlements.plist",
         "exceptionDomain": "",
         "frameworks": [],
+        "minimumSystemVersion": "13.0",
         "providerShortName": null,
         "signingIdentity": null
       },
