@@ -16,7 +16,7 @@ import {
   InputPicker,
   FormControlProps
 } from 'rsuite'
-import { useState, useEffect, useRef, forwardRef, ChangeEvent } from 'react'
+import { useState, useEffect, useRef, forwardRef, ChangeEvent, useCallback } from 'react'
 import { Icon } from '@rsuite/icons'
 import {
   BsEmojiLaughing,
@@ -96,6 +96,7 @@ const Status: React.FC<Props> = props => {
   const [editMedia, setEditMedia] = useState<Entity.Attachment | null>(null)
 
   const formRef = useRef<any>()
+  const cwRef = useRef<HTMLDivElement>()
   const statusRef = useRef<HTMLDivElement>()
   const emojiPickerRef = useRef(null)
   const uploaderRef = useRef<HTMLInputElement>()
@@ -252,13 +253,36 @@ const Status: React.FC<Props> = props => {
           await props.client.postStatus(formValue.status, options)
         }
         clear()
-      } catch {
+      } catch (err) {
+        console.error(err)
         toast.push(alert('error', t('alert.failed_post')), { placement: 'topStart' })
       } finally {
         setLoading(false)
       }
     }
   }
+
+  const handleKeyPress = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.ctrlKey === true && event.key === 'Enter') {
+        if (
+          document.activeElement === statusRef.current?.firstElementChild ||
+          document.activeElement === cwRef.current?.firstElementChild
+        ) {
+          handleSubmit()
+        }
+      }
+    },
+    [handleSubmit]
+  )
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress)
+    }
+  }, [handleKeyPress])
 
   const clear = () => {
     setFormValue({
@@ -424,7 +448,7 @@ const Status: React.FC<Props> = props => {
       <Form fluid model={model} ref={formRef} onChange={setFormValue} onCheck={setFormError} formValue={formValue}>
         {cw && (
           <Form.Group controlId="spoiler">
-            <Form.Control name="spoiler" placeholder={t('compose.spoiler.placeholder')} />
+            <Form.Control name="spoiler" ref={cwRef} placeholder={t('compose.spoiler.placeholder')} />
           </Form.Group>
         )}
 
@@ -528,7 +552,7 @@ const Status: React.FC<Props> = props => {
         <Form.Group>
           <ButtonToolbar style={{ justifyContent: 'flex-end' }}>
             {(props.in_reply_to || props.edit_target) && <Button onClick={clear}>{t('compose.cancel')}</Button>}
-            <Button appearance="primary" type="submit" onClick={handleSubmit} loading={loading}>
+            <Button appearance="primary" onClick={handleSubmit} loading={loading}>
               {t('compose.post')}
             </Button>
           </ButtonToolbar>
