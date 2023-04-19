@@ -33,6 +33,27 @@ const Media: React.FC<Props> = props => {
     setIndex(current => current - 1)
   }, [props.media, index, setIndex])
 
+  const handleKeyPress = useCallback(
+    (event: KeyboardEvent) => {
+      if (props.opened) {
+        if (event.key === 'ArrowLeft') {
+          previous()
+        } else if (event.key === 'ArrowRight') {
+          next()
+        }
+      }
+    },
+    [props.opened, previous, next]
+  )
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress)
+    }
+  }, [handleKeyPress])
+
   return (
     <Modal
       open={props.opened}
