@@ -83,12 +83,9 @@ mod tests {
 
     #[tokio::test]
     async fn test_get_favicon_url_for_pleroma() {
-        let result = get_favicon_url("https://pleroma.soykaf.com").await;
+        let result = get_favicon_url("https://pleroma.io").await;
         assert!(result.is_some());
-        assert_eq!(
-            result,
-            Some(String::from("https://pleroma.soykaf.com/favicon.png"))
-        );
+        assert_eq!(result, Some(String::from("https://pleroma.io/favicon.png")));
     }
 
     #[test]
