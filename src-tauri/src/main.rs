@@ -570,6 +570,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     tauri::Builder::default()
         .menu(menu::menu())
+        .on_menu_event(|event| match event.menu_item_id() {
+            "crash_reporting" => {
+                open::that("https://fedistar.net/help#crash_reporting")
+                    .expect("Failed to open the URL");
+            }
+            _ => {}
+        })
         .invoke_handler(tauri::generate_handler![
             list_servers,
             get_server,

@@ -1,5 +1,5 @@
 use rust_i18n::t;
-use tauri::{AboutMetadata, Menu, MenuItem, Submenu};
+use tauri::{AboutMetadata, CustomMenuItem, Menu, MenuItem, Submenu};
 
 const APP_NAME: &str = "Fedistar";
 
@@ -74,7 +74,12 @@ pub fn menu() -> Menu {
 
     #[cfg(not(target_os = "macos"))]
     {
-        let help_menu = Menu::new().add_native_item(about);
+        let help_menu = Menu::new()
+            .add_native_item(about)
+            .add_item(CustomMenuItem::new(
+                "crash_reporting",
+                t!("app_menu.crash_reporting"),
+            ));
         menu = menu.add_submenu(Submenu::new(t!("app_menu.help"), help_menu));
     }
     menu
