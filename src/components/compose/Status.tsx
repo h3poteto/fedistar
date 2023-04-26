@@ -14,7 +14,8 @@ import {
   FlexboxGrid,
   Radio,
   InputPicker,
-  FormControlProps
+  FormControlProps,
+  DatePicker
 } from 'rsuite'
 import { useState, useEffect, useRef, forwardRef, ChangeEvent, useCallback } from 'react'
 import { Icon } from '@rsuite/icons'
@@ -28,7 +29,8 @@ import {
   BsEnvelope,
   BsXCircle,
   BsX,
-  BsPencil
+  BsPencil,
+  BsClock
 } from 'react-icons/bs'
 import { Entity, MegalodonInterface } from 'megalodon'
 import Picker from '@emoji-mart/react'
@@ -61,6 +63,7 @@ type FormValue = {
   attachments?: Array<Entity.Attachment | Entity.AsyncAttachment>
   nsfw?: boolean
   poll?: Poll
+  scheduled_at?: Date
 }
 
 type Poll = {
@@ -76,7 +79,15 @@ const model = Schema.Model({
     options: Schema.Types.ArrayType().of(Schema.Types.StringType().isRequired('Required')).minLength(2, 'Minimum 2 choices required'),
     expires_in: Schema.Types.NumberType().isRequired('Required'),
     multiple: Schema.Types.BooleanType().isRequired('Required')
-  })
+  }),
+  scheduled_at: Schema.Types.DateType().addRule((value, _data) => {
+    const limit = new Date()
+    limit.setMinutes(limit.getMinutes() + 5)
+    if (value <= limit) {
+      return false
+    }
+    return true
+  }, 'Must be at least 5 minutes in the future')
 })
 
 const Status: React.FC<Props> = props => {
@@ -237,9 +248,14 @@ const Status: React.FC<Props> = props => {
             spoiler_text: formValue.spoiler
           })
         }
-        if (formValue.poll != undefined && formValue.poll.options.length > 0) {
+        if (formValue.poll !== undefined && formValue.poll.options.length > 0) {
           options = Object.assign({}, options, {
             poll: formValue.poll
+          })
+        }
+        if (formValue.scheduled_at !== undefined) {
+          options = Object.assign({}, options, {
+            scheduled_at: formValue.scheduled_at.toISOString()
           })
         }
         if (props.edit_target) {
@@ -381,6 +397,22 @@ const Status: React.FC<Props> = props => {
     }
   }
 
+  const toggleSchedule = () => {
+    if (formValue.scheduled_at) {
+      setFormValue(current =>
+        Object.assign({}, current, {
+          scheduled_at: undefined
+        })
+      )
+    } else {
+      setFormValue(current =>
+        Object.assign({}, current, {
+          scheduled_at: new Date()
+        })
+      )
+    }
+  }
+
   const EmojiPicker = forwardRef<HTMLDivElement>((props, ref) => (
     <Popover ref={ref} {...props}>
       <Picker data={data} custom={customEmojis} onEmojiSelect={onEmojiSelect} previewPosition="none" set="native" perLine="7" />
@@ -479,6 +511,7 @@ const Status: React.FC<Props> = props => {
           </Whisper>
         </Form.Group>
         {formValue.poll && <Form.Control name="poll" accepter={PollInputControl} fieldError={formError.poll} />}
+        {formValue.scheduled_at && <Form.Control name="scheduled_at" accepter={DatePicker} format="yyyy-MM-dd HH:mm" />}
 
         <Form.Group controlId="actions" style={{ marginBottom: '4px' }}>
           <ButtonToolbar>
@@ -502,6 +535,9 @@ const Status: React.FC<Props> = props => {
                 <span style={{ fontSize: '0.8em' }}>{language.toUpperCase()}</span>
               </Button>
             </Whisper>
+            <Button appearance="subtle" onClick={toggleSchedule}>
+              <Icon as={BsClock} style={{ fontSize: '1.1em' }} />
+            </Button>
           </ButtonToolbar>
         </Form.Group>
         {formValue.attachments?.length > 0 && (
