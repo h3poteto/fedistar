@@ -47,7 +47,7 @@
     "react-i18next": "^12.2.2",
     "react-icons": "^4.8.0",
     "react-virtuoso": "^4.3.2",
-    "rsuite": "^5.31.1",
+    "rsuite": "^5.32.0",
     "sanitize-html": "^2.10.0"
   },
   "devDependencies": {
