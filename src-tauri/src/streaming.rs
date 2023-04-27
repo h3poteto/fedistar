@@ -70,7 +70,10 @@ pub async fn start_user(
         Some(String::from("fedistar")),
     );
     let instance = client.get_instance().await.map_err(|e| e.to_string())?;
-    let streaming_url = instance.json.urls.streaming_api;
+    let Some(urls) = instance.json.urls else {
+        return Err("Streaming does not exist".to_string())
+    };
+    let streaming_url = urls.streaming_api;
 
     let streaming = client.user_streaming(streaming_url);
 
@@ -156,7 +159,10 @@ pub async fn start(
         Some(String::from("fedistar")),
     );
     let instance = client.get_instance().await.map_err(|e| e.to_string())?;
-    let streaming_url = instance.json.urls.streaming_api;
+    let Some(urls) = instance.json.urls else {
+        return Err("Streaming does not exist".to_string())
+    };
+    let streaming_url = urls.streaming_api;
 
     let streaming: Box<dyn megalodon::Streaming + Send + Sync>;
     match timeline.kind {
