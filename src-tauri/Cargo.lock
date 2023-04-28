@@ -828,7 +828,7 @@ dependencies = [
  "log",
  "megalodon",
  "once_cell",
- "open 4.0.2",
+ "open 4.1.0",
  "reqwest",
  "rust-i18n",
  "scraper",
@@ -2209,9 +2209,9 @@ dependencies = [
 
 [[package]]
 name = "open"
-version = "4.0.2"
+version = "4.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "873240a4a404d44c8cd1bf394359245d466a5695771fea15a79cafbc5e5cf4d7"
+checksum = "d16814a067484415fda653868c9be0ac5f2abd2ef5d951082a5f2fe1b3662944"
 dependencies = [
  "is-wsl",
  "pathdiff",
