@@ -95,27 +95,6 @@ const Profile: React.FC<Props> = props => {
     router.push({ query: {} })
   }
 
-  const followButton = () => {
-    if (!relationship) {
-      return null
-    }
-    if (relationship.following) {
-      return (
-        <Button appearance="primary" onClick={unfollow}>
-          {t('detail.profile.unfollow')}
-        </Button>
-      )
-    } else if (relationship.requested) {
-      return <Button appearance="primary">{t('detail.profile.follow_requested')}</Button>
-    } else {
-      return (
-        <Button appearance="primary" onClick={follow}>
-          {t('detail.profile.follow')}
-        </Button>
-      )
-    }
-  }
-
   const follow = useCallback(async () => {
     try {
       const res = await client.followAccount(user.id)
@@ -248,7 +227,9 @@ const Profile: React.FC<Props> = props => {
               </FlexboxGrid.Item>
               <FlexboxGrid.Item>
                 <FlexboxGrid style={{ gap: '8px' }}>
-                  <FlexboxGrid.Item>{followButton()}</FlexboxGrid.Item>
+                  <FlexboxGrid.Item>
+                    <FollowButton relationship={relationship} follow={follow} unfollow={unfollow} />
+                  </FlexboxGrid.Item>
                   <FlexboxGrid.Item>
                     <Whisper
                       placement="bottomEnd"
@@ -400,6 +381,63 @@ const precision = (num: number): string => {
     return `${(num / 1000000).toPrecision(3)}M`
   } else {
     return num.toString()
+  }
+}
+
+type FollowButtonProps = {
+  relationship: Entity.Relationship
+  follow: () => Promise<void>
+  unfollow: () => Promise<void>
+}
+
+const FollowButton: React.FC<FollowButtonProps> = props => {
+  const { t } = useTranslation()
+  const [followMessage, setFollowMessage] = useState(t('detail.profile.not_following'))
+  const [followColor, setFollowColor] = useState<'default' | 'primary'>('default')
+  const [unfollowMessage, setUnfollowMessage] = useState(t('detail.profile.following'))
+  const [unfollowColor, setUnfollowColor] = useState<'blue' | 'red'>('blue')
+
+  if (!props.relationship) {
+    return null
+  }
+  if (props.relationship.following) {
+    return (
+      <Button
+        appearance="primary"
+        color={unfollowColor}
+        onClick={props.unfollow}
+        onMouseEnter={() => {
+          setUnfollowMessage(t('detail.profile.unfollow'))
+          setUnfollowColor('red')
+        }}
+        onMouseLeave={() => {
+          setUnfollowMessage(t('detail.profile.following'))
+          setUnfollowColor('blue')
+        }}
+        block
+      >
+        {unfollowMessage}
+      </Button>
+    )
+  } else if (props.relationship.requested) {
+    return <Button appearance="primary">{t('detail.profile.follow_requested')}</Button>
+  } else {
+    return (
+      <Button
+        appearance={followColor}
+        onClick={props.follow}
+        onMouseEnter={() => {
+          setFollowMessage(t('detail.profile.follow'))
+          setFollowColor('primary')
+        }}
+        onMouseLeave={() => {
+          setFollowMessage(t('detail.profile.not_following'))
+          setFollowColor('default')
+        }}
+      >
+        {followMessage}
+      </Button>
+    )
   }
 }
 
