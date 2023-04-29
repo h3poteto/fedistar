@@ -239,10 +239,11 @@
     "profile": {
       "follow": "フォロー",
       "unfollow": "フォローを解除",
+      "following": "フォロー",
+      "not_following": "Not Following",
       "follow_requested": "フォローリクエスト",
       "follows_you": "フォローされています",
       "posts": "投稿",
-      "following": "フォロー",
       "followers": "フォロワー",
       "open_page": "元のページを開く",
       "mute": "ミュート",
