@@ -239,7 +239,6 @@
     "profile": {
       "follow": "Follow",
       "unfollow": "Unfollow",
-      "following": "Following",
       "not_following": "Not Following",
       "follow_requested": "Follow Requested",
       "follows_you": "FOLLOWS YOU",
