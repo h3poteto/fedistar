@@ -6,7 +6,12 @@
 ![License](https://img.shields.io/github/license/h3poteto/fedistar)
 [![Crowdin](https://badges.crowdin.net/fedistar/localized.svg)](https://crowdin.com/project/fedistar)
 
-This is a Mastodon and Pleroma client application for desktop.
+This is a Fediverse client application for desktop. It is supporting
+
+- Mastodon
+- Pleroma
+- Friendica
+
 
 ![screenshot](screenshot.png)
 
