@@ -1,5 +1,5 @@
 import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, useToaster } from 'rsuite'
-import { BsBell, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsCheck2 } from 'react-icons/bs'
+import { BsBell, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsCheck2, BsArrowClockwise } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
@@ -182,6 +182,19 @@ const Notifications: React.FC<Props> = props => {
     }
   }
 
+  const reload = useCallback(async () => {
+    try {
+      setLoading(true)
+      const res = await loadNotifications(client)
+      setNotifications(res)
+    } catch (err) {
+      console.error(err)
+      toast.push(alert('error', t('alert.failed_load', { timeline: `notifications` })), { placement: 'topStart' })
+    } finally {
+      setLoading(false)
+    }
+  }, [client, props.timeline])
+
   const loadMore = useCallback(async () => {
     console.debug('appending')
     const append = await loadNotifications(client, notifications[notifications.length - 1].id)
@@ -245,6 +258,11 @@ const Notifications: React.FC<Props> = props => {
                     style={{ padding: '4px' }}
                   >
                     <Icon as={BsCheck2} />
+                  </Button>
+                </FlexboxGrid.Item>
+                <FlexboxGrid.Item>
+                  <Button appearance="link" onClick={reload} style={{ padding: '4px' }} title={t('timeline.reload')}>
+                    <Icon as={BsArrowClockwise} />
                   </Button>
                 </FlexboxGrid.Item>
                 <FlexboxGrid.Item>

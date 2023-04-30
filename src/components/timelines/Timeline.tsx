@@ -250,16 +250,6 @@ const Timeline: React.FC<Props> = props => {
     }
   }
 
-  const reloadEnabled = (kind: TimelineKind) => {
-    switch (kind) {
-      case 'favourites':
-      case 'bookmarks':
-        return true
-      default:
-        return false
-    }
-  }
-
   const closeOptionPopover = () => triggerRef?.current.close()
 
   const updateStatus = (current: Array<Entity.Status>, status: Entity.Status) => {
@@ -372,13 +362,11 @@ const Timeline: React.FC<Props> = props => {
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={6}>
               <FlexboxGrid align="middle" justify="end">
-                {reloadEnabled(props.timeline.kind) && (
-                  <FlexboxGrid.Item>
-                    <Button appearance="link" onClick={reload} style={{ padding: '4px' }} title={t('timeline.reload')}>
-                      <Icon as={BsArrowClockwise} />
-                    </Button>
-                  </FlexboxGrid.Item>
-                )}
+                <FlexboxGrid.Item>
+                  <Button appearance="link" onClick={reload} style={{ padding: '4px' }} title={t('timeline.reload')}>
+                    <Icon as={BsArrowClockwise} />
+                  </Button>
+                </FlexboxGrid.Item>
 
                 <FlexboxGrid.Item>
                   {walkthrough && (
