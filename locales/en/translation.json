@@ -204,6 +204,7 @@
       "detail": {
         "title": "Detail",
         "browser": "Open original page",
+        "copy": "Copy link to post",
         "edit": "Edit",
         "delete": "Delete",
         "report": "Report",

@@ -204,6 +204,9 @@ const Actions: React.FC<Props> = props => {
                   openBrowser: () => {
                     open(status.url)
                   },
+                  copyLink: () => {
+                    navigator.clipboard.writeText(status.url)
+                  },
                   openEdit: () => {
                     props.setShowEdit(current => !current)
                   },
@@ -273,6 +276,7 @@ type DetailMenuProps = {
   top?: number
   own: boolean
   openBrowser: () => void
+  copyLink: () => void
   onDelete: () => void
   openEdit: () => void
   onClose: (delay?: number) => NodeJS.Timeout | void
@@ -289,6 +293,9 @@ const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>)
     switch (eventKey) {
       case 'browser':
         props.openBrowser()
+        return
+      case 'copy':
+        props.copyLink()
         return
       case 'edit':
         props.openEdit()
@@ -309,6 +316,7 @@ const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>)
     <Popover className={className} ref={ref} style={{ left, top, padding: 0 }}>
       <Dropdown.Menu onSelect={handleSelect}>
         <Dropdown.Item eventKey="browser">{t('timeline.actions.detail.browser')}</Dropdown.Item>
+        <Dropdown.Item eventKey="copy">{t('timeline.actions.detail.copy')}</Dropdown.Item>
         {props.own && <Dropdown.Item eventKey="edit">{t('timeline.actions.detail.edit')}</Dropdown.Item>}
         {props.own && <Dropdown.Item eventKey="delete">{t('timeline.actions.detail.delete')}</Dropdown.Item>}
         <Dropdown.Separator />
