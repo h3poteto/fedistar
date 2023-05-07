@@ -160,7 +160,7 @@ function App() {
         index={modalState.media.index}
         media={modalState.media.object}
         opened={modalState.media.opened}
-        close={() => dispatch({ target: 'media', value: false, object: [], index: 0 })}
+        close={() => dispatch({ target: 'media', value: false, object: [], index: -1 })}
       />
       <Thirdparty open={modalState.thirdparty.opened} onClose={() => dispatch({ target: 'thirdparty', value: false })} />
       <SettingsPage
