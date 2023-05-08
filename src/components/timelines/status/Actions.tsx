@@ -1,4 +1,5 @@
 import { open } from '@tauri-apps/api/shell'
+import { writeText } from '@tauri-apps/api/clipboard'
 import { FlexboxGrid, useToaster, Popover, Whisper, IconButton, Dropdown } from 'rsuite'
 import {
   BsChat,
@@ -201,11 +202,12 @@ const Actions: React.FC<Props> = props => {
                   top,
                   onClose,
                   own: props.account && props.account.account_id === props.status.account.id,
+                  disabled: typeof props.disabled === 'boolean' ? props.disabled : props.disabled.detail,
                   openBrowser: () => {
                     open(status.url)
                   },
-                  copyLink: () => {
-                    navigator.clipboard.writeText(status.url)
+                  copyLink: async () => {
+                    await writeText(status.url)
                   },
                   openEdit: () => {
                     props.setShowEdit(current => !current)
@@ -226,12 +228,7 @@ const Actions: React.FC<Props> = props => {
               )
             }
           >
-            <IconButton
-              appearance="link"
-              icon={<Icon as={BsThreeDots} />}
-              disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.detail}
-              title={t('timeline.actions.detail.title')}
-            />
+            <IconButton appearance="link" icon={<Icon as={BsThreeDots} />} title={t('timeline.actions.detail.title')} />
           </Whisper>
         </FlexboxGrid.Item>
       </FlexboxGrid>
@@ -275,6 +272,7 @@ type DetailMenuProps = {
   left?: number
   top?: number
   own: boolean
+  disabled: boolean
   openBrowser: () => void
   copyLink: () => void
   onDelete: () => void
@@ -317,10 +315,20 @@ const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>)
       <Dropdown.Menu onSelect={handleSelect}>
         <Dropdown.Item eventKey="browser">{t('timeline.actions.detail.browser')}</Dropdown.Item>
         <Dropdown.Item eventKey="copy">{t('timeline.actions.detail.copy')}</Dropdown.Item>
-        {props.own && <Dropdown.Item eventKey="edit">{t('timeline.actions.detail.edit')}</Dropdown.Item>}
-        {props.own && <Dropdown.Item eventKey="delete">{t('timeline.actions.detail.delete')}</Dropdown.Item>}
+        {props.own && (
+          <Dropdown.Item disabled={props.disabled} eventKey="edit">
+            {t('timeline.actions.detail.edit')}
+          </Dropdown.Item>
+        )}
+        {props.own && (
+          <Dropdown.Item disabled={props.disabled} eventKey="delete">
+            {t('timeline.actions.detail.delete')}
+          </Dropdown.Item>
+        )}
         <Dropdown.Separator />
-        <Dropdown.Item eventKey="report">{t('timeline.actions.detail.report')}</Dropdown.Item>
+        <Dropdown.Item disabled={props.disabled} eventKey="report">
+          {t('timeline.actions.detail.report')}
+        </Dropdown.Item>
         <Dropdown.Separator />
         <Dropdown.Item eventKey="from_other_account">{t('timeline.actions.detail.from_other_account')}</Dropdown.Item>
       </Dropdown.Menu>
