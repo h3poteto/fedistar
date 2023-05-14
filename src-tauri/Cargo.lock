@@ -3124,9 +3124,9 @@ dependencies = [
 
 [[package]]
 name = "rust-i18n"
-version = "1.1.4"
+version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a3dcb86b090a450cb642b6a465f0e9a3d4be26bdb9d8795a2a49fb02601b370f"
+checksum = "169fbf8f663e7bef4cddc3e0af0c350c4f8e8c1c40a1d92cdaa266865d2a749a"
 dependencies = [
  "anyhow",
  "clap",
@@ -3162,9 +3162,9 @@ dependencies = [
 
 [[package]]
 name = "rust-i18n-macro"
-version = "1.1.0"
+version = "1.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6e7e3e8f27d472822c5cf092a22631ebc667d9f8dc89dfc50ef4e87f4ebdf92f"
+checksum = "17107229a36fc4d21a868b4d5dce9f85ea7cffacb5d210a15e57c85ab7935703"
 dependencies = [
  "glob",
  "once_cell",
