@@ -72,7 +72,7 @@ const Follow: React.FC<Props> = props => {
             />
           </div>
         </FlexboxGrid.Item>
-        <FlexboxGrid.Item colspan={20} style={{ paddingRight: '8px' }}>
+        <FlexboxGrid.Item colspan={20} style={{ paddingRight: '8px', overflowWrap: 'break-word' }}>
           <div>
             <span
               dangerouslySetInnerHTML={{ __html: emojify(props.notification.account.display_name, props.notification.account.emojis) }}
