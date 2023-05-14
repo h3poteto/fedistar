@@ -44,6 +44,7 @@ const notification = (props: Props) => {
     case 'poll_vote':
     case 'quote':
     case 'status':
+    case 'update':
     case 'emoji_reaction':
       return (
         <Reaction

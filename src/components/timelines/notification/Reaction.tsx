@@ -2,7 +2,7 @@ import { MouseEventHandler } from 'react'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { Avatar, Button, FlexboxGrid, toaster, Notification } from 'rsuite'
 import { Icon } from '@rsuite/icons'
-import { BsStar, BsArrowRepeat, BsMenuUp, BsHouseDoor, BsPaperclip } from 'react-icons/bs'
+import { BsStar, BsArrowRepeat, BsMenuUp, BsHouseDoor, BsPaperclip, BsPencil } from 'react-icons/bs'
 import { open } from '@tauri-apps/api/shell'
 
 import Time from 'src/components/utils/Time'
@@ -35,6 +35,8 @@ const actionIcon = (notification: Entity.Notification) => {
       return <Icon as={BsMenuUp} />
     case 'status':
       return <Icon as={BsHouseDoor} />
+    case 'update':
+      return <Icon as={BsPencil} color="cyan" />
     case 'emoji_reaction':
       return <span dangerouslySetInnerHTML={{ __html: notification.emoji }} />
     default:
@@ -115,6 +117,19 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
           dangerouslySetInnerHTML={{
             __html: emojify(
               t('timeline.notification.status.body', { user: notification.account.display_name }),
+              notification.account.emojis
+            )
+          }}
+          onClick={() => setAccountDetail(notification.account)}
+        />
+      )
+    case 'update':
+      return (
+        <span
+          style={{ color: 'var(--rs-text-secondary)', cursor: 'pointer' }}
+          dangerouslySetInnerHTML={{
+            __html: emojify(
+              t('timeline.notification.update.body', { user: notification.account.display_name }),
               notification.account.emojis
             )
           }}
