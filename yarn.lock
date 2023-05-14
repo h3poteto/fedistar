@@ -3599,10 +3599,10 @@ rrweb-cssom@^0.6.0:
   resolved "https://registry.yarnpkg.com/rrweb-cssom/-/rrweb-cssom-0.6.0.tgz#ed298055b97cbddcdeb278f904857629dec5e0e1"
   integrity sha512-APM0Gt1KoXBz0iIkkdB/kfvGOwC4UuJFeG/c+yV7wSc7q96cG/kJ0HiYCnzivD9SB53cLV1MlHFNfOuPaadYSw==
 
-rsuite-table@^5.10.3:
-  version "5.10.3"
-  resolved "https://registry.yarnpkg.com/rsuite-table/-/rsuite-table-5.10.3.tgz#044b27269de8f381ee890e63900c3f0d48fd4bb6"
-  integrity sha512-GNOnjDp2vBHcPliVxC1kpAlUaXRSIbk1qtPt9FYCAU9Wq5aRAIktJPDvE0qWitzaaGUuiV2a4amZj9ui6Sd4NA==
+rsuite-table@^5.10.5:
+  version "5.10.5"
+  resolved "https://registry.yarnpkg.com/rsuite-table/-/rsuite-table-5.10.5.tgz#071ac935be2187ec09a2f92fdc720e7be6a4a67b"
+  integrity sha512-yrJILC2rtB8YcIdF6b+EjE41h2jW1dzwC9on7NjAZIAIrh7wGz8Y35J+ra40HaJUXevdItOCZhzF+Nj8gFUfIg==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@juggle/resize-observer" "^3.3.1"
@@ -3612,10 +3612,10 @@ rsuite-table@^5.10.3:
     lodash "^4.17.21"
     react-is "^17.0.2"
 
-rsuite@^5.33.0:
-  version "5.33.0"
-  resolved "https://registry.yarnpkg.com/rsuite/-/rsuite-5.33.0.tgz#4ce31007c9b482f6e1ed3a6d22dd8f3f95c3b0a6"
-  integrity sha512-/0JUvnB7tzkf6Fen5JWva41aGL9FY0WPXSAEwjj+JbCzRZtqWbkXn+xpt6weaYCqoz8mQeX6f38CzNjvdzucMg==
+rsuite@^5.33.1:
+  version "5.33.1"
+  resolved "https://registry.yarnpkg.com/rsuite/-/rsuite-5.33.1.tgz#8fabbc8c0288e87e9c5a6cbd4c35c8110b784b9c"
+  integrity sha512-tOT/rd5jcrmM/+5OSXquVq3Bw2c2+fu7Nkm54o8Oj3a1JWvalQXzkM5BqtNgtzP1v5uKHMiUz5/QXvtlsygCUQ==
   dependencies:
     "@babel/runtime" "^7.20.1"
     "@juggle/resize-observer" "^3.4.0"
@@ -3631,8 +3631,8 @@ rsuite@^5.33.0:
     prop-types "^15.8.1"
     react-use-set "^1.0.0"
     react-window "^1.8.8"
-    rsuite-table "^5.10.3"
-    schema-typed "^2.1.2"
+    rsuite-table "^5.10.5"
+    schema-typed "^2.1.3"
 
 run-parallel@^1.1.9:
   version "1.2.0"
@@ -3690,10 +3690,10 @@ scheduler@^0.23.0:
   dependencies:
     loose-envify "^1.1.0"
 
-schema-typed@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/schema-typed/-/schema-typed-2.1.2.tgz#d2b013d356f4f422e4990f82dd0374b92493f03b"
-  integrity sha512-5BCduF1qt9ch2kEqc3/4Jj0mZfUzh+E8iIto5AViOwgReCho2yiT1LlQJ/5KQ1MTkthD8EDokLA/BlhbYow7Bw==
+schema-typed@^2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/schema-typed/-/schema-typed-2.1.3.tgz#a4caa620873ab87e6a08822018cab4cc9b4ae87b"
+  integrity sha512-Nk0LLOq0L64HaQsXQGAZ8Z176tDE4jewsxyWe+6QvidNiC33DMaWFg+LaLWJ85uPPBtqBBJlCq9W4c1KEA88WA==
 
 semver@7.x, semver@^7.3.5, semver@^7.3.7:
   version "7.3.8"
