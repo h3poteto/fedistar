@@ -31,6 +31,8 @@ const generateNotification = (
       return [t('timeline.notification.quote.title'), t('timeline.notification.quote.body', { user: notification.account.acct })]
     case 'status':
       return [t('timeline.notification.status.title'), t('timeline.notification.status.body', { user: notification.account.acct })]
+    case 'update':
+      return [t('timeline.notification.update.title'), t('timeline.notification.update.body', { user: notification.account.acct })]
     case 'emoji_reaction':
       return [
         t('timeline.notification.emoji_reaction.title'),

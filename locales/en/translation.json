@@ -186,6 +186,10 @@
         "title": "Status",
         "body": "{{user}} just post"
       },
+      "update": {
+        "title": "Update",
+        "body": "{{user}} updated the post"
+      },
       "emoji_reaction": {
         "title": "Reaction",
         "body": "{{user}} reacted your post"
