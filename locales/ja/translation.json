@@ -186,6 +186,10 @@
         "title": "ステータス",
         "body": "{{user}} が投稿しました"
       },
+      "update": {
+        "title": "Update",
+        "body": "{{user}} updated the post"
+      },
       "emoji_reaction": {
         "title": "リアクション",
         "body": "{{user}} があなたの投稿をリアクションしました"
