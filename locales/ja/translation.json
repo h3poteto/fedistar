@@ -63,6 +63,7 @@
     },
     "servers": {
       "authorize": "認証",
+      "profile": "プロフィール",
       "remove": "削除"
     }
   },
