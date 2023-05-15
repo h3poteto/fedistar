@@ -63,6 +63,7 @@
     },
     "servers": {
       "authorize": "Authorize",
+      "profile": "Open profile",
       "remove": "Remove"
     }
   },
