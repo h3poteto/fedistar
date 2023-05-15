@@ -13,6 +13,7 @@ import { listen } from '@tauri-apps/api/event'
 import { useTranslation } from 'react-i18next'
 import alert from 'src/components/utils/alert'
 import generator, { Entity } from 'megalodon'
+import { useRouter } from 'next/router'
 
 type NavigatorProps = {
   servers: Array<ServerSet>
@@ -159,7 +160,17 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
                 trigger="contextMenu"
                 onOpen={closeWalkthrough}
                 speaker={({ className, left, top, onClose }, ref) =>
-                  serverMenu({ className, left, top, onClose, server: server.server, openAuthorize }, ref)
+                  serverMenu(
+                    {
+                      className,
+                      left,
+                      top,
+                      onClose,
+                      server,
+                      openAuthorize
+                    },
+                    ref
+                  )
                 }
               >
                 <Button
@@ -205,7 +216,7 @@ type ServerMenuProps = {
   left?: number
   top?: number
   onClose: (delay?: number) => NodeJS.Timeout | void
-  server: Server
+  server: ServerSet
   openAuthorize: (server: Server) => void
 }
 
@@ -214,23 +225,28 @@ const serverMenu = (
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
   const { t } = useTranslation()
+  const router = useRouter()
 
   const handleSelect = (eventKey: string) => {
     onClose()
     switch (eventKey) {
-      case '0':
-        openAuthorize(server)
+      case 'authorize':
+        openAuthorize(server.server)
         break
-      case '1':
-        invoke('remove_server', { id: server.id })
+      case 'profile':
+        router.push({ query: { user_id: server.account.account_id, server_id: server.server.id, account_id: server.account.id } })
+        break
+      case 'remove':
+        invoke('remove_server', { id: server.server.id })
         break
     }
   }
   return (
     <Popover ref={ref} className={className} style={{ left, top, padding: 0 }}>
       <Dropdown.Menu onSelect={handleSelect}>
-        {server.account_id === null && <Dropdown.Item eventKey="0">{t('navigator.servers.authorize')}</Dropdown.Item>}
-        <Dropdown.Item eventKey="1">{t('navigator.servers.remove')}</Dropdown.Item>
+        {server.server.account_id === null && <Dropdown.Item eventKey="authorize">{t('navigator.servers.authorize')}</Dropdown.Item>}
+        {server.server.account_id !== null && <Dropdown.Item eventKey="profile">{t('navigator.servers.profile')}</Dropdown.Item>}
+        <Dropdown.Item eventKey="remove">{t('navigator.servers.remove')}</Dropdown.Item>
       </Dropdown.Menu>
     </Popover>
   )
