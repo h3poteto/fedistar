@@ -212,7 +212,7 @@
         "copy": "Copy link to post",
         "edit": "Edit",
         "delete": "Delete",
-        "report": "Report",
+        "report": "Report {{user}}",
         "from_other_account": "React from other accounts"
       }
     },
@@ -252,10 +252,12 @@
       "following": "Following",
       "followers": "Followers",
       "open_page": "Open original page",
-      "mute": "Mute",
-      "unmute": "Unmute",
-      "block": "Block",
-      "unblock": "Unblock"
+      "mute": "Mute {{user}}",
+      "unmute": "Unmute {{user}}",
+      "block": "Block {{user}}",
+      "unblock": "Unblock {{user}}",
+      "unblock_domain": "Unblock domain {{server}}",
+      "block_domain": "Block domain {{server}}"
     }
   },
   "report": {

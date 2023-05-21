@@ -194,6 +194,7 @@ const Actions: React.FC<Props> = props => {
           <Whisper
             trigger="click"
             placement="bottom"
+            preventOverflow
             speaker={({ className, left, top, onClose }, ref) =>
               detailMenu(
                 {
@@ -202,6 +203,7 @@ const Actions: React.FC<Props> = props => {
                   top,
                   onClose,
                   own: props.account && props.account.account_id === props.status.account.id,
+                  status: props.status,
                   disabled: typeof props.disabled === 'boolean' ? props.disabled : props.disabled.detail,
                   openBrowser: () => {
                     open(status.url)
@@ -272,6 +274,7 @@ type DetailMenuProps = {
   left?: number
   top?: number
   own: boolean
+  status: Entity.Status
   disabled: boolean
   openBrowser: () => void
   copyLink: () => void
@@ -284,7 +287,7 @@ type DetailMenuProps = {
 
 const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>) => {
   const { t } = useTranslation()
-  const { left, top, className } = props
+  const { left, top, className, status } = props
 
   const handleSelect = async (eventKey: string) => {
     props.onClose()
@@ -327,7 +330,7 @@ const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>)
         )}
         <Dropdown.Separator />
         <Dropdown.Item disabled={props.disabled} eventKey="report">
-          {t('timeline.actions.detail.report')}
+          {t('timeline.actions.detail.report', { user: `@${status.account.username}` })}
         </Dropdown.Item>
         <Dropdown.Separator />
         <Dropdown.Item eventKey="from_other_account">{t('timeline.actions.detail.from_other_account')}</Dropdown.Item>
