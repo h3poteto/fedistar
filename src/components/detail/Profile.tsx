@@ -16,6 +16,7 @@ import Following, { FuncProps as FollowingFunc } from './profile/Following'
 import Followers, { FuncProps as FollowersFunc } from './profile/Followers'
 import { useTranslation } from 'react-i18next'
 import { findLink } from 'src/utils/statusParser'
+import { domainFromAcct } from 'src/utils/domain'
 
 const PostsTab = forwardRef(Posts)
 const FollowingTab = forwardRef(Following)
@@ -327,6 +328,8 @@ const profileMenu = (
 ): ReactElement => {
   const { t } = useTranslation()
 
+  const domain = domainFromAcct(user.acct)
+
   const handleSelect = async (eventKey: string) => {
     onClose()
     switch (eventKey) {
@@ -352,6 +355,15 @@ const profileMenu = (
         onChange()
         return
       }
+      case 'domain_block': {
+        if (relationship.domain_blocking) {
+          await client.unblockDomain(domain)
+        } else {
+          await client.blockDomain(domain)
+        }
+        onChange()
+        return
+      }
     }
   }
   return (
@@ -362,11 +374,25 @@ const profileMenu = (
           <>
             <Dropdown.Separator />
             <Dropdown.Item eventKey="mute">
-              {relationship.muting ? t('detail.profile.unmute') : t('detail.profile.mute')} @{user.username}
+              {relationship.muting
+                ? t('detail.profile.unmute', { user: `@${user.username}` })
+                : t('detail.profile.mute', { user: `@${user.username}` })}
             </Dropdown.Item>
             <Dropdown.Item eventKey="block">
-              {relationship.blocking ? t('detail.profile.unblock') : t('detail.profile.block')} @{user.username}
+              {relationship.blocking
+                ? t('detail.profile.unblock', { user: `@${user.username}` })
+                : t('detail.profile.block', { user: `@${user.username}` })}
             </Dropdown.Item>
+            {domain && (
+              <>
+                <Dropdown.Separator />
+                <Dropdown.Item eventKey="domain_block">
+                  {relationship.domain_blocking
+                    ? t('detail.profile.unblock_domain', { server: domain })
+                    : t('detail.profile.block_domain', { server: domain })}
+                </Dropdown.Item>
+              </>
+            )}
           </>
         )}
       </Dropdown.Menu>
