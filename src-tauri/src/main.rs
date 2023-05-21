@@ -507,7 +507,9 @@ async fn start_streamings(
 fn init_logger(logfile_path: std::path::PathBuf) {
     let mut logger: Vec<Box<dyn simplelog::SharedLogger>> = vec![simplelog::WriteLogger::new(
         simplelog::LevelFilter::Info,
-        simplelog::Config::default(),
+        simplelog::ConfigBuilder::new()
+            .set_time_format_rfc3339()
+            .build(),
         OpenOptions::new()
             .read(true)
             .write(true)
@@ -520,7 +522,9 @@ fn init_logger(logfile_path: std::path::PathBuf) {
     {
         logger.push(simplelog::TermLogger::new(
             simplelog::LevelFilter::Debug,
-            simplelog::Config::default(),
+            simplelog::ConfigBuilder::new()
+                .set_time_format_rfc3339()
+                .build(),
             simplelog::TerminalMode::Mixed,
             simplelog::ColorChoice::Auto,
         ));
