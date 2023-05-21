@@ -212,7 +212,7 @@
         "copy": "投稿へのリンクをコピー",
         "edit": "編集",
         "delete": "削除",
-        "report": "通報",
+        "report": "Report {{user}}",
         "from_other_account": "他のアカウントからリアクション"
       }
     },
@@ -252,10 +252,12 @@
       "following": "フォロー中",
       "followers": "フォロワー",
       "open_page": "元のページを開く",
-      "mute": "ミュート",
-      "unmute": "ミュートを解除",
-      "block": "ブロック",
-      "unblock": "ブロックを解除"
+      "mute": "Mute {{user}}",
+      "unmute": "Unmute {{user}}",
+      "block": "Block {{user}}",
+      "unblock": "Unblock {{user}}",
+      "unblock_domain": "Unblock domain {{server}}",
+      "block_domain": "Block domain {{server}}"
     }
   },
   "report": {
