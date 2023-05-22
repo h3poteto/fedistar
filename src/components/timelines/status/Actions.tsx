@@ -22,7 +22,7 @@ import ActionButton from './ActionButton'
 import alert from 'src/components/utils/alert'
 import { Server } from 'src/entities/server'
 import { data } from 'src/utils/emojiData'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Account } from 'src/entities/account'
 
 type Props = {
@@ -48,7 +48,7 @@ type Props = {
 }
 
 const Actions: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const { status, client } = props
   const [favouriteActivating, setFavouriteActivating] = useState<boolean>(false)
@@ -286,7 +286,7 @@ type DetailMenuProps = {
 }
 
 const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const { left, top, className, status } = props
 
   const handleSelect = async (eventKey: string) => {

@@ -1,6 +1,6 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Button, Checkbox, CheckboxGroup, Modal } from 'rsuite'
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 }
 
 export default function Rules(props: Props) {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const [rules, setRules] = useState<Array<Entity.InstanceRule>>([])
   const [values, setValues] = useState<Array<string>>([])
 

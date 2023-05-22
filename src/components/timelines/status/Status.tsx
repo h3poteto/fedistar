@@ -4,7 +4,7 @@ import { FlexboxGrid, Avatar, Button, useToaster, Notification } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsArrowRepeat, BsPin } from 'react-icons/bs'
 import { open } from '@tauri-apps/api/shell'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
 import Attachments from './Attachments'
@@ -33,7 +33,7 @@ type Props = {
 } & HTMLAttributes<HTMLElement>
 
 const Status: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const { client } = props
   const [showReply, setShowReply] = useState<boolean>(false)
   const [showEdit, setShowEdit] = useState<boolean>(false)

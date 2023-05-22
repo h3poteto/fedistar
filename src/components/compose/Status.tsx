@@ -40,7 +40,7 @@ import { Server } from 'src/entities/server'
 import { CustomEmojiCategory } from 'src/entities/emoji'
 import alert from 'src/components/utils/alert'
 import { Account } from 'src/entities/account'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import AutoCompleteTextarea, { ArgProps as AutoCompleteTextareaProps } from './AutoCompleteTextarea'
 import languages from 'src/utils/languages'
 import EditMedia from './EditMedia'
@@ -91,7 +91,7 @@ const model = Schema.Model({
 })
 
 const Status: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const [formValue, setFormValue] = useState<FormValue>({
     spoiler: '',
@@ -631,7 +631,7 @@ const defaultPoll = () => ({
 })
 
 const PollInputControl: FormControlProps<Poll, any> = ({ value, onChange, fieldError }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const [poll, setPoll] = useState<Poll>(value)
   const errors = fieldError ? fieldError.object : {}

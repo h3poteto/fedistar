@@ -1,6 +1,6 @@
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Modal } from 'rsuite'
 import { USER_AGENT } from 'src/defaults'
 import { Account } from 'src/entities/account'
@@ -15,7 +15,7 @@ type Props = {
 }
 
 export default function FromOtherAccount(props: Props) {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const [server, setServer] = useState<Server | null>(null)
   const [account, setAccount] = useState<Account | null>(null)

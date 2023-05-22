@@ -10,7 +10,7 @@ import { Unread } from 'src/entities/unread'
 import { Marker } from 'src/entities/marker'
 import { Instruction } from 'src/entities/instruction'
 import { listen } from '@tauri-apps/api/event'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import alert from 'src/components/utils/alert'
 import generator, { Entity } from 'megalodon'
 import { useRouter } from 'next/router'
@@ -28,7 +28,7 @@ type NavigatorProps = {
 }
 
 const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const { servers, openAuthorize, openThirdparty, openSettings } = props
   const [walkthrough, setWalkthrough] = useState(false)
   const toaster = useToaster()
@@ -224,7 +224,7 @@ const serverMenu = (
   { className, left, top, onClose, server, openAuthorize }: ServerMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const router = useRouter()
 
   const handleSelect = (eventKey: string) => {
@@ -265,7 +265,7 @@ const settingsMenu = (
   { className, left, top, onClose, openThirdparty, openSettings }: SettingsMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const handleSelect = async (eventKey: string) => {
     onClose()

@@ -38,7 +38,7 @@ import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from 'src/defaults'
 import alert from 'src/components/utils/alert'
 import { useRouter } from 'next/router'
 import { Instruction } from 'src/entities/instruction'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import timelineName from 'src/utils/timelineName'
 
 type Props = {
@@ -50,7 +50,7 @@ type Props = {
 }
 
 const Timeline: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [unreadStatuses, setUnreadStatuses] = useState<Array<Entity.Status>>([])
@@ -454,7 +454,7 @@ const Timeline: React.FC<Props> = props => {
 }
 
 const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const removeTimeline = async (timeline: Timeline) => {
     await invoke('remove_timeline', { id: timeline.id })

@@ -10,7 +10,7 @@ import { Server, ServerSet } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import failoverImg from 'src/utils/failoverImg'
 import Status from './Status'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 const renderAccountIcon = (props: any, ref: any, account: [Account, Server] | undefined) => {
   if (account && account.length > 0) {
@@ -42,7 +42,7 @@ type Props = {
 }
 
 const Compose: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const [accounts, setAccounts] = useState<Array<[Account, Server]>>([])
   const [fromAccount, setFromAccount] = useState<[Account, Server]>()

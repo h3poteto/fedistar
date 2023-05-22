@@ -1,9 +1,8 @@
 import { invoke } from '@tauri-apps/api/tauri'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { InputNumber, Modal, Panel, Form, Schema, ButtonToolbar, Button, InputPicker } from 'rsuite'
 import { Settings } from 'src/entities/settings'
-import { localeType } from 'src/i18n'
 
 type Props = {
   open: boolean
@@ -13,7 +12,7 @@ type Props = {
 
 type FormValue = {
   font_size: number
-  language: localeType
+  language: 'en' | 'ja'
 }
 
 const languages = [
@@ -28,7 +27,7 @@ const languages = [
 ]
 
 const Settings: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const [formValue, setFormValue] = useState<FormValue>({
     font_size: 14,

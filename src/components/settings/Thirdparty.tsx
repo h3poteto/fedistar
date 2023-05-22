@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { List, Modal } from 'rsuite'
 import licenses from 'src/thirdparty.json'
 
@@ -8,7 +8,7 @@ type Props = {
 }
 
 const Thirdparty: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   return (
     <Modal backdrop="static" keyboard={true} open={props.open} onClose={props.onClose}>

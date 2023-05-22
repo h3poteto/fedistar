@@ -10,7 +10,7 @@ import emojify from 'src/utils/emojify'
 import { findLink, findAccount, findTag, accountMatch, ParsedAccount } from 'src/utils/statusParser'
 import Body from '../status/Body'
 import Poll from '../status/Poll'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Server } from 'src/entities/server'
 
 type Props = {
@@ -45,7 +45,7 @@ const actionIcon = (notification: Entity.Notification) => {
 }
 
 const actionText = (notification: Entity.Notification, setAccountDetail: (account: Entity.Account) => void) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   switch (notification.type) {
     case 'favourite':
@@ -155,7 +155,7 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
 }
 
 const Reaction: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const status = props.notification.status
 
   const refresh = async () => {

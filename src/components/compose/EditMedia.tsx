@@ -1,7 +1,7 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import Image from 'next/image'
 import { forwardRef, useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Button, ButtonToolbar, FlexboxGrid, Form, Input, Modal, Schema } from 'rsuite'
 
 type Props = {
@@ -20,7 +20,7 @@ const model = Schema.Model({
 })
 
 export default function EditMedia(props: Props) {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const [formValue, setFormValue] = useState<FormValue>({
     description: ''

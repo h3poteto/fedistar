@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Button, Input, Modal, Toggle } from 'rsuite'
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
 }
 
 export default function Comment(props: Props) {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const [comment, setComment] = useState('')
   const [forward, setForward] = useState(true)
 

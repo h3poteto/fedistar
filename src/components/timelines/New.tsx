@@ -22,7 +22,7 @@ import { Account } from 'src/entities/account'
 import { TimelineKind } from 'src/entities/timeline'
 import { Instruction } from 'src/entities/instruction'
 import { listen } from '@tauri-apps/api/event'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 type AuthorizedProps = {
   server: Server
@@ -30,7 +30,7 @@ type AuthorizedProps = {
 }
 
 const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const [loading, setLoading] = useState<boolean>(false)
   const [lists, setLists] = useState<Array<Entity.List>>([])
@@ -129,7 +129,7 @@ type Props = {
 }
 
 const New: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const [server, setServer] = useState<Server | null>(null)
   const [walkthrough, setWalkthrough] = useState<boolean>(false)

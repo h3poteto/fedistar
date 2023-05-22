@@ -4,7 +4,7 @@ import { BsPersonPlus } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 type Props = {
   notification: Entity.Notification
@@ -12,7 +12,7 @@ type Props = {
 }
 
 const actionText = (notification: Entity.Notification) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   switch (notification.type) {
     case 'follow':

@@ -14,7 +14,7 @@ import { useRouter } from 'next/router'
 import Posts, { FuncProps as PostsFunc } from './profile/Posts'
 import Following, { FuncProps as FollowingFunc } from './profile/Following'
 import Followers, { FuncProps as FollowersFunc } from './profile/Followers'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { findLink } from 'src/utils/statusParser'
 import { domainFromAcct } from 'src/utils/domain'
 
@@ -29,7 +29,7 @@ type Props = {
 }
 
 const Profile: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const [client, setClient] = useState<MegalodonInterface | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
@@ -326,7 +326,7 @@ const profileMenu = (
   { className, left, top, onClose, client, user, relationship, onChange }: ProfileMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const domain = domainFromAcct(user.acct)
 
@@ -417,7 +417,7 @@ type FollowButtonProps = {
 }
 
 const FollowButton: React.FC<FollowButtonProps> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const [followMessage, setFollowMessage] = useState(t('detail.profile.not_following'))
   const [followColor, setFollowColor] = useState<'default' | 'primary'>('default')
   const [unfollowMessage, setUnfollowMessage] = useState(t('detail.profile.following'))

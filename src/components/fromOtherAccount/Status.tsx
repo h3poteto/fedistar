@@ -1,6 +1,6 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Avatar, Button, FlexboxGrid, Loader, Modal, Placeholder } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsPaperclip } from 'react-icons/bs'
@@ -19,7 +19,7 @@ type Props = {
   next: () => void
 }
 export default function Status(props: Props) {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [searching, setSearching] = useState(false)

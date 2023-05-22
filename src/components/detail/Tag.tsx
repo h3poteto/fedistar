@@ -10,7 +10,7 @@ import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import { Virtuoso } from 'react-virtuoso'
 import Status from '../timelines/status/Status'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
@@ -19,7 +19,7 @@ type Props = {
 }
 
 export default function TagDetail(props: Props) {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const [client, setClient] = useState<MegalodonInterface | null>(null)
   const [server, setServer] = useState<Server | null>(null)

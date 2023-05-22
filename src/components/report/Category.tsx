@@ -1,6 +1,6 @@
 import { Entity } from 'megalodon'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Modal, Radio, Button, RadioGroup } from 'rsuite'
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 }
 
 export default function Category(props: Props) {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const [value, setValue] = useState<Entity.Category | null>(null)
 
   return (

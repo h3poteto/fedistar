@@ -17,7 +17,7 @@ import Conversation from './conversation/Conversation'
 import { listen } from '@tauri-apps/api/event'
 import { ReceiveTimelineConversationPayload } from 'src/payload'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import timelineName from 'src/utils/timelineName'
 
 type Props = {
@@ -27,7 +27,7 @@ type Props = {
 }
 
 const Conversations: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const [account, setAccount] = useState<Account | null>(null)
   const [client, setClient] = useState<MegalodonInterface>()
@@ -213,7 +213,7 @@ const Conversations: React.FC<Props> = props => {
 }
 
 const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const removeTimeline = async (timeline: Timeline) => {
     await invoke('remove_timeline', { id: timeline.id })

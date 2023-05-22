@@ -1,6 +1,6 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Loader, Modal, Placeholder, useToaster } from 'rsuite'
 import Category from './Category'
 import Rules from './Rules'
@@ -16,7 +16,7 @@ type Props = {
 }
 
 export default function Report(props: Props) {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const [category, setCategory] = useState<Entity.Category | null>(null)
   const [rules, setRules] = useState<Array<string> | null>(null)
   const [statuses, setStatuses] = useState<Array<string> | null>(null)

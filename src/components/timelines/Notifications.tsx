@@ -17,7 +17,7 @@ import { Unread } from 'src/entities/unread'
 import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from 'src/defaults'
 import alert from 'src/components/utils/alert'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import timelineName from 'src/utils/timelineName'
 import { Marker } from 'src/entities/marker'
 
@@ -32,7 +32,7 @@ type Props = {
 }
 
 const Notifications: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const [account, setAccount] = useState<Account>()
   const [client, setClient] = useState<MegalodonInterface>()
@@ -346,7 +346,7 @@ const Notifications: React.FC<Props> = props => {
 }
 
 const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const removeTimeline = async (timeline: Timeline) => {
     await invoke('remove_timeline', { id: timeline.id })

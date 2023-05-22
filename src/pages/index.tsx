@@ -23,15 +23,24 @@ import Thirdparty from 'src/components/settings/Thirdparty'
 import { Settings } from 'src/entities/settings'
 import SettingsPage from 'src/components/settings/Settings'
 import Detail from 'src/components/detail/Detail'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { Account } from 'src/entities/account'
 import Report from 'src/components/report/Report'
 import FromOtherAccount from 'src/components/fromOtherAccount/FromOtherAccount'
 
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common']))
+    }
+  }
+}
+
 const { scrollLeft } = DOMHelper
 
 function App() {
-  const { t, i18n } = useTranslation()
+  const { t, i18n } = useTranslation('common')
 
   const [servers, setServers] = useState<Array<ServerSet>>([])
   const [timelines, setTimelines] = useState<Array<[Timeline, Server]>>([])

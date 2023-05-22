@@ -4,7 +4,7 @@ import { invoke } from '@tauri-apps/api/tauri'
 import { Server } from 'src/entities/server'
 import { OAuth } from 'megalodon'
 import alert from '../utils/alert'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 type Props = {
   open: boolean
@@ -13,7 +13,7 @@ type Props = {
 }
 
 const New: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   const [server, setServer] = useState<Server>()
   const [app, setApp] = useState<OAuth.AppDataFromServer>()

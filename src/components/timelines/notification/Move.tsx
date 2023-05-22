@@ -1,6 +1,6 @@
 import { Icon } from '@rsuite/icons'
 import { Entity } from 'megalodon'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { BsBag } from 'react-icons/bs'
 import { FlexboxGrid, Avatar } from 'rsuite'
 import Time from 'src/components/utils/Time'
@@ -51,7 +51,7 @@ export default function Move(props: Props) {
 }
 
 const actionText = (notification: Entity.Notification) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   switch (notification.type) {
     case 'move':

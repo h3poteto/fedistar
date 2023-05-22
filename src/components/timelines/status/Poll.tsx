@@ -1,6 +1,6 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { Button, Checkbox, CheckboxGroup, Progress, Radio, RadioGroup } from 'rsuite'
 import Time from 'src/components/utils/Time'
 
@@ -23,7 +23,7 @@ const Poll: React.FC<Props> = props => {
 }
 
 const SimplePoll: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const [pollRadio, setPollRadio] = useState<number | null>(null)
 
   const post = async () => {
@@ -52,7 +52,7 @@ const SimplePoll: React.FC<Props> = props => {
 }
 
 const MultiplePoll: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   const [pollCheck, setPollCheck] = useState<Array<number>>([])
 
   const post = async () => {
@@ -81,7 +81,7 @@ const MultiplePoll: React.FC<Props> = props => {
 }
 
 const PollResult: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
 
   return (
     <>
