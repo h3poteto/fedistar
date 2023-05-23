@@ -41,6 +41,7 @@
     "megalodon": "^6.0.2",
     "next": "^13.4.3",
     "next-i18next": "^13.2.2",
+    "next-language-detector": "^1.0.2",
     "parse-link-header": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
