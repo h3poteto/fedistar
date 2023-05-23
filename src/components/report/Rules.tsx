@@ -1,15 +1,16 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 import { Button, Checkbox, CheckboxGroup, Modal } from 'rsuite'
 
 type Props = {
   client: MegalodonInterface
   next: (rules: Array<string>) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 export default function Rules(props: Props) {
-  const { t } = useTranslation()
+  const { t } = props
   const [rules, setRules] = useState<Array<Entity.InstanceRule>>([])
   const [values, setValues] = useState<Array<string>>([])
 

@@ -1,6 +1,6 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 import { Avatar, Button, Checkbox, CheckboxGroup, FlexboxGrid, Loader, Modal, Placeholder } from 'rsuite'
 import emojify from 'src/utils/emojify'
 import Time from 'src/components/utils/Time'
@@ -9,10 +9,11 @@ type Props = {
   account: Entity.Account
   client: MegalodonInterface
   next: (ids: Array<string>) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 export default function Statuses(props: Props) {
-  const { t } = useTranslation()
+  const { t } = props
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [values, setValues] = useState<Array<string>>([])
   const [loading, setLoading] = useState<boolean>(false)

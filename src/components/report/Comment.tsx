@@ -1,13 +1,14 @@
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 import { Button, Input, Modal, Toggle } from 'rsuite'
 
 type Props = {
   next: (comment: string, forward: boolean) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 export default function Comment(props: Props) {
-  const { t } = useTranslation()
+  const { t } = props
   const [comment, setComment] = useState('')
   const [forward, setForward] = useState(true)
 

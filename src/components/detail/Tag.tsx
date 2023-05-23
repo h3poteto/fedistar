@@ -5,21 +5,22 @@ import { useEffect, useState } from 'react'
 import { Content, List, Header, FlexboxGrid, Button } from 'rsuite'
 import { BsX, BsChevronLeft, BsPin } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
+import { TFunction } from 'i18next'
 
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import { Virtuoso } from 'react-virtuoso'
 import Status from '../timelines/status/Status'
-import { useTranslation } from 'react-i18next'
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 export default function TagDetail(props: Props) {
-  const { t } = useTranslation()
+  const { t } = props
 
   const [client, setClient] = useState<MegalodonInterface | null>(null)
   const [server, setServer] = useState<Server | null>(null)
@@ -151,6 +152,7 @@ export default function TagDetail(props: Props) {
                   setTagDetail={setTagDetail}
                   openReport={props.openReport}
                   openFromOtherAccount={props.openFromOtherAccount}
+                  t={t}
                 />
               </List.Item>
             )}

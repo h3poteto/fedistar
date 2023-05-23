@@ -5,6 +5,7 @@ import { BsThreeDotsVertical, BsChevronLeft, BsX } from 'react-icons/bs'
 import { Button, Content, Dropdown, FlexboxGrid, IconButton, Nav, Popover, useToaster, Whisper, Header } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import Image from 'next/image'
+import { TFunction } from 'i18next'
 import emojify from 'src/utils/emojify'
 import { forwardRef, MouseEventHandler, ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import alert from '../utils/alert'
@@ -14,7 +15,6 @@ import { useRouter } from 'next/router'
 import Posts, { FuncProps as PostsFunc } from './profile/Posts'
 import Following, { FuncProps as FollowingFunc } from './profile/Following'
 import Followers, { FuncProps as FollowersFunc } from './profile/Followers'
-import { useTranslation } from 'react-i18next'
 import { findLink } from 'src/utils/statusParser'
 import { domainFromAcct } from 'src/utils/domain'
 
@@ -26,10 +26,11 @@ type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const Profile: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = props
 
   const [client, setClient] = useState<MegalodonInterface | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
@@ -159,6 +160,7 @@ const Profile: React.FC<Props> = props => {
             openReport={props.openReport}
             openFromOtherAccount={props.openFromOtherAccount}
             ref={postsRef}
+            t={t}
           />
         )
       case 'following':
@@ -229,7 +231,7 @@ const Profile: React.FC<Props> = props => {
               <FlexboxGrid.Item>
                 <FlexboxGrid style={{ gap: '8px' }}>
                   <FlexboxGrid.Item>
-                    <FollowButton relationship={relationship} follow={follow} unfollow={unfollow} />
+                    <FollowButton relationship={relationship} follow={follow} unfollow={unfollow} t={t} />
                   </FlexboxGrid.Item>
                   <FlexboxGrid.Item>
                     <Whisper
@@ -248,7 +250,8 @@ const Profile: React.FC<Props> = props => {
                             relationship,
                             onChange: () => {
                               loadRelationship(client, user)
-                            }
+                            },
+                            t
                           },
                           ref
                         )
@@ -320,14 +323,13 @@ type ProfileMenuProps = {
   user: Entity.Account
   relationship: Entity.Relationship | null
   onChange: () => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const profileMenu = (
-  { className, left, top, onClose, client, user, relationship, onChange }: ProfileMenuProps,
+  { className, left, top, onClose, client, user, relationship, onChange, t }: ProfileMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
-  const { t } = useTranslation()
-
   const domain = domainFromAcct(user.acct)
 
   const handleSelect = async (eventKey: string) => {
@@ -414,10 +416,11 @@ type FollowButtonProps = {
   relationship: Entity.Relationship
   follow: () => Promise<void>
   unfollow: () => Promise<void>
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const FollowButton: React.FC<FollowButtonProps> = props => {
-  const { t } = useTranslation()
+  const { t } = props
   const [followMessage, setFollowMessage] = useState(t('detail.profile.not_following'))
   const [followColor, setFollowColor] = useState<'default' | 'primary'>('default')
   const [unfollowMessage, setUnfollowMessage] = useState(t('detail.profile.following'))

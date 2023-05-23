@@ -1,14 +1,15 @@
-import { useTranslation } from 'react-i18next'
 import { List, Modal } from 'rsuite'
 import licenses from 'src/thirdparty.json'
+import { TFunction } from 'i18next'
 
 type Props = {
   open: boolean
   onClose: () => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const Thirdparty: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = props
 
   return (
     <Modal backdrop="static" keyboard={true} open={props.open} onClose={props.onClose}>

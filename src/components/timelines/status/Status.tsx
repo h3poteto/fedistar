@@ -4,7 +4,7 @@ import { FlexboxGrid, Avatar, Button, useToaster, Notification } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsArrowRepeat, BsPin } from 'react-icons/bs'
 import { open } from '@tauri-apps/api/shell'
-import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
 import Attachments from './Attachments'
@@ -30,10 +30,11 @@ type Props = {
   setTagDetail: (tag: string, serverId: number, accountId?: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  t: TFunction<'translation', undefined, 'translation'>
 } & HTMLAttributes<HTMLElement>
 
 const Status: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = props
   const { client } = props
   const [showReply, setShowReply] = useState<boolean>(false)
   const [showEdit, setShowEdit] = useState<boolean>(false)
@@ -161,10 +162,10 @@ const Status: React.FC<Props> = props => {
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </div>
-          <Body status={status} onClick={statusClicked} />
-          {status.poll && <Poll poll={status.poll} client={props.client} pollUpdated={refresh} />}
+          <Body status={status} onClick={statusClicked} t={t} />
+          {status.poll && <Poll poll={status.poll} client={props.client} pollUpdated={refresh} t={t} />}
           {status.media_attachments.length > 0 && (
-            <Attachments attachments={status.media_attachments} sensitive={status.sensitive} openMedia={props.openMedia} />
+            <Attachments attachments={status.media_attachments} sensitive={status.sensitive} openMedia={props.openMedia} t={t} />
           )}
           {status.emoji_reactions &&
             status.emoji_reactions.map(e => (
@@ -183,17 +184,32 @@ const Status: React.FC<Props> = props => {
             updateStatus={props.updateStatus}
             openReport={() => props.openReport(status, props.client)}
             openFromOtherAccount={() => props.openFromOtherAccount(status)}
+            t={t}
           />
         </FlexboxGrid.Item>
       </FlexboxGrid>
       {showReply && (
         <div style={{ padding: '8px 12px' }}>
-          <Reply client={client} server={props.server} account={props.account} in_reply_to={status} onClose={() => setShowReply(false)} />
+          <Reply
+            client={client}
+            server={props.server}
+            account={props.account}
+            in_reply_to={status}
+            onClose={() => setShowReply(false)}
+            t={t}
+          />
         </div>
       )}
       {showEdit && (
         <div style={{ padding: '8px 12px' }}>
-          <Reply client={client} server={props.server} account={props.account} edit_target={status} onClose={() => setShowEdit(false)} />
+          <Reply
+            client={client}
+            server={props.server}
+            account={props.account}
+            edit_target={status}
+            onClose={() => setShowEdit(false)}
+            t={t}
+          />
         </div>
       )}
     </div>

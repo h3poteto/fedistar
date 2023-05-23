@@ -2,6 +2,7 @@ import { Entity } from 'megalodon'
 import { Avatar, FlexboxGrid, Button, Badge } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsPaperclip } from 'react-icons/bs'
+import { TFunction } from 'i18next'
 
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
@@ -11,9 +12,10 @@ type Props = {
   conversation: Entity.Conversation
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   selectStatus: (conversationId: string, status: Entity.Status | null) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 const Conversation: React.FC<Props> = props => {
-  const { conversation } = props
+  const { conversation, t } = props
   const account = conversation.accounts[0]
 
   return (
@@ -50,6 +52,7 @@ const Conversation: React.FC<Props> = props => {
               status={conversation.last_status}
               style={{ color: 'var(--rs-text-tertiary)' }}
               onClick={() => props.selectStatus(conversation.id, conversation.last_status)}
+              t={t}
             />
           )}
           {conversation.last_status &&

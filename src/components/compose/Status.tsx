@@ -34,13 +34,13 @@ import {
 } from 'react-icons/bs'
 import { Entity, MegalodonInterface } from 'megalodon'
 import Picker from '@emoji-mart/react'
+import { TFunction } from 'i18next'
 
 import { data } from 'src/utils/emojiData'
 import { Server } from 'src/entities/server'
 import { CustomEmojiCategory } from 'src/entities/emoji'
 import alert from 'src/components/utils/alert'
 import { Account } from 'src/entities/account'
-import { useTranslation } from 'react-i18next'
 import AutoCompleteTextarea, { ArgProps as AutoCompleteTextareaProps } from './AutoCompleteTextarea'
 import languages from 'src/utils/languages'
 import EditMedia from './EditMedia'
@@ -55,6 +55,7 @@ type Props = {
   defaultNSFW?: boolean
   defaultLanguage?: string | null
   onClose?: () => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 type FormValue = {
@@ -91,8 +92,7 @@ const model = Schema.Model({
 })
 
 const Status: React.FC<Props> = props => {
-  const { t } = useTranslation()
-
+  const { t } = props
   const [formValue, setFormValue] = useState<FormValue>({
     spoiler: '',
     status: ''
@@ -510,7 +510,7 @@ const Status: React.FC<Props> = props => {
             </Button>
           </Whisper>
         </Form.Group>
-        {formValue.poll && <Form.Control name="poll" accepter={PollInputControl} fieldError={formError.poll} />}
+        {formValue.poll && <Form.Control name="poll" accepter={PollInputControl} fieldError={formError.poll} t={t} />}
         {formValue.scheduled_at && <Form.Control name="scheduled_at" accepter={DatePicker} format="yyyy-MM-dd HH:mm" />}
 
         <Form.Group controlId="actions" style={{ marginBottom: '4px' }}>
@@ -602,6 +602,7 @@ const Status: React.FC<Props> = props => {
           setEditMedia(null)
           setEditMediaModal(false)
         }}
+        t={t}
       />
     </>
   )
@@ -630,9 +631,7 @@ const defaultPoll = () => ({
   multiple: false
 })
 
-const PollInputControl: FormControlProps<Poll, any> = ({ value, onChange, fieldError }) => {
-  const { t } = useTranslation()
-
+const PollInputControl: FormControlProps<Poll, any> = ({ value, onChange, fieldError, t }) => {
   const [poll, setPoll] = useState<Poll>(value)
   const errors = fieldError ? fieldError.object : {}
 

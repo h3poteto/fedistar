@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { Dispatch, useEffect, useState } from 'react'
 import { Animation, Container } from 'rsuite'
+import { TFunction } from 'i18next'
 
 import Status from './Status'
 import Profile from './Profile'
@@ -12,6 +13,7 @@ type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const Detail: React.FC<Props> = props => {
@@ -48,13 +50,24 @@ const Detail: React.FC<Props> = props => {
                 }
                 openReport={props.openReport}
                 openFromOtherAccount={props.openFromOtherAccount}
+                t={props.t}
               />
             )}
             {target === 'profile' && (
-              <Profile openMedia={props.openMedia} openReport={props.openReport} openFromOtherAccount={props.openFromOtherAccount} />
+              <Profile
+                openMedia={props.openMedia}
+                openReport={props.openReport}
+                openFromOtherAccount={props.openFromOtherAccount}
+                t={props.t}
+              />
             )}
             {target === 'tag' && (
-              <TagDetail openMedia={props.openMedia} openReport={props.openReport} openFromOtherAccount={props.openFromOtherAccount} />
+              <TagDetail
+                openMedia={props.openMedia}
+                openReport={props.openReport}
+                openFromOtherAccount={props.openFromOtherAccount}
+                t={props.t}
+              />
             )}
           </Container>
         </div>

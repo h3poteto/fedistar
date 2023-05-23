@@ -22,7 +22,7 @@ import ActionButton from './ActionButton'
 import alert from 'src/components/utils/alert'
 import { Server } from 'src/entities/server'
 import { data } from 'src/utils/emojiData'
-import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 import { Account } from 'src/entities/account'
 
 type Props = {
@@ -45,10 +45,11 @@ type Props = {
   updateStatus: (status: Entity.Status) => void
   openReport?: () => void
   openFromOtherAccount?: () => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const Actions: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = props
 
   const { status, client } = props
   const [favouriteActivating, setFavouriteActivating] = useState<boolean>(false)
@@ -224,7 +225,8 @@ const Actions: React.FC<Props> = props => {
                   },
                   onFromOtherAccount: () => {
                     props.openFromOtherAccount()
-                  }
+                  },
+                  t: t
                 },
                 ref
               )
@@ -283,10 +285,11 @@ type DetailMenuProps = {
   onClose: (delay?: number) => NodeJS.Timeout | void
   onReport: () => void
   onFromOtherAccount: () => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>) => {
-  const { t } = useTranslation()
+  const { t } = props
   const { left, top, className, status } = props
 
   const handleSelect = async (eventKey: string) => {

@@ -1,14 +1,15 @@
 import { Entity } from 'megalodon'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 import { Modal, Radio, Button, RadioGroup } from 'rsuite'
 
 type Props = {
   next: (category: Entity.Category) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 export default function Category(props: Props) {
-  const { t } = useTranslation()
+  const { t } = props
   const [value, setValue] = useState<Entity.Category | null>(null)
 
   return (

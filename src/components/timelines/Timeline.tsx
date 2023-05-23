@@ -38,7 +38,7 @@ import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from 'src/defaults'
 import alert from 'src/components/utils/alert'
 import { useRouter } from 'next/router'
 import { Instruction } from 'src/entities/instruction'
-import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 import timelineName from 'src/utils/timelineName'
 
 type Props = {
@@ -47,10 +47,11 @@ type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const Timeline: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = props
 
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [unreadStatuses, setUnreadStatuses] = useState<Array<Entity.Status>>([])
@@ -390,7 +391,7 @@ const Timeline: React.FC<Props> = props => {
                     controlId="option-popover"
                     ref={triggerRef}
                     onOpen={closeWalkthrough}
-                    speaker={<OptionPopover timeline={props.timeline} close={closeOptionPopover} />}
+                    speaker={<OptionPopover timeline={props.timeline} close={closeOptionPopover} t={t} />}
                   >
                     <Button appearance="link" style={{ padding: '4px 8px 4px 4px' }} title={t('timeline.settings.title')}>
                       <Icon as={BsSliders} />
@@ -441,6 +442,7 @@ const Timeline: React.FC<Props> = props => {
                       setTagDetail={setTagDetail}
                       openReport={props.openReport}
                       openFromOtherAccount={props.openFromOtherAccount}
+                      t={t}
                     />
                   </List.Item>
                 )}
@@ -453,8 +455,11 @@ const Timeline: React.FC<Props> = props => {
   )
 }
 
-const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
-  const { t } = useTranslation()
+const OptionPopover = forwardRef<
+  HTMLDivElement,
+  { timeline: Timeline; close: () => void; t: TFunction<'translation', undefined, 'translation'> }
+>((props, ref) => {
+  const { t } = props
 
   const removeTimeline = async (timeline: Timeline) => {
     await invoke('remove_timeline', { id: timeline.id })

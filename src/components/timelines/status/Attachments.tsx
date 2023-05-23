@@ -4,12 +4,13 @@ import { Button, IconButton, Tag } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsCameraVideo, BsVolumeUp, BsEyeSlash } from 'react-icons/bs'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 
 type Props = {
   attachments: Array<Entity.Attachment>
   sensitive: boolean
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const Attachments: React.FC<Props> = props => {
@@ -17,7 +18,7 @@ const Attachments: React.FC<Props> = props => {
     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
       {props.attachments.map((media, index) => (
         <div key={index} style={{ margin: '4px' }}>
-          <Attachment media={media} sensitive={props.sensitive} openMedia={() => props.openMedia(props.attachments, index)} />
+          <Attachment media={media} sensitive={props.sensitive} openMedia={() => props.openMedia(props.attachments, index)} t={props.t} />
         </div>
       ))}
     </div>
@@ -28,10 +29,11 @@ type AttachmentProps = {
   media: Entity.Attachment
   sensitive: boolean
   openMedia: (media: Entity.Attachment) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const Attachment: React.FC<AttachmentProps> = props => {
-  const { t } = useTranslation()
+  const { t } = props
 
   const { media } = props
   const [sensitive, setSensitive] = useState<boolean>(props.sensitive)

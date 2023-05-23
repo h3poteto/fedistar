@@ -17,17 +17,18 @@ import Conversation from './conversation/Conversation'
 import { listen } from '@tauri-apps/api/event'
 import { ReceiveTimelineConversationPayload } from 'src/payload'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 import timelineName from 'src/utils/timelineName'
 
 type Props = {
   server: Server
   timeline: Timeline
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const Conversations: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = props
 
   const [account, setAccount] = useState<Account | null>(null)
   const [client, setClient] = useState<MegalodonInterface>()
@@ -164,7 +165,7 @@ const Conversations: React.FC<Props> = props => {
                     placement="bottomEnd"
                     controlId="option-popover"
                     ref={triggerRef}
-                    speaker={<OptionPopover timeline={props.timeline} close={closeOptionPopover} />}
+                    speaker={<OptionPopover timeline={props.timeline} close={closeOptionPopover} t={t} />}
                   >
                     <Button appearance="link" style={{ padding: '4px 8px 4px 4px' }} title={t('timeline.settings.title')}>
                       <Icon as={BsSliders} />
@@ -200,7 +201,7 @@ const Conversations: React.FC<Props> = props => {
                     key={conversation.id}
                     style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-gray-800)' }}
                   >
-                    <Conversation conversation={conversation} openMedia={props.openMedia} selectStatus={selectStatus} />
+                    <Conversation conversation={conversation} openMedia={props.openMedia} selectStatus={selectStatus} t={t} />
                   </List.Item>
                 )}
               />
@@ -212,8 +213,11 @@ const Conversations: React.FC<Props> = props => {
   )
 }
 
-const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
-  const { t } = useTranslation()
+const OptionPopover = forwardRef<
+  HTMLDivElement,
+  { timeline: Timeline; close: () => void; t: TFunction<'translation', undefined, 'translation'> }
+>((props, ref) => {
+  const { t } = props
 
   const removeTimeline = async (timeline: Timeline) => {
     await invoke('remove_timeline', { id: timeline.id })

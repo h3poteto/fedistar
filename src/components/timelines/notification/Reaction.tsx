@@ -4,13 +4,13 @@ import { Avatar, Button, FlexboxGrid, toaster, Notification } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsStar, BsArrowRepeat, BsMenuUp, BsHouseDoor, BsPaperclip, BsPencil } from 'react-icons/bs'
 import { open } from '@tauri-apps/api/shell'
+import { TFunction } from 'i18next'
 
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
 import { findLink, findAccount, findTag, accountMatch, ParsedAccount } from 'src/utils/statusParser'
 import Body from '../status/Body'
 import Poll from '../status/Poll'
-import { useTranslation } from 'react-i18next'
 import { Server } from 'src/entities/server'
 
 type Props = {
@@ -21,6 +21,7 @@ type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setAccountDetail: (account: Entity.Account) => void
   setTagDetail: (tag: string, serverId: number) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const actionIcon = (notification: Entity.Notification) => {
@@ -44,9 +45,11 @@ const actionIcon = (notification: Entity.Notification) => {
   }
 }
 
-const actionText = (notification: Entity.Notification, setAccountDetail: (account: Entity.Account) => void) => {
-  const { t } = useTranslation()
-
+const actionText = (
+  notification: Entity.Notification,
+  t: TFunction<'translation', undefined, 'translation'>,
+  setAccountDetail: (account: Entity.Account) => void
+) => {
   switch (notification.type) {
     case 'favourite':
       return (
@@ -155,7 +158,7 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
 }
 
 const Reaction: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = props
   const status = props.notification.status
 
   const refresh = async () => {
@@ -219,7 +222,7 @@ const Reaction: React.FC<Props> = props => {
           {actionIcon(props.notification)}
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={14} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-          {actionText(props.notification, props.setAccountDetail)}
+          {actionText(props.notification, t, props.setAccountDetail)}
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', color: 'var(--rs-text-secondary)' }}>
           <Time time={props.notification.created_at} />
@@ -254,8 +257,8 @@ const Reaction: React.FC<Props> = props => {
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </div>
-          <Body status={status} onClick={statusClicked} />
-          {status.poll && <Poll poll={status.poll} client={props.client} pollUpdated={refresh} />}
+          <Body status={status} onClick={statusClicked} t={t} />
+          {status.poll && <Poll poll={status.poll} client={props.client} pollUpdated={refresh} t={t} />}
           {status.media_attachments.map((media, index) => (
             <div key={index}>
               <Button appearance="subtle" size="sm" onClick={() => props.openMedia(status.media_attachments, index)}>

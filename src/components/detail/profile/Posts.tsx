@@ -1,6 +1,7 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
 import { useEffect, useImperativeHandle, useState } from 'react'
+import { TFunction } from 'i18next'
 import { List, Loader } from 'rsuite'
 import Status from 'src/components/timelines/status/Status'
 import { TIMELINE_STATUSES_COUNT } from 'src/defaults'
@@ -19,10 +20,11 @@ type ArgProps = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) => {
-  const { client, user } = props
+  const { client, user, t } = props
   const [pinned, setPinned] = useState<Array<Entity.Status>>([])
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [loading, setLoading] = useState<boolean>(false)
@@ -115,6 +117,7 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
                 setTagDetail={setTagDetail}
                 openReport={props.openReport}
                 openFromOtherAccount={props.openFromOtherAccount}
+                t={t}
               />
             </List.Item>
           ))}
@@ -131,6 +134,7 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
                 setTagDetail={setTagDetail}
                 openReport={props.openReport}
                 openFromOtherAccount={props.openFromOtherAccount}
+                t={t}
               />
             </List.Item>
           ))}

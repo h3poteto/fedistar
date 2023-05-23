@@ -1,6 +1,6 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 import { Button, Checkbox, CheckboxGroup, Progress, Radio, RadioGroup } from 'rsuite'
 import Time from 'src/components/utils/Time'
 
@@ -8,22 +8,23 @@ type Props = {
   poll: Entity.Poll
   client: MegalodonInterface
   pollUpdated: () => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const Poll: React.FC<Props> = props => {
   if (props.poll.voted || props.poll.expired) {
-    return <PollResult poll={props.poll} client={props.client} pollUpdated={props.pollUpdated} />
+    return <PollResult {...props} />
   } else {
     if (props.poll.multiple) {
-      return <MultiplePoll poll={props.poll} client={props.client} pollUpdated={props.pollUpdated} />
+      return <MultiplePoll {...props} />
     } else {
-      return <SimplePoll poll={props.poll} client={props.client} pollUpdated={props.pollUpdated} />
+      return <SimplePoll {...props} />
     }
   }
 }
 
 const SimplePoll: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = props
   const [pollRadio, setPollRadio] = useState<number | null>(null)
 
   const post = async () => {
@@ -52,7 +53,7 @@ const SimplePoll: React.FC<Props> = props => {
 }
 
 const MultiplePoll: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = props
   const [pollCheck, setPollCheck] = useState<Array<number>>([])
 
   const post = async () => {
@@ -81,7 +82,7 @@ const MultiplePoll: React.FC<Props> = props => {
 }
 
 const PollResult: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = props
 
   return (
     <>

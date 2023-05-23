@@ -1,6 +1,6 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 import { Loader, Modal, Placeholder, useToaster } from 'rsuite'
 import Category from './Category'
 import Rules from './Rules'
@@ -13,10 +13,11 @@ type Props = {
   status: Entity.Status
   client: MegalodonInterface
   close: () => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 export default function Report(props: Props) {
-  const { t } = useTranslation()
+  const { t } = props
   const [category, setCategory] = useState<Entity.Category | null>(null)
   const [rules, setRules] = useState<Array<string> | null>(null)
   const [statuses, setStatuses] = useState<Array<string> | null>(null)
@@ -68,11 +69,13 @@ export default function Report(props: Props) {
 
   const body = () => {
     if (category === null) {
-      return <Category next={(category: Entity.Category) => setCategory(category)} />
+      return <Category next={(category: Entity.Category) => setCategory(category)} t={t} />
     } else if (rules === null && category === 'violation') {
-      return <Rules client={props.client} next={(rules: Array<string>) => setRules(rules)} />
+      return <Rules client={props.client} next={(rules: Array<string>) => setRules(rules)} t={t} />
     } else if (statuses === null) {
-      return <Statuses account={props.status.account} client={props.client} next={(statuses: Array<string>) => setStatuses(statuses)} />
+      return (
+        <Statuses account={props.status.account} client={props.client} next={(statuses: Array<string>) => setStatuses(statuses)} t={t} />
+      )
     } else if (comment === null) {
       return (
         <Comment
@@ -81,6 +84,7 @@ export default function Report(props: Props) {
             setComment(comment)
             submit(category, rules, statuses, comment, forward)
           }}
+          t={t}
         />
       )
     } else if (sending) {

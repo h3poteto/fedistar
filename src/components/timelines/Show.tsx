@@ -1,4 +1,5 @@
 import { Entity, MegalodonInterface } from 'megalodon'
+import { TFunction } from 'i18next'
 import { Server } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
 import ShowTimeline from 'src/components/timelines/Timeline'
@@ -14,9 +15,11 @@ type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const Show: React.FC<Props> = props => {
+  const { t } = props
   if (props.timeline.kind === 'notifications') {
     return (
       <ShowNotifications
@@ -27,10 +30,11 @@ const Show: React.FC<Props> = props => {
         openMedia={props.openMedia}
         openReport={props.openReport}
         openFromOtherAccount={props.openFromOtherAccount}
+        t={t}
       />
     )
   } else if (props.timeline.kind === 'direct') {
-    return <ShowConversations server={props.server} timeline={props.timeline} openMedia={props.openMedia} />
+    return <ShowConversations server={props.server} timeline={props.timeline} openMedia={props.openMedia} t={t} />
   } else {
     return (
       <ShowTimeline
@@ -39,6 +43,7 @@ const Show: React.FC<Props> = props => {
         openMedia={props.openMedia}
         openReport={props.openReport}
         openFromOtherAccount={props.openFromOtherAccount}
+        t={t}
       />
     )
   }

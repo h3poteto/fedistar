@@ -1,6 +1,6 @@
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 import { Modal } from 'rsuite'
 import { USER_AGENT } from 'src/defaults'
 import { Account } from 'src/entities/account'
@@ -12,10 +12,11 @@ type Props = {
   opened: boolean
   status: Entity.Status
   close: () => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 export default function FromOtherAccount(props: Props) {
-  const { t } = useTranslation()
+  const { t } = props
 
   const [server, setServer] = useState<Server | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
@@ -43,6 +44,7 @@ export default function FromOtherAccount(props: Props) {
             setServer(server)
             setAccount(account)
           }}
+          t={t}
         />
       )
     } else {
@@ -56,6 +58,7 @@ export default function FromOtherAccount(props: Props) {
             reset()
             props.close()
           }}
+          t={t}
         />
       )
     }

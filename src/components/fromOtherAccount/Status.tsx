@@ -1,6 +1,6 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 import { Avatar, Button, FlexboxGrid, Loader, Modal, Placeholder } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsPaperclip } from 'react-icons/bs'
@@ -17,9 +17,10 @@ type Props = {
   account: Account
   client: MegalodonInterface | null
   next: () => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 export default function Status(props: Props) {
-  const { t } = useTranslation()
+  const { t } = props
 
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [searching, setSearching] = useState(false)
@@ -79,6 +80,7 @@ export default function Status(props: Props) {
                 updateStatus={replaceStatus}
                 server={props.server}
                 account={props.account}
+                t={t}
               />
             ))
           ) : (
@@ -101,10 +103,11 @@ type PostProps = {
   status: Entity.Status
   client: MegalodonInterface
   updateStatus: (status: Entity.Status) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 function Post(props: PostProps) {
-  const { status, client } = props
+  const { status, client, t } = props
 
   return (
     <FlexboxGrid>
@@ -129,7 +132,7 @@ function Post(props: PostProps) {
             </FlexboxGrid.Item>
           </FlexboxGrid>
         </div>
-        <Body status={status} />
+        <Body status={status} t={t} />
         {status.media_attachments.map((media, index) => (
           <div key={index}>
             <Button appearance="subtle" size="sm">
@@ -153,6 +156,7 @@ function Post(props: PostProps) {
             status={status}
             client={client}
             updateStatus={props.updateStatus}
+            t={t}
           />
         </div>
       </FlexboxGrid.Item>

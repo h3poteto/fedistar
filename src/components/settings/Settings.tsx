@@ -1,14 +1,15 @@
 import { invoke } from '@tauri-apps/api/tauri'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { InputNumber, Modal, Panel, Form, Schema, ButtonToolbar, Button, InputPicker } from 'rsuite'
-import { Settings } from 'src/entities/settings'
+import { Settings as SettingsEntity } from 'src/entities/settings'
 import { localeType } from 'src/i18n'
+import { TFunction } from 'i18next'
 
 type Props = {
   open: boolean
   onClose: () => void
   reloadAppearance: () => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 type FormValue = {
@@ -28,7 +29,7 @@ const languages = [
 ]
 
 const Settings: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = props
 
   const [formValue, setFormValue] = useState<FormValue>({
     font_size: 14,
@@ -44,14 +45,14 @@ const Settings: React.FC<Props> = props => {
 
   useEffect(() => {
     const f = async () => {
-      const settings = await invoke<Settings>('read_settings')
+      const settings = await invoke<SettingsEntity>('read_settings')
       setFormValue(current => Object.assign({}, current, settings.appearance))
     }
     f()
   }, [])
 
   const handleSubmit = async () => {
-    const settings: Settings = {
+    const settings: SettingsEntity = {
       appearance: {
         font_size: Number(formValue.font_size),
         language: formValue.language

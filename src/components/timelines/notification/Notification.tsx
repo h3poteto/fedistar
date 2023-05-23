@@ -1,4 +1,5 @@
 import { Entity, MegalodonInterface } from 'megalodon'
+import { TFunction } from 'i18next'
 import Follow from './Follow'
 import Reaction from './Reaction'
 import Status from '../status/Status'
@@ -19,9 +20,12 @@ type Props = {
   setTagDetail: (tag: string, serverId: number, accountId?: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const notification = (props: Props) => {
+  const { t } = props
+
   switch (props.notification.type) {
     case 'follow':
     case 'follow_request':
@@ -29,6 +33,7 @@ const notification = (props: Props) => {
         <Follow
           notification={props.notification}
           setAccountDetail={account => props.setAccountDetail(account.id, props.server.id, props.account?.id)}
+          t={t}
         />
       )
     case 'move':
@@ -36,6 +41,7 @@ const notification = (props: Props) => {
         <Move
           notification={props.notification}
           setAccountDetail={account => props.setAccountDetail(account.id, props.server.id, props.account?.id)}
+          t={t}
         />
       )
     case 'favourite':
@@ -55,6 +61,7 @@ const notification = (props: Props) => {
           openMedia={props.openMedia}
           setTagDetail={(tag, serverId) => props.setTagDetail(tag, serverId, props.account?.id)}
           setAccountDetail={account => props.setAccountDetail(account.id, props.server.id, props.account?.id)}
+          t={t}
         />
       )
     case 'mention':
@@ -73,6 +80,7 @@ const notification = (props: Props) => {
             setTagDetail={props.setTagDetail}
             openReport={props.openReport}
             openFromOtherAccount={props.openFromOtherAccount}
+            t={t}
           />
         )
       } else {

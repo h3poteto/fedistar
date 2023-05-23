@@ -1,6 +1,6 @@
 import { Icon } from '@rsuite/icons'
 import { Entity } from 'megalodon'
-import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 import { BsBag } from 'react-icons/bs'
 import { FlexboxGrid, Avatar } from 'rsuite'
 import Time from 'src/components/utils/Time'
@@ -9,6 +9,7 @@ import emojify from 'src/utils/emojify'
 type Props = {
   notification: Entity.Notification
   setAccountDetail: (account: Entity.Account) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 export default function Move(props: Props) {
@@ -21,7 +22,7 @@ export default function Move(props: Props) {
           <Icon as={BsBag} color="cyan" />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={14} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-          {actionText(props.notification)}
+          {actionText(props.notification, props.t)}
         </FlexboxGrid.Item>
         <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', color: 'var(--rs-text-tertiary)' }}>
           <Time time={props.notification.created_at} />
@@ -50,9 +51,7 @@ export default function Move(props: Props) {
   )
 }
 
-const actionText = (notification: Entity.Notification) => {
-  const { t } = useTranslation()
-
+const actionText = (notification: Entity.Notification, t: TFunction<'translation', undefined, 'translation'>) => {
   switch (notification.type) {
     case 'move':
       return (

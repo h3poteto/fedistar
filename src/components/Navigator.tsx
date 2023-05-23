@@ -10,10 +10,10 @@ import { Unread } from 'src/entities/unread'
 import { Marker } from 'src/entities/marker'
 import { Instruction } from 'src/entities/instruction'
 import { listen } from '@tauri-apps/api/event'
-import { useTranslation } from 'react-i18next'
 import alert from 'src/components/utils/alert'
 import generator, { Entity } from 'megalodon'
 import { useRouter } from 'next/router'
+import { TFunction } from 'i18next'
 
 type NavigatorProps = {
   servers: Array<ServerSet>
@@ -25,11 +25,11 @@ type NavigatorProps = {
   openSettings: () => void
   setHighlighted: Dispatch<SetStateAction<Timeline>>
   setUnreads: Dispatch<SetStateAction<Array<Unread>>>
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
-  const { t } = useTranslation()
-  const { servers, openAuthorize, openThirdparty, openSettings } = props
+  const { servers, openAuthorize, openThirdparty, openSettings, t } = props
   const [walkthrough, setWalkthrough] = useState(false)
   const toaster = useToaster()
 
@@ -167,7 +167,8 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
                       top,
                       onClose,
                       server,
-                      openAuthorize
+                      openAuthorize,
+                      t
                     },
                     ref
                   )
@@ -198,7 +199,7 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
             controlId="control-id-settings-menu"
             trigger="click"
             speaker={({ className, left, top, onClose }, ref) =>
-              settingsMenu({ className, left, top, onClose, openThirdparty, openSettings }, ref)
+              settingsMenu({ className, left, top, onClose, openThirdparty, openSettings, t }, ref)
             }
           >
             <Button appearance="link" size="lg" title={t('navigator.settings.title')}>
@@ -218,13 +219,13 @@ type ServerMenuProps = {
   onClose: (delay?: number) => NodeJS.Timeout | void
   server: ServerSet
   openAuthorize: (server: Server) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const serverMenu = (
-  { className, left, top, onClose, server, openAuthorize }: ServerMenuProps,
+  { className, left, top, onClose, server, openAuthorize, t }: ServerMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
-  const { t } = useTranslation()
   const router = useRouter()
 
   const handleSelect = (eventKey: string) => {
@@ -259,14 +260,13 @@ type SettingsMenuProps = {
   onClose: (delay?: number) => NodeJS.Timeout | void
   openThirdparty: () => void
   openSettings: () => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const settingsMenu = (
-  { className, left, top, onClose, openThirdparty, openSettings }: SettingsMenuProps,
+  { className, left, top, onClose, openThirdparty, openSettings, t }: SettingsMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
-  const { t } = useTranslation()
-
   const handleSelect = async (eventKey: string) => {
     onClose()
     switch (eventKey) {

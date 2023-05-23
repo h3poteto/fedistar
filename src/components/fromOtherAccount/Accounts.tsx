@@ -1,16 +1,17 @@
 import { invoke } from '@tauri-apps/api/tauri'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 import { Button, Modal, Radio, RadioGroup } from 'rsuite'
 import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
 
 type Props = {
   next: (server: Server, account: Account) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 export default function Accounts(props: Props) {
-  const { t } = useTranslation()
+  const { t } = props
 
   const [accounts, setAccounts] = useState<Array<[Account, Server]>>([])
   const [index, setIndex] = useState<number | null>(null)

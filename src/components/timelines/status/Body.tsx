@@ -1,6 +1,6 @@
 import { Entity } from 'megalodon'
 import { HTMLAttributes, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 import { Button } from 'rsuite'
 import emojify from 'src/utils/emojify'
 import LinkPreview from './LinkPreview'
@@ -8,10 +8,11 @@ import LinkPreview from './LinkPreview'
 type Props = {
   status: Entity.Status
   onClick?: (e: any) => void
+  t: TFunction<'translation', undefined, 'translation'>
 } & HTMLAttributes<HTMLElement>
 
 const Body: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = props
 
   const [spoilered, setSpoilered] = useState<boolean>(props.status.spoiler_text.length > 0)
 

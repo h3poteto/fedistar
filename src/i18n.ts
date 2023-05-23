@@ -24,6 +24,9 @@ i18n
     debug: true,
     interpolation: {
       escapeValue: false // react already safes from xss
+    },
+    react: {
+      useSuspense: true
     }
   })
 

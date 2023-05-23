@@ -1,14 +1,15 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import Image from 'next/image'
 import { forwardRef, useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Button, ButtonToolbar, FlexboxGrid, Form, Input, Modal, Schema } from 'rsuite'
+import { TFunction } from 'i18next'
 
 type Props = {
   attachment: Entity.Attachment | null
   client: MegalodonInterface
   opened: boolean
   close: () => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 type FormValue = {
@@ -20,7 +21,7 @@ const model = Schema.Model({
 })
 
 export default function EditMedia(props: Props) {
-  const { t } = useTranslation()
+  const { t } = props
 
   const [formValue, setFormValue] = useState<FormValue>({
     description: ''

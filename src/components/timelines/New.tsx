@@ -22,15 +22,16 @@ import { Account } from 'src/entities/account'
 import { TimelineKind } from 'src/entities/timeline'
 import { Instruction } from 'src/entities/instruction'
 import { listen } from '@tauri-apps/api/event'
-import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 
 type AuthorizedProps = {
   server: Server
   select: (kind: TimelineKind, name: string, list_id: string | null) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
-  const { t } = useTranslation()
+  const { t } = props
 
   const [loading, setLoading] = useState<boolean>(false)
   const [lists, setLists] = useState<Array<Entity.List>>([])
@@ -126,10 +127,11 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
 
 type Props = {
   servers: Array<ServerSet>
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const New: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = props
 
   const [server, setServer] = useState<Server | null>(null)
   const [walkthrough, setWalkthrough] = useState<boolean>(false)
@@ -260,7 +262,7 @@ const New: React.FC<Props> = props => {
                 </FlexboxGrid.Item>
               </FlexboxGrid>
             </List.Item>
-            {server.account_id && <AuthorizedTimelines server={server} select={select} />}
+            {server.account_id && <AuthorizedTimelines server={server} select={select} t={t} />}
           </List>
         </Content>
       </Container>

@@ -1,7 +1,7 @@
-import { useState, useEffect, useReducer, CSSProperties, useRef } from 'react'
+import { useState, useEffect, useReducer, CSSProperties, useRef, Suspense } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
-import { Container, Content, useToaster, Animation, DOMHelper } from 'rsuite'
+import { Container, Content, useToaster, Animation, DOMHelper, Loader } from 'rsuite'
 import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/api/notification'
 import dayjs from 'dayjs'
 import { register } from '@tauri-apps/api/globalShortcut'
@@ -155,6 +155,7 @@ function App() {
         open={modalState.newServer.opened}
         onClose={() => dispatch({ target: 'newServer', value: false, object: null })}
         initialServer={modalState.newServer.object}
+        t={t}
       />
       <Media
         index={modalState.media.index}
@@ -162,22 +163,25 @@ function App() {
         opened={modalState.media.opened}
         close={() => dispatch({ target: 'media', value: false, object: [], index: -1 })}
       />
-      <Thirdparty open={modalState.thirdparty.opened} onClose={() => dispatch({ target: 'thirdparty', value: false })} />
+      <Thirdparty open={modalState.thirdparty.opened} onClose={() => dispatch({ target: 'thirdparty', value: false })} t={t} />
       <SettingsPage
         open={modalState.settings.opened}
         onClose={() => dispatch({ target: 'settings', value: false })}
         reloadAppearance={loadAppearance}
+        t={t}
       />
       <Report
         opened={modalState.report.opened}
         status={modalState.report.object}
         client={modalState.report.client}
         close={() => dispatch({ target: 'report', value: false, object: null, client: null })}
+        t={t}
       />
       <FromOtherAccount
         opened={modalState.fromOtherAccount.opened}
         status={modalState.fromOtherAccount.object}
         close={() => dispatch({ target: 'fromOtherAccount', value: false, object: null })}
+        t={t}
       />
 
       <Container style={{ height: '100%' }}>
@@ -191,6 +195,7 @@ function App() {
           toggleCompose={toggleCompose}
           setHighlighted={setHighlighted}
           setUnreads={setUnreads}
+          t={t}
         />
         <Animation.Transition
           in={composeOpened}
@@ -201,7 +206,7 @@ function App() {
         >
           {(props, ref) => (
             <div {...props} ref={ref} style={{ overflow: 'hidden' }}>
-              <Compose setOpened={setComposeOpened} servers={servers} />
+              <Compose setOpened={setComposeOpened} servers={servers} t={t} />
             </div>
           )}
         </Animation.Transition>
@@ -220,9 +225,10 @@ function App() {
                 dispatch({ target: 'report', value: true, object: status, client: client })
               }
               openFromOtherAccount={(status: Entity.Status) => dispatch({ target: 'fromOtherAccount', value: true, object: status })}
+              t={t}
             />
           ))}
-          <NewTimeline servers={servers} />
+          <NewTimeline servers={servers} t={t} />
         </Content>
         <Detail
           dispatch={dispatch}
@@ -233,6 +239,7 @@ function App() {
             dispatch({ target: 'report', value: true, object: status, client: client })
           }
           openFromOtherAccount={(status: Entity.Status) => dispatch({ target: 'fromOtherAccount', value: true, object: status })}
+          t={t}
         />
       </Container>
     </div>
@@ -315,4 +322,10 @@ const modalReducer = (
   }
 }
 
-export default App
+export default function Wrapper() {
+  return (
+    <Suspense fallback={<Loader />}>
+      <App />
+    </Suspense>
+  )
+}

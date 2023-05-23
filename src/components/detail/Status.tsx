@@ -9,16 +9,17 @@ import { BsX, BsChevronLeft } from 'react-icons/bs'
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import Status from '../timelines/status/Status'
-import { useTranslation } from 'react-i18next'
+import { TFunction } from 'i18next'
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  t: TFunction<'translation', undefined, 'translation'>
 }
 
 const StatusDetail: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { t } = props
   const [client, setClient] = useState<MegalodonInterface | null>(null)
   const [server, setServer] = useState<Server | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
@@ -174,6 +175,7 @@ const StatusDetail: React.FC<Props> = props => {
                   setTagDetail={setTagDetail}
                   openReport={props.openReport}
                   openFromOtherAccount={props.openFromOtherAccount}
+                  t={t}
                 />
               </List.Item>
             ))}
