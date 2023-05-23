@@ -1,6 +1,10 @@
 import { Entity } from 'megalodon'
 
-const emojify = (str: string, customEmoji: Array<Entity.Emoji> = []): string => {
+const emojify = (str: string | undefined, customEmoji: Array<Entity.Emoji> = []): string | undefined => {
+  if (!str) {
+    console.error(`Provided string is not a string: ${str}`)
+    return str
+  }
   let result = str
   customEmoji.map(emoji => {
     const reg = new RegExp(`:${emoji.shortcode}:`, 'g')
