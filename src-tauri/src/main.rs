@@ -384,7 +384,7 @@ async fn init_instruction(
 
 #[tauri::command]
 async fn switch_devtools(app_handle: AppHandle) -> () {
-    #[cfg(debug_assertions)]
+    #[cfg(any(feature = "devtools", debug_assertions))]
     {
         let window = app_handle
             .get_window("main")
