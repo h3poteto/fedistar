@@ -1,6 +1,13 @@
+import { invoke } from '@tauri-apps/api/tauri'
 import { Entity } from 'megalodon'
 
-const emojify = (str: string, customEmoji: Array<Entity.Emoji> = []): string => {
+const emojify = (str: string | any, customEmoji: Array<Entity.Emoji> = []): string | null => {
+  if (typeof str !== 'string') {
+    const message = `Provided string is not a string: ${str}`
+    console.error(message)
+    invoke('frontend_log', { level: 'error', message: message })
+    return null
+  }
   let result = str
   customEmoji.map(emoji => {
     const reg = new RegExp(`:${emoji.shortcode}:`, 'g')
