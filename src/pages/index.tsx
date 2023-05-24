@@ -53,7 +53,7 @@ function App() {
   useEffect(() => {
     loadAppearance()
     const f = async () => {
-      await register('CommandOrControl+Shift+I', async () => {
+      await register('F12', async () => {
         await invoke('switch_devtools')
       })
     }
