@@ -39,6 +39,8 @@ default = [ "custom-protocol" ]
 # DO NOT remove this
 custom-protocol = [ "tauri/custom-protocol" ]
 
+devtools = [ "tauri/devtools" ]
+
 
 [package.metadata.i18n]
 # The available locales for your application, default: ["en"].
