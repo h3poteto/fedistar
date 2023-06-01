@@ -46,17 +46,21 @@ const notification = (props: Props) => {
     case 'status':
     case 'update':
     case 'emoji_reaction':
-      return (
-        <Reaction
-          server={props.server}
-          notification={props.notification}
-          updateStatus={props.updateStatus}
-          client={props.client}
-          openMedia={props.openMedia}
-          setTagDetail={(tag, serverId) => props.setTagDetail(tag, serverId, props.account?.id)}
-          setAccountDetail={account => props.setAccountDetail(account.id, props.server.id, props.account?.id)}
-        />
-      )
+      if (props.notification.status) {
+        return (
+          <Reaction
+            server={props.server}
+            notification={props.notification}
+            updateStatus={props.updateStatus}
+            client={props.client}
+            openMedia={props.openMedia}
+            setTagDetail={(tag, serverId) => props.setTagDetail(tag, serverId, props.account?.id)}
+            setAccountDetail={account => props.setAccountDetail(account.id, props.server.id, props.account?.id)}
+          />
+        )
+      } else {
+        return null
+      }
     case 'mention':
       if (props.notification.status) {
         return (
