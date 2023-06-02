@@ -1,10 +1,9 @@
-import { useState, useEffect, useReducer, CSSProperties, useRef } from 'react'
+import { useState, useEffect, useReducer, CSSProperties, useRef, useCallback } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
 import { Container, Content, useToaster, Animation, DOMHelper } from 'rsuite'
 import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/api/notification'
 import dayjs from 'dayjs'
-import { register } from '@tauri-apps/api/globalShortcut'
 
 import { Server, ServerSet } from 'src/entities/server'
 import { Timeline } from 'src/entities/timeline'
@@ -52,12 +51,7 @@ function App() {
 
   useEffect(() => {
     loadAppearance()
-    const f = async () => {
-      await register('F12', async () => {
-        await invoke('switch_devtools')
-      })
-    }
-    f()
+    document.addEventListener('keydown', handleKeyPress)
 
     invoke<Array<[Server, Account | null]>>('list_servers').then(res => {
       if (res.length === 0) {
@@ -118,6 +112,10 @@ function App() {
         }
       }
     })
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress)
+    }
   }, [])
 
   useEffect(() => {
@@ -126,6 +124,12 @@ function App() {
     const node = document.getElementById(highlighted.id.toString())
     scrollLeft(spaceRef.current, node.offsetLeft)
   }, [highlighted])
+
+  const handleKeyPress = useCallback(async (event: KeyboardEvent) => {
+    if (event.key === 'F12') {
+      await invoke('switch_devtools')
+    }
+  }, [])
 
   const loadAppearance = () => {
     invoke<Settings>('read_settings').then(res => {
