@@ -26,6 +26,7 @@ import { useTranslation } from 'react-i18next'
 import { Account } from 'src/entities/account'
 import Report from 'src/components/report/Report'
 import FromOtherAccount from 'src/components/fromOtherAccount/FromOtherAccount'
+import Announcements from 'src/components/announcements/Announcements'
 
 const { scrollLeft } = DOMHelper
 
@@ -183,6 +184,14 @@ function App() {
         status={modalState.fromOtherAccount.object}
         close={() => dispatch({ target: 'fromOtherAccount', value: false, object: null })}
       />
+      {modalState.announcements.object && (
+        <Announcements
+          account={modalState.announcements.object.account}
+          server={modalState.announcements.object.server}
+          opened={modalState.announcements.opened}
+          close={() => dispatch({ target: 'announcements', value: false, object: null })}
+        />
+      )}
 
       <Container style={{ height: '100%' }}>
         <Navigator
@@ -190,6 +199,9 @@ function App() {
           unreads={unreads}
           addNewServer={() => dispatch({ target: 'newServer', value: true, object: null })}
           openAuthorize={(server: Server) => dispatch({ target: 'newServer', value: true, object: server })}
+          openAnnouncements={(server: Server, account: Account) =>
+            dispatch({ target: 'announcements', value: true, object: { server, account } })
+          }
           openThirdparty={() => dispatch({ target: 'thirdparty', value: true })}
           openSettings={() => dispatch({ target: 'settings', value: true })}
           toggleCompose={toggleCompose}
@@ -268,6 +280,13 @@ type ModalState = {
     opened: boolean
     object: Entity.Status | null
   }
+  announcements: {
+    opened: boolean
+    object: {
+      server: Server
+      account: Account
+    } | null
+  }
 }
 
 const initialModalState: ModalState = {
@@ -294,6 +313,10 @@ const initialModalState: ModalState = {
   fromOtherAccount: {
     opened: false,
     object: null
+  },
+  announcements: {
+    opened: false,
+    object: null
   }
 }
 
@@ -314,6 +337,8 @@ const modalReducer = (
       return { ...current, report: { opened: action.value, object: action.object, client: action.client } }
     case 'fromOtherAccount':
       return { ...current, fromOtherAccount: { opened: action.value, object: action.object } }
+    case 'announcements':
+      return { ...current, announcements: { opened: action.value, object: action.object } }
     default:
       return current
   }
