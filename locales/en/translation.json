@@ -2,7 +2,7 @@
   "alert": {
     "no_server": "There is no server, so please add it at first.",
     "need_auth": "You need to authorize a server.",
-    "failed_add_server": "Failed to add server.",
+    "failed_add_server": "Failed to connect to {{domain}}, make sure the server URL is valid or correct.",
     "failed_add_application": "Failed to add application.",
     "failed_authorize": "Failed to authorize.",
     "failed_post": "Failed to post status.",

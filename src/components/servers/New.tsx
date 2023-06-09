@@ -5,6 +5,7 @@ import { Server } from 'src/entities/server'
 import { OAuth } from 'megalodon'
 import alert from '../utils/alert'
 import { useTranslation } from 'react-i18next'
+import { parseDomain } from 'src/utils/domainParser'
 
 type Props = {
   open: boolean
@@ -33,11 +34,12 @@ const New: React.FC<Props> = props => {
   async function addServer() {
     setLoading(true)
     try {
-      const res = await invoke<Server>('add_server', { domain })
+      const d = parseDomain(domain)
+      const res = await invoke<Server>('add_server', { domain: d })
       setServer(res)
     } catch (err) {
       console.error(err)
-      toast.push(alert('error', t('alert.failed_add_server')), { placement: 'topCenter' })
+      toast.push(alert('error', t('alert.failed_add_server', { domain: domain })), { placement: 'topCenter' })
     } finally {
       setLoading(false)
     }
@@ -97,7 +99,7 @@ const New: React.FC<Props> = props => {
           <Form fluid onChange={o => setDomain(o.domain)}>
             <Form.Group>
               <Form.ControlLabel>{t('servers.new.domain')}</Form.ControlLabel>
-              <Form.Control name="domain" />
+              <Form.Control name="domain" placeholder="mastodon.social" />
             </Form.Group>
             <Form.Group>
               <ButtonToolbar>
