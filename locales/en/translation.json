@@ -64,7 +64,8 @@
     "servers": {
       "authorize": "Authorize",
       "profile": "Open profile",
-      "remove": "Remove"
+      "remove": "Remove",
+      "announcements": "Announcements"
     }
   },
   "servers": {
@@ -288,6 +289,10 @@
       "forward": "Forward to the original server",
       "next": "Submit"
     }
+  },
+  "announcements": {
+    "title": "Announcement @{{domain}}",
+    "close": "Close"
   },
   "from_other_account": {
     "title": "React from other accounts",

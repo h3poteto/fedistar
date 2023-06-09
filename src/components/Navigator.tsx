@@ -4,6 +4,7 @@ import { Icon } from '@rsuite/icons'
 import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge, FlexboxGrid, useToaster } from 'rsuite'
 import { BsPlus, BsGear, BsPencilSquare } from 'react-icons/bs'
 import { Server, ServerSet } from 'src/entities/server'
+import { Account } from 'src/entities/account'
 import { Timeline } from 'src/entities/timeline'
 import FailoverImg from 'src/utils/failoverImg'
 import { Unread } from 'src/entities/unread'
@@ -20,6 +21,7 @@ type NavigatorProps = {
   unreads: Array<Unread>
   addNewServer: () => void
   openAuthorize: (server: Server) => void
+  openAnnouncements: (server: Server, account: Account) => void
   toggleCompose: () => void
   openThirdparty: () => void
   openSettings: () => void
@@ -29,7 +31,7 @@ type NavigatorProps = {
 
 const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
   const { t } = useTranslation()
-  const { servers, openAuthorize, openThirdparty, openSettings } = props
+  const { servers, openAuthorize, openAnnouncements, openThirdparty, openSettings } = props
   const [walkthrough, setWalkthrough] = useState(false)
   const toaster = useToaster()
 
@@ -167,7 +169,8 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
                       top,
                       onClose,
                       server,
-                      openAuthorize
+                      openAuthorize,
+                      openAnnouncements
                     },
                     ref
                   )
@@ -218,10 +221,11 @@ type ServerMenuProps = {
   onClose: (delay?: number) => NodeJS.Timeout | void
   server: ServerSet
   openAuthorize: (server: Server) => void
+  openAnnouncements: (server: Server, account: Account) => void
 }
 
 const serverMenu = (
-  { className, left, top, onClose, server, openAuthorize }: ServerMenuProps,
+  { className, left, top, onClose, server, openAuthorize, openAnnouncements }: ServerMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
   const { t } = useTranslation()
@@ -239,6 +243,9 @@ const serverMenu = (
       case 'remove':
         invoke('remove_server', { id: server.server.id })
         break
+      case 'announcements':
+        openAnnouncements(server.server, server.account)
+        break
     }
   }
   return (
@@ -246,6 +253,9 @@ const serverMenu = (
       <Dropdown.Menu onSelect={handleSelect}>
         {server.server.account_id === null && <Dropdown.Item eventKey="authorize">{t('navigator.servers.authorize')}</Dropdown.Item>}
         {server.server.account_id !== null && <Dropdown.Item eventKey="profile">{t('navigator.servers.profile')}</Dropdown.Item>}
+        {server.server.account_id !== null && (
+          <Dropdown.Item eventKey="announcements">{t('navigator.servers.announcements')}</Dropdown.Item>
+        )}
         <Dropdown.Item eventKey="remove">{t('navigator.servers.remove')}</Dropdown.Item>
       </Dropdown.Menu>
     </Popover>
