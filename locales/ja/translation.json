@@ -2,7 +2,7 @@
   "alert": {
     "no_server": "まずはサーバを登録してください。",
     "need_auth": "いずれかのサーバにログインする必要があります。",
-    "failed_add_server": "サーバーの追加に失敗しました。",
+    "failed_add_server": "Failed to connect to {{domain}}, make sure the server URL is valid or correct.",
     "failed_add_application": "アプリケーションの追加に失敗しました。",
     "failed_authorize": "認証に失敗しました。",
     "failed_post": "投稿に失敗しました。",
@@ -64,7 +64,8 @@
     "servers": {
       "authorize": "認証",
       "profile": "プロフィール",
-      "remove": "削除"
+      "remove": "削除",
+      "announcements": "Announcements"
     }
   },
   "servers": {
@@ -288,6 +289,10 @@
       "forward": "投稿元のサーバーに転送する",
       "next": "送信"
     }
+  },
+  "announcements": {
+    "title": "Announcement @{{domain}}",
+    "close": "Close"
   },
   "from_other_account": {
     "title": "他のアカウントからリアクション",
