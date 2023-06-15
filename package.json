@@ -45,7 +45,7 @@
     "react-dom": "^18.2.0",
     "react-i18next": "^12.3.1",
     "react-icons": "^4.9.0",
-    "react-virtuoso": "^4.3.9",
+    "react-virtuoso": "^4.3.10",
     "rsuite": "^5.35.1",
     "sanitize-html": "^2.10.0"
   },

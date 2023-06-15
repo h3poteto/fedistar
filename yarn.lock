@@ -3516,10 +3516,10 @@ react-use-set@^1.0.0:
   resolved "https://registry.yarnpkg.com/react-use-set/-/react-use-set-1.0.0.tgz#2b8b442c6e8c77a907534dcc665d54c3f7b3c841"
   integrity sha512-6BBbOcWc/tOKuwd9gDtdunvOr/g40S0SkCBYvrSJvpI0upzNlHmLoeDvylnoP8PrjQXItClAFxseVGGhEkk7kw==
 
-react-virtuoso@^4.3.9:
-  version "4.3.9"
-  resolved "https://registry.yarnpkg.com/react-virtuoso/-/react-virtuoso-4.3.9.tgz#02c4e166c8d8315fccae35724264b2388bd1a785"
-  integrity sha512-xz8jqaZojIVUbMlUsrwdCH86ApbzfvYzkXKTjxCjFFfieoo46xftvXIC4JKt0eBMlDQLmwrVyXy1FP5ibjqU4A==
+react-virtuoso@^4.3.10:
+  version "4.3.10"
+  resolved "https://registry.yarnpkg.com/react-virtuoso/-/react-virtuoso-4.3.10.tgz#5f4c41c23f94b9bfbcef80fc5cdb1b59aca258fc"
+  integrity sha512-/LDICLCmPRDMOheCKmuHj/U7CGjLT/WtMWZGfOothhhubQeWGbR6mtGyd+uD80Yw/n3ICZtYwERQZnTM8eC0ag==
 
 react-window@^1.8.8:
   version "1.8.8"
