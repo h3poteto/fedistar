@@ -10,6 +10,7 @@ import Time from 'src/components/utils/Time'
 import Body from '../timelines/status/Body'
 import Actions from '../timelines/status/Actions'
 import { Account } from 'src/entities/account'
+import Reply from 'src/components/compose/Status'
 
 type Props = {
   target: Entity.Status
@@ -105,57 +106,66 @@ type PostProps = {
 
 function Post(props: PostProps) {
   const { status, client } = props
+  const [showReply, setShowReply] = useState(false)
 
   return (
-    <FlexboxGrid>
-      {/** icon **/}
-      <FlexboxGrid.Item colspan={3}>
-        <div style={{ margin: '6px' }}>
-          <Avatar src={status.account.avatar} style={{ cursor: 'pointer' }} title={status.account.acct} alt={status.account.acct} />
-        </div>
-      </FlexboxGrid.Item>
-      {/** status **/}
-      <FlexboxGrid.Item colspan={21} style={{ paddingRight: '8px' }}>
-        <div className="metadata">
-          <FlexboxGrid>
-            {/** account name **/}
-            <FlexboxGrid.Item colspan={18} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-              <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
-              <span>@{status.account.acct}</span>
-            </FlexboxGrid.Item>
-            {/** timestamp **/}
-            <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right' }}>
-              <Time time={status.created_at} />
-            </FlexboxGrid.Item>
-          </FlexboxGrid>
-        </div>
-        <Body status={status} />
-        {status.media_attachments.map((media, index) => (
-          <div key={index}>
-            <Button appearance="subtle" size="sm">
-              <Icon as={BsPaperclip} />
-              {media.id}
-            </Button>
+    <>
+      <FlexboxGrid>
+        {/** icon **/}
+        <FlexboxGrid.Item colspan={3}>
+          <div style={{ margin: '6px' }}>
+            <Avatar src={status.account.avatar} style={{ cursor: 'pointer' }} title={status.account.acct} alt={status.account.acct} />
           </div>
-        ))}
-        <div className="toolbox">
-          <Actions
-            disabled={{
-              reply: true,
-              reblog: false,
-              favourite: false,
-              bookmark: false,
-              emoji: true,
-              detail: true
-            }}
-            server={props.server}
-            account={props.account}
-            status={status}
-            client={client}
-            updateStatus={props.updateStatus}
-          />
+        </FlexboxGrid.Item>
+        {/** status **/}
+        <FlexboxGrid.Item colspan={21} style={{ paddingRight: '8px' }}>
+          <div className="metadata">
+            <FlexboxGrid>
+              {/** account name **/}
+              <FlexboxGrid.Item colspan={18} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
+                <span>@{status.account.acct}</span>
+              </FlexboxGrid.Item>
+              {/** timestamp **/}
+              <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right' }}>
+                <Time time={status.created_at} />
+              </FlexboxGrid.Item>
+            </FlexboxGrid>
+          </div>
+          <Body status={status} />
+          {status.media_attachments.map((media, index) => (
+            <div key={index}>
+              <Button appearance="subtle" size="sm">
+                <Icon as={BsPaperclip} />
+                {media.id}
+              </Button>
+            </div>
+          ))}
+          <div className="toolbox">
+            <Actions
+              disabled={{
+                reply: false,
+                reblog: false,
+                favourite: false,
+                bookmark: false,
+                emoji: true,
+                detail: true
+              }}
+              server={props.server}
+              account={props.account}
+              status={status}
+              client={client}
+              setShowReply={setShowReply}
+              updateStatus={props.updateStatus}
+            />
+          </div>
+        </FlexboxGrid.Item>
+      </FlexboxGrid>
+      {showReply && (
+        <div style={{ padding: '8px 12px' }}>
+          <Reply client={client} server={props.server} account={props.account} in_reply_to={status} onClose={() => setShowReply(false)} />
         </div>
-      </FlexboxGrid.Item>
-    </FlexboxGrid>
+      )}
+    </>
   )
 }
