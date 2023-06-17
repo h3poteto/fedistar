@@ -64,7 +64,7 @@ export default function Status(props: Props) {
   return (
     <>
       <Modal.Body>
-        <Modal.Title>{t('from_other_account.status.title')}</Modal.Title>
+        <Modal.Title>{t('from_other_account.status.title', { account: `@${props.account.username}@${props.server.domain}` })}</Modal.Title>
         <div style={{ paddingTop: '2em' }}>
           {searching ? (
             <>
