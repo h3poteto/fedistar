@@ -33,9 +33,11 @@ export default function EditMedia(props: Props) {
     if (!props.attachment) {
       return
     }
-    setFormValue({
-      description: props.attachment.description
-    })
+    if (props.attachment.description) {
+      setFormValue({
+        description: props.attachment.description
+      })
+    }
   }, [props.attachment, props.client])
 
   const handleSubmit = async () => {
@@ -76,7 +78,7 @@ export default function EditMedia(props: Props) {
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={16}>
             <div style={{ height: '320px', width: '320px' }}>
-              {props.attachment && <Image src={props.attachment.url} fill alt="" style={{ objectFit: 'contain' }} />}
+              {props.attachment && <Image src={props.attachment.preview_url} fill alt="" style={{ objectFit: 'contain' }} />}
             </div>
           </FlexboxGrid.Item>
         </FlexboxGrid>
