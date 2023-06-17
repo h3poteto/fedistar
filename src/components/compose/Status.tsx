@@ -113,6 +113,7 @@ const Status: React.FC<Props> = props => {
   const uploaderRef = useRef<HTMLInputElement>()
   const toast = useToaster()
 
+  // Update instance custom emoji
   useEffect(() => {
     if (!props.client || !props.server) {
       return
@@ -142,6 +143,7 @@ const Status: React.FC<Props> = props => {
     f()
   }, [props.server, props.client])
 
+  // Set replyTo or edit target
   useEffect(() => {
     if (props.in_reply_to) {
       const mentionAccounts = [props.in_reply_to.account.acct, ...props.in_reply_to.mentions.map(a => a.acct)]
@@ -152,11 +154,7 @@ const Status: React.FC<Props> = props => {
       if (props.in_reply_to.language) {
         setLanguage(props.in_reply_to.language)
       }
-    }
-  }, [props.in_reply_to, props.account])
-
-  useEffect(() => {
-    if (props.edit_target) {
+    } else if (props.edit_target) {
       const target = props.edit_target
 
       const f = async () => {
@@ -185,15 +183,19 @@ const Status: React.FC<Props> = props => {
         }
       }
       f()
+    } else {
+      clear()
     }
-  }, [props.edit_target, props.client])
+  }, [props.in_reply_to, props.edit_target, props.account, props.client])
 
+  // Set visibility
   useEffect(() => {
     if (props.defaultVisibility) {
       setVisibility(props.defaultVisibility)
     }
   }, [props.defaultVisibility])
 
+  // Set NSFW
   useEffect(() => {
     if (props.defaultNSFW) {
       setFormValue(current =>
@@ -204,6 +206,7 @@ const Status: React.FC<Props> = props => {
     }
   }, [props.defaultNSFW])
 
+  // Set Language
   useEffect(() => {
     if (props.defaultLanguage) {
       setLanguage(props.defaultLanguage)
