@@ -1,7 +1,7 @@
 import { TFunction } from 'i18next'
 import { TimelineKind } from 'src/entities/timeline'
 
-const timelineName = (timelineKind: TimelineKind, name: string, t: TFunction<'translation', undefined, 'translation'>) => {
+const timelineName = (timelineKind: TimelineKind, name: string, t: TFunction<'translation', undefined>) => {
   switch (timelineKind) {
     case 'home':
       return t('timeline.home')

@@ -2,10 +2,7 @@ import sanitizeHtml from 'sanitize-html'
 import { Entity } from 'megalodon'
 import { TFunction } from 'i18next'
 
-const generateNotification = (
-  notification: Entity.Notification,
-  t: TFunction<'translation', undefined, 'translation'>
-): [string, string] => {
+const generateNotification = (notification: Entity.Notification, t: TFunction<'translation', undefined>): [string, string] => {
   switch (notification.type) {
     case 'follow':
       return [t('timeline.notification.follow.title'), t('timeline.notification.follow.body', { user: notification.account.acct })]
