@@ -301,7 +301,7 @@
       "next": "次へ"
     },
     "status": {
-      "title": "投稿にブースト、お気に入り、ブックマークができます",
+      "title": "React on the status from {{account}}",
       "searching": "検索中…",
       "not_found": "投稿が {{server}} 内で見つかりませんでした。",
       "next": "閉じる"
