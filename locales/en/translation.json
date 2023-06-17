@@ -301,7 +301,7 @@
       "next": "Next"
     },
     "status": {
-      "title": "React on the status",
+      "title": "React on the status from {{account}}",
       "searching": "Searching",
       "not_found": "Sorry, the status is not found in {{server}}",
       "next": "Close"
