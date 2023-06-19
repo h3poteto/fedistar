@@ -6,6 +6,7 @@ import Status from './Status'
 import Profile from './Profile'
 import { MegalodonInterface } from 'megalodon'
 import TagDetail from './Tag'
+import ListsDetail from './Lists'
 
 type Props = {
   dispatch: Dispatch<{ target: string; value: boolean; object?: any; index?: number }>
@@ -15,7 +16,7 @@ type Props = {
 }
 
 const Detail: React.FC<Props> = props => {
-  const [target, setTarget] = useState<'status' | 'profile' | 'tag' | null>(null)
+  const [target, setTarget] = useState<'status' | 'profile' | 'tag' | 'lists' | 'list' | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -25,6 +26,10 @@ const Detail: React.FC<Props> = props => {
       setTarget('profile')
     } else if (router.query.tag) {
       setTarget('tag')
+    } else if (router.query.lists === 'all') {
+      setTarget('lists')
+    } else if (router.query.list_id) {
+      setTarget('list')
     } else {
       setTarget(null)
     }
@@ -56,6 +61,7 @@ const Detail: React.FC<Props> = props => {
             {target === 'tag' && (
               <TagDetail openMedia={props.openMedia} openReport={props.openReport} openFromOtherAccount={props.openFromOtherAccount} />
             )}
+            {target === 'lists' && <ListsDetail />}
           </Container>
         </div>
       )}

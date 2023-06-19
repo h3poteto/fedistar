@@ -65,7 +65,8 @@
       "authorize": "Authorize",
       "profile": "Open profile",
       "remove": "Remove",
-      "announcements": "Announcements"
+      "announcements": "Announcements",
+      "lists": "Lists"
     }
   },
   "servers": {
