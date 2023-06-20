@@ -64,7 +64,13 @@ export default function ListsDetail(props: Props) {
       <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)' }}>
         <List style={{ height: '100%' }}>
           {lists.map((list, index) => (
-            <List.Item key={index} style={{ cursor: 'pointer' }}>
+            <List.Item
+              key={index}
+              style={{ cursor: 'pointer' }}
+              onClick={() =>
+                router.push({ query: { list_id: list.id, server_id: router.query.server_id, account_id: router.query.account_id } })
+              }
+            >
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <FlexboxGrid align="middle">
                   <FlexboxGrid.Item style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0 1em' }}>

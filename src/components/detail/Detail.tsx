@@ -7,6 +7,7 @@ import Profile from './Profile'
 import { MegalodonInterface } from 'megalodon'
 import TagDetail from './Tag'
 import ListsDetail from './Lists'
+import ListDetail from './List'
 
 type Props = {
   dispatch: Dispatch<{ target: string; value: boolean; object?: any; index?: number }>
@@ -62,6 +63,9 @@ const Detail: React.FC<Props> = props => {
               <TagDetail openMedia={props.openMedia} openReport={props.openReport} openFromOtherAccount={props.openFromOtherAccount} />
             )}
             {target === 'lists' && <ListsDetail />}
+            {target === 'list' && (
+              <ListDetail openMedia={props.openMedia} openReport={props.openReport} openFromOtherAccount={props.openFromOtherAccount} />
+            )}
           </Container>
         </div>
       )}
