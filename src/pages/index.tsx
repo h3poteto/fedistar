@@ -27,6 +27,7 @@ import { Account } from 'src/entities/account'
 import Report from 'src/components/report/Report'
 import FromOtherAccount from 'src/components/fromOtherAccount/FromOtherAccount'
 import Announcements from 'src/components/announcements/Announcements'
+import ListMemberships from 'src/components/listMemberships/ListMemberships'
 
 const { scrollLeft } = DOMHelper
 
@@ -192,6 +193,12 @@ function App() {
           close={() => dispatch({ target: 'announcements', value: false, object: null })}
         />
       )}
+      <ListMemberships
+        opened={modalState.listMemberships.opened}
+        list={modalState.listMemberships.object}
+        client={modalState.listMemberships.client}
+        close={() => dispatch({ target: 'listMemberships', value: false, object: null, client: null })}
+      />
 
       <Container style={{ height: '100%' }}>
         <Navigator
@@ -249,6 +256,9 @@ function App() {
             dispatch({ target: 'report', value: true, object: status, client: client })
           }
           openFromOtherAccount={(status: Entity.Status) => dispatch({ target: 'fromOtherAccount', value: true, object: status })}
+          openListMemberships={(list: Entity.List, client: MegalodonInterface) =>
+            dispatch({ target: 'listMemberships', value: true, object: list, client: client })
+          }
         />
       </Container>
     </div>
@@ -287,6 +297,11 @@ type ModalState = {
       account: Account
     } | null
   }
+  listMemberships: {
+    opened: boolean
+    object: Entity.List | null
+    client: MegalodonInterface | null
+  }
 }
 
 const initialModalState: ModalState = {
@@ -317,6 +332,11 @@ const initialModalState: ModalState = {
   announcements: {
     opened: false,
     object: null
+  },
+  listMemberships: {
+    opened: false,
+    object: null,
+    client: null
   }
 }
 
@@ -339,6 +359,8 @@ const modalReducer = (
       return { ...current, fromOtherAccount: { opened: action.value, object: action.object } }
     case 'announcements':
       return { ...current, announcements: { opened: action.value, object: action.object } }
+    case 'listMemberships':
+      return { ...current, listMemberships: { opened: action.value, object: action.object, client: action.client } }
     default:
       return current
   }

@@ -10,7 +10,9 @@ import { invoke } from '@tauri-apps/api/tauri'
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 
-type Props = {}
+type Props = {
+  openListMemberships: (list: Entity.List, client: MegalodonInterface) => void
+}
 
 export default function ListsDetail(props: Props) {
   const { t } = useTranslation()
@@ -64,15 +66,15 @@ export default function ListsDetail(props: Props) {
       <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)' }}>
         <List style={{ height: '100%' }}>
           {lists.map((list, index) => (
-            <List.Item
-              key={index}
-              style={{ cursor: 'pointer' }}
-              onClick={() =>
-                router.push({ query: { list_id: list.id, server_id: router.query.server_id, account_id: router.query.account_id } })
-              }
-            >
+            <List.Item key={index}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <FlexboxGrid align="middle">
+                <FlexboxGrid
+                  align="middle"
+                  style={{ cursor: 'pointer' }}
+                  onClick={() =>
+                    router.push({ query: { list_id: list.id, server_id: router.query.server_id, account_id: router.query.account_id } })
+                  }
+                >
                   <FlexboxGrid.Item style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0 1em' }}>
                     <Icon as={BsListUl} />
                   </FlexboxGrid.Item>
@@ -80,8 +82,8 @@ export default function ListsDetail(props: Props) {
                     <div>{list.title}</div>
                   </FlexboxGrid.Item>
                 </FlexboxGrid>
-                <div style={{ paddingRight: '1em' }}>
-                  <Icon as={BsPencil} />
+                <div style={{ paddingRight: '1em', cursor: 'pointer' }}>
+                  <Icon as={BsPencil} onClick={() => props.openListMemberships(list, client)} />
                 </div>
               </div>
             </List.Item>
