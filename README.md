@@ -71,6 +71,9 @@ $ yarn install
 $ yarn tauri dev
 ```
 
+## Sponsors
+<a href="https://github.com/throwException"><img src="https://github.com/throwException.png" width="60px" alt="Stefan Thöni" /></a>
+
 ## License
 The software is available as open source under the terms of the [GPL-3.0 License](https://www.gnu.org/licenses/gpl-3.0.en.html).
 However, icons do not comply with this license, &copy; Haruka Kurosaki.
