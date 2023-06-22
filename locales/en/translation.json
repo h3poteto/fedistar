@@ -65,7 +65,8 @@
       "authorize": "Authorize",
       "profile": "Open profile",
       "remove": "Remove",
-      "announcements": "Announcements"
+      "announcements": "Announcements",
+      "lists": "Lists"
     }
   },
   "servers": {
@@ -306,5 +307,9 @@
       "not_found": "Sorry, the status is not found in {{server}}",
       "next": "Close"
     }
+  },
+  "list_memberships": {
+    "title": "List memberships",
+    "search_placeholder": "Search among people you follow"
   }
 }

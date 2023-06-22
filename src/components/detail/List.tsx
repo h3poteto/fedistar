@@ -1,16 +1,16 @@
+import { useEffect, useState } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Content, List, Header, FlexboxGrid, Button, Loader } from 'rsuite'
 import { BsX, BsChevronLeft, BsPin } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
+import { Virtuoso } from 'react-virtuoso'
 
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
-import { Virtuoso } from 'react-virtuoso'
 import Status from '../timelines/status/Status'
-import { useTranslation } from 'react-i18next'
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
@@ -18,50 +18,45 @@ type Props = {
   openFromOtherAccount: (status: Entity.Status) => void
 }
 
-export default function TagDetail(props: Props) {
+export default function ListDetail(props: Props) {
   const { t } = useTranslation()
+  const router = useRouter()
 
   const [client, setClient] = useState<MegalodonInterface | null>(null)
   const [server, setServer] = useState<Server | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
-  const [tag, setTag] = useState('')
-  const router = useRouter()
+  const [list, setList] = useState<Entity.List | null>(null)
 
   useEffect(() => {
     const f = async () => {
-      let cli: MegalodonInterface
-      if (router.query.account_id && router.query.server_id) {
+      if (router.query.account_id && router.query.list_id) {
         const [account, server] = await invoke<[Account, Server]>('get_account', {
           id: parseInt(router.query.account_id.toLocaleString())
         })
         setServer(server)
         setAccount(account)
-        cli = generator(server.sns, server.base_url, account.access_token, 'Fedistar')
+        const cli = generator(server.sns, server.base_url, account.access_token, 'Fedistar')
         setClient(cli)
-      } else if (router.query.server_id) {
-        const server = await invoke<Server>('get_server', { id: parseInt(router.query.server_id.toString()) })
-        setServer(server)
-        setAccount(null)
-        cli = generator(server.sns, server.base_url, undefined, 'Fedistar')
-        setClient(cli)
-      }
-      if (router.query.tag) {
-        setTag(router.query.tag.toString())
+
+        const listID = router.query.list_id.toString()
+        const res = await cli.getList(listID)
+        setList(res.data)
       }
     }
+
     f()
-  }, [router.query.tag, router.query.server_id, router.query.account_id])
+  }, [router.query.list_id, router.query.server_id, router.query.account_id])
 
   useEffect(() => {
-    if (tag && client) {
+    if (list && client) {
       const f = async () => {
-        const res = await client.getTagTimeline(tag)
+        const res = await client.getListTimeline(router.query.list_id.toString())
         setStatuses(res.data)
       }
       f()
     }
-  }, [tag, client])
+  }, [list, client])
 
   const back = () => {
     router.back()
@@ -72,10 +67,9 @@ export default function TagDetail(props: Props) {
   }
 
   const addTimeline = async () => {
-    if (tag.length <= 0) {
-      return
+    if (list) {
+      await invoke('add_timeline', { server: server, kind: 'list', name: list.title, list_id: list.id })
     }
-    await invoke('add_timeline', { server: server, kind: 'tag', name: tag, listId: null })
   }
 
   const updateStatus = (status: Entity.Status) => {

@@ -246,6 +246,9 @@ const serverMenu = (
       case 'announcements':
         openAnnouncements(server.server, server.account)
         break
+      case 'lists':
+        router.push({ query: { lists: 'all', server_id: server.server.id, account_id: server.account.id } })
+        break
     }
   }
   return (
@@ -254,7 +257,10 @@ const serverMenu = (
         {server.server.account_id === null && <Dropdown.Item eventKey="authorize">{t('navigator.servers.authorize')}</Dropdown.Item>}
         {server.server.account_id !== null && <Dropdown.Item eventKey="profile">{t('navigator.servers.profile')}</Dropdown.Item>}
         {server.server.account_id !== null && (
-          <Dropdown.Item eventKey="announcements">{t('navigator.servers.announcements')}</Dropdown.Item>
+          <>
+            <Dropdown.Item eventKey="announcements">{t('navigator.servers.announcements')}</Dropdown.Item>
+            <Dropdown.Item eventKey="lists">{t('navigator.servers.lists')}</Dropdown.Item>
+          </>
         )}
         <Dropdown.Item eventKey="remove">{t('navigator.servers.remove')}</Dropdown.Item>
       </Dropdown.Menu>
