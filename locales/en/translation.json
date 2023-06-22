@@ -309,6 +309,7 @@
     }
   },
   "list_memberships": {
-    "title": "List memberships"
+    "title": "List memberships",
+    "search_placeholder": "Search among people you follow"
   }
 }

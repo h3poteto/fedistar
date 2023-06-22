@@ -46,6 +46,10 @@ export default function ListsDetail(props: Props) {
     router.back()
   }
 
+  const close = () => {
+    router.push({ query: {} })
+  }
+
   return (
     <>
       <Header style={{ backgroundColor: 'var(--rs-gray-700)' }}>

@@ -2,8 +2,8 @@ import { Icon } from '@rsuite/icons'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { BsX } from 'react-icons/bs'
-import { Avatar, Button, FlexboxGrid, List, Modal } from 'rsuite'
+import { BsCheck2, BsX } from 'react-icons/bs'
+import { Avatar, Button, FlexboxGrid, Input, List, Modal, InputPicker } from 'rsuite'
 import emojify from 'src/utils/emojify'
 
 type Props = {
@@ -17,9 +17,12 @@ export default function ListMemberships(props: Props) {
   const { t } = useTranslation()
 
   const [accounts, setAccounts] = useState<Array<Entity.Account>>([])
+  const [title, setTitle] = useState('')
+  const [users, setUsers] = useState<Array<Entity.Account>>([])
 
   useEffect(() => {
     if (props.list && props.client) {
+      setTitle(props.list.title)
       const f = async () => {
         await reload(props.list.id)
       }
@@ -37,6 +40,21 @@ export default function ListMemberships(props: Props) {
     await reload(props.list.id)
   }
 
+  const updateListTitle = async () => {
+    await props.client.updateList(props.list.id, title)
+  }
+
+  const onSearch = async (keyword: string) => {
+    const res = await props.client.searchAccount(keyword, { following: true, resolve: true })
+    setUsers(res.data)
+  }
+
+  const onSelect = async (value: string) => {
+    await props.client.addAccountsToList(props.list.id, [value])
+    setUsers([])
+    await reload(props.list.id)
+  }
+
   return (
     <Modal
       size="xs"
@@ -45,10 +63,26 @@ export default function ListMemberships(props: Props) {
         props.close()
       }}
     >
-      <Modal.Header>{t('list_memberships.title')}</Modal.Header>
+      <Modal.Header>
+        <div style={{ display: 'flex', paddingBottom: '0.7em' }}>
+          <Input value={title} onChange={value => setTitle(value)} />
+          <Button appearance="link" onClick={() => updateListTitle()}>
+            <Icon as={BsCheck2} />
+          </Button>
+        </div>
+        <InputPicker
+          placeholder={t('list_memberships.search_placeholder')}
+          data={users}
+          labelKey="acct"
+          valueKey="id"
+          style={{ width: '100%' }}
+          onSearch={onSearch}
+          onSelect={onSelect}
+        />
+      </Modal.Header>
       <Modal.Body>
         <div>
-          <List className="timeline-scrollable">
+          <List>
             {accounts.map((account, index) => (
               <List.Item key={index} style={{ padding: 0 }}>
                 <FlexboxGrid align="middle">
@@ -68,7 +102,7 @@ export default function ListMemberships(props: Props) {
                     </div>
                   </FlexboxGrid.Item>
                   <FlexboxGrid.Item colspan={3}>
-                    <Button appearance="link" size="lg" onClick={() => remove(account)}>
+                    <Button appearance="link" size="sm" onClick={() => remove(account)}>
                       <Icon as={BsX} style={{ fontSize: '1.4em', color: 'var(--rs-text-tertiary)' }} />
                     </Button>
                   </FlexboxGrid.Item>
