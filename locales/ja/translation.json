@@ -65,7 +65,8 @@
       "authorize": "認証",
       "profile": "プロフィール",
       "remove": "削除",
-      "announcements": "お知らせ"
+      "announcements": "お知らせ",
+      "lists": "Lists"
     }
   },
   "servers": {
@@ -306,5 +307,9 @@
       "not_found": "投稿が {{server}} 内で見つかりませんでした。",
       "next": "閉じる"
     }
+  },
+  "list_memberships": {
+    "title": "List memberships",
+    "search_placeholder": "Search among people you follow"
   }
 }
