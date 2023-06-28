@@ -26,10 +26,12 @@ type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  openAddListMember: (user: Entity.Account, client: MegalodonInterface) => void
 }
 
 const Profile: React.FC<Props> = props => {
   const { t } = useTranslation()
+  const { openAddListMember } = props
 
   const [client, setClient] = useState<MegalodonInterface | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
@@ -248,7 +250,8 @@ const Profile: React.FC<Props> = props => {
                             relationship,
                             onChange: () => {
                               loadRelationship(client, user)
-                            }
+                            },
+                            openAddListMember
                           },
                           ref
                         )
@@ -320,10 +323,11 @@ type ProfileMenuProps = {
   user: Entity.Account
   relationship: Entity.Relationship | null
   onChange: () => void
+  openAddListMember: (user: Entity.Account, client: MegalodonInterface) => void
 }
 
 const profileMenu = (
-  { className, left, top, onClose, client, user, relationship, onChange }: ProfileMenuProps,
+  { className, left, top, onClose, client, user, relationship, onChange, openAddListMember }: ProfileMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
   const { t } = useTranslation()
@@ -355,6 +359,10 @@ const profileMenu = (
         onChange()
         return
       }
+      case 'list_management': {
+        openAddListMember(user, client)
+        return
+      }
       case 'domain_block': {
         if (relationship.domain_blocking) {
           await client.unblockDomain(domain)
@@ -383,6 +391,8 @@ const profileMenu = (
                 ? t('detail.profile.unblock', { user: `@${user.username}` })
                 : t('detail.profile.block', { user: `@${user.username}` })}
             </Dropdown.Item>
+            <Dropdown.Separator />
+            <Dropdown.Item eventKey="list_management">{t('detail.profile.list_management')}</Dropdown.Item>
             {domain && (
               <>
                 <Dropdown.Separator />

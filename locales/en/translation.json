@@ -259,6 +259,7 @@
       "block": "Block {{user}}",
       "unblock": "Unblock {{user}}",
       "unblock_domain": "Unblock domain {{server}}",
+      "list_management": "Add or Remove from lists",
       "block_domain": "Block domain {{server}}"
     }
   },
