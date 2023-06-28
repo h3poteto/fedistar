@@ -15,6 +15,7 @@ type Props = {
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
   openListMemberships: (list: Entity.List, client: MegalodonInterface) => void
+  openAddListMember: (user: Entity.Account, client: MegalodonInterface) => void
 }
 
 const Detail: React.FC<Props> = props => {
@@ -58,7 +59,12 @@ const Detail: React.FC<Props> = props => {
               />
             )}
             {target === 'profile' && (
-              <Profile openMedia={props.openMedia} openReport={props.openReport} openFromOtherAccount={props.openFromOtherAccount} />
+              <Profile
+                openMedia={props.openMedia}
+                openReport={props.openReport}
+                openFromOtherAccount={props.openFromOtherAccount}
+                openAddListMember={props.openAddListMember}
+              />
             )}
             {target === 'tag' && (
               <TagDetail openMedia={props.openMedia} openReport={props.openReport} openFromOtherAccount={props.openFromOtherAccount} />

@@ -28,6 +28,7 @@ import Report from 'src/components/report/Report'
 import FromOtherAccount from 'src/components/fromOtherAccount/FromOtherAccount'
 import Announcements from 'src/components/announcements/Announcements'
 import ListMemberships from 'src/components/listMemberships/ListMemberships'
+import AddListMember from 'src/components/addListMember/AddListMember'
 
 const { scrollLeft } = DOMHelper
 
@@ -199,6 +200,13 @@ function App() {
         client={modalState.listMemberships.client}
         close={() => dispatch({ target: 'listMemberships', value: false, object: null, client: null })}
       />
+      <AddListMember
+        opened={modalState.addListMember.opened}
+        user={modalState.addListMember.object}
+        client={modalState.addListMember.client}
+        close={() => dispatch({ target: 'addListMember', value: false, object: null, client: null })}
+      />
+      {/** Modals **/}
 
       <Container style={{ height: '100%' }}>
         <Navigator
@@ -259,6 +267,9 @@ function App() {
           openListMemberships={(list: Entity.List, client: MegalodonInterface) =>
             dispatch({ target: 'listMemberships', value: true, object: list, client: client })
           }
+          openAddListMember={(user: Entity.Account, client: MegalodonInterface) => {
+            dispatch({ target: 'addListMember', value: true, object: user, client: client })
+          }}
         />
       </Container>
     </div>
@@ -302,6 +313,11 @@ type ModalState = {
     object: Entity.List | null
     client: MegalodonInterface | null
   }
+  addListMember: {
+    opened: boolean
+    object: Entity.Account | null
+    client: MegalodonInterface | null
+  }
 }
 
 const initialModalState: ModalState = {
@@ -337,6 +353,11 @@ const initialModalState: ModalState = {
     opened: false,
     object: null,
     client: null
+  },
+  addListMember: {
+    opened: false,
+    object: null,
+    client: null
   }
 }
 
@@ -361,6 +382,8 @@ const modalReducer = (
       return { ...current, announcements: { opened: action.value, object: action.object } }
     case 'listMemberships':
       return { ...current, listMemberships: { opened: action.value, object: action.object, client: action.client } }
+    case 'addListMember':
+      return { ...current, addListMember: { opened: action.value, object: action.object, client: action.client } }
     default:
       return current
   }
