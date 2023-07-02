@@ -11,7 +11,7 @@ This is a Fediverse client application for desktop. It is supporting
 - Mastodon
 - Pleroma
 - Friendica
-
+- Akkoma (Unofficial)
 
 ![screenshot](screenshot.png)
 
