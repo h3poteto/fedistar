@@ -66,7 +66,7 @@
       "profile": "プロフィール",
       "remove": "削除",
       "announcements": "お知らせ",
-      "lists": "Lists"
+      "lists": "リスト"
     }
   },
   "servers": {
@@ -259,7 +259,7 @@
       "block": "{{user}} をブロック",
       "unblock": "{{user}} のブロックを解除",
       "unblock_domain": "ドメイン {{server}} のブロックを解除",
-      "list_management": "Add or Remove from lists",
+      "list_management": "リストに追加/削除",
       "block_domain": "ドメイン {{server}} をブロック"
     }
   },
@@ -310,7 +310,7 @@
     }
   },
   "list_memberships": {
-    "title": "List memberships",
-    "search_placeholder": "Search among people you follow"
+    "title": "リストメンバー管理",
+    "search_placeholder": "フォローしている人の中から検索"
   }
 }
