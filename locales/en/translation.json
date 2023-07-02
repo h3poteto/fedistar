@@ -244,6 +244,8 @@
     "back": "Back",
     "close": "Close",
     "pin": "Pin",
+    "follow_tag": "Follow hashtag",
+    "unfollow_tag": "Unfollow hashtag",
     "profile": {
       "follow": "Follow",
       "unfollow": "Unfollow",
