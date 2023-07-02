@@ -244,6 +244,8 @@
     "back": "Indietro",
     "close": "Chiudi",
     "pin": "Seleziona",
+    "follow_tag": "Follow hashtag",
+    "unfollow_tag": "Unfollow hashtag",
     "profile": {
       "follow": "Segui",
       "unfollow": "Non seguire",

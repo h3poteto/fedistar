@@ -244,6 +244,8 @@
     "back": "戻る",
     "close": "閉じる",
     "pin": "ピン留めする",
+    "follow_tag": "Follow hashtag",
+    "unfollow_tag": "Unfollow hashtag",
     "profile": {
       "follow": "フォロー",
       "unfollow": "フォローを解除",
