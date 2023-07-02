@@ -914,7 +914,12 @@
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.187.tgz#122ff0a7192115b4c1a19444ab4482caa77e2c9d"
   integrity sha512-MrO/xLXCaUgZy3y96C/iOsaIqZSeupyTImKClHunL5GrmaiII2VwvWmLBu2hwa0Kp0sV19CsyjtrTc/Fx8rg/A==
 
-"@types/node@*", "@types/node@^20.3.1":
+"@types/node@*":
+  version "20.3.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.3.3.tgz#329842940042d2b280897150e023e604d11657d6"
+  integrity sha512-wheIYdr4NYML61AjC8MKj/2jrR/kDQri/CIpVoZwldwhnIrD/j9jIU5bJ8yBKuB2VhpFV7Ab6G2XkBjv9r9Zzw==
+
+"@types/node@^20.3.1":
   version "20.3.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.3.2.tgz#fa6a90f2600e052a03c18b8cb3fd83dd4e599898"
   integrity sha512-vOBLVQeCQfIcF/2Y7eKFTqrMnizK5lRNQ7ykML/5RuwVXVWxYkgwS7xbt4B6fKCUPgbSL5FSsjHQpaGQP/dQmw==
@@ -979,10 +984,10 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-2.0.1.tgz#20f18294f797f2209b5f65c8e3b5c8e8261d127c"
   integrity sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==
 
-"@types/ws@^8.5.4":
-  version "8.5.4"
-  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-8.5.4.tgz#bb10e36116d6e570dd943735f86c933c1587b8a5"
-  integrity sha512-zdQDHKUgcX/zBc4GrwsE/7dVdAD8JR4EuiAXiiUhhfyIJXXb2+PrGshFyeXWQPMmmZ2XxgaqclgpIC7eTXc1mg==
+"@types/ws@^8.5.5":
+  version "8.5.5"
+  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-8.5.5.tgz#af587964aa06682702ee6dcbc7be41a80e4b28eb"
+  integrity sha512-lwhs8hktwxSjf9UaZ9tG5M03PGogvFaH8gUgLNbN9HKIg0dvv6q+gkSuJ8HN4/VbyxkuLzCjlN7GquQ0gUJfIg==
   dependencies:
     "@types/node" "*"
 
@@ -3056,12 +3061,12 @@ makeerror@1.0.12:
     tmpl "1.0.5"
 
 megalodon@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-6.1.0.tgz#42a1008c0e702a528f07fcbe143969a82d1d3a56"
-  integrity sha512-LHmy9sU6BMSRaNlMaomCLLDBYhouYNU99P6nRw6LdMYcWt2Pgwd8q+5Y0isCEZIlhDg3sJbCKRRN1L0d4raOnQ==
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-6.1.1.tgz#fd22817df22ea3698ed9d027fafde4054ec26f25"
+  integrity sha512-1X5hyE1c4ZyASwhn4rrnwmREh9guFNgZca7sEDETMFO/j6qZEEd+u9nvTWtyWP9at2amgmXkQJg5Kix/zGn5XQ==
   dependencies:
     "@types/oauth" "^0.9.0"
-    "@types/ws" "^8.5.4"
+    "@types/ws" "^8.5.5"
     axios "1.4.0"
     dayjs "^1.11.8"
     form-data "^4.0.0"
