@@ -3,7 +3,7 @@ import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { Content, List, Header, FlexboxGrid, Button, Loader } from 'rsuite'
-import { BsX, BsChevronLeft, BsPin } from 'react-icons/bs'
+import { BsX, BsChevronLeft, BsPin, BsPersonPlus, BsPersonX } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 
 import { Server } from 'src/entities/server'
@@ -26,6 +26,7 @@ export default function TagDetail(props: Props) {
   const [account, setAccount] = useState<Account | null>(null)
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [tag, setTag] = useState('')
+  const [hashtag, setHashtag] = useState<Entity.Tag | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -58,6 +59,9 @@ export default function TagDetail(props: Props) {
       const f = async () => {
         const res = await client.getTagTimeline(tag)
         setStatuses(res.data)
+        const t = await client.getTag(tag)
+        setHashtag(t.data)
+        console.log(t.data)
       }
       f()
     }
@@ -76,6 +80,22 @@ export default function TagDetail(props: Props) {
       return
     }
     await invoke('add_timeline', { server: server, kind: 'tag', name: tag, listId: null })
+  }
+
+  const followHashtag = async () => {
+    if (hashtag && client) {
+      await client.followTag(hashtag.name)
+      const t = await client.getTag(hashtag.name)
+      setHashtag(t.data)
+    }
+  }
+
+  const unfollowHashtag = async () => {
+    if (hashtag && client) {
+      await client.unfollowTag(hashtag.name)
+      const t = await client.getTag(hashtag.name)
+      setHashtag(t.data)
+    }
   }
 
   const updateStatus = (status: Entity.Status) => {
@@ -122,6 +142,17 @@ export default function TagDetail(props: Props) {
             </Button>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item>
+            {hashtag && hashtag.following && (
+              <Button appearance="link" onClick={unfollowHashtag} title={t('detail.unfollow_tag')}>
+                <Icon as={BsPersonX} style={{ fontSize: '1.2em' }} />
+              </Button>
+            )}
+            {hashtag && !hashtag.following && (
+              <Button appearance="link" onClick={followHashtag} title={t('detail.follow_tag')}>
+                <Icon as={BsPersonPlus} style={{ fontSize: '1.2em' }} />
+              </Button>
+            )}
+
             <Button appearance="link" onClick={addTimeline} title={t('detail.pin')}>
               <Icon as={BsPin} style={{ fontSize: '1.2em' }} />
             </Button>
