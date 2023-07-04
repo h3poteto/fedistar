@@ -3,6 +3,7 @@ import { initReactI18next } from 'react-i18next'
 
 import en from '../locales/en/translation.json'
 import ja from '../locales/ja/translation.json'
+import it from '../locales/it/translation.json'
 
 const resources = {
   en: {
@@ -10,6 +11,9 @@ const resources = {
   },
   ja: {
     translation: ja
+  },
+  it: {
+    translation: it
   }
 }
 
@@ -26,6 +30,6 @@ i18n
     }
   })
 
-export type localeType = 'en' | 'ja'
+export type localeType = 'en' | 'ja' | 'it'
 
 export default i18n

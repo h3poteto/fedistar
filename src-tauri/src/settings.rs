@@ -19,6 +19,7 @@ pub struct Appearance {
 pub enum LocaleType {
     EN,
     JA,
+    IT,
 }
 
 pub(crate) fn read_settings(filepath: &PathBuf) -> Result<Settings, String> {
@@ -44,6 +45,7 @@ impl fmt::Display for LocaleType {
         match self {
             LocaleType::EN => write!(f, "en"),
             LocaleType::JA => write!(f, "ja"),
+            LocaleType::IT => write!(f, "it"),
         }
     }
 }
