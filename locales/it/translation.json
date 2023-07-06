@@ -2,11 +2,11 @@
   "alert": {
     "no_server": "Non ci sono server, innanzitutto aggiungine uno.",
     "need_auth": "Devi autorizzare un server.",
-    "failed_add_server": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
+    "failed_add_server": "Impossibile collegarsi a {domain}, assicurati che l'indirizzo sia valido e il server sia raggiungibile.",
     "failed_add_application": "Impossibile aggiungere l'applicazione.",
     "failed_authorize": "Impossibile autorizzare.",
     "failed_post": "Impossibile pubblicare.",
-    "failed_load": "Failed to load {timeline}.",
+    "failed_load": "Impossibile caricare {timeline}.",
     "failed_mark": "Impossibile segnare come letta",
     "failed_unreblog": "Impossibile rimuovere la condivisione",
     "failed_reblog": "Impossibile ricondividere",
@@ -17,7 +17,7 @@
     "failed_follow": "Impossibile seguire",
     "failed_unfollow": "Impossibile smettere di seguire",
     "validation_error": "Convalida fallita.",
-    "validation_attachments_length": "You can't attach over {limit} files.",
+    "validation_attachments_length": "Non puoi allegare più di {limit} file.",
     "validation_attachments_type": "Puoi soltanto allegare immagini o video",
     "upload_error": "Impossibile caricare il file",
     "failed_to_report": "Impossibile inviare il report",
@@ -97,7 +97,7 @@
       "validation": {
         "font_size": {
           "type": "Inserire un numero",
-          "range": "Please enter a number from {from} to {to}",
+          "range": "Inserire un numero tra {from} e {to}",
           "required": "Indicare la dimensione caratteri"
         },
         "language": {
@@ -159,47 +159,47 @@
     "notification": {
       "follow": {
         "title": "Segui",
-        "body": "{user} followed you"
+        "body": "{user} ti segue"
       },
       "follow_request": {
         "title": "Richiesta",
-        "body": "{user} requested to follow you"
+        "body": "{user} vorrebbe seguirti"
       },
       "favourite": {
         "title": "Preferito",
-        "body": "{user} favourited your post"
+        "body": "Preferito da {user}"
       },
       "reblog": {
         "title": "Condivisione",
-        "body": "{user} boosted your post"
+        "body": "{user} ha condiviso"
       },
       "poll_expired": {
         "title": "Sondaggio",
-        "body": "{user}'s poll is expired"
+        "body": "Terminato il sondaggio di {user}"
       },
       "poll_vote": {
         "title": "Voto al sondaggio",
-        "body": "{user} voted your poll"
+        "body": "{user} ha votato il tuo sondaggio"
       },
       "quote": {
         "title": "Citazione",
-        "body": "{user} quoted your post"
+        "body": "{user} ti ha citato"
       },
       "status": {
         "title": "Pubblicazione",
-        "body": "{user} just post"
+        "body": "{user} ha scritto"
       },
       "update": {
         "title": "Correzione",
-        "body": "{user} updated the post"
+        "body": "{user} ha corretto"
       },
       "emoji_reaction": {
         "title": "Reazione",
-        "body": "{user} reacted your post"
+        "body": "{user} ha reagito"
       },
       "move": {
         "title": "Migrazione",
-        "body": "{user} migrated to"
+        "body": "{user} ha migrato su"
       }
     },
     "actions": {
@@ -214,7 +214,7 @@
         "copy": "Copia il collegamento",
         "edit": "Modifica",
         "delete": "Elimina",
-        "report": "Report {user}",
+        "report": "Segnala {user}",
         "from_other_account": "Reagisci da altri profili"
       }
     },
@@ -226,7 +226,7 @@
     "poll": {
       "vote": "Vota",
       "refresh": "Aggiorna",
-      "people": "{count} people",
+      "people": "{count} persone",
       "closed": "Concluso",
       "left": "rimasti"
     },
@@ -256,17 +256,17 @@
       "following": "Chi segui",
       "followers": "Chi ti segue",
       "open_page": "Apri la pagina originale",
-      "mute": "Mute {user}",
-      "unmute": "Unmute {user}",
-      "block": "Block {user}",
-      "unblock": "Unblock {user}",
-      "unblock_domain": "Unblock domain {server}",
+      "mute": "Silenzia {user}",
+      "unmute": "Non silenziare {user}",
+      "block": "Blocca {user}",
+      "unblock": "Sblocca {user}",
+      "unblock_domain": "Sblocca il dominio {server}",
       "list_management": "Aggiungi o rimuovi dalle liste",
-      "block_domain": "Block domain {server}"
+      "block_domain": "Blocca il dominio {server}"
     }
   },
   "report": {
-    "title": "Report {user}",
+    "title": "Segnala {user}",
     "category": {
       "title": "Racconta che problema c'è",
       "description": "Scegli di che si tratta",
@@ -295,7 +295,7 @@
     }
   },
   "announcements": {
-    "title": "Announcement @{domain}",
+    "title": "Annuncio su {domain}",
     "close": "Chiudi"
   },
   "from_other_account": {
@@ -305,9 +305,9 @@
       "next": "Avanti"
     },
     "status": {
-      "title": "React on the status from {account}",
+      "title": "Reagisci come {account}",
       "searching": "Ricerca",
-      "not_found": "Sorry, the status is not found in {server}",
+      "not_found": "Spiacente ma non ho trovato la pubblicazione su {server}",
       "next": "Chiudi"
     }
   },
