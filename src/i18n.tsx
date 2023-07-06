@@ -35,7 +35,9 @@ export const IntlProviderWrapper: React.FC<Props> = props => {
 
   return (
     <Context.Provider value={{ switchLang }}>
-      <IntlProvider {...lang}>{props.children}</IntlProvider>
+      <IntlProvider {...lang} defaultLocale="en" fallbackOnEmptyString={true}>
+        {props.children}
+      </IntlProvider>
     </Context.Provider>
   )
 }
