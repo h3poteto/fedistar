@@ -1,7 +1,6 @@
 import { Header, FlexboxGrid, Button, Content, List } from 'rsuite'
 import { BsX, BsChevronLeft, BsListUl, BsPencil } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
-import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
@@ -9,13 +8,14 @@ import { invoke } from '@tauri-apps/api/tauri'
 
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 type Props = {
   openListMemberships: (list: Entity.List, client: MegalodonInterface) => void
 }
 
 export default function ListsDetail(props: Props) {
-  const { t } = useTranslation()
+  const { formatMessage } = useIntl()
   const router = useRouter()
 
   const [client, setClient] = useState<MegalodonInterface | null>(null)
@@ -57,11 +57,11 @@ export default function ListsDetail(props: Props) {
           <FlexboxGrid.Item>
             <Button appearance="link" onClick={back}>
               <Icon as={BsChevronLeft} style={{ fontSize: '1.4em' }} />
-              {t('detail.back')}
+              <FormattedMessage id="detail.back" />
             </Button>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item>
-            <Button appearance="link" onClick={close} title={t('detail.close')}>
+            <Button appearance="link" onClick={close} title={formatMessage({ id: 'detail.close' })}>
               <Icon as={BsX} style={{ fontSize: '1.4em' }} />
             </Button>
           </FlexboxGrid.Item>

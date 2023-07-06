@@ -1,6 +1,6 @@
 import { Entity } from 'megalodon'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { FormattedMessage } from 'react-intl'
 import { Modal, Radio, Button, RadioGroup } from 'rsuite'
 
 type Props = {
@@ -8,24 +8,27 @@ type Props = {
 }
 
 export default function Category(props: Props) {
-  const { t } = useTranslation()
   const [value, setValue] = useState<Entity.Category | null>(null)
 
   return (
     <>
       <Modal.Body>
-        <Modal.Title>{t('report.category.title')}</Modal.Title>
-        <p>{t('report.category.description')}</p>
+        <Modal.Title>
+          <FormattedMessage id="report.category.title" />
+        </Modal.Title>
+        <p>
+          <FormattedMessage id="report.category.description" />
+        </p>
         <div style={{ paddingTop: '2em' }}>
           <RadioGroup name="category" value={value} onChange={v => setValue(v as Entity.Category)}>
             <Radio defaultChecked={false} value="spam">
-              {t('report.category.spam')}
+              <FormattedMessage id="report.category.spam" />
             </Radio>
             <Radio defaultChecked={false} value="violation">
-              {t('report.category.violation')}
+              <FormattedMessage id="report.category.violation" />
             </Radio>
             <Radio defaultChecked={false} value="other">
-              {t('report.category.other')}
+              <FormattedMessage id="report.category.other" />
             </Radio>
           </RadioGroup>
         </div>
@@ -38,7 +41,7 @@ export default function Category(props: Props) {
             if (value) props.next(value)
           }}
         >
-          {t('report.category.next')}
+          <FormattedMessage id="report.category.next" />
         </Button>
       </Modal.Footer>
     </>

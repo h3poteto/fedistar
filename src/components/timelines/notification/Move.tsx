@@ -1,7 +1,7 @@
 import { Icon } from '@rsuite/icons'
 import { Entity } from 'megalodon'
-import { useTranslation } from 'react-i18next'
 import { BsBag } from 'react-icons/bs'
+import { useIntl } from 'react-intl'
 import { FlexboxGrid, Avatar } from 'rsuite'
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
@@ -51,7 +51,7 @@ export default function Move(props: Props) {
 }
 
 const actionText = (notification: Entity.Notification) => {
-  const { t } = useTranslation()
+  const { formatMessage } = useIntl()
 
   switch (notification.type) {
     case 'move':
@@ -59,7 +59,10 @@ const actionText = (notification: Entity.Notification) => {
         <span
           style={{ color: 'var(--rs-text-secondary)' }}
           dangerouslySetInnerHTML={{
-            __html: emojify(t('timeline.notification.move.body', { user: notification.account.display_name }), notification.account.emojis)
+            __html: emojify(
+              formatMessage({ id: 'timeline.notification.move.body' }, { user: notification.account.display_name }),
+              notification.account.emojis
+            )
           }}
         />
       )

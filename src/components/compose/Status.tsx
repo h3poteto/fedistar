@@ -40,10 +40,10 @@ import { Server } from 'src/entities/server'
 import { CustomEmojiCategory } from 'src/entities/emoji'
 import alert from 'src/components/utils/alert'
 import { Account } from 'src/entities/account'
-import { useTranslation } from 'react-i18next'
 import AutoCompleteTextarea, { ArgProps as AutoCompleteTextareaProps } from './AutoCompleteTextarea'
 import languages from 'src/utils/languages'
 import EditMedia from './EditMedia'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 type Props = {
   server: Server
@@ -91,7 +91,7 @@ const model = Schema.Model({
 })
 
 const Status: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { formatMessage } = useIntl()
 
   const [formValue, setFormValue] = useState<FormValue>({
     spoiler: '',
@@ -220,7 +220,7 @@ const Status: React.FC<Props> = props => {
     if (formRef === undefined || formRef.current === undefined) {
       return
     } else if (!formRef.current.check()) {
-      toast.push(alert('error', t('alert.validation_error')), { placement: 'topStart' })
+      toast.push(alert('error', formatMessage({ id: 'alert.validation_error' })), { placement: 'topStart' })
       return
     } else {
       setLoading(true)
@@ -274,7 +274,7 @@ const Status: React.FC<Props> = props => {
         clear()
       } catch (err) {
         console.error(err)
-        toast.push(alert('error', t('alert.failed_post')), { placement: 'topStart' })
+        toast.push(alert('error', formatMessage({ id: 'alert.failed_post' })), { placement: 'topStart' })
       } finally {
         setLoading(false)
       }
@@ -341,7 +341,7 @@ const Status: React.FC<Props> = props => {
 
   const fileChanged = async (_filepath: string, event: ChangeEvent<HTMLInputElement>) => {
     if (formValue.attachments && formValue.attachments.length > 4) {
-      toast.push(alert('error', t('alert.validation_attachments_length', { limit: 5 })), { placement: 'topStart' })
+      toast.push(alert('error', formatMessage({ id: 'alert.validation_attachments_length' }, { limit: 5 })), { placement: 'topStart' })
       return
     }
 
@@ -350,7 +350,7 @@ const Status: React.FC<Props> = props => {
       return
     }
     if (!file.type.includes('image') && !file.type.includes('video')) {
-      toast.push(alert('error', t('alert.validation_attachments_type')), { placement: 'topStart' })
+      toast.push(alert('error', formatMessage({ id: 'alert.validation_attachments_type' })), { placement: 'topStart' })
       return
     }
 
@@ -365,7 +365,7 @@ const Status: React.FC<Props> = props => {
         return Object.assign({}, current, { attachments: [res.data] })
       })
     } catch {
-      toast.push(alert('error', t('alert.upload_error')), { placement: 'topStart' })
+      toast.push(alert('error', formatMessage({ id: 'alert.upload_error' })), { placement: 'topStart' })
     } finally {
       setLoading(false)
     }
@@ -433,16 +433,16 @@ const Status: React.FC<Props> = props => {
       <Popover ref={ref} className={className} style={{ left, top }} full>
         <Dropdown.Menu onSelect={handleSelect}>
           <Dropdown.Item eventKey={'public'} icon={<Icon as={BsGlobe} />}>
-            {t('compose.visibility.public')}
+            <FormattedMessage id="compose.visibility.public" />
           </Dropdown.Item>
           <Dropdown.Item eventKey={'unlisted'} icon={<Icon as={BsUnlock} />}>
-            {t('compose.visibility.unlisted')}
+            <FormattedMessage id="compose.visibility.unlisted" />
           </Dropdown.Item>
           <Dropdown.Item eventKey={'private'} icon={<Icon as={BsLock} />}>
-            {t('compose.visibility.private')}
+            <FormattedMessage id="compose.visibility.private" />
           </Dropdown.Item>
           <Dropdown.Item eventKey={'direct'} icon={<Icon as={BsEnvelope} />}>
-            {t('compose.visibility.direct')}
+            <FormattedMessage id="compose.visibility.direct" />
           </Dropdown.Item>
         </Dropdown.Menu>
       </Popover>
@@ -483,7 +483,7 @@ const Status: React.FC<Props> = props => {
       <Form fluid model={model} ref={formRef} onChange={setFormValue} onCheck={setFormError} formValue={formValue}>
         {cw && (
           <Form.Group controlId="spoiler">
-            <Form.Control name="spoiler" ref={cwRef} placeholder={t('compose.spoiler.placeholder')} />
+            <Form.Control name="spoiler" ref={cwRef} placeholder={formatMessage({ id: 'compose.spoiler.placeholder' })} />
           </Form.Group>
         )}
 
@@ -494,7 +494,7 @@ const Status: React.FC<Props> = props => {
             name="status"
             accepter={Textarea}
             ref={statusRef}
-            placeholder={t('compose.status.placeholder')}
+            placeholder={formatMessage({ id: 'compose.status.placeholder' })}
             emojis={customEmojis}
             client={props.client}
           />
@@ -548,8 +548,8 @@ const Status: React.FC<Props> = props => {
             <Form.Control
               name="nsfw"
               accepter={Toggle}
-              checkedChildren={t('compose.nsfw.sensitive')}
-              unCheckedChildren={t('compose.nsfw.not_sensitive')}
+              checkedChildren={<FormattedMessage id="compose.nsfw.sensitive" />}
+              unCheckedChildren={<FormattedMessage id="compose.nsfw.not_sensitive" />}
             />
           </Form.Group>
         )}
@@ -590,9 +590,13 @@ const Status: React.FC<Props> = props => {
         </Form.Group>
         <Form.Group>
           <ButtonToolbar style={{ justifyContent: 'flex-end' }}>
-            {(props.in_reply_to || props.edit_target) && <Button onClick={clear}>{t('compose.cancel')}</Button>}
+            {(props.in_reply_to || props.edit_target) && (
+              <Button onClick={clear}>
+                <FormattedMessage id="compose.cancel" />
+              </Button>
+            )}
             <Button appearance="primary" onClick={handleSubmit} loading={loading}>
-              {t('compose.post')}
+              <FormattedMessage id="compose.post" />
             </Button>
           </ButtonToolbar>
         </Form.Group>
@@ -634,19 +638,18 @@ const defaultPoll = () => ({
 })
 
 const PollInputControl: FormControlProps<Poll, any> = ({ value, onChange, fieldError }) => {
-  const { t } = useTranslation()
-
+  const { formatMessage } = useIntl()
   const [poll, setPoll] = useState<Poll>(value)
   const errors = fieldError ? fieldError.object : {}
 
   const expiresList = [
-    { label: t('compose.poll.5min'), value: 300 },
-    { label: t('compose.poll.30min'), value: 1800 },
-    { label: t('compose.poll.1h'), value: 3600 },
-    { label: t('compose.poll.6h'), value: 21600 },
-    { label: t('compose.poll.1d'), value: 86400 },
-    { label: t('compose.poll.3d'), value: 259200 },
-    { label: t('compose.poll.7d'), value: 604800 }
+    { label: formatMessage({ id: 'compose.poll.5min' }), value: 300 },
+    { label: formatMessage({ id: 'compose.poll.30min' }), value: 1800 },
+    { label: formatMessage({ id: 'compose.poll.1h' }), value: 3600 },
+    { label: formatMessage({ id: 'compose.poll.6h' }), value: 21600 },
+    { label: formatMessage({ id: 'compose.poll.1d' }), value: 86400 },
+    { label: formatMessage({ id: 'compose.poll.3d' }), value: 259200 },
+    { label: formatMessage({ id: 'compose.poll.7d' }), value: 604800 }
   ]
 
   const handleChangePoll = (nextPoll: Poll) => {
@@ -705,8 +708,8 @@ const PollInputControl: FormControlProps<Poll, any> = ({ value, onChange, fieldE
         <FlexboxGrid align="middle" justify="space-between">
           <FlexboxGrid.Item>
             <Toggle
-              checkedChildren={t('compose.poll.multiple')}
-              unCheckedChildren={t('compose.poll.simple')}
+              checkedChildren={<FormattedMessage id="compose.poll.multiple" />}
+              unCheckedChildren={<FormattedMessage id="compose.poll.simple" />}
               onChange={value =>
                 setPoll(current =>
                   Object.assign({}, current, {
@@ -718,7 +721,7 @@ const PollInputControl: FormControlProps<Poll, any> = ({ value, onChange, fieldE
           </FlexboxGrid.Item>
           <FlexboxGrid.Item>
             <Button appearance="ghost" onClick={addOption}>
-              {t('compose.poll.add_choice')}
+              <FormattedMessage id="compose.poll.add_choice" />
             </Button>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item>

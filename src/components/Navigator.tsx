@@ -11,10 +11,10 @@ import { Unread } from 'src/entities/unread'
 import { Marker } from 'src/entities/marker'
 import { Instruction } from 'src/entities/instruction'
 import { listen } from '@tauri-apps/api/event'
-import { useTranslation } from 'react-i18next'
 import alert from 'src/components/utils/alert'
 import generator, { Entity } from 'megalodon'
 import { useRouter } from 'next/router'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 type NavigatorProps = {
   servers: Array<ServerSet>
@@ -30,7 +30,7 @@ type NavigatorProps = {
 }
 
 const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
-  const { t } = useTranslation()
+  const { formatMessage } = useIntl()
   const { servers, openAuthorize, openAnnouncements, openThirdparty, openSettings } = props
   const [walkthrough, setWalkthrough] = useState(false)
   const toaster = useToaster()
@@ -104,7 +104,7 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
       const timelines = await invoke<Array<[Timeline, Server]>>('list_timelines')
       target = timelines.find(t => t[1].id === set.server.id && t[0].kind === 'notifications')
       if (target === undefined || target === null) {
-        toaster.push(alert('error', t('alert.notifications_not_found')), { placement: 'topStart' })
+        toaster.push(alert('error', formatMessage({ id: 'alert.notifications_not_found' })), { placement: 'topStart' })
       }
     }
 
@@ -136,19 +136,23 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
       </Sidenav>
       <Sidenav expanded={false}>
         <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Button appearance="link" size="lg" onClick={props.addNewServer} title={t('navigator.add_server.title')}>
+          <Button appearance="link" size="lg" onClick={props.addNewServer} title={formatMessage({ id: 'navigator.add_server.title' })}>
             <Icon as={BsPlus} style={{ fontSize: '1.4em' }} />
           </Button>
           {walkthrough && (
             <div style={{ position: 'relative' }}>
               <Popover arrow={false} visible={walkthrough} style={{ left: 12, top: 'auto', bottom: 0 }}>
                 <div style={{ width: '120px' }}>
-                  <h4 style={{ fontSize: '1.2em' }}>{t('walkthrough.navigator.servers.title')}</h4>
-                  <p>{t('walkthrough.navigator.servers.description')}</p>
+                  <h4 style={{ fontSize: '1.2em' }}>
+                    <FormattedMessage id="walkthrough.navigator.servers.title" />
+                  </h4>
+                  <p>
+                    <FormattedMessage id="walkthrough.navigator.servers.description" />
+                  </p>
                 </div>
                 <FlexboxGrid justify="end">
                   <Button appearance="default" size="xs" onClick={closeWalkthrough}>
-                    {t('walkthrough.navigator.servers.ok')}
+                    <FormattedMessage id="walkthrough.navigator.servers.ok" />
                   </Button>
                 </FlexboxGrid>
               </Popover>
@@ -204,7 +208,7 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
               settingsMenu({ className, left, top, onClose, openThirdparty, openSettings }, ref)
             }
           >
-            <Button appearance="link" size="lg" title={t('navigator.settings.title')}>
+            <Button appearance="link" size="lg" title={formatMessage({ id: 'navigator.settings.title' })}>
               <Icon as={BsGear} style={{ fontSize: '1.4em' }} />
             </Button>
           </Whisper>
@@ -228,7 +232,6 @@ const serverMenu = (
   { className, left, top, onClose, server, openAuthorize, openAnnouncements }: ServerMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
-  const { t } = useTranslation()
   const router = useRouter()
 
   const handleSelect = (eventKey: string) => {
@@ -254,15 +257,29 @@ const serverMenu = (
   return (
     <Popover ref={ref} className={className} style={{ left, top, padding: 0 }}>
       <Dropdown.Menu onSelect={handleSelect}>
-        {server.server.account_id === null && <Dropdown.Item eventKey="authorize">{t('navigator.servers.authorize')}</Dropdown.Item>}
-        {server.server.account_id !== null && <Dropdown.Item eventKey="profile">{t('navigator.servers.profile')}</Dropdown.Item>}
+        {server.server.account_id === null && (
+          <Dropdown.Item eventKey="authorize">
+            <FormattedMessage id="navigator.servers.authorize" />
+          </Dropdown.Item>
+        )}
+        {server.server.account_id !== null && (
+          <Dropdown.Item eventKey="profile">
+            <FormattedMessage id="navigator.servers.profile" />
+          </Dropdown.Item>
+        )}
         {server.server.account_id !== null && (
           <>
-            <Dropdown.Item eventKey="announcements">{t('navigator.servers.announcements')}</Dropdown.Item>
-            <Dropdown.Item eventKey="lists">{t('navigator.servers.lists')}</Dropdown.Item>
+            <Dropdown.Item eventKey="announcements">
+              <FormattedMessage id="navigator.servers.announcements" />
+            </Dropdown.Item>
+            <Dropdown.Item eventKey="lists">
+              <FormattedMessage id="navigator.servers.lists" />
+            </Dropdown.Item>
           </>
         )}
-        <Dropdown.Item eventKey="remove">{t('navigator.servers.remove')}</Dropdown.Item>
+        <Dropdown.Item eventKey="remove">
+          <FormattedMessage id="navigator.servers.remove" />
+        </Dropdown.Item>
       </Dropdown.Menu>
     </Popover>
   )
@@ -281,8 +298,6 @@ const settingsMenu = (
   { className, left, top, onClose, openThirdparty, openSettings }: SettingsMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
-  const { t } = useTranslation()
-
   const handleSelect = async (eventKey: string) => {
     onClose()
     switch (eventKey) {
@@ -304,9 +319,15 @@ const settingsMenu = (
   return (
     <Popover ref={ref} className={className} style={{ left, top, padding: 0 }}>
       <Dropdown.Menu onSelect={handleSelect}>
-        <Dropdown.Item eventKey="menu">{t('navigator.settings.app_menu')}</Dropdown.Item>
-        <Dropdown.Item eventKey="settings">{t('navigator.settings.settings')}</Dropdown.Item>
-        <Dropdown.Item eventKey="thirdparty">{t('navigator.settings.thirdparty')}</Dropdown.Item>
+        <Dropdown.Item eventKey="menu">
+          <FormattedMessage id="navigator.settings.app_menu" />
+        </Dropdown.Item>
+        <Dropdown.Item eventKey="settings">
+          <FormattedMessage id="navigator.settings.settings" />
+        </Dropdown.Item>
+        <Dropdown.Item eventKey="thirdparty">
+          <FormattedMessage id="navigator.settings.thirdparty" />
+        </Dropdown.Item>
       </Dropdown.Menu>
     </Popover>
   )

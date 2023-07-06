@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { FormattedMessage } from 'react-intl'
 import { List, Modal } from 'rsuite'
 import licenses from 'src/thirdparty.json'
 
@@ -8,12 +8,12 @@ type Props = {
 }
 
 const Thirdparty: React.FC<Props> = props => {
-  const { t } = useTranslation()
-
   return (
     <Modal backdrop="static" keyboard={true} open={props.open} onClose={props.onClose}>
       <Modal.Header>
-        <Modal.Title>{t('settings.thirdparty.title')}</Modal.Title>
+        <Modal.Title>
+          <FormattedMessage id="settings.thirdparty.title" />
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <List style={{ margin: '0 8px', backgroundColor: 'var(--rs-gray-700)' }}>

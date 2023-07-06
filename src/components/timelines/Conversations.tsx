@@ -17,8 +17,8 @@ import Conversation from './conversation/Conversation'
 import { listen } from '@tauri-apps/api/event'
 import { ReceiveTimelineConversationPayload } from 'src/payload'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'react-i18next'
 import timelineName from 'src/utils/timelineName'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 type Props = {
   server: Server
@@ -27,8 +27,7 @@ type Props = {
 }
 
 const Conversations: React.FC<Props> = props => {
-  const { t } = useTranslation()
-
+  const { formatMessage } = useIntl()
   const [account, setAccount] = useState<Account | null>(null)
   const [client, setClient] = useState<MegalodonInterface>()
   const [conversations, setConversations] = useState<Array<Entity.Conversation>>([])
@@ -56,7 +55,7 @@ const Conversations: React.FC<Props> = props => {
           setConversations(res)
         } catch (err) {
           console.error(err)
-          toast.push(alert('error', t('alert.failed_load', { timeline: 'conversations' })), { placement: 'topStart' })
+          toast.push(alert('error', formatMessage({ id: 'alert.failed_load' }, { timeline: 'conversations' })), { placement: 'topStart' })
         } finally {
           setLoading(false)
         }
@@ -149,9 +148,9 @@ const Conversations: React.FC<Props> = props => {
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap'
                   }}
-                  title={timelineName(props.timeline.kind, props.timeline.name, t) + '@' + props.server.domain}
+                  title={timelineName(props.timeline.kind, props.timeline.name, formatMessage) + '@' + props.server.domain}
                 >
-                  {timelineName(props.timeline.kind, props.timeline.name, t)}
+                  {timelineName(props.timeline.kind, props.timeline.name, formatMessage)}
                   <span style={{ fontSize: '14px', color: 'var(--rs-text-secondary)' }}>@{props.server.domain}</span>
                 </FlexboxGrid.Item>
               </FlexboxGrid>
@@ -166,7 +165,11 @@ const Conversations: React.FC<Props> = props => {
                     ref={triggerRef}
                     speaker={<OptionPopover timeline={props.timeline} close={closeOptionPopover} />}
                   >
-                    <Button appearance="link" style={{ padding: '4px 8px 4px 4px' }} title={t('timeline.settings.title')}>
+                    <Button
+                      appearance="link"
+                      style={{ padding: '4px 8px 4px 4px' }}
+                      title={formatMessage({ id: 'timeline.settings.title' })}
+                    >
                       <Icon as={BsSliders} />
                     </Button>
                   </Whisper>
@@ -213,8 +216,6 @@ const Conversations: React.FC<Props> = props => {
 }
 
 const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
-  const { t } = useTranslation()
-
   const removeTimeline = async (timeline: Timeline) => {
     await invoke('remove_timeline', { id: timeline.id })
   }
@@ -236,7 +237,9 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
           <FlexboxGrid.Item>
             <Button appearance="link" size="xs" onClick={() => removeTimeline(props.timeline)}>
               <Icon as={BsX} style={{ paddingBottom: '2px', fontSize: '1.4em' }} />
-              <span>{t('timeline.settings.unpin')}</span>
+              <span>
+                <FormattedMessage id="timeline.settings.unpin" />
+              </span>
             </Button>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item>

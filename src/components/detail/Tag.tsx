@@ -10,7 +10,7 @@ import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import { Virtuoso } from 'react-virtuoso'
 import Status from '../timelines/status/Status'
-import { useTranslation } from 'react-i18next'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
@@ -19,8 +19,7 @@ type Props = {
 }
 
 export default function TagDetail(props: Props) {
-  const { t } = useTranslation()
-
+  const { formatMessage } = useIntl()
   const [client, setClient] = useState<MegalodonInterface | null>(null)
   const [server, setServer] = useState<Server | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
@@ -138,25 +137,25 @@ export default function TagDetail(props: Props) {
           <FlexboxGrid.Item>
             <Button appearance="link" onClick={back}>
               <Icon as={BsChevronLeft} style={{ fontSize: '1.4em' }} />
-              {t('detail.back')}
+              <FormattedMessage id="detail.back" />
             </Button>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item>
             {hashtag && hashtag.following && (
-              <Button appearance="link" onClick={unfollowHashtag} title={t('detail.unfollow_tag')}>
+              <Button appearance="link" onClick={unfollowHashtag} title={formatMessage({ id: 'detail.unfollow_tag' })}>
                 <Icon as={BsPersonX} style={{ fontSize: '1.2em' }} />
               </Button>
             )}
             {hashtag && !hashtag.following && (
-              <Button appearance="link" onClick={followHashtag} title={t('detail.follow_tag')}>
+              <Button appearance="link" onClick={followHashtag} title={formatMessage({ id: 'detail.follow_tag' })}>
                 <Icon as={BsPersonPlus} style={{ fontSize: '1.2em' }} />
               </Button>
             )}
 
-            <Button appearance="link" onClick={addTimeline} title={t('detail.pin')}>
+            <Button appearance="link" onClick={addTimeline} title={formatMessage({ id: 'detail.pin' })}>
               <Icon as={BsPin} style={{ fontSize: '1.2em' }} />
             </Button>
-            <Button appearance="link" onClick={close} title={t('detail.close')}>
+            <Button appearance="link" onClick={close} title={formatMessage({ id: 'detail.close' })}>
               <Icon as={BsX} style={{ fontSize: '1.4em' }} />
             </Button>
           </FlexboxGrid.Item>

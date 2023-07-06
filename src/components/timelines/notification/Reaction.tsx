@@ -10,8 +10,8 @@ import emojify from 'src/utils/emojify'
 import { findLink, findAccount, findTag, accountMatch, ParsedAccount } from 'src/utils/statusParser'
 import Body from '../status/Body'
 import Poll from '../status/Poll'
-import { useTranslation } from 'react-i18next'
 import { Server } from 'src/entities/server'
+import { useIntl } from 'react-intl'
 
 type Props = {
   server: Server
@@ -45,7 +45,7 @@ const actionIcon = (notification: Entity.Notification) => {
 }
 
 const actionText = (notification: Entity.Notification, setAccountDetail: (account: Entity.Account) => void) => {
-  const { t } = useTranslation()
+  const { formatMessage } = useIntl()
 
   switch (notification.type) {
     case 'favourite':
@@ -54,7 +54,7 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
           style={{ color: 'var(--rs-text-secondary)', cursor: 'pointer' }}
           dangerouslySetInnerHTML={{
             __html: emojify(
-              t('timeline.notification.favourite.body', { user: notification.account.display_name }),
+              formatMessage({ id: 'timeline.notification.favourite.body' }, { user: notification.account.display_name }),
               notification.account.emojis
             )
           }}
@@ -67,7 +67,7 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
           style={{ color: 'var(--rs-text-secondary)', cursor: 'pointer' }}
           dangerouslySetInnerHTML={{
             __html: emojify(
-              t('timeline.notification.reblog.body', { user: notification.account.display_name }),
+              formatMessage({ id: 'timeline.notification.reblog.body' }, { user: notification.account.display_name }),
               notification.account.emojis
             )
           }}
@@ -80,7 +80,7 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
           style={{ color: 'var(--rs-text-secondary)', cursor: 'pointer' }}
           dangerouslySetInnerHTML={{
             __html: emojify(
-              t('timeline.notification.poll_expired.body', { user: notification.account.display_name }),
+              formatMessage({ id: 'timeline.notification.poll_expired.body' }, { user: notification.account.display_name }),
               notification.account.emojis
             )
           }}
@@ -93,7 +93,7 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
           style={{ color: 'var(--rs-text-secondary)', cursor: 'pointer' }}
           dangerouslySetInnerHTML={{
             __html: emojify(
-              t('timeline.notification.poll_vote.body', { user: notification.account.display_name }),
+              formatMessage({ id: 'timeline.notification.poll_vote.body' }, { user: notification.account.display_name }),
               notification.account.emojis
             )
           }}
@@ -105,7 +105,10 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
         <span
           style={{ color: 'var(--rs-text-secondary)', cursor: 'pointer' }}
           dangerouslySetInnerHTML={{
-            __html: emojify(t('timeline.notification.quote.body', { user: notification.account.display_name }), notification.account.emojis)
+            __html: emojify(
+              formatMessage({ id: 'timeline.notification.quote.body' }, { user: notification.account.display_name }),
+              notification.account.emojis
+            )
           }}
           onClick={() => setAccountDetail(notification.account)}
         />
@@ -116,7 +119,7 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
           style={{ color: 'var(--rs-text-secondary)', cursor: 'pointer' }}
           dangerouslySetInnerHTML={{
             __html: emojify(
-              t('timeline.notification.status.body', { user: notification.account.display_name }),
+              formatMessage({ id: 'timeline.notification.status.body' }, { user: notification.account.display_name }),
               notification.account.emojis
             )
           }}
@@ -129,7 +132,7 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
           style={{ color: 'var(--rs-text-secondary)', cursor: 'pointer' }}
           dangerouslySetInnerHTML={{
             __html: emojify(
-              t('timeline.notification.update.body', { user: notification.account.display_name }),
+              formatMessage({ id: 'timeline.notification.update.body' }, { user: notification.account.display_name }),
               notification.account.emojis
             )
           }}
@@ -142,7 +145,7 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
           style={{ color: 'var(--rs-text-secondary)', cursor: 'pointer' }}
           dangerouslySetInnerHTML={{
             __html: emojify(
-              t('timeline.notification.emoji_reaction.body', { user: notification.account.display_name }),
+              formatMessage({ id: 'timeline.notification.emoji_reaction.body' }, { user: notification.account.display_name }),
               notification.account.emojis
             )
           }}
@@ -155,7 +158,7 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
 }
 
 const Reaction: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { formatMessage } = useIntl()
   const status = props.notification.status
 
   const refresh = async () => {
@@ -179,9 +182,9 @@ const Reaction: React.FC<Props> = props => {
         confirmToaster = toaster.push(
           notification(
             'info',
-            t('dialog.account_not_found.title'),
-            t('dialog.account_not_found.message'),
-            t('dialog.account_not_found.button'),
+            formatMessage({ id: 'dialog.account_not_found.title' }),
+            formatMessage({ id: 'dialog.account_not_found.message' }),
+            formatMessage({ id: 'dialog.account_not_found.button' }),
             () => {
               open(parsedAccount.url)
               toaster.remove(confirmToaster)

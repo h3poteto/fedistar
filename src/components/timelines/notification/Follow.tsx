@@ -4,7 +4,7 @@ import { BsPersonPlus } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
-import { useTranslation } from 'react-i18next'
+import { useIntl } from 'react-intl'
 
 type Props = {
   notification: Entity.Notification
@@ -12,7 +12,7 @@ type Props = {
 }
 
 const actionText = (notification: Entity.Notification) => {
-  const { t } = useTranslation()
+  const { formatMessage } = useIntl()
 
   switch (notification.type) {
     case 'follow':
@@ -21,7 +21,7 @@ const actionText = (notification: Entity.Notification) => {
           style={{ color: 'var(--rs-text-secondary)' }}
           dangerouslySetInnerHTML={{
             __html: emojify(
-              t('timeline.notification.follow.body', { user: notification.account.display_name }),
+              formatMessage({ id: 'timeline.notification.follow.body' }, { user: notification.account.display_name }),
               notification.account.emojis
             )
           }}
@@ -33,7 +33,7 @@ const actionText = (notification: Entity.Notification) => {
           style={{ color: 'var(--rs-text-secondary)' }}
           dangerouslySetInnerHTML={{
             __html: emojify(
-              t('timeline.notification.follow_request.body', { user: notification.account.display_name }),
+              formatMessage({ id: 'timeline.notification.follow_request.body' }, { user: notification.account.display_name }),
               notification.account.emojis
             )
           }}

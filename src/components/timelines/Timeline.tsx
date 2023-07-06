@@ -38,8 +38,8 @@ import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from 'src/defaults'
 import alert from 'src/components/utils/alert'
 import { useRouter } from 'next/router'
 import { Instruction } from 'src/entities/instruction'
-import { useTranslation } from 'react-i18next'
 import timelineName from 'src/utils/timelineName'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 type Props = {
   timeline: Timeline
@@ -50,7 +50,7 @@ type Props = {
 }
 
 const Timeline: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { formatMessage } = useIntl()
 
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [unreadStatuses, setUnreadStatuses] = useState<Array<Entity.Status>>([])
@@ -86,7 +86,9 @@ const Timeline: React.FC<Props> = props => {
         setStatuses(res)
       } catch (err) {
         console.error(err)
-        toast.push(alert('error', t('alert.failed_load', { timeline: `${props.timeline.name} timeline` })), { placement: 'topStart' })
+        toast.push(alert('error', formatMessage({ id: 'alert.failed_load' }, { timeline: `${props.timeline.name} timeline` })), {
+          placement: 'topStart'
+        })
       } finally {
         setLoading(false)
       }
@@ -225,7 +227,9 @@ const Timeline: React.FC<Props> = props => {
       setStatuses(res)
     } catch (err) {
       console.error(err)
-      toast.push(alert('error', t('alert.failed_load', { timeline: `${props.timeline.name} timeline` })), { placement: 'topStart' })
+      toast.push(alert('error', formatMessage({ id: 'alert.failed_load' }, { timeline: `${props.timeline.name} timeline` })), {
+        placement: 'topStart'
+      })
     } finally {
       setLoading(false)
     }
@@ -353,9 +357,9 @@ const Timeline: React.FC<Props> = props => {
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap'
                   }}
-                  title={timelineName(props.timeline.kind, props.timeline.name, t) + '@' + props.server.domain}
+                  title={timelineName(props.timeline.kind, props.timeline.name, formatMessage) + '@' + props.server.domain}
                 >
-                  {timelineName(props.timeline.kind, props.timeline.name, t)}
+                  {timelineName(props.timeline.kind, props.timeline.name, formatMessage)}
                   <span style={{ fontSize: '14px', color: 'var(--rs-text-secondary)' }}>@{props.server.domain}</span>
                 </FlexboxGrid.Item>
               </FlexboxGrid>
@@ -363,7 +367,7 @@ const Timeline: React.FC<Props> = props => {
             <FlexboxGrid.Item colspan={6}>
               <FlexboxGrid align="middle" justify="end">
                 <FlexboxGrid.Item>
-                  <Button appearance="link" onClick={reload} style={{ padding: '4px' }} title={t('timeline.reload')}>
+                  <Button appearance="link" onClick={reload} style={{ padding: '4px' }} title={formatMessage({ id: 'timeline.reload' })}>
                     <Icon as={BsArrowClockwise} />
                   </Button>
                 </FlexboxGrid.Item>
@@ -373,12 +377,16 @@ const Timeline: React.FC<Props> = props => {
                     <div style={{ position: 'relative' }}>
                       <Popover arrow={false} visible={walkthrough} style={{ left: 0, top: 30 }}>
                         <div style={{ width: '120px' }}>
-                          <h4 style={{ fontSize: '1.2em' }}>{t('walkthrough.timeline.settings.title')}</h4>
-                          <p>{t('walkthrough.timeline.settings.description')}</p>
+                          <h4 style={{ fontSize: '1.2em' }}>
+                            <FormattedMessage id="walkthrough.timeline.settings.title" />
+                          </h4>
+                          <p>
+                            <FormattedMessage id="walkthrough.timeline.settings.description" />
+                          </p>
                         </div>
                         <FlexboxGrid justify="end">
                           <Button appearance="default" size="xs" onClick={closeWalkthrough}>
-                            {t('walkthrough.timeline.settings.ok')}
+                            <FormattedMessage id="walkthrough.timeline.settings.ok" />
                           </Button>
                         </FlexboxGrid>
                       </Popover>
@@ -392,7 +400,11 @@ const Timeline: React.FC<Props> = props => {
                     onOpen={closeWalkthrough}
                     speaker={<OptionPopover timeline={props.timeline} close={closeOptionPopover} />}
                   >
-                    <Button appearance="link" style={{ padding: '4px 8px 4px 4px' }} title={t('timeline.settings.title')}>
+                    <Button
+                      appearance="link"
+                      style={{ padding: '4px 8px 4px 4px' }}
+                      title={formatMessage({ id: 'timeline.settings.title' })}
+                    >
                       <Icon as={BsSliders} />
                     </Button>
                   </Whisper>
@@ -454,8 +466,6 @@ const Timeline: React.FC<Props> = props => {
 }
 
 const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: () => void }>((props, ref) => {
-  const { t } = useTranslation()
-
   const removeTimeline = async (timeline: Timeline) => {
     await invoke('remove_timeline', { id: timeline.id })
   }
@@ -477,7 +487,9 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
           <FlexboxGrid.Item>
             <Button appearance="link" size="xs" onClick={() => removeTimeline(props.timeline)}>
               <Icon as={BsX} style={{ paddingBottom: '2px', fontSize: '1.4em' }} />
-              <span>{t('timeline.settings.unpin')}</span>
+              <span>
+                <FormattedMessage id="timeline.settings.unpin" />
+              </span>
             </Button>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item>

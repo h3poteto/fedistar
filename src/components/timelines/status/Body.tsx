@@ -1,6 +1,6 @@
 import { Entity } from 'megalodon'
 import { HTMLAttributes, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { FormattedMessage } from 'react-intl'
 import { Button } from 'rsuite'
 import emojify from 'src/utils/emojify'
 import LinkPreview from './LinkPreview'
@@ -11,8 +11,6 @@ type Props = {
 } & HTMLAttributes<HTMLElement>
 
 const Body: React.FC<Props> = props => {
-  const { t } = useTranslation()
-
   const [spoilered, setSpoilered] = useState<boolean>(props.status.spoiler_text.length > 0)
 
   const spoiler = () => {
@@ -26,7 +24,7 @@ const Body: React.FC<Props> = props => {
             onClick={props.onClick}
           />
           <Button size="xs" onClick={() => setSpoilered(current => !current)}>
-            {spoilered ? t('timeline.status.show_more') : t('timeline.status.show_less')}
+            {spoilered ? <FormattedMessage id="timeline.status.show_more" /> : <FormattedMessage id="timeline.status.show_less" />}
           </Button>
         </div>
       )

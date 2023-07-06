@@ -1,22 +1,26 @@
-import { TFunction } from 'i18next'
+import { MessageDescriptor } from 'react-intl'
 import { TimelineKind } from 'src/entities/timeline'
 
-const timelineName = (timelineKind: TimelineKind, name: string, t: TFunction<'translation', undefined>) => {
+const timelineName = (
+  timelineKind: TimelineKind,
+  name: string,
+  formatMessage: (descriptor: MessageDescriptor, values?: any, opt?: any) => string
+) => {
   switch (timelineKind) {
     case 'home':
-      return t('timeline.home')
+      return formatMessage({ id: 'timeline.home' })
     case 'notifications':
-      return t('timeline.notifications')
+      return formatMessage({ id: 'timeline.notifications' })
     case 'favourites':
-      return t('timeline.favourites')
+      return formatMessage({ id: 'timeline.favourites' })
     case 'bookmarks':
-      return t('timeline.bookmarks')
+      return formatMessage({ id: 'timeline.bookmarks' })
     case 'direct':
-      return t('timeline.direct')
+      return formatMessage({ id: 'timeline.direct' })
     case 'local':
-      return t('timeline.local')
+      return formatMessage({ id: 'timeline.local' })
     case 'public':
-      return t('timeline.public')
+      return formatMessage({ id: 'timeline.public' })
     default:
       return name
   }

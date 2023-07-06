@@ -22,18 +22,18 @@ import Thirdparty from 'src/components/settings/Thirdparty'
 import { Settings } from 'src/entities/settings'
 import SettingsPage from 'src/components/settings/Settings'
 import Detail from 'src/components/detail/Detail'
-import { useTranslation } from 'react-i18next'
 import { Account } from 'src/entities/account'
 import Report from 'src/components/report/Report'
 import FromOtherAccount from 'src/components/fromOtherAccount/FromOtherAccount'
 import Announcements from 'src/components/announcements/Announcements'
 import ListMemberships from 'src/components/listMemberships/ListMemberships'
 import AddListMember from 'src/components/addListMember/AddListMember'
+import { useIntl } from 'react-intl'
 
 const { scrollLeft } = DOMHelper
 
 function App() {
-  const { t, i18n } = useTranslation()
+  const { formatMessage } = useIntl()
 
   const [servers, setServers] = useState<Array<ServerSet>>([])
   const [timelines, setTimelines] = useState<Array<[Timeline, Server]>>([])
@@ -60,7 +60,7 @@ function App() {
       if (res.length === 0) {
         console.debug('There is no server')
         dispatch({ target: 'newServer', value: true })
-        toaster.push(alert('info', t('alert.no_server')), { placement: 'topCenter' })
+        toaster.push(alert('info', formatMessage({ id: 'alert.no_server' })), { placement: 'topCenter' })
       } else {
         console.debug('list_servers: ', res)
         setServers(
@@ -109,7 +109,7 @@ function App() {
         permissionGranted = permission === 'granted'
       }
       if (permissionGranted) {
-        const [title, body] = generateNotification(ev.payload.notification, t)
+        const [title, body] = generateNotification(ev.payload.notification, formatMessage)
         if (title.length > 0) {
           sendNotification({ title, body })
         }
@@ -139,7 +139,8 @@ function App() {
       setStyle({
         fontSize: res.appearance.font_size
       })
-      i18n.changeLanguage(res.appearance.language)
+      // TODO: intl
+      // i18n.changeLanguage(res.appearance.language)
       dayjs.locale(res.appearance.language)
     })
   }
@@ -148,7 +149,7 @@ function App() {
     if (servers.find(s => s.account !== null)) {
       setComposeOpened(previous => !previous)
     } else {
-      toaster.push(alert('info', t('alert.need_auth')), { placement: 'topStart' })
+      toaster.push(alert('info', formatMessage({ id: 'alert.need_auth' })), { placement: 'topStart' })
     }
   }
 

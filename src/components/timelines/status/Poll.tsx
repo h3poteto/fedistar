@@ -1,6 +1,6 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { FormattedMessage } from 'react-intl'
 import { Button, Checkbox, CheckboxGroup, Progress, Radio, RadioGroup } from 'rsuite'
 import Time from 'src/components/utils/Time'
 
@@ -23,7 +23,6 @@ const Poll: React.FC<Props> = props => {
 }
 
 const SimplePoll: React.FC<Props> = props => {
-  const { t } = useTranslation()
   const [pollRadio, setPollRadio] = useState<number | null>(null)
 
   const post = async () => {
@@ -43,16 +42,17 @@ const SimplePoll: React.FC<Props> = props => {
         ))}
       </RadioGroup>
       <Button appearance="ghost" size="sm" style={{ marginLeft: '10px' }} onClick={post}>
-        {t('timeline.poll.vote')}
+        <FormattedMessage id="timeline.poll.vote" />
       </Button>
-      <span style={{ paddingLeft: '8px' }}>{t('timeline.poll.people', { count: props.poll.votes_count })}</span>
-      <Time time={props.poll.expires_at} style={{ paddingLeft: '8px' }} /> {t('timeline.poll.left')}
+      <span style={{ paddingLeft: '8px' }}>
+        <FormattedMessage id="timeline.poll.people" values={{ count: props.poll.votes_count }} />
+      </span>
+      <Time time={props.poll.expires_at} style={{ paddingLeft: '8px' }} /> <FormattedMessage id="timeline.poll.left" />
     </>
   )
 }
 
 const MultiplePoll: React.FC<Props> = props => {
-  const { t } = useTranslation()
   const [pollCheck, setPollCheck] = useState<Array<number>>([])
 
   const post = async () => {
@@ -72,17 +72,17 @@ const MultiplePoll: React.FC<Props> = props => {
         ))}
       </CheckboxGroup>
       <Button appearance="ghost" size="sm" style={{ marginLeft: '10px' }} onClick={post}>
-        {t('timeline.poll.vote')}
+        <FormattedMessage id="timeline.poll.vote" />
       </Button>
-      <span style={{ paddingLeft: '8px' }}>{t('timeline.poll.people', { count: props.poll.votes_count })}</span>
-      <Time time={props.poll.expires_at} style={{ paddingLeft: '8px' }} /> {t('timeline.poll.left')}
+      <span style={{ paddingLeft: '8px' }}>
+        <FormattedMessage id="timeline.poll.people" values={{ count: props.poll.votes_count }} />
+      </span>
+      <Time time={props.poll.expires_at} style={{ paddingLeft: '8px' }} /> <FormattedMessage id="timeline.poll.left" />
     </>
   )
 }
 
 const PollResult: React.FC<Props> = props => {
-  const { t } = useTranslation()
-
   return (
     <>
       {props.poll.options.map((option, index) => (
@@ -92,14 +92,18 @@ const PollResult: React.FC<Props> = props => {
         </div>
       ))}
       <Button appearance="subtle" size="sm" onClick={props.pollUpdated}>
-        {t('timeline.poll.refresh')}
+        <FormattedMessage id="timeline.poll.refresh" />
       </Button>
-      <span style={{ paddingLeft: '8px' }}>{t('timeline.poll.people', { count: props.poll.votes_count })}</span>
+      <span style={{ paddingLeft: '8px' }}>
+        <FormattedMessage id="timeline.poll.people" values={{ count: props.poll.votes_count }} />
+      </span>
       {props.poll.expired ? (
-        <span style={{ paddingLeft: '8px' }}>{t('timeline.poll.closed')}</span>
+        <span style={{ paddingLeft: '8px' }}>
+          <FormattedMessage id="timeline.poll.closed" />
+        </span>
       ) : (
         <>
-          <Time time={props.poll.expires_at} style={{ paddingLeft: '8px' }} /> {t('timeline.poll.left')}
+          <Time time={props.poll.expires_at} style={{ paddingLeft: '8px' }} /> <FormattedMessage id="timeline.poll.left" />
         </>
       )}
     </>

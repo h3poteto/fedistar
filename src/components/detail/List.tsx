@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'react-i18next'
 import { Content, List, Header, FlexboxGrid, Button, Loader } from 'rsuite'
 import { BsX, BsChevronLeft, BsPin } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
@@ -11,6 +10,7 @@ import { Virtuoso } from 'react-virtuoso'
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import Status from '../timelines/status/Status'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
@@ -19,8 +19,8 @@ type Props = {
 }
 
 export default function ListDetail(props: Props) {
-  const { t } = useTranslation()
   const router = useRouter()
+  const { formatMessage } = useIntl()
 
   const [client, setClient] = useState<MegalodonInterface | null>(null)
   const [server, setServer] = useState<Server | null>(null)
@@ -112,14 +112,14 @@ export default function ListDetail(props: Props) {
           <FlexboxGrid.Item>
             <Button appearance="link" onClick={back}>
               <Icon as={BsChevronLeft} style={{ fontSize: '1.4em' }} />
-              {t('detail.back')}
+              <FormattedMessage id="detail.back" />
             </Button>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item>
-            <Button appearance="link" onClick={addTimeline} title={t('detail.pin')}>
+            <Button appearance="link" onClick={addTimeline} title={formatMessage({ id: 'detail.pin' })}>
               <Icon as={BsPin} style={{ fontSize: '1.2em' }} />
             </Button>
-            <Button appearance="link" onClick={close} title={t('detail.close')}>
+            <Button appearance="link" onClick={close} title={formatMessage({ id: 'detail.close' })}>
               <Icon as={BsX} style={{ fontSize: '1.4em' }} />
             </Button>
           </FlexboxGrid.Item>
