@@ -2,11 +2,11 @@
   "alert": {
     "no_server": "まずはサーバを登録してください。",
     "need_auth": "いずれかのサーバにログインする必要があります。",
-    "failed_add_server": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
+    "failed_add_server": "{domain} への接続に失敗しました。サーバーの URL が正しいか正しいか確認してください。",
     "failed_add_application": "アプリケーションの追加に失敗しました。",
     "failed_authorize": "認証に失敗しました。",
     "failed_post": "投稿に失敗しました。",
-    "failed_load": "Failed to load {timeline}.",
+    "failed_load": "{timeline} の読み込みに失敗しました。",
     "failed_mark": "通知を既読にできませんでした。",
     "failed_unreblog": "ブーストの取り消しに失敗しました。",
     "failed_reblog": "ブーストに失敗しました。",
@@ -17,7 +17,7 @@
     "failed_follow": "フォローに失敗しました。",
     "failed_unfollow": "フォロー解除に失敗しました。",
     "validation_error": "検証エラー",
-    "validation_attachments_length": "You can't attach over {limit} files.",
+    "validation_attachments_length": "{limit} 個以上のファイルを添付できません。",
     "validation_attachments_type": "画像または動画のみ添付できます",
     "upload_error": "ファイルのアップロードに失敗しました",
     "failed_to_report": "通報の送信に失敗しました",
@@ -97,7 +97,7 @@
       "validation": {
         "font_size": {
           "type": "有効な数値を入力してください",
-          "range": "Please enter a number from {from} to {to}",
+          "range": "{from} から {to} までの数字を入力してください",
           "required": "フォントサイズは必須です"
         },
         "language": {
@@ -159,47 +159,47 @@
     "notification": {
       "follow": {
         "title": "フォロー",
-        "body": "{user} followed you"
+        "body": "{user} があなたをフォローしました"
       },
       "follow_request": {
         "title": "フォローリクエスト",
-        "body": "{user} requested to follow you"
+        "body": "{user} からフォローリクエストを受け取りました"
       },
       "favourite": {
         "title": "お気に入り",
-        "body": "{user} favourited your post"
+        "body": "{user} があなたの投稿をお気に入りに登録しました"
       },
       "reblog": {
         "title": "ブースト",
-        "body": "{user} boosted your post"
+        "body": "{user} があなたの投稿をブーストしました"
       },
       "poll_expired": {
         "title": "アンケート",
-        "body": "{user}'s poll is expired"
+        "body": "{user} のアンケートが終了しました"
       },
       "poll_vote": {
         "title": "アンケート",
-        "body": "{user} voted your poll"
+        "body": "{user} があなたのアンケートに投票しました"
       },
       "quote": {
         "title": "引用",
-        "body": "{user} quoted your post"
+        "body": "{user} があなたの投稿を引用しました"
       },
       "status": {
         "title": "ステータス",
-        "body": "{user} just post"
+        "body": "{user} が投稿しました"
       },
       "update": {
         "title": "編集",
-        "body": "{user} updated the post"
+        "body": "{user} が投稿を編集しました"
       },
       "emoji_reaction": {
         "title": "リアクション",
-        "body": "{user} reacted your post"
+        "body": "{user} があなたの投稿にリアクションしました"
       },
       "move": {
         "title": "引越し",
-        "body": "{user} migrated to"
+        "body": "{user} が引越しました"
       }
     },
     "actions": {
@@ -214,7 +214,7 @@
         "copy": "投稿へのリンクをコピー",
         "edit": "編集",
         "delete": "削除",
-        "report": "Report {user}",
+        "report": "{user} を通報",
         "from_other_account": "他のアカウントからリアクション"
       }
     },
@@ -226,7 +226,7 @@
     "poll": {
       "vote": "投票",
       "refresh": "更新",
-      "people": "{count} people",
+      "people": "{count} 人",
       "closed": "終了",
       "left": "残り"
     },
@@ -244,8 +244,8 @@
     "back": "戻る",
     "close": "閉じる",
     "pin": "ピン留めする",
-    "follow_tag": "Follow hashtag",
-    "unfollow_tag": "Unfollow hashtag",
+    "follow_tag": "ハッシュタグをフォローする",
+    "unfollow_tag": "ハッシュタグのフォローを解除",
     "profile": {
       "follow": "フォロー",
       "unfollow": "フォローを解除",
@@ -256,17 +256,17 @@
       "following": "フォロー中",
       "followers": "フォロワー",
       "open_page": "元のページを開く",
-      "mute": "Mute {user}",
-      "unmute": "Unmute {user}",
-      "block": "Block {user}",
-      "unblock": "Unblock {user}",
-      "unblock_domain": "Unblock domain {server}",
+      "mute": "{user} をミュート",
+      "unmute": "{user} のミュートを解除",
+      "block": "{user} をブロック",
+      "unblock": "{user} のブロックを解除",
+      "unblock_domain": "ドメイン {server} のブロックを解除",
       "list_management": "リストに追加/削除",
-      "block_domain": "Block domain {server}"
+      "block_domain": "ドメイン {server} をブロック"
     }
   },
   "report": {
-    "title": "Report {user}",
+    "title": "{user} を通報",
     "category": {
       "title": "この投稿のについて教えてください",
       "description": "近いものを選択してください",
@@ -295,7 +295,7 @@
     }
   },
   "announcements": {
-    "title": "Announcement @{domain}",
+    "title": "お知らせ @{domain}",
     "close": "閉じる"
   },
   "from_other_account": {
@@ -305,9 +305,9 @@
       "next": "次へ"
     },
     "status": {
-      "title": "React on the status from {account}",
+      "title": "{account} からこのステータスにリアクション",
       "searching": "検索中…",
-      "not_found": "Sorry, the status is not found in {server}",
+      "not_found": "投稿が {server} 内で見つかりませんでした。",
       "next": "閉じる"
     }
   },
