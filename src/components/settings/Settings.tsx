@@ -68,7 +68,7 @@ const Settings: React.FC<Props> = props => {
     <Modal backdrop="static" keyboard={true} open={props.open} onClose={props.onClose}>
       <Modal.Header>
         <Modal.Title>
-          <FormattedMessage id="'settings.settings.title'" />
+          <FormattedMessage id="settings.settings.title" />
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>

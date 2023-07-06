@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer, CSSProperties, useRef, useCallback } from 'react'
+import { useState, useEffect, useReducer, CSSProperties, useRef, useCallback, useContext } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
 import { Container, Content, useToaster, Animation, DOMHelper } from 'rsuite'
@@ -29,6 +29,7 @@ import Announcements from 'src/components/announcements/Announcements'
 import ListMemberships from 'src/components/listMemberships/ListMemberships'
 import AddListMember from 'src/components/addListMember/AddListMember'
 import { useIntl } from 'react-intl'
+import { Context } from 'src/i18n'
 
 const { scrollLeft } = DOMHelper
 
@@ -46,6 +47,7 @@ function App() {
   const spaceRef = useRef<HTMLDivElement>()
 
   const toaster = useToaster()
+  const { switchLang } = useContext(Context)
 
   const loadTimelines = async () => {
     const timelines = await invoke<Array<[Timeline, Server]>>('list_timelines')
@@ -139,8 +141,7 @@ function App() {
       setStyle({
         fontSize: res.appearance.font_size
       })
-      // TODO: intl
-      // i18n.changeLanguage(res.appearance.language)
+      switchLang(res.appearance.language)
       dayjs.locale(res.appearance.language)
     })
   }

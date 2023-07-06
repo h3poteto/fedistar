@@ -6,9 +6,7 @@ import '../App.scss'
 
 import { invoke } from '@tauri-apps/api/tauri'
 import { useEffect } from 'react'
-import { IntlProvider } from 'react-intl'
-import en from '../../locales/en/translation.json'
-import { flattenMessages } from 'src/utils/flattenMessage'
+import { IntlProviderWrapper } from 'src/i18n'
 
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -23,9 +21,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <CustomProvider theme="dark">
-      <IntlProvider locale="en" messages={flattenMessages(en)}>
+      <IntlProviderWrapper>
         <Component {...pageProps} />
-      </IntlProvider>
+      </IntlProviderWrapper>
     </CustomProvider>
   )
 }
