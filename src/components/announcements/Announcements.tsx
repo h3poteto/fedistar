@@ -1,6 +1,6 @@
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { FormattedMessage } from 'react-intl'
 import { Button, Carousel, Modal } from 'rsuite'
 import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
@@ -13,7 +13,6 @@ type Props = {
 }
 
 export default function Announcements(props: Props) {
-  const { t } = useTranslation()
   const [announcements, setAnnouncements] = useState<Array<Entity.Announcement>>([])
   const [client, setClient] = useState<MegalodonInterface | null>(null)
 
@@ -37,7 +36,9 @@ export default function Announcements(props: Props) {
   return (
     <Modal size="sm" open={props.opened} onClose={props.close}>
       <Modal.Header>
-        <Modal.Title>{t('announcements.title', { domain: props.server.domain })}</Modal.Title>
+        <Modal.Title>
+          <FormattedMessage id="announcements.title" values={{ domain: props.server.domain }} />
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Carousel placement="bottom" shape="bar" onSelect={onSelect}>
@@ -50,7 +51,7 @@ export default function Announcements(props: Props) {
       </Modal.Body>
       <Modal.Footer>
         <Button appearance="subtle" onClick={props.close}>
-          {t('announcements.close')}
+          <FormattedMessage id="announcements.close" />
         </Button>
       </Modal.Footer>
     </Modal>

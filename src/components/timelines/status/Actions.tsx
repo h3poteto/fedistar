@@ -22,8 +22,8 @@ import ActionButton from './ActionButton'
 import alert from 'src/components/utils/alert'
 import { Server } from 'src/entities/server'
 import { data } from 'src/utils/emojiData'
-import { useTranslation } from 'react-i18next'
 import { Account } from 'src/entities/account'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 type Props = {
   disabled:
@@ -48,7 +48,7 @@ type Props = {
 }
 
 const Actions: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { formatMessage } = useIntl()
 
   const { status, client } = props
   const [favouriteActivating, setFavouriteActivating] = useState<boolean>(false)
@@ -67,7 +67,7 @@ const Actions: React.FC<Props> = props => {
       try {
         res = await client.unreblogStatus(status.id)
       } catch {
-        toast.push(alert('error', t('alert.failed_unreblog')), { placement: 'topStart' })
+        toast.push(alert('error', formatMessage({ id: 'alert.failed_unreblog' })), { placement: 'topStart' })
       }
     } else {
       setReblogDeactivating(false)
@@ -75,7 +75,7 @@ const Actions: React.FC<Props> = props => {
       try {
         res = await client.reblogStatus(status.id)
       } catch {
-        toast.push(alert('error', t('alert.failed_reblog')), { placement: 'topStart' })
+        toast.push(alert('error', formatMessage({ id: 'alert.failed_reblog' })), { placement: 'topStart' })
       }
     }
     props.updateStatus(res.data)
@@ -89,7 +89,7 @@ const Actions: React.FC<Props> = props => {
       try {
         res = await client.unfavouriteStatus(status.id)
       } catch {
-        toast.push(alert('error', t('alert.failed_unfavourite')), { placement: 'topStart' })
+        toast.push(alert('error', formatMessage({ id: 'alert.failed_unfavourite' })), { placement: 'topStart' })
       }
     } else {
       setFavouriteDeactivating(false)
@@ -97,7 +97,7 @@ const Actions: React.FC<Props> = props => {
       try {
         res = await client.favouriteStatus(status.id)
       } catch {
-        toast.push(alert('error', t('alert.failed_favourite')), { placement: 'topStart' })
+        toast.push(alert('error', formatMessage({ id: 'alert.failed_favourite' })), { placement: 'topStart' })
       }
     }
     props.updateStatus(res.data)
@@ -109,13 +109,13 @@ const Actions: React.FC<Props> = props => {
       try {
         res = await client.unbookmarkStatus(status.id)
       } catch {
-        toast.push(alert('error', t('alert.failed_unbookmark')), { placement: 'topStart' })
+        toast.push(alert('error', formatMessage({ id: 'alert.failed_unbookmark' })), { placement: 'topStart' })
       }
     } else {
       try {
         res = await client.bookmarkStatus(status.id)
       } catch {
-        toast.push(alert('error', t('alert.failed_bookmark')), { placement: 'topStart' })
+        toast.push(alert('error', formatMessage({ id: 'alert.failed_bookmark' })), { placement: 'topStart' })
       }
     }
     props.updateStatus(res.data)
@@ -142,7 +142,7 @@ const Actions: React.FC<Props> = props => {
             disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.reply}
             icon={<Icon as={BsChat} />}
             onClick={() => props.setShowReply(current => !current)}
-            title={t('timeline.actions.reply')}
+            title={formatMessage({ id: 'timeline.actions.reply' })}
           />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
@@ -157,7 +157,7 @@ const Actions: React.FC<Props> = props => {
             deactivating={reblogDeactivating}
             icon={reblogIcon(props.status)}
             onClick={reblog}
-            title={t('timeline.actions.reblog')}
+            title={formatMessage({ id: 'timeline.actions.reblog' })}
           />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
@@ -168,7 +168,7 @@ const Actions: React.FC<Props> = props => {
             deactivating={favouriteDeactivating}
             icon={favouriteIcon(props.status)}
             onClick={favourite}
-            title={t('timeline.actions.favourite')}
+            title={formatMessage({ id: 'timeline.actions.favourite' })}
           />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
@@ -176,7 +176,7 @@ const Actions: React.FC<Props> = props => {
             disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.bookmark}
             icon={bookmarkIcon(props.status)}
             onClick={bookmark}
-            title={t('timeline.actions.bookmark')}
+            title={formatMessage({ id: 'timeline.actions.bookmark' })}
           />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
@@ -186,7 +186,7 @@ const Actions: React.FC<Props> = props => {
               appearance="link"
               icon={<Icon as={BsEmojiSmile} />}
               disabled={(typeof props.disabled === 'boolean' ? props.disabled : props.disabled.emoji) || props.server.sns === 'mastodon'}
-              title={t('timeline.actions.emoji_reaction')}
+              title={formatMessage({ id: 'timeline.actions.emoji_reaction' })}
             />
           </Whisper>
         </FlexboxGrid.Item>
@@ -230,7 +230,7 @@ const Actions: React.FC<Props> = props => {
               )
             }
           >
-            <IconButton appearance="link" icon={<Icon as={BsThreeDots} />} title={t('timeline.actions.detail.title')} />
+            <IconButton appearance="link" icon={<Icon as={BsThreeDots} />} title={formatMessage({ id: 'timeline.actions.detail.title' })} />
           </Whisper>
         </FlexboxGrid.Item>
       </FlexboxGrid>
@@ -286,7 +286,6 @@ type DetailMenuProps = {
 }
 
 const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>) => {
-  const { t } = useTranslation()
   const { left, top, className, status } = props
 
   const handleSelect = async (eventKey: string) => {
@@ -316,24 +315,30 @@ const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>)
   return (
     <Popover className={className} ref={ref} style={{ left, top, padding: 0 }}>
       <Dropdown.Menu onSelect={handleSelect}>
-        <Dropdown.Item eventKey="browser">{t('timeline.actions.detail.browser')}</Dropdown.Item>
-        <Dropdown.Item eventKey="copy">{t('timeline.actions.detail.copy')}</Dropdown.Item>
+        <Dropdown.Item eventKey="browser">
+          <FormattedMessage id="timeline.actions.detail.browser" />
+        </Dropdown.Item>
+        <Dropdown.Item eventKey="copy">
+          <FormattedMessage id="timeline.actions.detail.copy" />
+        </Dropdown.Item>
         {props.own && (
           <Dropdown.Item disabled={props.disabled} eventKey="edit">
-            {t('timeline.actions.detail.edit')}
+            <FormattedMessage id="timeline.actions.detail.edit" />
           </Dropdown.Item>
         )}
         {props.own && (
           <Dropdown.Item disabled={props.disabled} eventKey="delete">
-            {t('timeline.actions.detail.delete')}
+            <FormattedMessage id="timeline.actions.detail.delete" />
           </Dropdown.Item>
         )}
         <Dropdown.Separator />
         <Dropdown.Item disabled={props.disabled} eventKey="report">
-          {t('timeline.actions.detail.report', { user: `@${status.account.username}` })}
+          <FormattedMessage id="timeline.actions.detail.report" values={{ user: `@${status.account.username}` }} />
         </Dropdown.Item>
         <Dropdown.Separator />
-        <Dropdown.Item eventKey="from_other_account">{t('timeline.actions.detail.from_other_account')}</Dropdown.Item>
+        <Dropdown.Item eventKey="from_other_account">
+          <FormattedMessage id="timeline.actions.detail.from_other_account" />
+        </Dropdown.Item>
       </Dropdown.Menu>
     </Popover>
   )

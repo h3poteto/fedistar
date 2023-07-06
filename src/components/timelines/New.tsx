@@ -22,7 +22,7 @@ import { Account } from 'src/entities/account'
 import { TimelineKind } from 'src/entities/timeline'
 import { Instruction } from 'src/entities/instruction'
 import { listen } from '@tauri-apps/api/event'
-import { useTranslation } from 'react-i18next'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 type AuthorizedProps = {
   server: Server
@@ -30,8 +30,6 @@ type AuthorizedProps = {
 }
 
 const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
-  const { t } = useTranslation()
-
   const [loading, setLoading] = useState<boolean>(false)
   const [lists, setLists] = useState<Array<Entity.List>>([])
   const { server, select } = props
@@ -59,7 +57,9 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
             <Icon as={BsHouseDoor} />
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={20}>
-            <div>{t('timeline.home')}</div>
+            <div>
+              <FormattedMessage id="timeline.home" />
+            </div>
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </List.Item>
@@ -69,7 +69,9 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
             <Icon as={BsBell} />
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={20}>
-            <div>{t('timeline.notifications')}</div>
+            <div>
+              <FormattedMessage id="timeline.notifications" />
+            </div>
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </List.Item>
@@ -79,7 +81,9 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
             <Icon as={BsStar} />
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={20}>
-            <div>{t('timeline.favourites')}</div>
+            <div>
+              <FormattedMessage id="timeline.favourites" />
+            </div>
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </List.Item>
@@ -89,7 +93,9 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
             <Icon as={BsBookmark} />
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={20}>
-            <div>{t('timeline.bookmarks')}</div>
+            <div>
+              <FormattedMessage id="timeline.bookmarks" />
+            </div>
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </List.Item>
@@ -99,7 +105,9 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
             <Icon as={BsEnvelope} />
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={20}>
-            <div>{t('timeline.direct')}</div>
+            <div>
+              <FormattedMessage id="timeline.direct" />
+            </div>
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </List.Item>
@@ -129,7 +137,7 @@ type Props = {
 }
 
 const New: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { formatMessage } = useIntl()
 
   const [server, setServer] = useState<Server | null>(null)
   const [walkthrough, setWalkthrough] = useState<boolean>(false)
@@ -196,12 +204,16 @@ const New: React.FC<Props> = props => {
         <div style={{ position: 'relative' }}>
           <Popover arrow={false} visible={walkthrough} style={{ left: 0, top: 30 }}>
             <div style={{ width: '120px' }}>
-              <h4 style={{ fontSize: '1.2em' }}>{t('walkthrough.timeline.new.title')}</h4>
-              <p>{t('walkthrough.timeline.new.description')}</p>
+              <h4 style={{ fontSize: '1.2em' }}>
+                <FormattedMessage id="walkthrough.timeline.new.title" />
+              </h4>
+              <p>
+                <FormattedMessage id="walkthrough.timeline.new.description" />
+              </p>
             </div>
             <FlexboxGrid justify="end">
               <Button appearance="default" size="xs" onClick={closeWalkthrough}>
-                {t('walkthrough.timeline.new.ok')}
+                <FormattedMessage id="walkthrough.timeline.new.ok" />
               </Button>
             </FlexboxGrid>
           </Popover>
@@ -209,7 +221,7 @@ const New: React.FC<Props> = props => {
       )}
       <ButtonToolbar>
         <Whisper placement="bottom" delay={100} preventOverflow trigger="click" speaker={addTimelineMenu} onOpen={closeWalkthrough}>
-          <IconButton icon={<Icon as={BsPlus} />} size="lg" appearance="ghost" title={t('timeline.new')} />
+          <IconButton icon={<Icon as={BsPlus} />} size="lg" appearance="ghost" title={formatMessage({ id: 'timeline.new' })} />
         </Whisper>
       </ButtonToolbar>
     </div>
@@ -231,9 +243,9 @@ const New: React.FC<Props> = props => {
           <FlexboxGrid align="middle" justify="space-between">
             <FlexboxGrid.Item style={{ paddingLeft: '8px', lineHeight: '52px' }}>@{server.domain}</FlexboxGrid.Item>
             <FlexboxGrid.Item>
-              <Button appearance="link" onClick={back} title={t('timeline.back')}>
+              <Button appearance="link" onClick={back} title={formatMessage({ id: 'timeline.back' })}>
                 <Icon as={BsChevronLeft} />
-                {t('timeline.back')}
+                <FormattedMessage id="timeline.back" />
               </Button>
             </FlexboxGrid.Item>
           </FlexboxGrid>
@@ -246,7 +258,9 @@ const New: React.FC<Props> = props => {
                   <Icon as={BsPeople} />
                 </FlexboxGrid.Item>
                 <FlexboxGrid.Item colspan={20}>
-                  <div>{t('timeline.local')}</div>
+                  <div>
+                    <FormattedMessage id="timeline.local" />
+                  </div>
                 </FlexboxGrid.Item>
               </FlexboxGrid>
             </List.Item>
@@ -256,7 +270,9 @@ const New: React.FC<Props> = props => {
                   <Icon as={BsGlobe2} />
                 </FlexboxGrid.Item>
                 <FlexboxGrid.Item colspan={20}>
-                  <div>{t('timeline.public')}</div>
+                  <div>
+                    <FormattedMessage id="timeline.public" />
+                  </div>
                 </FlexboxGrid.Item>
               </FlexboxGrid>
             </List.Item>

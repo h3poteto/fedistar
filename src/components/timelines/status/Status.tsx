@@ -4,7 +4,6 @@ import { FlexboxGrid, Avatar, Button, useToaster, Notification } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsArrowRepeat, BsPin } from 'react-icons/bs'
 import { open } from '@tauri-apps/api/shell'
-import { useTranslation } from 'react-i18next'
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
 import Attachments from './Attachments'
@@ -15,6 +14,7 @@ import { Server } from 'src/entities/server'
 import Body from './Body'
 import Actions from './Actions'
 import Poll from './Poll'
+import { useIntl } from 'react-intl'
 
 type Props = {
   status: Entity.Status
@@ -33,7 +33,7 @@ type Props = {
 } & HTMLAttributes<HTMLElement>
 
 const Status: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { formatMessage } = useIntl()
   const { client } = props
   const [showReply, setShowReply] = useState<boolean>(false)
   const [showEdit, setShowEdit] = useState<boolean>(false)
@@ -71,9 +71,9 @@ const Status: React.FC<Props> = props => {
         confirmToaster = toaster.push(
           notification(
             'info',
-            t('dialog.account_not_found.title'),
-            t('dialog.account_not_found.message'),
-            t('dialog.account_not_found.button'),
+            formatMessage({ id: 'dialog.account_not_found.title' }),
+            formatMessage({ id: 'dialog.account_not_found.message' }),
+            formatMessage({ id: 'dialog.account_not_found.button' }),
             () => {
               open(parsedAccount.url)
               toaster.remove(confirmToaster)

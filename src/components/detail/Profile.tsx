@@ -14,9 +14,9 @@ import { useRouter } from 'next/router'
 import Posts, { FuncProps as PostsFunc } from './profile/Posts'
 import Following, { FuncProps as FollowingFunc } from './profile/Following'
 import Followers, { FuncProps as FollowersFunc } from './profile/Followers'
-import { useTranslation } from 'react-i18next'
 import { findLink } from 'src/utils/statusParser'
 import { domainFromAcct } from 'src/utils/domain'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 const PostsTab = forwardRef(Posts)
 const FollowingTab = forwardRef(Following)
@@ -30,8 +30,8 @@ type Props = {
 }
 
 const Profile: React.FC<Props> = props => {
-  const { t } = useTranslation()
   const { openAddListMember } = props
+  const { formatMessage } = useIntl()
 
   const [client, setClient] = useState<MegalodonInterface | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
@@ -104,7 +104,7 @@ const Profile: React.FC<Props> = props => {
       setRelationship(res.data)
     } catch (err) {
       console.error(err)
-      toaster.push(alert('error', t('alert.failed_follow')), { placement: 'topEnd' })
+      toaster.push(alert('error', formatMessage({ id: 'alert.failed_follow' })), { placement: 'topEnd' })
     }
   }, [client, account, user])
 
@@ -114,7 +114,7 @@ const Profile: React.FC<Props> = props => {
       setRelationship(res.data)
     } catch (err) {
       console.error(err)
-      toaster.push(alert('error', t('alert.failed_unfollow')), { placement: 'topEnd' })
+      toaster.push(alert('error', formatMessage({ id: 'alert.failed_unfollow' })), { placement: 'topEnd' })
     }
   }, [client, account, user])
 
@@ -187,11 +187,11 @@ const Profile: React.FC<Props> = props => {
           <FlexboxGrid.Item>
             <Button appearance="link" onClick={back}>
               <Icon as={BsChevronLeft} style={{ fontSize: '1.4em' }} />
-              {t('detail.back')}
+              <FormattedMessage id="detail.back" />
             </Button>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item>
-            <Button appearance="link" onClick={close} title={t('detail.close')}>
+            <Button appearance="link" onClick={close} title={formatMessage({ id: 'detail.close' })}>
               <Icon as={BsX} style={{ fontSize: '1.4em' }} />
             </Button>
           </FlexboxGrid.Item>
@@ -217,7 +217,7 @@ const Profile: React.FC<Props> = props => {
                 borderRadius: '4px'
               }}
             >
-              {t('detail.profile.follows_you')}
+              <FormattedMessage id="detail.profile.follows_you" />
             </div>
           )}
           <div className="profile-header-image" style={{ width: '100%', backgroundColor: 'var(--rs-body)' }}>
@@ -298,13 +298,13 @@ const Profile: React.FC<Props> = props => {
           </div>
           <Nav appearance="subtle" activeKey={activeNav} onSelect={changeNav} justified>
             <Nav.Item eventKey="posts" style={{ fontWeight: 'bold', padding: '6px 8px' }}>
-              {precision(user.statuses_count)} {t('detail.profile.posts')}
+              {precision(user.statuses_count)} <FormattedMessage id="detail.profile.posts" />
             </Nav.Item>
             <Nav.Item eventKey="following" style={{ fontWeight: 'bold', padding: '6px 8px' }}>
-              {precision(user.following_count)} {t('detail.profile.following')}
+              {precision(user.following_count)} <FormattedMessage id="detail.profile.following" />
             </Nav.Item>
             <Nav.Item eventKey="followers" style={{ fontWeight: 'bold', padding: '6px 8px' }}>
-              {precision(user.followers_count)} {t('detail.profile.followers')}
+              {precision(user.followers_count)} <FormattedMessage id="detail.profile.followers" />
             </Nav.Item>
           </Nav>
           {timeline()}
@@ -330,8 +330,6 @@ const profileMenu = (
   { className, left, top, onClose, client, user, relationship, onChange, openAddListMember }: ProfileMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
-  const { t } = useTranslation()
-
   const domain = domainFromAcct(user.acct)
 
   const handleSelect = async (eventKey: string) => {
@@ -377,29 +375,39 @@ const profileMenu = (
   return (
     <Popover ref={ref} className={className} style={{ left, top, padding: '0 4px' }}>
       <Dropdown.Menu onSelect={handleSelect}>
-        <Dropdown.Item eventKey="browser">{t('detail.profile.open_page')}</Dropdown.Item>
+        <Dropdown.Item eventKey="browser">
+          <FormattedMessage id="detail.profile.open_page" />
+        </Dropdown.Item>
         {relationship && (
           <>
             <Dropdown.Separator />
             <Dropdown.Item eventKey="mute">
-              {relationship.muting
-                ? t('detail.profile.unmute', { user: `@${user.username}` })
-                : t('detail.profile.mute', { user: `@${user.username}` })}
+              {relationship.muting ? (
+                <FormattedMessage id="detail.profile.unmute" values={{ user: `@${user.username}` }} />
+              ) : (
+                <FormattedMessage id="detail.profile.mute" values={{ user: `@${user.username}` }} />
+              )}
             </Dropdown.Item>
             <Dropdown.Item eventKey="block">
-              {relationship.blocking
-                ? t('detail.profile.unblock', { user: `@${user.username}` })
-                : t('detail.profile.block', { user: `@${user.username}` })}
+              {relationship.blocking ? (
+                <FormattedMessage id="detail.profile.unblock" values={{ user: `@${user.username}` }} />
+              ) : (
+                <FormattedMessage id="detail.profile.block" values={{ user: `@${user.username}` }} />
+              )}
             </Dropdown.Item>
             <Dropdown.Separator />
-            <Dropdown.Item eventKey="list_management">{t('detail.profile.list_management')}</Dropdown.Item>
+            <Dropdown.Item eventKey="list_management">
+              <FormattedMessage id="detail.profile.list_management" />
+            </Dropdown.Item>
             {domain && (
               <>
                 <Dropdown.Separator />
                 <Dropdown.Item eventKey="domain_block">
-                  {relationship.domain_blocking
-                    ? t('detail.profile.unblock_domain', { server: domain })
-                    : t('detail.profile.block_domain', { server: domain })}
+                  {relationship.domain_blocking ? (
+                    <FormattedMessage id="detail.profile.unblock_domain" values={{ server: domain }} />
+                  ) : (
+                    <FormattedMessage id="detail.profile.block_domain" values={{ server: domain }} />
+                  )}
                 </Dropdown.Item>
               </>
             )}
@@ -427,10 +435,10 @@ type FollowButtonProps = {
 }
 
 const FollowButton: React.FC<FollowButtonProps> = props => {
-  const { t } = useTranslation()
-  const [followMessage, setFollowMessage] = useState(t('detail.profile.not_following'))
+  const { formatMessage } = useIntl()
+  const [followMessage, setFollowMessage] = useState(formatMessage({ id: 'detail.profile.not_following' }))
   const [followColor, setFollowColor] = useState<'default' | 'primary'>('default')
-  const [unfollowMessage, setUnfollowMessage] = useState(t('detail.profile.following'))
+  const [unfollowMessage, setUnfollowMessage] = useState(formatMessage({ id: 'detail.profile.following' }))
   const [unfollowColor, setUnfollowColor] = useState<'blue' | 'red'>('blue')
 
   if (!props.relationship) {
@@ -443,11 +451,11 @@ const FollowButton: React.FC<FollowButtonProps> = props => {
         color={unfollowColor}
         onClick={props.unfollow}
         onMouseEnter={() => {
-          setUnfollowMessage(t('detail.profile.unfollow'))
+          setUnfollowMessage(formatMessage({ id: 'detail.profile.unfollow' }))
           setUnfollowColor('red')
         }}
         onMouseLeave={() => {
-          setUnfollowMessage(t('detail.profile.following'))
+          setUnfollowMessage(formatMessage({ id: 'detail.profile.following' }))
           setUnfollowColor('blue')
         }}
         block
@@ -456,18 +464,18 @@ const FollowButton: React.FC<FollowButtonProps> = props => {
       </Button>
     )
   } else if (props.relationship.requested) {
-    return <Button appearance="primary">{t('detail.profile.follow_requested')}</Button>
+    return <Button appearance="primary">{formatMessage({ id: 'detail.profile.follow_requested' })}</Button>
   } else {
     return (
       <Button
         appearance={followColor}
         onClick={props.follow}
         onMouseEnter={() => {
-          setFollowMessage(t('detail.profile.follow'))
+          setFollowMessage(formatMessage({ id: 'detail.profile.follow' }))
           setFollowColor('primary')
         }}
         onMouseLeave={() => {
-          setFollowMessage(t('detail.profile.not_following'))
+          setFollowMessage(formatMessage({ id: 'detail.profile.not_following' }))
           setFollowColor('default')
         }}
       >

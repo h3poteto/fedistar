@@ -4,9 +4,9 @@ import { CustomProvider } from 'rsuite'
 import '../style.css'
 import '../App.scss'
 
-import '../i18n'
 import { invoke } from '@tauri-apps/api/tauri'
 import { useEffect } from 'react'
+import { IntlProviderWrapper } from 'src/i18n'
 
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -21,7 +21,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <CustomProvider theme="dark">
-      <Component {...pageProps} />
+      <IntlProviderWrapper>
+        <Component {...pageProps} />
+      </IntlProviderWrapper>
     </CustomProvider>
   )
 }

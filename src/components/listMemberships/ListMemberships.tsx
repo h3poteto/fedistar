@@ -1,8 +1,8 @@
 import { Icon } from '@rsuite/icons'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { BsCheck2, BsX } from 'react-icons/bs'
+import { FormattedMessage } from 'react-intl'
 import { Avatar, Button, FlexboxGrid, Input, List, Modal, InputPicker } from 'rsuite'
 import emojify from 'src/utils/emojify'
 
@@ -14,8 +14,6 @@ type Props = {
 }
 
 export default function ListMemberships(props: Props) {
-  const { t } = useTranslation()
-
   const [accounts, setAccounts] = useState<Array<Entity.Account>>([])
   const [title, setTitle] = useState('')
   const [users, setUsers] = useState<Array<Entity.Account>>([])
@@ -71,7 +69,7 @@ export default function ListMemberships(props: Props) {
           </Button>
         </div>
         <InputPicker
-          placeholder={t('list_memberships.search_placeholder')}
+          placeholder={<FormattedMessage id="list_memberships.search_placeholder" />}
           data={users}
           labelKey="acct"
           valueKey="id"

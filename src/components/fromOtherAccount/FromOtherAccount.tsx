@@ -1,6 +1,6 @@
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { FormattedMessage } from 'react-intl'
 import { Modal } from 'rsuite'
 import { USER_AGENT } from 'src/defaults'
 import { Account } from 'src/entities/account'
@@ -15,8 +15,6 @@ type Props = {
 }
 
 export default function FromOtherAccount(props: Props) {
-  const { t } = useTranslation()
-
   const [server, setServer] = useState<Server | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
   const [client, setClient] = useState<MegalodonInterface | null>(null)
@@ -71,7 +69,9 @@ export default function FromOtherAccount(props: Props) {
           props.close()
         }}
       >
-        <Modal.Header>{t('from_other_account.title')}</Modal.Header>
+        <Modal.Header>
+          <FormattedMessage id="from_other_account.title" />
+        </Modal.Header>
         {body()}
       </Modal>
     )

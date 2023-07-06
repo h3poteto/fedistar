@@ -1,12 +1,12 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Loader, Modal, Placeholder, useToaster } from 'rsuite'
 import Category from './Category'
 import Rules from './Rules'
 import Statuses from './Statuses'
 import Comment from './Comment'
 import alert from 'src/components/utils/alert'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 type Props = {
   opened: boolean
@@ -16,7 +16,7 @@ type Props = {
 }
 
 export default function Report(props: Props) {
-  const { t } = useTranslation()
+  const { formatMessage } = useIntl()
   const [category, setCategory] = useState<Entity.Category | null>(null)
   const [rules, setRules] = useState<Array<string> | null>(null)
   const [statuses, setStatuses] = useState<Array<string> | null>(null)
@@ -58,7 +58,7 @@ export default function Report(props: Props) {
       await props.client.report(props.status.account.id, options)
     } catch (err) {
       console.error(err)
-      toaster.push(alert('error', t('alert.failed_to_report')), { placement: 'topCenter' })
+      toaster.push(alert('error', formatMessage({ id: 'alert.failed_to_report' })), { placement: 'topCenter' })
     } finally {
       setSending(false)
       reset()
@@ -103,7 +103,9 @@ export default function Report(props: Props) {
           props.close()
         }}
       >
-        <Modal.Header>{t('report.title', { user: '@' + props.status.account.acct })}</Modal.Header>
+        <Modal.Header>
+          <FormattedMessage id="report.title" values={{ user: '@' + props.status.account.acct }} />
+        </Modal.Header>
         {body()}
       </Modal>
     )

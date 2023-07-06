@@ -1,7 +1,7 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import Image from 'next/image'
 import { forwardRef, useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { FormattedMessage } from 'react-intl'
 import { Button, ButtonToolbar, FlexboxGrid, Form, Input, Modal, Schema } from 'rsuite'
 
 type Props = {
@@ -20,8 +20,6 @@ const model = Schema.Model({
 })
 
 export default function EditMedia(props: Props) {
-  const { t } = useTranslation()
-
   const [formValue, setFormValue] = useState<FormValue>({
     description: ''
   })
@@ -57,20 +55,24 @@ export default function EditMedia(props: Props) {
 
   return (
     <Modal open={props.opened} onClose={() => props.close()} size="md">
-      <Modal.Header>{t('compose.edit_attachment.title')}</Modal.Header>
+      <Modal.Header>
+        <FormattedMessage id="compose.edit_attachment.title" />
+      </Modal.Header>
       <Modal.Body>
         <FlexboxGrid>
           <FlexboxGrid.Item colspan={8}>
             <Form fluid model={model} onChange={setFormValue} formValue={formValue} ref={formRef}>
               <Form.Group controlId="description">
-                <Form.ControlLabel>{t('compose.edit_attachment.label')}</Form.ControlLabel>
+                <Form.ControlLabel>
+                  <FormattedMessage id="compose.edit_attachment.label" />
+                </Form.ControlLabel>
                 {/** @ts-ignore **/}
                 <Form.Control name="description" rows={5} accepter={Textarea} />
               </Form.Group>
               <Form.Group>
                 <ButtonToolbar style={{ justifyContent: 'flex-end' }}>
                   <Button appearance="primary" type="submit" loading={loading} onClick={handleSubmit}>
-                    {t('compose.edit_attachment.submit')}
+                    <FormattedMessage id="compose.edit_attachment.submit" />
                   </Button>
                 </ButtonToolbar>
               </Form.Group>

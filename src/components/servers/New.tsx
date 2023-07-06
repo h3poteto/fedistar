@@ -4,8 +4,8 @@ import { invoke } from '@tauri-apps/api/tauri'
 import { Server } from 'src/entities/server'
 import { OAuth } from 'megalodon'
 import alert from '../utils/alert'
-import { useTranslation } from 'react-i18next'
 import { parseDomain } from 'src/utils/domainParser'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 type Props = {
   open: boolean
@@ -14,7 +14,7 @@ type Props = {
 }
 
 const New: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { formatMessage } = useIntl()
 
   const [server, setServer] = useState<Server>()
   const [app, setApp] = useState<OAuth.AppDataFromServer>()
@@ -39,7 +39,7 @@ const New: React.FC<Props> = props => {
       setServer(res)
     } catch (err) {
       console.error(err)
-      toast.push(alert('error', t('alert.failed_add_server', { domain: domain })), { placement: 'topCenter' })
+      toast.push(alert('error', formatMessage({ id: 'alert.failed_add_server' }, { domain: domain })), { placement: 'topCenter' })
     } finally {
       setLoading(false)
     }
@@ -52,7 +52,7 @@ const New: React.FC<Props> = props => {
       setApp(res)
     } catch (err) {
       console.error(err)
-      toast.push(alert('error', t('alert.failed_add_application')), { placement: 'topCenter' })
+      toast.push(alert('error', formatMessage({ id: 'alert.failed_add_application' })), { placement: 'topCenter' })
     } finally {
       setLoading(false)
     }
@@ -65,7 +65,7 @@ const New: React.FC<Props> = props => {
       finish()
     } catch (err) {
       console.error(err)
-      toast.push(alert('error', t('alert.failed_authorize')), { placement: 'topCenter' })
+      toast.push(alert('error', formatMessage({ id: 'alert.failed_authorize' })), { placement: 'topCenter' })
     } finally {
       setLoading(false)
     }
@@ -92,22 +92,26 @@ const New: React.FC<Props> = props => {
   return (
     <Modal backdrop="static" keyboard={true} open={props.open} onClose={() => close()}>
       <Modal.Header>
-        <Modal.Title>{t('servers.new.title')}</Modal.Title>
+        <Modal.Title>
+          <FormattedMessage id="servers.new.title" />
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {server === undefined && (
           <Form fluid onChange={o => setDomain(o.domain)}>
             <Form.Group>
-              <Form.ControlLabel>{t('servers.new.domain')}</Form.ControlLabel>
+              <Form.ControlLabel>
+                <FormattedMessage id="servers.new.domain" />
+              </Form.ControlLabel>
               <Form.Control name="domain" placeholder="mastodon.social" />
             </Form.Group>
             <Form.Group>
               <ButtonToolbar>
                 <Button appearance="primary" onClick={() => addServer()}>
-                  {t('servers.new.add')}
+                  <FormattedMessage id="servers.new.add" />
                 </Button>
                 <Button appearance="link" onClick={() => close()}>
-                  {t('servers.new.cancel')}
+                  <FormattedMessage id="servers.new.cancel" />
                 </Button>
               </ButtonToolbar>
             </Form.Group>
@@ -116,7 +120,9 @@ const New: React.FC<Props> = props => {
         {server !== undefined && app === undefined && (
           <Form fluid>
             <Form.Group>
-              <p>{t('servers.new.server_description')}</p>
+              <p>
+                <FormattedMessage id="servers.new.server_description" />
+              </p>
             </Form.Group>
             <Form.Group>
               <Input value={domain} readOnly />
@@ -124,10 +130,10 @@ const New: React.FC<Props> = props => {
             <Form.Group>
               <ButtonToolbar>
                 <Button appearance="primary" onClick={() => addApplication()}>
-                  {t('servers.new.sign_in')}
+                  <FormattedMessage id="servers.new.sign_in" />
                 </Button>
                 <Button appearance="link" onClick={() => finish()}>
-                  {t('servers.new.finish')}
+                  <FormattedMessage id="servers.new.finish" />
                 </Button>
               </ButtonToolbar>
             </Form.Group>
@@ -136,23 +142,27 @@ const New: React.FC<Props> = props => {
         {app !== undefined && (
           <Form fluid onChange={o => setCode(o.code)}>
             <Form.Group>
-              <Form.ControlLabel>{t('servers.new.authorization_code')}</Form.ControlLabel>
+              <Form.ControlLabel>
+                <FormattedMessage id="servers.new.authorization_code" />
+              </Form.ControlLabel>
               <Form.Control name="code" />
-              <Form.HelpText>{t('servers.new.authorization_help')}</Form.HelpText>
+              <Form.HelpText>
+                <FormattedMessage id="servers.new.authorization_help" />
+              </Form.HelpText>
             </Form.Group>
             <Form.Group>
               <ButtonToolbar>
                 <Button appearance="primary" onClick={() => authorizeCode()}>
-                  {t('servers.new.authorize')}
+                  <FormattedMessage id="servers.new.authorize" />
                 </Button>
                 <Button appearance="link" onClick={() => finish()}>
-                  {t('servers.new.cancel')}
+                  <FormattedMessage id="servers.new.cancel" />
                 </Button>
               </ButtonToolbar>
             </Form.Group>
           </Form>
         )}
-        {loading && <Loader center backdrop content={t('servers.new.loading')} />}
+        {loading && <Loader center backdrop content={<FormattedMessage id="servers.new.loading" />} />}
       </Modal.Body>
     </Modal>
   )

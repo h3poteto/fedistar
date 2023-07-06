@@ -1,9 +1,9 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Avatar, Button, Checkbox, CheckboxGroup, FlexboxGrid, Loader, Modal, Placeholder } from 'rsuite'
 import emojify from 'src/utils/emojify'
 import Time from 'src/components/utils/Time'
+import { FormattedMessage } from 'react-intl'
 
 type Props = {
   account: Entity.Account
@@ -12,7 +12,6 @@ type Props = {
 }
 
 export default function Statuses(props: Props) {
-  const { t } = useTranslation()
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [values, setValues] = useState<Array<string>>([])
   const [loading, setLoading] = useState<boolean>(false)
@@ -33,8 +32,12 @@ export default function Statuses(props: Props) {
   return (
     <>
       <Modal.Body>
-        <Modal.Title>{t('report.statuses.title')}</Modal.Title>
-        <p>{t('report.statuses.description')}</p>
+        <Modal.Title>
+          <FormattedMessage id="report.statuses.title" />
+        </Modal.Title>
+        <p>
+          <FormattedMessage id="report.statuses.description" />
+        </p>
         <div style={{ paddingTop: '2em' }}>
           {loading ? (
             <>
@@ -42,7 +45,11 @@ export default function Statuses(props: Props) {
               <Loader center />
             </>
           ) : (
-            statuses.length === 0 && <p>{t('report.statuses.no_status')}</p>
+            statuses.length === 0 && (
+              <p>
+                <FormattedMessage id="report.statuses.no_status" />
+              </p>
+            )
           )}
           <CheckboxGroup name="statuses" value={values} onChange={value => setValues(value.map(v => v.toString()))}>
             {statuses.map(s => (
@@ -55,7 +62,7 @@ export default function Statuses(props: Props) {
       </Modal.Body>
       <Modal.Footer>
         <Button appearance="primary" block onClick={() => props.next(values)}>
-          {t('report.statuses.next')}
+          <FormattedMessage id="report.statuses.next" />
         </Button>
       </Modal.Footer>
     </>

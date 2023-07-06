@@ -2,11 +2,11 @@
   "alert": {
     "no_server": "There is no server, so please add it at first.",
     "need_auth": "You need to authorize a server.",
-    "failed_add_server": "Failed to connect to {{domain}}, make sure the server URL is valid or correct.",
+    "failed_add_server": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
     "failed_add_application": "Failed to add application.",
     "failed_authorize": "Failed to authorize.",
     "failed_post": "Failed to post status.",
-    "failed_load": "Failed to load {{timeline}}.",
+    "failed_load": "Failed to load {timeline}.",
     "failed_mark": "Failed to mark as read",
     "failed_unreblog": "Failed to unboost",
     "failed_reblog": "Failed to boost",
@@ -17,7 +17,7 @@
     "failed_follow": "Failed to follow",
     "failed_unfollow": "Failed to unfollow",
     "validation_error": "Validation error.",
-    "validation_attachments_length": "You can't attach over {{limit}} files.",
+    "validation_attachments_length": "You can't attach over {limit} files.",
     "validation_attachments_type": "You can attach only images or videos",
     "upload_error": "Failed to upload your file",
     "failed_to_report": "Faild to send the report",
@@ -97,7 +97,7 @@
       "validation": {
         "font_size": {
           "type": "Please enter a valid number",
-          "range": "Please enter a number from {{from}} to {{to}}",
+          "range": "Please enter a number from {from} to {to}",
           "required": "Font size is required"
         },
         "language": {
@@ -159,47 +159,47 @@
     "notification": {
       "follow": {
         "title": "Follow",
-        "body": "{{user}} followed you"
+        "body": "{user} followed you"
       },
       "follow_request": {
         "title": "Follow Request",
-        "body": "{{user}} requested to follow you"
+        "body": "{user} requested to follow you"
       },
       "favourite": {
         "title": "Favourite",
-        "body": "{{user}} favourited your post"
+        "body": "{user} favourited your post"
       },
       "reblog": {
         "title": "Boost",
-        "body": "{{user}} boosted your post"
+        "body": "{user} boosted your post"
       },
       "poll_expired": {
         "title": "Poll",
-        "body": "{{user}}'s poll is expired"
+        "body": "{user}'s poll is expired"
       },
       "poll_vote": {
         "title": "Poll",
-        "body": "{{user}} voted your poll"
+        "body": "{user} voted your poll"
       },
       "quote": {
         "title": "Quote",
-        "body": "{{user}} quoted your post"
+        "body": "{user} quoted your post"
       },
       "status": {
         "title": "Status",
-        "body": "{{user}} just post"
+        "body": "{user} just post"
       },
       "update": {
         "title": "Update",
-        "body": "{{user}} updated the post"
+        "body": "{user} updated the post"
       },
       "emoji_reaction": {
         "title": "Reaction",
-        "body": "{{user}} reacted your post"
+        "body": "{user} reacted your post"
       },
       "move": {
         "title": "Move",
-        "body": "{{user}} migrated to"
+        "body": "{user} migrated to"
       }
     },
     "actions": {
@@ -214,7 +214,7 @@
         "copy": "Copy link to post",
         "edit": "Edit",
         "delete": "Delete",
-        "report": "Report {{user}}",
+        "report": "Report {user}",
         "from_other_account": "React from other accounts"
       }
     },
@@ -226,7 +226,7 @@
     "poll": {
       "vote": "Vote",
       "refresh": "Refresh",
-      "people": "{{count}} people",
+      "people": "{count} people",
       "closed": "Closed",
       "left": "left"
     },
@@ -256,17 +256,17 @@
       "following": "Following",
       "followers": "Followers",
       "open_page": "Open original page",
-      "mute": "Mute {{user}}",
-      "unmute": "Unmute {{user}}",
-      "block": "Block {{user}}",
-      "unblock": "Unblock {{user}}",
-      "unblock_domain": "Unblock domain {{server}}",
+      "mute": "Mute {user}",
+      "unmute": "Unmute {user}",
+      "block": "Block {user}",
+      "unblock": "Unblock {user}",
+      "unblock_domain": "Unblock domain {server}",
       "list_management": "Add or Remove from lists",
-      "block_domain": "Block domain {{server}}"
+      "block_domain": "Block domain {server}"
     }
   },
   "report": {
-    "title": "Report {{user}}",
+    "title": "Report {user}",
     "category": {
       "title": "Tell us what's going on with this post",
       "description": "Choose the best match",
@@ -295,7 +295,7 @@
     }
   },
   "announcements": {
-    "title": "Announcement @{{domain}}",
+    "title": "Announcement @{domain}",
     "close": "Close"
   },
   "from_other_account": {
@@ -305,9 +305,9 @@
       "next": "Next"
     },
     "status": {
-      "title": "React on the status from {{account}}",
+      "title": "React on the status from {account}",
       "searching": "Searching",
-      "not_found": "Sorry, the status is not found in {{server}}",
+      "not_found": "Sorry, the status is not found in {server}",
       "next": "Close"
     }
   },

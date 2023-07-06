@@ -1,6 +1,6 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { FormattedMessage } from 'react-intl'
 import { Button, Checkbox, CheckboxGroup, Modal } from 'rsuite'
 
 type Props = {
@@ -9,7 +9,6 @@ type Props = {
 }
 
 export default function Rules(props: Props) {
-  const { t } = useTranslation()
   const [rules, setRules] = useState<Array<Entity.InstanceRule>>([])
   const [values, setValues] = useState<Array<string>>([])
 
@@ -26,11 +25,19 @@ export default function Rules(props: Props) {
   return (
     <>
       <Modal.Body>
-        <Modal.Title>{t('report.rules.title')}</Modal.Title>
-        <p>{t('report.rules.description')}</p>
+        <Modal.Title>
+          <FormattedMessage id="report.rules.title" />
+        </Modal.Title>
+        <p>
+          <FormattedMessage id="report.rules.description" />
+        </p>
         <div style={{ paddingTop: '2em' }}>
           <CheckboxGroup name="rules" value={values} onChange={value => setValues(value.map(v => v.toString()))}>
-            {rules.length === 0 && <p>{t('report.rules.no_rules')}</p>}
+            {rules.length === 0 && (
+              <p>
+                <FormattedMessage id="report.rules.no_rules" />
+              </p>
+            )}
             {rules.map(r => (
               <Checkbox key={r.id} value={r.id}>
                 {r.text}
@@ -41,7 +48,7 @@ export default function Rules(props: Props) {
       </Modal.Body>
       <Modal.Footer>
         <Button appearance="primary" block onClick={() => props.next(values)}>
-          {t('report.rules.next')}
+          <FormattedMessage id="report.rules.next" />
         </Button>
       </Modal.Footer>
     </>

@@ -1,6 +1,6 @@
 import { invoke } from '@tauri-apps/api/tauri'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { FormattedMessage } from 'react-intl'
 import { Button, Modal, Radio, RadioGroup } from 'rsuite'
 import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
@@ -10,8 +10,6 @@ type Props = {
 }
 
 export default function Accounts(props: Props) {
-  const { t } = useTranslation()
-
   const [accounts, setAccounts] = useState<Array<[Account, Server]>>([])
   const [index, setIndex] = useState<number | null>(null)
 
@@ -26,7 +24,9 @@ export default function Accounts(props: Props) {
   return (
     <>
       <Modal.Body>
-        <Modal.Title>{t('from_other_account.accounts.title')}</Modal.Title>
+        <Modal.Title>
+          <FormattedMessage id="from_other_account.accounts.title" />
+        </Modal.Title>
         <div style={{ paddingTop: '2em' }}>
           <RadioGroup name="account" value={index} onChange={v => setIndex(parseInt(v.toString()))}>
             {accounts.map((account, i) => (
@@ -39,7 +39,7 @@ export default function Accounts(props: Props) {
       </Modal.Body>
       <Modal.Footer>
         <Button appearance="primary" block onClick={() => props.next(accounts[index][1], accounts[index][0])}>
-          {t('from_other_account.accounts.next')}
+          <FormattedMessage id="from_other_account.accounts.next" />
         </Button>
       </Modal.Footer>
     </>

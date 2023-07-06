@@ -1,6 +1,5 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Avatar, Button, FlexboxGrid, Loader, Modal, Placeholder } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsPaperclip } from 'react-icons/bs'
@@ -11,6 +10,7 @@ import Body from '../timelines/status/Body'
 import Actions from '../timelines/status/Actions'
 import { Account } from 'src/entities/account'
 import Reply from 'src/components/compose/Status'
+import { FormattedMessage } from 'react-intl'
 
 type Props = {
   target: Entity.Status
@@ -20,8 +20,6 @@ type Props = {
   next: () => void
 }
 export default function Status(props: Props) {
-  const { t } = useTranslation()
-
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [searching, setSearching] = useState(false)
 
@@ -64,12 +62,17 @@ export default function Status(props: Props) {
   return (
     <>
       <Modal.Body>
-        <Modal.Title>{t('from_other_account.status.title', { account: `@${props.account.username}@${props.server.domain}` })}</Modal.Title>
+        <Modal.Title>
+          <FormattedMessage
+            id="from_other_account.status.title"
+            values={{ account: `@${props.account.username}@${props.server.domain}` }}
+          />
+        </Modal.Title>
         <div style={{ paddingTop: '2em' }}>
           {searching ? (
             <>
               <Placeholder.Paragraph rows={3} />
-              <Loader center content={t('from_other_account.status.searching')} />
+              <Loader center content={<FormattedMessage id="from_other_account.status.searching" />} />
             </>
           ) : statuses.length > 0 ? (
             statuses.map((status, index) => (
@@ -83,13 +86,15 @@ export default function Status(props: Props) {
               />
             ))
           ) : (
-            <p style={{ color: 'var(--rs-state-error)' }}>{t('from_other_account.status.not_found', { server: props.server.domain })}</p>
+            <p style={{ color: 'var(--rs-state-error)' }}>
+              <FormattedMessage id="from_other_account.status.not_found" values={{ server: props.server.domain }} />
+            </p>
           )}
         </div>
       </Modal.Body>
       <Modal.Footer>
         <Button appearance="primary" block onClick={() => props.next()}>
-          {t('from_other_account.status.next')}
+          <FormattedMessage id="from_other_account.status.next" />
         </Button>
       </Modal.Footer>
     </>

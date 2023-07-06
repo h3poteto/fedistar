@@ -9,7 +9,7 @@ import { BsX, BsChevronLeft } from 'react-icons/bs'
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import Status from '../timelines/status/Status'
-import { useTranslation } from 'react-i18next'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
@@ -18,7 +18,7 @@ type Props = {
 }
 
 const StatusDetail: React.FC<Props> = props => {
-  const { t } = useTranslation()
+  const { formatMessage } = useIntl()
   const [client, setClient] = useState<MegalodonInterface | null>(null)
   const [server, setServer] = useState<Server | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
@@ -138,11 +138,11 @@ const StatusDetail: React.FC<Props> = props => {
           <FlexboxGrid.Item>
             <Button appearance="link" onClick={back}>
               <Icon as={BsChevronLeft} style={{ fontSize: '1.4em' }} />
-              {t('detail.back')}
+              <FormattedMessage id="detail.back" />
             </Button>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item>
-            <Button appearance="link" onClick={close} title={t('detail.close')}>
+            <Button appearance="link" onClick={close} title={formatMessage({ id: 'detail.close' })}>
               <Icon as={BsX} style={{ fontSize: '1.4em' }} />
             </Button>
           </FlexboxGrid.Item>
