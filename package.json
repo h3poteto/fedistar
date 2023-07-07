@@ -1,6 +1,6 @@
 {
   "name": "fedistar",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "scripts": {
     "dev": "next dev -p 1420",
     "build": "next build && next export -o dist",
