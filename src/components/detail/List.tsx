@@ -68,7 +68,7 @@ export default function ListDetail(props: Props) {
 
   const addTimeline = async () => {
     if (list) {
-      await invoke('add_timeline', { server: server, kind: 'list', name: list.title, list_id: list.id })
+      await invoke('add_timeline', { server: server, kind: 'list', name: list.title, list_id: list.id, columnWidth: 'sm' })
     }
   }
 

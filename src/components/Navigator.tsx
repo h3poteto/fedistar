@@ -100,7 +100,7 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
     const timelines = await invoke<Array<[Timeline, Server]>>('list_timelines')
     let target = timelines.find(t => t[1].id === set.server.id && t[0].kind === 'notifications')
     if (target === undefined || target === null) {
-      await invoke('add_timeline', { server: set.server, kind: 'notifications', name: 'Notifications' })
+      await invoke('add_timeline', { server: set.server, kind: 'notifications', name: 'Notifications', columnWidth: 'sm' })
       const timelines = await invoke<Array<[Timeline, Server]>>('list_timelines')
       target = timelines.find(t => t[1].id === set.server.id && t[0].kind === 'notifications')
       if (target === undefined || target === null) {

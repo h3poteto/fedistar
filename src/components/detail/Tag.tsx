@@ -78,7 +78,7 @@ export default function TagDetail(props: Props) {
     if (tag.length <= 0) {
       return
     }
-    await invoke('add_timeline', { server: server, kind: 'tag', name: tag, listId: null })
+    await invoke('add_timeline', { server: server, kind: 'tag', name: tag, listId: null, columnWidth: 'sm' })
   }
 
   const followHashtag = async () => {

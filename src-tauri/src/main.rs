@@ -204,10 +204,13 @@ async fn add_timeline(
     server: entities::Server,
     kind: &str,
     name: &str,
+    column_width: &str,
     list_id: Option<&str>,
 ) -> Result<(), String> {
     let k = entities::timeline::Kind::from_str(kind)?;
-    let timeline = database::add_timeline(&sqlite_pool, &server, &k, name, list_id)
+    let width = entities::timeline::ColumnWidth::from_str(column_width)?;
+    print!("{:#?}", &width);
+    let timeline = database::add_timeline(&sqlite_pool, &server, &k, name, list_id, &width)
         .await
         .map_err(|e| e.to_string())?;
 
