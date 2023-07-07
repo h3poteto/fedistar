@@ -13,38 +13,38 @@ type Props = {
 }
 
 const Attachments: React.FC<Props> = props => {
-  return (
-    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-      {props.attachments.map((media, index) => (
-        <div key={index} style={{ margin: '4px' }}>
-          <Attachment media={media} sensitive={props.sensitive} openMedia={() => props.openMedia(props.attachments, index)} />
-        </div>
-      ))}
-    </div>
-  )
-}
-
-type AttachmentProps = {
-  media: Entity.Attachment
-  sensitive: boolean
-  openMedia: (media: Entity.Attachment) => void
-}
-
-const Attachment: React.FC<AttachmentProps> = props => {
-  const { media } = props
   const [sensitive, setSensitive] = useState<boolean>(props.sensitive)
 
   const changeSensitive = () => {
     setSensitive(current => !current)
   }
 
-  if (sensitive) {
-    return (
-      <Button appearance="default" block onClick={changeSensitive}>
-        <FormattedMessage id="timeline.status.media_hidden" />
-      </Button>
-    )
-  }
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+      {sensitive && (
+        <Button appearance="default" block onClick={changeSensitive}>
+          <FormattedMessage id="timeline.status.media_hidden" />
+        </Button>
+      )}
+
+      {!sensitive &&
+        props.attachments.map((media, index) => (
+          <div key={index} style={{ margin: '4px' }}>
+            <Attachment media={media} changeSensitive={changeSensitive} openMedia={() => props.openMedia(props.attachments, index)} />
+          </div>
+        ))}
+    </div>
+  )
+}
+
+type AttachmentProps = {
+  media: Entity.Attachment
+  openMedia: (media: Entity.Attachment) => void
+  changeSensitive: () => void
+}
+
+const Attachment: React.FC<AttachmentProps> = props => {
+  const { media, changeSensitive } = props
 
   switch (media.type) {
     case 'gifv':
