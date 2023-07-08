@@ -234,25 +234,31 @@ const Notifications: React.FC<Props> = props => {
       <Container style={{ height: '100%' }}>
         <Header style={{ backgroundColor: 'var(--rs-gray-800)' }}>
           <FlexboxGrid align="middle" justify="space-between">
-            <FlexboxGrid.Item colspan={16}>
+            <FlexboxGrid.Item style={{ width: 'calc(100% - 108px)' }}>
               <FlexboxGrid align="middle">
                 {/** icon **/}
                 <FlexboxGrid.Item
-                  colspan={4}
-                  style={{ lineHeight: '48px', fontSize: '18px', paddingRight: '8px', paddingLeft: '8px', paddingBottom: '6px' }}
+                  style={{
+                    lineHeight: '48px',
+                    fontSize: '18px',
+                    paddingRight: '8px',
+                    paddingLeft: '8px',
+                    paddingBottom: '6px',
+                    width: '42px'
+                  }}
                 >
                   <Icon as={BsBell} />
                 </FlexboxGrid.Item>
                 {/** name **/}
                 <FlexboxGrid.Item
-                  colspan={20}
                   style={{
                     lineHeight: '48px',
                     fontSize: '18px',
                     verticalAlign: 'middle',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap'
+                    whiteSpace: 'nowrap',
+                    width: 'calc(100% - 42px)'
                   }}
                   title={timelineName(props.timeline.kind, props.timeline.name, formatMessage) + '@' + props.server.domain}
                 >
@@ -261,7 +267,7 @@ const Notifications: React.FC<Props> = props => {
                 </FlexboxGrid.Item>
               </FlexboxGrid>
             </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={8}>
+            <FlexboxGrid.Item style={{ width: '108px' }}>
               <FlexboxGrid align="middle" justify="end">
                 <FlexboxGrid.Item>
                   <Button
