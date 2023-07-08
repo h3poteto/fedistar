@@ -153,7 +153,8 @@
     "reload": "Reload",
     "settings": {
       "title": "Settings",
-      "unpin": "Unpin"
+      "unpin": "Unpin",
+      "column_width": "Column width"
     },
     "mark_as_read": "Mark as read",
     "notification": {
