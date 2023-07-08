@@ -216,22 +216,24 @@ const Reaction: React.FC<Props> = props => {
   return (
     <div>
       {/** action **/}
-      <FlexboxGrid style={{ paddingRight: '8px' }}>
-        {/** icon **/}
-        <FlexboxGrid.Item style={{ paddingRight: '8px', textAlign: 'right' }} colspan={4}>
-          {actionIcon(props.notification)}
+      <FlexboxGrid align="middle" style={{ paddingRight: '8px' }}>
+        <FlexboxGrid.Item colspan={20}>
+          <div style={{ display: 'flex', alignItems: 'middle' }}>
+            {/** icon **/}
+            <div style={{ paddingRight: '8px', textAlign: 'right', width: '56px' }}>{actionIcon(props.notification)}</div>
+            <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {actionText(props.notification, props.setAccountDetail)}
+            </div>
+          </div>
         </FlexboxGrid.Item>
-        <FlexboxGrid.Item colspan={14} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-          {actionText(props.notification, props.setAccountDetail)}
-        </FlexboxGrid.Item>
-        <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', color: 'var(--rs-text-secondary)' }}>
+        <FlexboxGrid.Item colspan={4} style={{ textAlign: 'right', color: 'var(--rs-text-secondary)' }}>
           <Time time={props.notification.created_at} />
         </FlexboxGrid.Item>
       </FlexboxGrid>
       {/** body **/}
-      <FlexboxGrid style={{ color: 'var(--rs-text-tertiary)' }}>
+      <div style={{ display: 'flex', color: 'var(--rs-text-tertiary)' }}>
         {/** icon **/}
-        <FlexboxGrid.Item colspan={4}>
+        <div style={{ width: '56px' }}>
           <div style={{ margin: '6px' }}>
             <Avatar
               src={status.account.avatar}
@@ -241,9 +243,9 @@ const Reaction: React.FC<Props> = props => {
               alt={status.account.acct}
             />
           </div>
-        </FlexboxGrid.Item>
+        </div>
         {/** status **/}
-        <FlexboxGrid.Item colspan={20} style={{ paddingRight: '8px' }}>
+        <div style={{ paddingRight: '8px', width: 'calc(100% - 56px)' }}>
           <div className="metadata">
             <FlexboxGrid>
               {/** account name **/}
@@ -268,8 +270,8 @@ const Reaction: React.FC<Props> = props => {
             </div>
           ))}
           <div className="toolbox"></div>
-        </FlexboxGrid.Item>
-      </FlexboxGrid>
+        </div>
+      </div>
     </div>
   )
 }

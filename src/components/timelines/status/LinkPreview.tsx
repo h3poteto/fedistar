@@ -17,10 +17,10 @@ const LinkPreview: React.FC<Props> = props => {
   return (
     <Panel bordered bodyFill onClick={onClick}>
       <FlexboxGrid style={{ overflow: 'hidden' }}>
-        <FlexboxGrid.Item colspan={6}>
+        <FlexboxGrid.Item style={{ width: '60px' }}>
           <Image width={60} height={60} src={FailoverImg(props.card.image)} alt={props.card.title} />
         </FlexboxGrid.Item>
-        <FlexboxGrid.Item colspan={18} style={{ height: '60px', overflow: 'hidden' }}>
+        <FlexboxGrid.Item style={{ height: '60px', width: 'calc(100% - 60px)', overflow: 'hidden', paddingLeft: '4px' }}>
           <p style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }} title={props.card.title}>
             <strong>{props.card.title}</strong>
           </p>

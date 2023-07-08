@@ -153,7 +153,8 @@
     "reload": "Reload",
     "settings": {
       "title": "Settings",
-      "unpin": "Unpin"
+      "unpin": "Unpin",
+      "column_width": "Column width"
     },
     "mark_as_read": "Mark as read",
     "notification": {
@@ -221,7 +222,8 @@
     "status": {
       "show_more": "Show more",
       "show_less": "Show less",
-      "media_hidden": "Media hidden"
+      "media_hidden": "Media hidden",
+      "pinned_post": "Pnned post"
     },
     "poll": {
       "vote": "Vote",

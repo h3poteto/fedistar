@@ -10,3 +10,18 @@ export type Timeline = {
 
 export type TimelineKind = 'home' | 'notifications' | 'local' | 'public' | 'favourites' | 'list' | 'bookmarks' | 'direct' | 'tag'
 export type ColumnWidth = 'xs' | 'sm' | 'md' | 'lg'
+
+export function columnWidth(width: ColumnWidth) {
+  switch (width) {
+    case 'xs':
+      return '280px'
+    case 'sm':
+      return '340px'
+    case 'md':
+      return '420px'
+    case 'lg':
+      return '500px'
+    default:
+      return '340px'
+  }
+}

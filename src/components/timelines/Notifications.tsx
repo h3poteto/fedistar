@@ -1,4 +1,19 @@
-import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, useToaster } from 'rsuite'
+import {
+  Avatar,
+  Container,
+  Content,
+  FlexboxGrid,
+  Header,
+  List,
+  Whisper,
+  Popover,
+  Radio,
+  RadioGroup,
+  Divider,
+  Button,
+  Loader,
+  useToaster
+} from 'rsuite'
 import { BsBell, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsCheck2, BsArrowClockwise } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
@@ -9,7 +24,7 @@ import { Virtuoso } from 'react-virtuoso'
 
 import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
-import { Timeline } from 'src/entities/timeline'
+import { columnWidth, Timeline } from 'src/entities/timeline'
 import Notification from './notification/Notification'
 import FailoverImg from 'src/utils/failoverImg'
 import { ReceiveNotificationPayload } from 'src/payload'
@@ -212,32 +227,38 @@ const Notifications: React.FC<Props> = props => {
 
   return (
     <div
-      style={{ width: '340px', minWidth: '340px', margin: '0 4px' }}
+      style={{ width: columnWidth(props.timeline.column_width), minWidth: columnWidth(props.timeline.column_width), margin: '0 4px' }}
       className="timeline notifications"
       id={props.timeline.id.toString()}
     >
       <Container style={{ height: '100%' }}>
         <Header style={{ backgroundColor: 'var(--rs-gray-800)' }}>
           <FlexboxGrid align="middle" justify="space-between">
-            <FlexboxGrid.Item colspan={16}>
+            <FlexboxGrid.Item style={{ width: 'calc(100% - 108px)' }}>
               <FlexboxGrid align="middle">
                 {/** icon **/}
                 <FlexboxGrid.Item
-                  colspan={4}
-                  style={{ lineHeight: '48px', fontSize: '18px', paddingRight: '8px', paddingLeft: '8px', paddingBottom: '6px' }}
+                  style={{
+                    lineHeight: '48px',
+                    fontSize: '18px',
+                    paddingRight: '8px',
+                    paddingLeft: '8px',
+                    paddingBottom: '6px',
+                    width: '42px'
+                  }}
                 >
                   <Icon as={BsBell} />
                 </FlexboxGrid.Item>
                 {/** name **/}
                 <FlexboxGrid.Item
-                  colspan={20}
                   style={{
                     lineHeight: '48px',
                     fontSize: '18px',
                     verticalAlign: 'middle',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap'
+                    whiteSpace: 'nowrap',
+                    width: 'calc(100% - 42px)'
                   }}
                   title={timelineName(props.timeline.kind, props.timeline.name, formatMessage) + '@' + props.server.domain}
                 >
@@ -246,7 +267,7 @@ const Notifications: React.FC<Props> = props => {
                 </FlexboxGrid.Item>
               </FlexboxGrid>
             </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={8}>
+            <FlexboxGrid.Item style={{ width: '108px' }}>
               <FlexboxGrid align="middle" justify="end">
                 <FlexboxGrid.Item>
                   <Button
@@ -293,7 +314,7 @@ const Notifications: React.FC<Props> = props => {
           <Loader style={{ margin: '10em auto' }} />
         ) : (
           <Content style={{ height: 'calc(100% - 54px)' }}>
-            <List hover style={{ width: '340px', height: '100%' }}>
+            <List hover style={{ width: '100%', height: '100%' }}>
               <Virtuoso
                 style={{ height: '100%' }}
                 data={notifications}
@@ -363,9 +384,24 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
     props.close()
   }
 
+  const updateColumnWidth = async (timeline: Timeline, columnWidth: string) => {
+    await invoke('update_column_width', { id: timeline.id, columnWidth: columnWidth })
+    props.close()
+  }
+
   return (
     <Popover ref={ref} style={{ opacity: 1 }}>
-      <div style={{ display: 'flex', flexDirection: 'column', width: '200px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', width: '220px' }}>
+        <label>
+          <FormattedMessage id="timeline.settings.column_width" />
+        </label>
+        <RadioGroup inline value={props.timeline.column_width} onChange={value => updateColumnWidth(props.timeline, value.toString())}>
+          <Radio value="xs">xs</Radio>
+          <Radio value="sm">sm</Radio>
+          <Radio value="md">md</Radio>
+          <Radio value="lg">lg</Radio>
+        </RadioGroup>
+        <Divider style={{ margin: '16px 0' }} />
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item>
             <Button appearance="link" size="xs" onClick={() => removeTimeline(props.timeline)}>

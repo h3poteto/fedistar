@@ -332,6 +332,31 @@ async fn switch_right_timeline(
 }
 
 #[tauri::command]
+async fn update_column_width(
+    app_handle: AppHandle,
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+    id: i64,
+    column_width: &str,
+) -> Result<(), String> {
+    let width = entities::timeline::ColumnWidth::from_str(column_width)?;
+    print!("{:#?}", width);
+
+    database::update_column_width(&sqlite_pool, id, &width)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    let timelines = database::list_timelines(&sqlite_pool)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    app_handle
+        .emit_all("updated-timelines", UpdatedTimelinePayload { timelines })
+        .expect("Failed to updated-timelines event");
+
+    Ok(())
+}
+
+#[tauri::command]
 fn read_settings(settings_path: State<'_, PathBuf>) -> Result<settings::Settings, String> {
     settings::read_settings(&settings_path)
 }
@@ -609,6 +634,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             update_instruction,
             switch_devtools,
             frontend_log,
+            update_column_width,
         ])
         .setup(|app| {
             let app_handle = app.handle();

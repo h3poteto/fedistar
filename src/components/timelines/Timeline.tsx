@@ -2,7 +2,22 @@ import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useRef, useState, forwardRef, useCallback } from 'react'
-import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, useToaster } from 'rsuite'
+import {
+  Avatar,
+  Container,
+  Content,
+  FlexboxGrid,
+  Header,
+  List,
+  Whisper,
+  Popover,
+  Button,
+  Loader,
+  useToaster,
+  Radio,
+  RadioGroup,
+  Divider
+} from 'rsuite'
 import {
   BsHouseDoor,
   BsPeople,
@@ -23,7 +38,7 @@ import parse from 'parse-link-header'
 
 import { Account } from 'src/entities/account'
 import { Server } from 'src/entities/server'
-import { Timeline, TimelineKind } from 'src/entities/timeline'
+import { columnWidth, Timeline, TimelineKind } from 'src/entities/timeline'
 import Status from './status/Status'
 import FailoverImg from 'src/utils/failoverImg'
 import {
@@ -333,29 +348,35 @@ const Timeline: React.FC<Props> = props => {
   }, [firstItemIndex, statuses, setStatuses, unreadStatuses])
 
   return (
-    <div style={{ width: '340px', minWidth: '340px', margin: '0 4px' }}>
+    <div style={{ width: columnWidth(props.timeline.column_width), minWidth: columnWidth(props.timeline.column_width), margin: '0 4px' }}>
       <Container style={{ height: '100%' }}>
         <Header style={{ backgroundColor: 'var(--rs-gray-800)' }}>
           <FlexboxGrid align="middle" justify="space-between">
-            <FlexboxGrid.Item colspan={18}>
+            <FlexboxGrid.Item style={{ width: 'calc(100% - 80px)' }}>
               <FlexboxGrid align="middle">
                 {/** icon **/}
                 <FlexboxGrid.Item
-                  colspan={4}
-                  style={{ lineHeight: '48px', fontSize: '18px', paddingRight: '8px', paddingLeft: '8px', paddingBottom: '6px' }}
+                  style={{
+                    lineHeight: '48px',
+                    fontSize: '18px',
+                    paddingRight: '8px',
+                    paddingLeft: '8px',
+                    paddingBottom: '6px',
+                    width: '42px'
+                  }}
                 >
                   {timelineIcon(props.timeline.kind)}
                 </FlexboxGrid.Item>
                 {/** name **/}
                 <FlexboxGrid.Item
-                  colspan={20}
                   style={{
                     lineHeight: '48px',
                     fontSize: '18px',
                     verticalAlign: 'middle',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap'
+                    whiteSpace: 'nowrap',
+                    width: 'calc(100% - 42px)'
                   }}
                   title={timelineName(props.timeline.kind, props.timeline.name, formatMessage) + '@' + props.server.domain}
                 >
@@ -364,7 +385,7 @@ const Timeline: React.FC<Props> = props => {
                 </FlexboxGrid.Item>
               </FlexboxGrid>
             </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={6}>
+            <FlexboxGrid.Item style={{ width: '80px' }}>
               <FlexboxGrid align="middle" justify="end">
                 <FlexboxGrid.Item>
                   <Button appearance="link" onClick={reload} style={{ padding: '4px' }} title={formatMessage({ id: 'timeline.reload' })}>
@@ -423,7 +444,7 @@ const Timeline: React.FC<Props> = props => {
           <Content style={{ height: 'calc(100% - 54px)' }}>
             <List
               style={{
-                width: '340px',
+                width: '100%',
                 height: '100%'
               }}
             >
@@ -480,9 +501,24 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
     props.close()
   }
 
+  const updateColumnWidth = async (timeline: Timeline, columnWidth: string) => {
+    await invoke('update_column_width', { id: timeline.id, columnWidth: columnWidth })
+    props.close()
+  }
+
   return (
     <Popover ref={ref} style={{ opacity: 1 }}>
-      <div style={{ display: 'flex', flexDirection: 'column', width: '200px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', width: '220px' }}>
+        <label>
+          <FormattedMessage id="timeline.settings.column_width" />
+        </label>
+        <RadioGroup inline value={props.timeline.column_width} onChange={value => updateColumnWidth(props.timeline, value.toString())}>
+          <Radio value="xs">xs</Radio>
+          <Radio value="sm">sm</Radio>
+          <Radio value="md">md</Radio>
+          <Radio value="lg">lg</Radio>
+        </RadioGroup>
+        <Divider style={{ margin: '16px 0' }} />
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item>
             <Button appearance="link" size="xs" onClick={() => removeTimeline(props.timeline)}>

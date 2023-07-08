@@ -306,6 +306,23 @@ pub(crate) async fn switch_right_timeline(pool: &SqlitePool, id: i64) -> DBResul
     Ok(())
 }
 
+pub(crate) async fn update_column_width(
+    pool: &SqlitePool,
+    id: i64,
+    column_width: &entities::timeline::ColumnWidth,
+) -> DBResult<()> {
+    let mut tx = pool.begin().await?;
+
+    sqlx::query("UPDATE timelines SET column_width = ? WHERE id = ?")
+        .bind(column_width.clone())
+        .bind(id)
+        .execute(&mut tx)
+        .await?;
+    tx.commit().await?;
+
+    Ok(())
+}
+
 pub(crate) async fn get_account(
     pool: &SqlitePool,
     id: i64,
