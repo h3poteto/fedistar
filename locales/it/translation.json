@@ -153,7 +153,8 @@
     "reload": "Ricarica",
     "settings": {
       "title": "Impostazioni",
-      "unpin": "Deseleziona"
+      "unpin": "Deseleziona",
+      "column_width": "Column width"
     },
     "mark_as_read": "Segna come già letto",
     "notification": {
@@ -221,7 +222,8 @@
     "status": {
       "show_more": "Leggi di più",
       "show_less": "Leggi di meno",
-      "media_hidden": "Allegati nascosti"
+      "media_hidden": "Allegati nascosti",
+      "pinned_post": "Pnned post"
     },
     "poll": {
       "vote": "Vota",
