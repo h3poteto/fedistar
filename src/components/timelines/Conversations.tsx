@@ -2,14 +2,29 @@ import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
 import { useRef, forwardRef, useState, useEffect, useCallback } from 'react'
 import { BsEnvelope, BsSliders, BsX, BsChevronLeft, BsChevronRight } from 'react-icons/bs'
-import { Avatar, Container, Content, FlexboxGrid, Header, List, Whisper, Popover, Button, Loader, useToaster } from 'rsuite'
+import {
+  Avatar,
+  Container,
+  Content,
+  FlexboxGrid,
+  Header,
+  List,
+  Whisper,
+  Popover,
+  Button,
+  Loader,
+  Divider,
+  RadioGroup,
+  Radio,
+  useToaster
+} from 'rsuite'
 import generator, { MegalodonInterface } from 'megalodon'
 import parse from 'parse-link-header'
 
 import FailoverImg from 'src/utils/failoverImg'
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
-import { Timeline } from 'src/entities/timeline'
+import { columnWidth, Timeline } from 'src/entities/timeline'
 import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from 'src/defaults'
 import alert from '../utils/alert'
 import { Virtuoso } from 'react-virtuoso'
@@ -124,7 +139,7 @@ const Conversations: React.FC<Props> = props => {
   }, [firstItemIndex, conversations, setConversations, unreadConversations])
 
   return (
-    <div style={{ width: '340px', minWidth: '340px', margin: '0 4px' }}>
+    <div style={{ width: columnWidth(props.timeline.column_width), minWidth: columnWidth(props.timeline.column_width), margin: '0 4px' }}>
       <Container style={{ height: 'calc(100% - 8px)' }}>
         <Header style={{ backgroundColor: 'var(--rs-gray-800)' }}>
           <FlexboxGrid align="middle" justify="space-between">
@@ -186,7 +201,7 @@ const Conversations: React.FC<Props> = props => {
           <Loader style={{ margin: '10em auto ' }} />
         ) : (
           <Content style={{ height: 'calc(100% - 54px)' }}>
-            <List hover style={{ width: '340px', height: '100%' }}>
+            <List hover style={{ width: '100%', height: '100%' }}>
               <Virtuoso
                 style={{ height: '100%' }}
                 data={conversations}
@@ -230,9 +245,24 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
     props.close()
   }
 
+  const updateColumnWidth = async (timeline: Timeline, columnWidth: string) => {
+    await invoke('update_column_width', { id: timeline.id, columnWidth: columnWidth })
+    props.close()
+  }
+
   return (
     <Popover ref={ref} style={{ opacity: 1 }}>
-      <div style={{ display: 'flex', flexDirection: 'column', width: '200px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', width: '220px' }}>
+        <label>
+          <FormattedMessage id="timeline.settings.column_width" />
+        </label>
+        <RadioGroup inline value={props.timeline.column_width} onChange={value => updateColumnWidth(props.timeline, value.toString())}>
+          <Radio value="xs">xs</Radio>
+          <Radio value="sm">sm</Radio>
+          <Radio value="md">md</Radio>
+          <Radio value="lg">lg</Radio>
+        </RadioGroup>
+        <Divider style={{ margin: '16px 0' }} />
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item>
             <Button appearance="link" size="xs" onClick={() => removeTimeline(props.timeline)}>

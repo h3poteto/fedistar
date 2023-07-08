@@ -18,19 +18,15 @@ const Conversation: React.FC<Props> = props => {
 
   return (
     <div className="conversation">
-      <FlexboxGrid>
+      <div style={{ display: 'flex' }}>
         {/** icon **/}
-        <FlexboxGrid.Item
-          colspan={4}
-          onClick={() => props.selectStatus(conversation.id, conversation.last_status)}
-          style={{ cursor: 'pointer' }}
-        >
+        <div onClick={() => props.selectStatus(conversation.id, conversation.last_status)} style={{ cursor: 'pointer', width: '56px' }}>
           <div style={{ margin: '6px' }}>
             <Avatar src={account.avatar} circle title={account.acct} alt={account.acct} />
           </div>
-        </FlexboxGrid.Item>
+        </div>
         {/** message **/}
-        <FlexboxGrid.Item colspan={20} style={{ cursor: 'pointer' }}>
+        <div style={{ cursor: 'pointer', width: 'calc(100% - 56px)' }}>
           <div className="metadata" onClick={() => props.selectStatus(conversation.id, conversation.last_status)}>
             <FlexboxGrid>
               {/** account name **/}
@@ -61,8 +57,8 @@ const Conversation: React.FC<Props> = props => {
                 </Button>
               </div>
             ))}
-        </FlexboxGrid.Item>
-      </FlexboxGrid>
+        </div>
+      </div>
     </div>
   )
 }
