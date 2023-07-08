@@ -14,7 +14,7 @@ import { Server } from 'src/entities/server'
 import Body from './Body'
 import Actions from './Actions'
 import Poll from './Poll'
-import { useIntl } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 type Props = {
   status: Entity.Status
@@ -126,9 +126,9 @@ const Status: React.FC<Props> = props => {
     <div className="status">
       {pinnedHeader(props.pinned)}
       {rebloggedHeader(props.status)}
-      <FlexboxGrid>
+      <div style={{ display: 'flex' }}>
         {/** icon **/}
-        <FlexboxGrid.Item colspan={4}>
+        <div style={{ width: '56px' }}>
           <div style={{ margin: '6px' }}>
             <Avatar
               src={status.account.avatar}
@@ -138,9 +138,9 @@ const Status: React.FC<Props> = props => {
               alt={status.account.acct}
             />
           </div>
-        </FlexboxGrid.Item>
+        </div>
         {/** status **/}
-        <FlexboxGrid.Item colspan={20} style={{ paddingRight: '8px' }}>
+        <div style={{ paddingRight: '8px', width: 'calc(100% - 56px)' }}>
           <div className="metadata">
             <FlexboxGrid>
               {/** account name **/}
@@ -184,8 +184,8 @@ const Status: React.FC<Props> = props => {
             openReport={() => props.openReport(status, props.client)}
             openFromOtherAccount={() => props.openFromOtherAccount(status)}
           />
-        </FlexboxGrid.Item>
-      </FlexboxGrid>
+        </div>
+      </div>
       {showReply && (
         <div style={{ padding: '8px 12px' }}>
           <Reply client={client} server={props.server} account={props.account} in_reply_to={status} onClose={() => setShowReply(false)} />
@@ -212,12 +212,14 @@ const pinnedHeader = (pinned?: boolean) => {
   if (pinned) {
     return (
       <div style={{ color: 'var(--rs-text-tertiary)' }}>
-        <FlexboxGrid align="middle">
-          <FlexboxGrid.Item style={{ paddingRight: '8px', textAlign: 'right' }} colspan={4}>
+        <div style={{ alignItems: 'middle', display: 'flex' }}>
+          <div style={{ paddingRight: '8px', textAlign: 'right', width: '56px' }}>
             <Icon as={BsPin} />
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={20}>Pinned post</FlexboxGrid.Item>
-        </FlexboxGrid>
+          </div>
+          <div>
+            <FormattedMessage id="timeline.status.pinned_post" />
+          </div>
+        </div>
       </div>
     )
   } else {
@@ -229,14 +231,14 @@ const rebloggedHeader = (status: Entity.Status) => {
   if (status.reblog && !status.quote) {
     return (
       <div style={{ color: 'var(--rs-text-tertiary)' }}>
-        <FlexboxGrid align="middle">
-          <FlexboxGrid.Item style={{ paddingRight: '8px', textAlign: 'right' }} colspan={4}>
+        <div style={{ alignItems: 'middle', display: 'flex' }}>
+          <div style={{ paddingRight: '8px', textAlign: 'right', width: '56px' }}>
             <Icon as={BsArrowRepeat} style={{ color: 'green' }} />
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={20}>
+          </div>
+          <div>
             <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </div>
+        </div>
       </div>
     )
   } else {

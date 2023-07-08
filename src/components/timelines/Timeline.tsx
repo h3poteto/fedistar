@@ -317,6 +317,21 @@ const Timeline: React.FC<Props> = props => {
     await invoke('update_instruction', { step: 2 })
   }
 
+  const columnWidth = () => {
+    switch (props.timeline.column_width) {
+      case 'xs':
+        return '280px'
+      case 'sm':
+        return '340px'
+      case 'md':
+        return '420px'
+      case 'lg':
+        return '500px'
+      default:
+        return '340px'
+    }
+  }
+
   const loadMore = useCallback(async () => {
     console.debug('appending')
     let maxId = null
@@ -348,7 +363,7 @@ const Timeline: React.FC<Props> = props => {
   }, [firstItemIndex, statuses, setStatuses, unreadStatuses])
 
   return (
-    <div style={{ width: '340px', minWidth: '340px', margin: '0 4px' }}>
+    <div style={{ width: columnWidth(), minWidth: columnWidth(), margin: '0 4px' }}>
       <Container style={{ height: '100%' }}>
         <Header style={{ backgroundColor: 'var(--rs-gray-800)' }}>
           <FlexboxGrid align="middle" justify="space-between">
@@ -438,7 +453,7 @@ const Timeline: React.FC<Props> = props => {
           <Content style={{ height: 'calc(100% - 54px)' }}>
             <List
               style={{
-                width: '340px',
+                width: '100%',
                 height: '100%'
               }}
             >
