@@ -2,7 +2,7 @@ import { Icon } from '@rsuite/icons'
 import { Entity } from 'megalodon'
 import { BsBag } from 'react-icons/bs'
 import { useIntl } from 'react-intl'
-import { FlexboxGrid, Avatar } from 'rsuite'
+import { Avatar, FlexboxGrid } from 'rsuite'
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
 
@@ -15,21 +15,21 @@ export default function Move(props: Props) {
   return (
     <div onClick={() => props.setAccountDetail(props.notification.target)} style={{ cursor: 'pointer' }}>
       {/** action **/}
-      <FlexboxGrid align="middle" style={{ paddingRight: '8px' }}>
-        {/** icon **/}
-        <FlexboxGrid.Item style={{ paddingRight: '8px', textAlign: 'right' }} colspan={4}>
-          <Icon as={BsBag} color="cyan" />
+      <FlexboxGrid style={{ paddingRight: '8px' }}>
+        <FlexboxGrid.Item colspan={20} style={{ display: 'flex', alignItems: 'middle' }}>
+          {/** icon **/}
+          <div style={{ paddingRight: '8px', textAlign: 'right', width: '56px' }}>
+            <Icon as={BsBag} color="cyan" />
+          </div>
+          <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{actionText(props.notification)}</div>
         </FlexboxGrid.Item>
-        <FlexboxGrid.Item colspan={14} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-          {actionText(props.notification)}
-        </FlexboxGrid.Item>
-        <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', color: 'var(--rs-text-tertiary)' }}>
+        <FlexboxGrid.Item colspan={4} style={{ textAlign: 'right', color: 'var(--rs-text-tertiary)' }}>
           <Time time={props.notification.created_at} />
         </FlexboxGrid.Item>
       </FlexboxGrid>
       {/** body **/}
-      <FlexboxGrid>
-        <FlexboxGrid.Item colspan={4}>
+      <div style={{ display: 'flex' }}>
+        <div style={{ width: '56px' }}>
           <div style={{ margin: '6px' }}>
             <Avatar
               src={props.notification.target.avatar}
@@ -38,14 +38,14 @@ export default function Move(props: Props) {
               alt={props.notification.target.acct}
             />
           </div>
-        </FlexboxGrid.Item>
-        <FlexboxGrid.Item colspan={20} style={{ paddingRight: '8px' }}>
+        </div>
+        <div style={{ paddingRight: '8px', overflowWrap: 'break-word' }}>
           <div>
             <span dangerouslySetInnerHTML={{ __html: emojify(props.notification.target.display_name, props.notification.target.emojis) }} />
           </div>
           <div style={{ color: 'var(--rs-text-secondary)' }}>{props.notification.target.acct}</div>
-        </FlexboxGrid.Item>
-      </FlexboxGrid>
+        </div>
+      </div>
     </div>
   )
 }
