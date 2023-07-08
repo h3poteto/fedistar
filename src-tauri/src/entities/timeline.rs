@@ -11,6 +11,7 @@ pub struct Timeline {
     pub name: String,
     pub sort: i64,
     pub list_id: Option<String>,
+    pub column_width: ColumnWidth,
 }
 
 impl Timeline {
@@ -21,6 +22,7 @@ impl Timeline {
         name: String,
         sort: i64,
         list_id: Option<String>,
+        column_width: ColumnWidth,
     ) -> Self {
         Self {
             id,
@@ -29,6 +31,7 @@ impl Timeline {
             name,
             sort,
             list_id,
+            column_width,
         }
     }
 }
@@ -79,6 +82,41 @@ impl FromStr for Kind {
             "direct" => Ok(Kind::Direct),
             "tag" => Ok(Kind::Tag),
             _ => Err(String::from("Unknown timeline kind")),
+        }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize, sqlx::Type, Clone, PartialEq, Eq)]
+#[sqlx(rename = "column_width", rename_all = "lowercase")]
+#[serde(rename_all = "snake_case")]
+pub enum ColumnWidth {
+    XS,
+    SM,
+    MD,
+    LG,
+}
+
+impl fmt::Display for ColumnWidth {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            ColumnWidth::XS => write!(f, "xs"),
+            ColumnWidth::SM => write!(f, "sm"),
+            ColumnWidth::MD => write!(f, "md"),
+            ColumnWidth::LG => write!(f, "lg"),
+        }
+    }
+}
+
+impl FromStr for ColumnWidth {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "xs" => Ok(ColumnWidth::XS),
+            "sm" => Ok(ColumnWidth::SM),
+            "md" => Ok(ColumnWidth::MD),
+            "lg" => Ok(ColumnWidth::LG),
+            _ => Err(String::from("Unknown timeline column width")),
         }
     }
 }

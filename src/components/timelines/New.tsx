@@ -228,7 +228,7 @@ const New: React.FC<Props> = props => {
   )
 
   const select = async (tl: TimelineKind, name: string, list_id: string | null) => {
-    await invoke('add_timeline', { server: server, kind: tl, name: name, listId: list_id })
+    await invoke('add_timeline', { server: server, kind: tl, name: name, listId: list_id, columnWidth: 'sm' })
     setServer(null)
   }
 

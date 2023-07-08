@@ -148,7 +148,7 @@ pub(crate) async fn list_timelines(
 ) -> DBResult<Vec<(entities::Timeline, entities::Server)>> {
     let timelines = sqlx::query(
         r#"
-SELECT timelines.id, timelines.server_id, timelines.kind, timelines.name, timelines.sort, timelines.list_id,
+SELECT timelines.id, timelines.server_id, timelines.kind, timelines.name, timelines.sort, timelines.list_id, timelines.column_width,
        servers.id, servers.domain, servers.base_url, servers.sns, servers.favicon, servers.account_id
 FROM timelines INNER JOIN servers ON servers.id = timelines.server_id ORDER BY timelines.sort"#,
     )
@@ -161,14 +161,15 @@ FROM timelines INNER JOIN servers ON servers.id = timelines.server_id ORDER BY t
                 name: row.get(3),
                 sort: row.get(4),
                 list_id: row.get(5),
+                column_width: row.get(6),
             },
             entities::Server {
-                id: row.get(6),
-                domain: row.get(7),
-                base_url: row.get(8),
-                sns: row.get(9),
-                favicon: row.get(10),
-                account_id: row.get(11),
+                id: row.get(7),
+                domain: row.get(8),
+                base_url: row.get(9),
+                sns: row.get(10),
+                favicon: row.get(11),
+                account_id: row.get(12),
             },
         )
     })
@@ -184,6 +185,7 @@ pub(crate) async fn add_timeline(
     kind: &entities::timeline::Kind,
     name: &str,
     list_id: Option<&str>,
+    column_width: &entities::timeline::ColumnWidth,
 ) -> DBResult<entities::Timeline> {
     let mut tx = pool.begin().await?;
 
@@ -215,6 +217,7 @@ pub(crate) async fn add_timeline(
         name.to_string(),
         1,
         list_id.map(|i| i.to_string()),
+        column_width.clone(),
     );
     Ok(created)
 }
