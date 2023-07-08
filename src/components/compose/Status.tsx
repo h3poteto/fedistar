@@ -210,8 +210,13 @@ const Status: React.FC<Props> = props => {
   useEffect(() => {
     if (props.defaultLanguage) {
       setLanguage(props.defaultLanguage)
+    } else {
+      const key = localStorage.getItem('language')
+      if (key) {
+        setLanguage(key)
+      }
     }
-  }, [props.defaultLanguage])
+  }, [props.defaultLanguage, props.client])
 
   const handleSubmit = async () => {
     if (loading) {
@@ -452,6 +457,7 @@ const Status: React.FC<Props> = props => {
   const LanguageDropdown = ({ onClose, left, top, className }, ref: any) => {
     const handleSelect = (key: string) => {
       setLanguage(key)
+      localStorage.setItem('language', key)
       onClose()
     }
 
