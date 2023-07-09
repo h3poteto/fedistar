@@ -153,7 +153,8 @@
     "reload": "再読み込み",
     "settings": {
       "title": "設定",
-      "unpin": "ピン留め解除"
+      "unpin": "ピン留め解除",
+      "column_width": "Column width"
     },
     "mark_as_read": "全て既読にする",
     "notification": {
@@ -221,7 +222,8 @@
     "status": {
       "show_more": "もっと見る",
       "show_less": "隠す",
-      "media_hidden": "非表示のメディア"
+      "media_hidden": "非表示のメディア",
+      "pinned_post": "Pnned post"
     },
     "poll": {
       "vote": "投票",
