@@ -1,62 +1,62 @@
 {
   "alert": {
-    "no_server": "There is no server, so please add it at first.",
-    "need_auth": "You need to authorize a server.",
-    "failed_add_server": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
-    "failed_add_application": "Failed to add application.",
-    "failed_authorize": "Failed to authorize.",
-    "failed_post": "Failed to post status.",
-    "failed_load": "Failed to load {timeline}.",
-    "failed_mark": "Failed to mark as read",
-    "failed_unreblog": "Failed to unboost",
-    "failed_reblog": "Failed to boost",
-    "failed_unfavourite": "Failed to unfavourite",
-    "failed_favourite": "Failed to favourite",
-    "failed_unbookmark": "Failed to unbookmark",
-    "failed_bookmark": "Failed to bookmark",
-    "failed_follow": "Failed to follow",
-    "failed_unfollow": "Failed to unfollow",
-    "validation_error": "Validation error.",
-    "validation_attachments_length": "You can't attach over {limit} files.",
-    "validation_attachments_type": "You can attach only images or videos",
-    "upload_error": "Failed to upload your file",
-    "failed_to_report": "Faild to send the report",
-    "notifications_not_found": "Failed to find notifications"
+    "no_server": "Não há nenhum servidor, adicione um primeiro, por favor.",
+    "need_auth": "Você precisa autorizar um servidor.",
+    "failed_add_server": "Falha ao conectar a {domain}, verifique se a URL do servidor é válida ou correta.",
+    "failed_add_application": "Falha ao adicionar aplicação.",
+    "failed_authorize": "Falha ao autorizar.",
+    "failed_post": "Falha ao postar status.",
+    "failed_load": "Falha ao carregar {timeline}.",
+    "failed_mark": "Falha ao marcar como lido",
+    "failed_unreblog": "Falha ao desimpulsionar",
+    "failed_reblog": "Falha ao impulsionar",
+    "failed_unfavourite": "Falha ao desfavoritar",
+    "failed_favourite": "Falha ao favoritar",
+    "failed_unbookmark": "Falha ao remover dos salvos",
+    "failed_bookmark": "Falha ao salvar",
+    "failed_follow": "Falha ao seguir",
+    "failed_unfollow": "Falha ao deixar de seguir",
+    "validation_error": "Erro de validação.",
+    "validation_attachments_length": "Você não pode anexar mais que {limit} arquivos.",
+    "validation_attachments_type": "Você pode anexar apenas imagens ou vídeos",
+    "upload_error": "Falha ao carregar seu arquivo",
+    "failed_to_report": "Falha ao enviar relatório",
+    "notifications_not_found": "Falha ao encontrar notificações"
   },
   "dialog": {
     "account_not_found": {
-      "title": "Account not found",
-      "message": "The account does not exist in the server, do you want to open the account in your browser?",
-      "button": "Open"
+      "title": "Conta não encontrada",
+      "message": "A conta não existe no servidor, você quer abrir a conta no seu navegador?",
+      "button": "Abrir"
     }
   },
   "walkthrough": {
     "navigator": {
       "servers": {
-        "title": "Servers",
-        "description": "You can remove or authorize servers, please right click.",
-        "ok": "OK"
+        "title": "Servidores",
+        "description": "Você pode remover ou autorizar servidores, clique com o botão direito, por favor.",
+        "ok": "Ok"
       }
     },
     "timeline": {
       "settings": {
-        "title": "Timeline settings",
-        "description": "You can move and remove the timeline.",
-        "ok": "OK"
+        "title": "Configurações de linha do tempo",
+        "description": "Você pode mover e remover a linha do tempo.",
+        "ok": "Ok"
       },
       "new": {
-        "title": "Add a timeline",
-        "description": "Click this button to add a timeline.",
-        "ok": "OK"
+        "title": "Adicionar uma linha do tempo",
+        "description": "Clique neste botão para adicionar uma linha do tempo.",
+        "ok": "Ok"
       }
     }
   },
   "navigator": {
     "add_server": {
-      "title": "Add a new server"
+      "title": "Adicionar um novo servidor"
     },
     "settings": {
-      "title": "Settings",
+      "title": "Configurações",
       "app_menu": "Toggle app menu",
       "settings": "Settings",
       "thirdparty": "Third-party licenses"
