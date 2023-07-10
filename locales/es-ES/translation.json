@@ -1,0 +1,320 @@
+{
+  "alert": {
+    "no_server": "There is no server, so please add it at first.",
+    "need_auth": "You need to authorize a server.",
+    "failed_add_server": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
+    "failed_add_application": "Failed to add application.",
+    "failed_authorize": "Failed to authorize.",
+    "failed_post": "Failed to post status.",
+    "failed_load": "Failed to load {timeline}.",
+    "failed_mark": "Failed to mark as read",
+    "failed_unreblog": "Failed to unboost",
+    "failed_reblog": "Failed to boost",
+    "failed_unfavourite": "Failed to unfavourite",
+    "failed_favourite": "Failed to favourite",
+    "failed_unbookmark": "Failed to unbookmark",
+    "failed_bookmark": "Failed to bookmark",
+    "failed_follow": "Failed to follow",
+    "failed_unfollow": "Failed to unfollow",
+    "validation_error": "Validation error.",
+    "validation_attachments_length": "You can't attach over {limit} files.",
+    "validation_attachments_type": "You can attach only images or videos",
+    "upload_error": "Failed to upload your file",
+    "failed_to_report": "Faild to send the report",
+    "notifications_not_found": "Failed to find notifications"
+  },
+  "dialog": {
+    "account_not_found": {
+      "title": "Account not found",
+      "message": "The account does not exist in the server, do you want to open the account in your browser?",
+      "button": "Open"
+    }
+  },
+  "walkthrough": {
+    "navigator": {
+      "servers": {
+        "title": "Servers",
+        "description": "You can remove or authorize servers, please right click.",
+        "ok": "OK"
+      }
+    },
+    "timeline": {
+      "settings": {
+        "title": "Timeline settings",
+        "description": "You can move and remove the timeline.",
+        "ok": "OK"
+      },
+      "new": {
+        "title": "Add a timeline",
+        "description": "Click this button to add a timeline.",
+        "ok": "OK"
+      }
+    }
+  },
+  "navigator": {
+    "add_server": {
+      "title": "Add a new server"
+    },
+    "settings": {
+      "title": "Settings",
+      "app_menu": "Toggle app menu",
+      "settings": "Settings",
+      "thirdparty": "Third-party licenses"
+    },
+    "servers": {
+      "authorize": "Authorize",
+      "profile": "Open profile",
+      "remove": "Remove",
+      "announcements": "Announcements",
+      "lists": "Lists"
+    }
+  },
+  "servers": {
+    "new": {
+      "title": "Add Server",
+      "domain": "Domain",
+      "add": "Add",
+      "cancel": "Cancel",
+      "server_description": "You can also quit without signing in. If that case, you can see only Federated and Local timelines.",
+      "sign_in": "Sign In",
+      "finish": "Finish",
+      "authorization_code": "Authorization Code",
+      "authorization_help": "Please paste the authorization code from your browser",
+      "authorize": "Authorize",
+      "loading": "Loading"
+    }
+  },
+  "settings": {
+    "settings": {
+      "title": "Settings",
+      "appearance": {
+        "title": "Appearance",
+        "font_size": "Font size",
+        "language": "Language"
+      },
+      "save": "Save",
+      "close": "Close",
+      "validation": {
+        "font_size": {
+          "type": "Please enter a valid number",
+          "range": "Please enter a number from {from} to {to}",
+          "required": "Font size is required"
+        },
+        "language": {
+          "required": "Language is required"
+        }
+      }
+    },
+    "thirdparty": {
+      "title": "Third-party licenses"
+    }
+  },
+  "compose": {
+    "title": "New Post",
+    "from": "From",
+    "visibility": {
+      "public": "Public",
+      "unlisted": "Unlisted",
+      "private": "Private",
+      "direct": "Direct"
+    },
+    "spoiler": {
+      "placeholder": "Write your warning here"
+    },
+    "status": {
+      "title": "Status",
+      "placeholder": "What's on your mind?"
+    },
+    "nsfw": {
+      "sensitive": "Sensitive",
+      "not_sensitive": "Not sensitive"
+    },
+    "poll": {
+      "add_choice": "Add a choice",
+      "multiple": "multiple",
+      "simple": "simple",
+      "5min": "5 minutes",
+      "30min": "30 minutes",
+      "1h": "1 hour",
+      "6h": "6 hours",
+      "1d": "1 day",
+      "3d": "3 days",
+      "7d": "7 days"
+    },
+    "cancel": "Cancel",
+    "post": "Post",
+    "edit_attachment": {
+      "title": "Edit media",
+      "label": "Describe for people who are blind or have low vision",
+      "submit": "Apply"
+    }
+  },
+  "timeline": {
+    "reload": "Reload",
+    "settings": {
+      "title": "Settings",
+      "unpin": "Unpin",
+      "column_width": "Column width"
+    },
+    "mark_as_read": "Mark as read",
+    "notification": {
+      "follow": {
+        "title": "Follow",
+        "body": "{user} followed you"
+      },
+      "follow_request": {
+        "title": "Follow Request",
+        "body": "{user} requested to follow you"
+      },
+      "favourite": {
+        "title": "Favourite",
+        "body": "{user} favourited your post"
+      },
+      "reblog": {
+        "title": "Boost",
+        "body": "{user} boosted your post"
+      },
+      "poll_expired": {
+        "title": "Poll",
+        "body": "{user}'s poll is expired"
+      },
+      "poll_vote": {
+        "title": "Poll",
+        "body": "{user} voted your poll"
+      },
+      "quote": {
+        "title": "Quote",
+        "body": "{user} quoted your post"
+      },
+      "status": {
+        "title": "Status",
+        "body": "{user} just post"
+      },
+      "update": {
+        "title": "Update",
+        "body": "{user} updated the post"
+      },
+      "emoji_reaction": {
+        "title": "Reaction",
+        "body": "{user} reacted your post"
+      },
+      "move": {
+        "title": "Move",
+        "body": "{user} migrated to"
+      }
+    },
+    "actions": {
+      "reply": "Reply",
+      "reblog": "Boost",
+      "favourite": "Favourite",
+      "emoji_reaction": "Emoji reaction",
+      "bookmark": "Bookmark",
+      "detail": {
+        "title": "Detail",
+        "browser": "Open original page",
+        "copy": "Copy link to post",
+        "edit": "Edit",
+        "delete": "Delete",
+        "report": "Report {user}",
+        "from_other_account": "React from other accounts"
+      }
+    },
+    "status": {
+      "show_more": "Show more",
+      "show_less": "Show less",
+      "media_hidden": "Media hidden",
+      "pinned_post": "Pnned post"
+    },
+    "poll": {
+      "vote": "Vote",
+      "refresh": "Refresh",
+      "people": "{count} people",
+      "closed": "Closed",
+      "left": "left"
+    },
+    "new": "Add a new timeline",
+    "home": "Home",
+    "notifications": "Notifications",
+    "favourites": "Favourites",
+    "bookmarks": "Bookmarks",
+    "direct": "Direct messages",
+    "local": "Local",
+    "public": "Federated",
+    "back": "Back"
+  },
+  "detail": {
+    "back": "Back",
+    "close": "Close",
+    "pin": "Pin",
+    "follow_tag": "Follow hashtag",
+    "unfollow_tag": "Unfollow hashtag",
+    "profile": {
+      "follow": "Follow",
+      "unfollow": "Unfollow",
+      "not_following": "Not Following",
+      "follow_requested": "Follow Requested",
+      "follows_you": "FOLLOWS YOU",
+      "posts": "Posts",
+      "following": "Following",
+      "followers": "Followers",
+      "open_page": "Open original page",
+      "mute": "Mute {user}",
+      "unmute": "Unmute {user}",
+      "block": "Block {user}",
+      "unblock": "Unblock {user}",
+      "unblock_domain": "Unblock domain {server}",
+      "list_management": "Add or Remove from lists",
+      "block_domain": "Block domain {server}"
+    }
+  },
+  "report": {
+    "title": "Report {user}",
+    "category": {
+      "title": "Tell us what's going on with this post",
+      "description": "Choose the best match",
+      "spam": "It's spam",
+      "violation": "It violates server rules",
+      "other": "It's something else",
+      "next": "Next"
+    },
+    "rules": {
+      "title": "Which rules are being violated?",
+      "description": "Select all that apply",
+      "no_rules": "There is not rule in this server.",
+      "next": "Next"
+    },
+    "statuses": {
+      "title": "Are there any posts that back up this report?",
+      "description": "Select all that apply",
+      "no_status": "There is not status.",
+      "next": "Next"
+    },
+    "comment": {
+      "title": "Is there anything else you think we should know?",
+      "placeholder": "Additional comments",
+      "forward": "Forward to the original server",
+      "next": "Submit"
+    }
+  },
+  "announcements": {
+    "title": "Announcement @{domain}",
+    "close": "Close"
+  },
+  "from_other_account": {
+    "title": "React from other accounts",
+    "accounts": {
+      "title": "Which account do you want react from?",
+      "next": "Next"
+    },
+    "status": {
+      "title": "React on the status from {account}",
+      "searching": "Searching",
+      "not_found": "Sorry, the status is not found in {server}",
+      "next": "Close"
+    }
+  },
+  "list_memberships": {
+    "title": "List memberships",
+    "search_placeholder": "Search among people you follow"
+  }
+}
