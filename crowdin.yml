@@ -6,6 +6,7 @@ files:
         ja: ja
         it: it
         pt-BR: pt-BR
+        fr: fr
   - source: /src-tauri/locales/en.yml
     translation: /src-tauri/locales/%locale%.yml
     languages_mapping:
@@ -13,3 +14,4 @@ files:
         ja: ja
         it: it
         pt-BR: pt-BR
+        fr: fr
