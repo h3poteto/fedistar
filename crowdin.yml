@@ -7,6 +7,11 @@ files:
         it: it
         pt-BR: pt-BR
         fr: fr
+        zh-CN: zh-CN
+        de: de
+        ko: ko
+        es-ES: es-ES
+        id: id
   - source: /src-tauri/locales/en.yml
     translation: /src-tauri/locales/%locale%.yml
     languages_mapping:
@@ -15,3 +20,8 @@ files:
         it: it
         pt-BR: pt-BR
         fr: fr
+        zh-CN: zh-CN
+        de: de
+        ko: ko
+        es-ES: es-ES
+        id: id
