@@ -57,264 +57,264 @@
     },
     "settings": {
       "title": "Configurações",
-      "app_menu": "Toggle app menu",
-      "settings": "Settings",
-      "thirdparty": "Third-party licenses"
+      "app_menu": "Abrir/fechar o menu",
+      "settings": "Configurações",
+      "thirdparty": "Licenças de terceiros"
     },
     "servers": {
-      "authorize": "Authorize",
-      "profile": "Open profile",
-      "remove": "Remove",
-      "announcements": "Announcements",
-      "lists": "Lists"
+      "authorize": "Autorizar",
+      "profile": "Abrir perfil",
+      "remove": "Remover",
+      "announcements": "Avisos",
+      "lists": "Listas"
     }
   },
   "servers": {
     "new": {
-      "title": "Add Server",
-      "domain": "Domain",
-      "add": "Add",
-      "cancel": "Cancel",
-      "server_description": "You can also quit without signing in. If that case, you can see only Federated and Local timelines.",
-      "sign_in": "Sign In",
-      "finish": "Finish",
-      "authorization_code": "Authorization Code",
-      "authorization_help": "Please paste the authorization code from your browser",
-      "authorize": "Authorize",
-      "loading": "Loading"
+      "title": "Adicionar Servidor",
+      "domain": "Domínio",
+      "add": "Adicionar",
+      "cancel": "Cancelar",
+      "server_description": "Você também pode sair sem se inscrever. Nesse caso, você só pode ver linhas de tempo federadas e locais.",
+      "sign_in": "Entrar",
+      "finish": "Concluir",
+      "authorization_code": "Código de autorização",
+      "authorization_help": "Por favor, cole o código de autorização do seu navegador",
+      "authorize": "Autorizar",
+      "loading": "Carregando"
     }
   },
   "settings": {
     "settings": {
-      "title": "Settings",
+      "title": "Configurações",
       "appearance": {
-        "title": "Appearance",
-        "font_size": "Font size",
-        "language": "Language"
+        "title": "Aparência",
+        "font_size": "Tamanho da fonte",
+        "language": "Idioma"
       },
-      "save": "Save",
-      "close": "Close",
+      "save": "Salvar",
+      "close": "Fechar",
       "validation": {
         "font_size": {
-          "type": "Please enter a valid number",
-          "range": "Please enter a number from {from} to {to}",
-          "required": "Font size is required"
+          "type": "Por favor, insira um número válido",
+          "range": "Por favor, insira um número entre {from} e {to}",
+          "required": "Tamanho da fonte é necessário"
         },
         "language": {
-          "required": "Language is required"
+          "required": "O idioma é obrigatório"
         }
       }
     },
     "thirdparty": {
-      "title": "Third-party licenses"
+      "title": "Licenças de terceiros"
     }
   },
   "compose": {
-    "title": "New Post",
-    "from": "From",
+    "title": "Nova Postagem",
+    "from": "De",
     "visibility": {
-      "public": "Public",
-      "unlisted": "Unlisted",
-      "private": "Private",
-      "direct": "Direct"
+      "public": "Público",
+      "unlisted": "Não listado",
+      "private": "Privado",
+      "direct": "Direto"
     },
     "spoiler": {
-      "placeholder": "Write your warning here"
+      "placeholder": "Escreva seu aviso aqui"
     },
     "status": {
       "title": "Status",
-      "placeholder": "What's on your mind?"
+      "placeholder": "No que você está pensando?"
     },
     "nsfw": {
-      "sensitive": "Sensitive",
-      "not_sensitive": "Not sensitive"
+      "sensitive": "Sensível",
+      "not_sensitive": "Não sensível"
     },
     "poll": {
-      "add_choice": "Add a choice",
-      "multiple": "multiple",
-      "simple": "simple",
-      "5min": "5 minutes",
-      "30min": "30 minutes",
-      "1h": "1 hour",
-      "6h": "6 hours",
-      "1d": "1 day",
-      "3d": "3 days",
-      "7d": "7 days"
+      "add_choice": "Adicionar uma escolha",
+      "multiple": "múltiplo",
+      "simple": "simples",
+      "5min": "5 minutos",
+      "30min": "30 minutos",
+      "1h": "1 hora",
+      "6h": "6 horas",
+      "1d": "1 dia",
+      "3d": "3 dias",
+      "7d": "7 dias"
     },
-    "cancel": "Cancel",
-    "post": "Post",
+    "cancel": "Cancelar",
+    "post": "Postar",
     "edit_attachment": {
-      "title": "Edit media",
-      "label": "Describe for people who are blind or have low vision",
-      "submit": "Apply"
+      "title": "Editar mídia",
+      "label": "Descreva para pessoas que são cegas ou têm baixa visão",
+      "submit": "Aplicar"
     }
   },
   "timeline": {
-    "reload": "Reload",
+    "reload": "Recarregar",
     "settings": {
-      "title": "Settings",
-      "unpin": "Unpin",
-      "column_width": "Column width"
+      "title": "Configurações",
+      "unpin": "Desafixar",
+      "column_width": "Largura da coluna"
     },
-    "mark_as_read": "Mark as read",
+    "mark_as_read": "Marcar como lido",
     "notification": {
       "follow": {
-        "title": "Follow",
-        "body": "{user} followed you"
+        "title": "Seguir",
+        "body": "{user} seguiu você"
       },
       "follow_request": {
-        "title": "Follow Request",
-        "body": "{user} requested to follow you"
+        "title": "Pedir para seguir",
+        "body": "{user} pediu para te seguir"
       },
       "favourite": {
-        "title": "Favourite",
-        "body": "{user} favourited your post"
+        "title": "Favorito",
+        "body": "{user} favoritou seu post"
       },
       "reblog": {
-        "title": "Boost",
-        "body": "{user} boosted your post"
+        "title": "Impulsionar",
+        "body": "{user} deu boost no seu post"
       },
       "poll_expired": {
-        "title": "Poll",
-        "body": "{user}'s poll is expired"
+        "title": "Enquete",
+        "body": "A enquete de {user} expirou"
       },
       "poll_vote": {
-        "title": "Poll",
-        "body": "{user} voted your poll"
+        "title": "Enquete",
+        "body": "{user} votou na sua enquete"
       },
       "quote": {
-        "title": "Quote",
-        "body": "{user} quoted your post"
+        "title": "Citar",
+        "body": "{user} citou a sua publicação"
       },
       "status": {
         "title": "Status",
-        "body": "{user} just post"
+        "body": "{user} acabou de postar"
       },
       "update": {
-        "title": "Update",
-        "body": "{user} updated the post"
+        "title": "Atualização",
+        "body": "{user} atualizou a publicação"
       },
       "emoji_reaction": {
-        "title": "Reaction",
-        "body": "{user} reacted your post"
+        "title": "Reação",
+        "body": "{user} reagiu à sua publicação"
       },
       "move": {
-        "title": "Move",
-        "body": "{user} migrated to"
+        "title": "Mover",
+        "body": "{user} migrado para"
       }
     },
     "actions": {
-      "reply": "Reply",
-      "reblog": "Boost",
-      "favourite": "Favourite",
-      "emoji_reaction": "Emoji reaction",
-      "bookmark": "Bookmark",
+      "reply": "Responder",
+      "reblog": "Impulsionar",
+      "favourite": "Favorito",
+      "emoji_reaction": "Reação de emoji",
+      "bookmark": "Adicionar marcador",
       "detail": {
-        "title": "Detail",
-        "browser": "Open original page",
-        "copy": "Copy link to post",
-        "edit": "Edit",
-        "delete": "Delete",
-        "report": "Report {user}",
-        "from_other_account": "React from other accounts"
+        "title": "Detalhe",
+        "browser": "Abrir a página original",
+        "copy": "Copiar link para a publicação",
+        "edit": "Editar",
+        "delete": "Deletar",
+        "report": "Denunciar {user}",
+        "from_other_account": "Reagir de outras contas"
       }
     },
     "status": {
-      "show_more": "Show more",
-      "show_less": "Show less",
-      "media_hidden": "Media hidden",
-      "pinned_post": "Pnned post"
+      "show_more": "Mostrar mais",
+      "show_less": "Mostrar menos",
+      "media_hidden": "Mídia oculta",
+      "pinned_post": "Publicação fixada"
     },
     "poll": {
-      "vote": "Vote",
-      "refresh": "Refresh",
-      "people": "{count} people",
-      "closed": "Closed",
-      "left": "left"
+      "vote": "Votar",
+      "refresh": "Atualizar",
+      "people": "{count} pessoas",
+      "closed": "Fechado",
+      "left": "esquerda"
     },
-    "new": "Add a new timeline",
-    "home": "Home",
-    "notifications": "Notifications",
-    "favourites": "Favourites",
-    "bookmarks": "Bookmarks",
-    "direct": "Direct messages",
+    "new": "Adicionar nova linha do tempo",
+    "home": "Página inicial",
+    "notifications": "Notificações",
+    "favourites": "Favoritos",
+    "bookmarks": "Salvos",
+    "direct": "Mensagens diretas",
     "local": "Local",
-    "public": "Federated",
-    "back": "Back"
+    "public": "Federado",
+    "back": "Voltar"
   },
   "detail": {
-    "back": "Back",
-    "close": "Close",
-    "pin": "Pin",
-    "follow_tag": "Follow hashtag",
-    "unfollow_tag": "Unfollow hashtag",
+    "back": "Voltar",
+    "close": "Fechar",
+    "pin": "Fixar",
+    "follow_tag": "Seguir hashtag",
+    "unfollow_tag": "Parar de seguir hashtag",
     "profile": {
-      "follow": "Follow",
-      "unfollow": "Unfollow",
-      "not_following": "Not Following",
-      "follow_requested": "Follow Requested",
-      "follows_you": "FOLLOWS YOU",
-      "posts": "Posts",
-      "following": "Following",
-      "followers": "Followers",
-      "open_page": "Open original page",
-      "mute": "Mute {user}",
-      "unmute": "Unmute {user}",
-      "block": "Block {user}",
-      "unblock": "Unblock {user}",
-      "unblock_domain": "Unblock domain {server}",
-      "list_management": "Add or Remove from lists",
-      "block_domain": "Block domain {server}"
+      "follow": "Seguir",
+      "unfollow": "Deixar de seguir",
+      "not_following": "Não está seguindo",
+      "follow_requested": "Solicitação de seguir enviada",
+      "follows_you": "SEGUE VOCÊ",
+      "posts": "Publicações",
+      "following": "Seguindo",
+      "followers": "Seguidores",
+      "open_page": "Abrir a página original",
+      "mute": "Silenciar {user}",
+      "unmute": "Reativar {user}",
+      "block": "Bloquear {user}",
+      "unblock": "Desbloquear {user}",
+      "unblock_domain": "Desbloquear domínio {server}",
+      "list_management": "Adicionar ou Remover de listas",
+      "block_domain": "Bloquear domínio {server}"
     }
   },
   "report": {
-    "title": "Report {user}",
+    "title": "Denunciar {user}",
     "category": {
-      "title": "Tell us what's going on with this post",
-      "description": "Choose the best match",
-      "spam": "It's spam",
-      "violation": "It violates server rules",
-      "other": "It's something else",
-      "next": "Next"
+      "title": "Conte-nos o que está acontecendo com esta publicação",
+      "description": "Escolha a melhor correspondência",
+      "spam": "É spam",
+      "violation": "Viola as regras do servidor",
+      "other": "É outra coisa",
+      "next": "Próximo"
     },
     "rules": {
-      "title": "Which rules are being violated?",
-      "description": "Select all that apply",
-      "no_rules": "There is not rule in this server.",
-      "next": "Next"
+      "title": "Quais regras estão sendo violadas?",
+      "description": "Selecionar todas que se aplicam",
+      "no_rules": "Não há regras neste servidor.",
+      "next": "Próximo"
     },
     "statuses": {
-      "title": "Are there any posts that back up this report?",
-      "description": "Select all that apply",
-      "no_status": "There is not status.",
-      "next": "Next"
+      "title": "Há alguma postagem que respalde essa denúncia?",
+      "description": "Selecionar todos que se aplicam",
+      "no_status": "Não há status.",
+      "next": "Próximo"
     },
     "comment": {
-      "title": "Is there anything else you think we should know?",
-      "placeholder": "Additional comments",
-      "forward": "Forward to the original server",
-      "next": "Submit"
+      "title": "Há algo mais que você acha que deveríamos saber?",
+      "placeholder": "Comentários adicionais",
+      "forward": "Encaminhar para o servidor original",
+      "next": "Enviar"
     }
   },
   "announcements": {
-    "title": "Announcement @{domain}",
-    "close": "Close"
+    "title": "Anúncio @{domain}",
+    "close": "Fechar"
   },
   "from_other_account": {
-    "title": "React from other accounts",
+    "title": "Reagir de outras contas",
     "accounts": {
-      "title": "Which account do you want react from?",
-      "next": "Next"
+      "title": "De qual conta você quer reagir?",
+      "next": "Próximo"
     },
     "status": {
-      "title": "React on the status from {account}",
-      "searching": "Searching",
-      "not_found": "Sorry, the status is not found in {server}",
-      "next": "Close"
+      "title": "Reagir no status de {account}",
+      "searching": "Procurando",
+      "not_found": "Desculpe, o status não foi encontrado no {server}",
+      "next": "Fechar"
     }
   },
   "list_memberships": {
-    "title": "List memberships",
-    "search_placeholder": "Search among people you follow"
+    "title": "Listar associações",
+    "search_placeholder": "Pesquisar entre as pessoas que você segue"
   }
 }
