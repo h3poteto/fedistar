@@ -12,6 +12,7 @@ This is a Fediverse client application for desktop. It is supporting
 - Pleroma
 - Friendica
 - Akkoma (Unofficial)
+- Wildebeest (Unofficial)
 
 ![screenshot](screenshot.png)
 
