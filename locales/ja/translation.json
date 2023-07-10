@@ -154,7 +154,7 @@
     "settings": {
       "title": "設定",
       "unpin": "ピン留め解除",
-      "column_width": "Column width"
+      "column_width": "カラムの幅"
     },
     "mark_as_read": "全て既読にする",
     "notification": {
@@ -223,7 +223,7 @@
       "show_more": "もっと見る",
       "show_less": "隠す",
       "media_hidden": "非表示のメディア",
-      "pinned_post": "Pnned post"
+      "pinned_post": "ピン留めされた投稿"
     },
     "poll": {
       "vote": "投票",

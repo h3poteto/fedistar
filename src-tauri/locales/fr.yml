@@ -1,6 +1,6 @@
 app_menu:
-  file: File
-  edit: Edit
-  help: Help
-  window: Window
-  crash_reporting: Crash Report
+  file: Fichier
+  edit: Éditer
+  help: Aide
+  window: Fenêtre
+  crash_reporting: Rapport de crash
