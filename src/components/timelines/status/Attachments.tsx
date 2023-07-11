@@ -22,7 +22,7 @@ const Attachments: React.FC<Props> = props => {
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
       {sensitive && (
-        <Button appearance="default" block onClick={changeSensitive}>
+        <Button appearance="default" block style={{ marginTop: '0.4em' }} onClick={changeSensitive}>
           <FormattedMessage id="timeline.status.media_hidden" />
         </Button>
       )}
