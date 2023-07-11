@@ -171,14 +171,16 @@ const Notifications: React.FC<Props> = props => {
   }
 
   const read = async () => {
-    props.setUnreads(
-      props.unreads.map(u => {
+    props.setUnreads(current => {
+      const updated = current.map(u => {
         if (u.server_id === props.server.id) {
           return Object.assign({}, u, { count: 0 })
         }
         return u
       })
-    )
+
+      return updated
+    })
 
     // Update maker for server-side
     try {
