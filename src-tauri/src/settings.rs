@@ -17,9 +17,12 @@ pub struct Appearance {
 #[sqlx(rename = "locale_type", rename_all = "lowercase")]
 #[serde(rename_all = "lowercase")]
 pub enum LocaleType {
-    EN,
-    JA,
-    IT,
+    En,
+    Ja,
+    It,
+    #[sqlx(rename = "pt-BR")]
+    #[serde(rename = "pt-BR")]
+    PtBr,
 }
 
 pub(crate) fn read_settings(filepath: &PathBuf) -> Result<Settings, String> {
@@ -28,7 +31,7 @@ pub(crate) fn read_settings(filepath: &PathBuf) -> Result<Settings, String> {
         return Ok(Settings {
             appearance: Appearance {
                 font_size: 14,
-                language: LocaleType::EN,
+                language: LocaleType::En,
             }
         })
     };
@@ -43,9 +46,10 @@ pub(crate) fn save_settings(filepath: &PathBuf, settings: &Settings) -> Result<(
 impl fmt::Display for LocaleType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            LocaleType::EN => write!(f, "en"),
-            LocaleType::JA => write!(f, "ja"),
-            LocaleType::IT => write!(f, "it"),
+            LocaleType::En => write!(f, "en"),
+            LocaleType::Ja => write!(f, "ja"),
+            LocaleType::It => write!(f, "it"),
+            LocaleType::PtBr => write!(f, "pt-BR"),
         }
     }
 }
