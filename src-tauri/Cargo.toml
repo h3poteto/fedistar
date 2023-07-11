@@ -44,7 +44,7 @@ devtools = [ "tauri/devtools" ]
 
 [package.metadata.i18n]
 # The available locales for your application, default: ["en"].
-available-locales = ["en", "ja", "it"]
+available-locales = ["en", "ja", "it", "pt-BR"]
 
 # The default locale, default: "en".
 default-locale = "en"

@@ -28,6 +28,10 @@ const languages = [
   {
     label: 'Italian',
     value: 'it'
+  },
+  {
+    label: 'Brazilian Portuguese',
+    value: 'pt-BR'
   }
 ]
 
