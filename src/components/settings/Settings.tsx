@@ -32,6 +32,10 @@ const languages = [
   {
     label: 'Brazilian Portuguese',
     value: 'pt-BR'
+  },
+  {
+    label: 'French',
+    value: 'fr'
   }
 ]
 

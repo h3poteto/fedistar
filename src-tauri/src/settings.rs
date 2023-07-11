@@ -23,6 +23,7 @@ pub enum LocaleType {
     #[sqlx(rename = "pt-BR")]
     #[serde(rename = "pt-BR")]
     PtBr,
+    Fr,
 }
 
 pub(crate) fn read_settings(filepath: &PathBuf) -> Result<Settings, String> {
@@ -50,6 +51,7 @@ impl fmt::Display for LocaleType {
             LocaleType::Ja => write!(f, "ja"),
             LocaleType::It => write!(f, "it"),
             LocaleType::PtBr => write!(f, "pt-BR"),
+            LocaleType::Fr => write!(f, "fr"),
         }
     }
 }
