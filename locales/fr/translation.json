@@ -14,8 +14,8 @@
     "failed_favourite": "Impossible d'ajouter aux favoris",
     "failed_unbookmark": "Impossible de retirer des marques-pages",
     "failed_bookmark": "Impossible d'ajouter aux marques-pages",
-    "failed_follow": "Impossible de suivre",
-    "failed_unfollow": "Impossible d'arrêter de suivre",
+    "failed_follow": "Impossible de s'abonner",
+    "failed_unfollow": "Impossible de se désabonner",
     "validation_error": "Erreur de validation.",
     "validation_attachments_length": "Vous ne pouvez pas ajouter plus de {limit} fichiers.",
     "validation_attachments_type": "Vous ne pouvez ajouter que des images ou des vidéos",
@@ -159,12 +159,12 @@
     "mark_as_read": "Marquer comme lu",
     "notification": {
       "follow": {
-        "title": "Suivre",
+        "title": "S'abonner",
         "body": "{user} vous suit"
       },
       "follow_request": {
-        "title": "Demande de suivi",
-        "body": "{user} souhaite vous suivre"
+        "title": "Demande d'abonnement",
+        "body": "{user} souhaite s'abonner"
       },
       "favourite": {
         "title": "Favori",
@@ -246,17 +246,17 @@
     "back": "Retour",
     "close": "Fermer",
     "pin": "Épingler",
-    "follow_tag": "Suivre le hashtag",
-    "unfollow_tag": "Ne plus suivre le hashtag",
+    "follow_tag": "S'abonner au hashtag",
+    "unfollow_tag": "Se désabonner du hashtag",
     "profile": {
-      "follow": "Suivre",
-      "unfollow": "Ne plus suivre",
-      "not_following": "Non suivi",
-      "follow_requested": "Demande de suivi en cours",
+      "follow": "S'abonner",
+      "unfollow": "Se désabonner",
+      "not_following": "Non abonné",
+      "follow_requested": "Demande d'abonnement en cours",
       "follows_you": "VOUS SUIT",
       "posts": "Messages",
-      "following": "Suivis",
-      "followers": "Suivent",
+      "following": "Abonnements",
+      "followers": "Abonnés",
       "open_page": "Ouvrir la page originale",
       "mute": "Rendre {user} muet",
       "unmute": "Ne plus rendre {user} muet",
