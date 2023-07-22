@@ -7,7 +7,7 @@ import { flattenMessages } from './utils/flattenMessage'
 import { createContext, useState } from 'react'
 import { IntlProvider } from 'react-intl'
 
-export type localeType = 'en' | 'ja' | 'it'
+export type localeType = 'en' | 'ja' | 'it' | 'pt-BR' | 'fr'
 
 type Props = {
   children: React.ReactNode
