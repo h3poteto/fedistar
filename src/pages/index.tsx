@@ -91,19 +91,19 @@ function App() {
 
     listen<ReceiveNotificationPayload>('receive-notification', async ev => {
       const server_id = ev.payload.server_id
-      const target = unreads.find(u => u.server_id === server_id)
-      if (target) {
-        setUnreads(
-          unreads.map(u => {
+      setUnreads(current => {
+        const target = current.find(u => u.server_id === server_id)
+        if (target) {
+          return current.map(u => {
             if (u.server_id === server_id) {
               return Object.assign({}, u, { count: u.count + 1 })
             }
             return u
           })
-        )
-      } else {
-        setUnreads(unreads.concat({ server_id: server_id, count: 1 }))
-      }
+        } else {
+          return current.concat({ server_id: server_id, count: 1 })
+        }
+      })
 
       let permissionGranted = await isPermissionGranted()
       if (!permissionGranted) {
