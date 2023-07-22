@@ -150,11 +150,11 @@
     }
   },
   "timeline": {
-    "reload": "Ricarica",
+    "reload": "Aggiorna",
     "settings": {
       "title": "Impostazioni",
-      "unpin": "Deseleziona",
-      "column_width": "Column width"
+      "unpin": "Nascondi",
+      "column_width": "Larghezza colonna"
     },
     "mark_as_read": "Segna come già letto",
     "notification": {
@@ -168,7 +168,7 @@
       },
       "favourite": {
         "title": "Preferito",
-        "body": "Preferito da {user}"
+        "body": "{user} ha preferito"
       },
       "reblog": {
         "title": "Condivisione",
@@ -223,7 +223,7 @@
       "show_more": "Leggi di più",
       "show_less": "Leggi di meno",
       "media_hidden": "Allegati nascosti",
-      "pinned_post": "Pnned post"
+      "pinned_post": "Post selezionato"
     },
     "poll": {
       "vote": "Vota",
@@ -246,8 +246,8 @@
     "back": "Indietro",
     "close": "Chiudi",
     "pin": "Seleziona",
-    "follow_tag": "Follow hashtag",
-    "unfollow_tag": "Unfollow hashtag",
+    "follow_tag": "Seguire hashtag",
+    "unfollow_tag": "Non seguire hashtag",
     "profile": {
       "follow": "Segui",
       "unfollow": "Non seguire",
