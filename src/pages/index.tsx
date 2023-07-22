@@ -143,6 +143,7 @@ function App() {
       })
       switchLang(res.appearance.language)
       dayjs.locale(res.appearance.language)
+      document.documentElement.setAttribute('lang', res.appearance.language)
     })
   }
 
