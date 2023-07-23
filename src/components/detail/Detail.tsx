@@ -8,6 +8,7 @@ import { Entity, MegalodonInterface } from 'megalodon'
 import TagDetail from './Tag'
 import ListsDetail from './Lists'
 import ListDetail from './List'
+import FollowedHashtags from './FollowedHashtags'
 
 type Props = {
   dispatch: Dispatch<{ target: string; value: boolean; object?: any; index?: number }>
@@ -19,7 +20,7 @@ type Props = {
 }
 
 const Detail: React.FC<Props> = props => {
-  const [target, setTarget] = useState<'status' | 'profile' | 'tag' | 'lists' | 'list' | null>(null)
+  const [target, setTarget] = useState<'status' | 'profile' | 'tag' | 'lists' | 'list' | 'followed_hashtags' | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -33,6 +34,8 @@ const Detail: React.FC<Props> = props => {
       setTarget('lists')
     } else if (router.query.list_id) {
       setTarget('list')
+    } else if (router.query.followed_hashtags === 'all') {
+      setTarget('followed_hashtags')
     } else {
       setTarget(null)
     }
@@ -73,6 +76,7 @@ const Detail: React.FC<Props> = props => {
             {target === 'list' && (
               <ListDetail openMedia={props.openMedia} openReport={props.openReport} openFromOtherAccount={props.openFromOtherAccount} />
             )}
+            {target === 'followed_hashtags' && <FollowedHashtags />}
           </Container>
         </div>
       )}
