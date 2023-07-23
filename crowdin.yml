@@ -12,6 +12,7 @@ files:
         ko: ko
         es-ES: es-ES
         id: id
+        pl: pl
   - source: /src-tauri/locales/en.yml
     translation: /src-tauri/locales/%locale%.yml
     languages_mapping:
@@ -25,3 +26,4 @@ files:
         ko: ko
         es-ES: es-ES
         id: id
+        pl: pl
