@@ -165,6 +165,7 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
                 controlId="control-id-context-menu"
                 trigger="contextMenu"
                 onOpen={closeWalkthrough}
+                preventOverflow={true}
                 speaker={({ className, left, top, onClose }, ref) =>
                   serverMenu(
                     {
@@ -252,6 +253,9 @@ const serverMenu = (
       case 'lists':
         router.push({ query: { lists: 'all', server_id: server.server.id, account_id: server.account.id } })
         break
+      case 'followed_hashtags':
+        router.push({ query: { followed_hashtags: 'all', server_id: server.server.id, account_id: server.account.id } })
+        break
     }
   }
   return (
@@ -274,6 +278,9 @@ const serverMenu = (
             </Dropdown.Item>
             <Dropdown.Item eventKey="lists">
               <FormattedMessage id="navigator.servers.lists" />
+            </Dropdown.Item>
+            <Dropdown.Item eventKey="followed_hashtags">
+              <FormattedMessage id="navigator.servers.followed_hashtags" />
             </Dropdown.Item>
           </>
         )}
