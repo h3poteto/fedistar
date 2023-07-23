@@ -3191,9 +3191,9 @@ makeerror@1.0.12:
     tmpl "1.0.5"
 
 megalodon@^6.1.0:
-  version "6.1.3"
-  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-6.1.3.tgz#18bc66b840a4cdecef06c8642dd8f6ef916f0470"
-  integrity sha512-tw2iPtP5gy8NwjqBO+7C6ktR3nhnfKsIJmC9y1yKtJjVgNoX+8TdfRdO3ezeeRFYfHbdeWEow01qcp6DIUGWYw==
+  version "6.1.4"
+  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-6.1.4.tgz#2da9dcc53429cb0ec314f6e7cf798bb0b85766d8"
+  integrity sha512-6eowFmYts4N+NRxqYPx5o95RRLv0JS1uZs1hkCq+ZXKH8dQegG61JMd3HkaJNzS0ECKSplnKW6uRYoApedqs0Q==
   dependencies:
     "@types/oauth" "^0.9.0"
     "@types/ws" "^8.5.5"
