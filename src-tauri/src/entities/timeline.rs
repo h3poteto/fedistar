@@ -37,7 +37,7 @@ impl Timeline {
 }
 
 #[derive(Debug, Serialize, Deserialize, sqlx::Type, Clone, PartialEq, Eq)]
-#[sqlx(rename = "kind", rename_all = "lowercase")]
+#[sqlx(rename_all = "lowercase")]
 #[serde(rename_all = "snake_case")]
 pub enum Kind {
     Home,
@@ -87,7 +87,7 @@ impl FromStr for Kind {
 }
 
 #[derive(Debug, Serialize, Deserialize, sqlx::Type, Clone, PartialEq, Eq)]
-#[sqlx(rename = "column_width", rename_all = "lowercase")]
+#[sqlx(rename_all = "lowercase")]
 #[serde(rename_all = "lowercase")]
 pub enum ColumnWidth {
     XS,
