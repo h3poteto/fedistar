@@ -90,7 +90,7 @@ pub(crate) async fn add_server(
             .bind(server.base_url)
             .bind(server.sns)
             .bind(server.favicon)
-            .execute(&mut tx)
+            .execute(&mut *tx)
             .await?;
 
     tx.commit().await?;
@@ -104,7 +104,7 @@ pub(crate) async fn remove_server(pool: &SqlitePool, id: i64) -> DBResult<()> {
 
     sqlx::query("DELETE FROM servers WHERE id = ?")
         .bind(id)
-        .execute(&mut tx)
+        .execute(&mut *tx)
         .await?;
     tx.commit().await?;
 
@@ -128,7 +128,7 @@ pub(crate) async fn add_account(
         .bind(account.access_token.clone())
         .bind(account.refresh_token.clone())
         .bind(account.usual.clone())
-        .execute(&mut tx)
+        .execute(&mut *tx)
         .await?;
     let id = res.last_insert_rowid();
     created.id = id;
@@ -136,7 +136,7 @@ pub(crate) async fn add_account(
     sqlx::query("UPDATE servers SET account_id = ? WHERE id = ?")
         .bind(id)
         .bind(server.id.clone())
-        .execute(&mut tx)
+        .execute(&mut *tx)
         .await?;
 
     tx.commit().await?;
@@ -190,7 +190,7 @@ pub(crate) async fn add_timeline(
     let mut tx = pool.begin().await?;
 
     let exists = query_as::<_, entities::Timeline>("SELECT * FROM timelines ORDER BY sort DESC")
-        .fetch_all(&mut tx)
+        .fetch_all(&mut *tx)
         .await?;
 
     let mut sort = 1;
@@ -205,7 +205,7 @@ pub(crate) async fn add_timeline(
     .bind(name)
     .bind::<i64>(sort)
     .bind(list_id)
-    .execute(&mut tx)
+    .execute(&mut *tx)
     .await?;
     let id = res.last_insert_rowid();
     tx.commit().await?;
@@ -227,7 +227,7 @@ pub(crate) async fn remove_timeline(pool: &SqlitePool, id: i64) -> DBResult<()> 
 
     sqlx::query("DELETE FROM timelines WHERE id = ?")
         .bind(id)
-        .execute(&mut tx)
+        .execute(&mut *tx)
         .await?;
     tx.commit().await?;
 
@@ -238,7 +238,7 @@ pub(crate) async fn switch_left_timeline(pool: &SqlitePool, id: i64) -> DBResult
     let mut tx = pool.begin().await?;
 
     let exists = query_as::<_, entities::Timeline>("SELECT * FROM timelines ORDER BY sort")
-        .fetch_all(&mut tx)
+        .fetch_all(&mut *tx)
         .await?;
 
     let find = exists.iter().position(|e| e.id == id);
@@ -252,17 +252,17 @@ pub(crate) async fn switch_left_timeline(pool: &SqlitePool, id: i64) -> DBResult
         sqlx::query("UPDATE timelines SET sort = ? WHERE id = ?")
             .bind(-100)
             .bind(base.id)
-            .execute(&mut tx)
+            .execute(&mut *tx)
             .await?;
         sqlx::query("UPDATE timelines SET sort = ? WHERE id = ?")
             .bind(base.sort)
             .bind(target.id)
-            .execute(&mut tx)
+            .execute(&mut *tx)
             .await?;
         sqlx::query("UPDATE timelines SET sort = ? WHERE id = ?")
             .bind(target.sort)
             .bind(base.id)
-            .execute(&mut tx)
+            .execute(&mut *tx)
             .await?;
     }
     tx.commit().await?;
@@ -274,7 +274,7 @@ pub(crate) async fn switch_right_timeline(pool: &SqlitePool, id: i64) -> DBResul
     let mut tx = pool.begin().await?;
 
     let exists = query_as::<_, entities::Timeline>("SELECT * FROM timelines ORDER BY sort")
-        .fetch_all(&mut tx)
+        .fetch_all(&mut *tx)
         .await?;
 
     let find = exists.iter().position(|e| e.id == id);
@@ -288,17 +288,17 @@ pub(crate) async fn switch_right_timeline(pool: &SqlitePool, id: i64) -> DBResul
         sqlx::query("UPDATE timelines SET sort = ? WHERE id = ?")
             .bind(-100)
             .bind(base.id)
-            .execute(&mut tx)
+            .execute(&mut *tx)
             .await?;
         sqlx::query("UPDATE timelines SET sort = ? WHERE id = ?")
             .bind(base.sort)
             .bind(target.id)
-            .execute(&mut tx)
+            .execute(&mut *tx)
             .await?;
         sqlx::query("UPDATE timelines SET sort = ? WHERE id = ?")
             .bind(target.sort)
             .bind(base.id)
-            .execute(&mut tx)
+            .execute(&mut *tx)
             .await?;
     }
     tx.commit().await?;
@@ -316,7 +316,7 @@ pub(crate) async fn update_column_width(
     sqlx::query("UPDATE timelines SET column_width = ? WHERE id = ?")
         .bind(column_width.clone())
         .bind(id)
-        .execute(&mut tx)
+        .execute(&mut *tx)
         .await?;
     tx.commit().await?;
 
@@ -406,12 +406,12 @@ pub(crate) async fn set_usual_account(pool: &SqlitePool, id: i64) -> DBResult<en
     sqlx::query("UPDATE accounts SET usual = ? WHERE id = ?")
         .bind(true)
         .bind(id)
-        .execute(&mut tx)
+        .execute(&mut *tx)
         .await?;
     sqlx::query("UPDATE accounts SET usual = ? WHERE id != ?")
         .bind(false)
         .bind(id)
-        .execute(&mut tx)
+        .execute(&mut *tx)
         .await?;
     tx.commit().await?;
 
@@ -435,7 +435,7 @@ pub(crate) async fn init_instruction(pool: &SqlitePool) -> DBResult<entities::In
     let mut tx = pool.begin().await?;
 
     let exists = query_as::<_, entities::Instruction>("SELECT * FROM instructions")
-        .fetch_one(&mut tx)
+        .fetch_one(&mut *tx)
         .await;
     match exists {
         Ok(instruction) => {
@@ -445,10 +445,10 @@ pub(crate) async fn init_instruction(pool: &SqlitePool) -> DBResult<entities::In
         Err(_) => {
             let _ = sqlx::query("INSERT INTO instructions (instruction) VALUES (?)")
                 .bind(0)
-                .execute(&mut tx)
+                .execute(&mut *tx)
                 .await?;
             let instruction = query_as::<_, entities::Instruction>("SELECT * FROM instructions")
-                .fetch_one(&mut tx)
+                .fetch_one(&mut *tx)
                 .await?;
             tx.commit().await?;
             Ok(instruction)
@@ -463,7 +463,7 @@ pub(crate) async fn update_instruction(
     let mut tx = pool.begin().await?;
 
     let exists = query_as::<_, entities::Instruction>("SELECT * FROM instructions")
-        .fetch_one(&mut tx)
+        .fetch_one(&mut *tx)
         .await?;
     if exists.instruction >= step {
         return Ok(exists);
@@ -471,10 +471,10 @@ pub(crate) async fn update_instruction(
 
     sqlx::query("UPDATE instructions SET instruction = ?")
         .bind(step)
-        .execute(&mut tx)
+        .execute(&mut *tx)
         .await?;
     let instruction = query_as::<_, entities::Instruction>("SELECT * FROM instructions")
-        .fetch_one(&mut tx)
+        .fetch_one(&mut *tx)
         .await?;
     tx.commit().await?;
     Ok(instruction)

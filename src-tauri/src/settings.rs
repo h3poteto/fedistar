@@ -14,7 +14,7 @@ pub struct Appearance {
 }
 
 #[derive(Debug, Serialize, Deserialize, sqlx::Type, Clone, PartialEq, Eq)]
-#[sqlx(rename = "locale_type", rename_all = "lowercase")]
+#[sqlx(rename_all = "lowercase")]
 #[serde(rename_all = "lowercase")]
 pub enum LocaleType {
     En,
