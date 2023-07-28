@@ -1,321 +1,321 @@
 {
   "alert": {
-    "no_server": "There is no server, so please add it at first.",
-    "need_auth": "You need to authorize a server.",
-    "failed_add_server": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
-    "failed_add_application": "Failed to add application.",
-    "failed_authorize": "Failed to authorize.",
-    "failed_post": "Failed to post status.",
-    "failed_load": "Failed to load {timeline}.",
-    "failed_mark": "Failed to mark as read",
-    "failed_unreblog": "Failed to unboost",
-    "failed_reblog": "Failed to boost",
-    "failed_unfavourite": "Failed to unfavourite",
-    "failed_favourite": "Failed to favourite",
-    "failed_unbookmark": "Failed to unbookmark",
-    "failed_bookmark": "Failed to bookmark",
-    "failed_follow": "Failed to follow",
-    "failed_unfollow": "Failed to unfollow",
-    "validation_error": "Validation error.",
-    "validation_attachments_length": "You can't attach over {limit} files.",
-    "validation_attachments_type": "You can attach only images or videos",
-    "upload_error": "Failed to upload your file",
-    "failed_to_report": "Faild to send the report",
-    "notifications_not_found": "Failed to find notifications"
+    "no_server": "Es gibt keinen Server, daher fügen Sie bitte zuerst einen hinzu.",
+    "need_auth": "Du musst einen Server autorisieren.",
+    "failed_add_server": "Fehler beim Verbinden mit {domain}. Stellen Sie sicher, dass die Server-URL gültig oder korrekt ist.",
+    "failed_add_application": "Hinzufügen der Anwendung fehlgeschlagen.",
+    "failed_authorize": "Autorisierung fehlgeschlagen.",
+    "failed_post": "Anzeigen des Status fehlgeschlagen.",
+    "failed_load": "Laden von {timeline} fehlgeschlagen.",
+    "failed_mark": "Markieren als gelesen fehlgeschlagen",
+    "failed_unreblog": "Nicht-Teilen fehlgeschlagen",
+    "failed_reblog": "Teilen fehlgeschlagen",
+    "failed_unfavourite": "Favorisierung entfernen fehlgeschlagen",
+    "failed_favourite": "Favorisieren fehlgeschlagen",
+    "failed_unbookmark": "Lesezeichen entfernen fehlgeschlagen",
+    "failed_bookmark": "Lesezeichen setzen fehlgeschlagen",
+    "failed_follow": "Folgen fehlgeschlagen",
+    "failed_unfollow": "Entfolgen fehlgeschlagen",
+    "validation_error": "Überprüfen fehlgeschlagen.",
+    "validation_attachments_length": "Sie können keine {limit} Dateien anhängen.",
+    "validation_attachments_type": "Sie können nur Bilder oder Videos anhängen",
+    "upload_error": "Fehler beim Hochladen deiner Datei",
+    "failed_to_report": "Fehler beim Senden des Berichts",
+    "notifications_not_found": "Fehler beim Finden von Benachrichtigungen"
   },
   "dialog": {
     "account_not_found": {
-      "title": "Account not found",
-      "message": "The account does not exist in the server, do you want to open the account in your browser?",
-      "button": "Open"
+      "title": "Konto nicht gefunden",
+      "message": "Das Konto existiert nicht auf dem Server, willst du das Konto in deinem Browser öffnen?",
+      "button": "Öffnen"
     }
   },
   "walkthrough": {
     "navigator": {
       "servers": {
-        "title": "Servers",
-        "description": "You can remove or authorize servers, please right click.",
-        "ok": "OK"
+        "title": "Server",
+        "description": "Du kannst Server entfernen oder autorisieren, bitte Rechtsklicken.",
+        "ok": "Ok"
       }
     },
     "timeline": {
       "settings": {
-        "title": "Timeline settings",
-        "description": "You can move and remove the timeline.",
-        "ok": "OK"
+        "title": "Timeline-Einstellungen",
+        "description": "Du kannst die Zeitleiste verschieben und entfernen.",
+        "ok": "Ok"
       },
       "new": {
-        "title": "Add a timeline",
-        "description": "Click this button to add a timeline.",
-        "ok": "OK"
+        "title": "Zeitleiste hinzufügen",
+        "description": "Klicke auf diese Schaltfläche, um eine Zeitleiste hinzuzufügen.",
+        "ok": "Ok"
       }
     }
   },
   "navigator": {
     "add_server": {
-      "title": "Add a new server"
+      "title": "Neuen Server hinzufügen"
     },
     "settings": {
-      "title": "Settings",
-      "app_menu": "Toggle app menu",
-      "settings": "Settings",
-      "thirdparty": "Third-party licenses"
+      "title": "Einstellungen",
+      "app_menu": "App-Menü umschalten",
+      "settings": "Einstellungen",
+      "thirdparty": "Lizenzen von Drittanbietern"
     },
     "servers": {
-      "authorize": "Authorize",
-      "profile": "Open profile",
-      "remove": "Remove",
-      "announcements": "Announcements",
-      "lists": "Lists",
-      "followed_hashtags": "Followed Hashtags"
+      "authorize": "Autorisieren",
+      "profile": "Profil öffnen",
+      "remove": "Entfernen",
+      "announcements": "Ankündigungen",
+      "lists": "Listen",
+      "followed_hashtags": "Abonnierte Hashtags"
     }
   },
   "servers": {
     "new": {
-      "title": "Add Server",
+      "title": "Server hinzufügen",
       "domain": "Domain",
-      "add": "Add",
-      "cancel": "Cancel",
-      "server_description": "You can also quit without signing in. If that case, you can see only Federated and Local timelines.",
-      "sign_in": "Sign In",
-      "finish": "Finish",
-      "authorization_code": "Authorization Code",
-      "authorization_help": "Please paste the authorization code from your browser",
-      "authorize": "Authorize",
-      "loading": "Loading"
+      "add": "Hinzufügen",
+      "cancel": "Abbrechen",
+      "server_description": "Sie können auch ohne Anmeldung beenden. Falls dies der Fall ist, können Sie nur föderierte und lokale Zeitachsen sehen.",
+      "sign_in": "Anmelden",
+      "finish": "Beenden",
+      "authorization_code": "Autorisierungscode",
+      "authorization_help": "Bitte füge den Autorisierungscode aus deinem Browser ein",
+      "authorize": "Autorisieren",
+      "loading": "Wird geladen"
     }
   },
   "settings": {
     "settings": {
-      "title": "Settings",
+      "title": "Einstellungen",
       "appearance": {
-        "title": "Appearance",
-        "font_size": "Font size",
-        "language": "Language"
+        "title": "Darstellung",
+        "font_size": "Schriftgröße",
+        "language": "Sprache"
       },
-      "save": "Save",
-      "close": "Close",
+      "save": "Speichern",
+      "close": "Schließen",
       "validation": {
         "font_size": {
-          "type": "Please enter a valid number",
-          "range": "Please enter a number from {from} to {to}",
-          "required": "Font size is required"
+          "type": "Bitte gib eine gültige Nummer ein",
+          "range": "Bitte gib eine Nummer von {from} bis {to} ein",
+          "required": "Schriftgröße ist erforderlich"
         },
         "language": {
-          "required": "Language is required"
+          "required": "Sprache ist erforderlich"
         }
       }
     },
     "thirdparty": {
-      "title": "Third-party licenses"
+      "title": "Drittanbieter-Lizenzen"
     }
   },
   "compose": {
-    "title": "New Post",
-    "from": "From",
+    "title": "Neuer Beitrag",
+    "from": "Von",
     "visibility": {
-      "public": "Public",
-      "unlisted": "Unlisted",
-      "private": "Private",
-      "direct": "Direct"
+      "public": "Öffentlich",
+      "unlisted": "Nicht gelistet",
+      "private": "Privat",
+      "direct": "Direkt"
     },
     "spoiler": {
-      "placeholder": "Write your warning here"
+      "placeholder": "Schreibe hier deine Warnung"
     },
     "status": {
       "title": "Status",
-      "placeholder": "What's on your mind?"
+      "placeholder": "Was gibt's Neues?"
     },
     "nsfw": {
-      "sensitive": "Sensitive",
-      "not_sensitive": "Not sensitive"
+      "sensitive": "Inhaltswarnung",
+      "not_sensitive": "Keine Inhaltswarnung"
     },
     "poll": {
-      "add_choice": "Add a choice",
-      "multiple": "multiple",
-      "simple": "simple",
-      "5min": "5 minutes",
-      "30min": "30 minutes",
-      "1h": "1 hour",
-      "6h": "6 hours",
-      "1d": "1 day",
-      "3d": "3 days",
-      "7d": "7 days"
+      "add_choice": "Auswahl hinzufügen",
+      "multiple": "mehrere",
+      "simple": "einfach",
+      "5min": "5 Minuten",
+      "30min": "30 Minuten",
+      "1h": "1 Stunde",
+      "6h": "6 Stunden",
+      "1d": "1 Tag",
+      "3d": "3 Tage",
+      "7d": "7 Tage"
     },
-    "cancel": "Cancel",
-    "post": "Post",
+    "cancel": "Abbrechen",
+    "post": "Beitrag",
     "edit_attachment": {
-      "title": "Edit media",
-      "label": "Describe for people who are blind or have low vision",
-      "submit": "Apply"
+      "title": "Medien bearbeiten",
+      "label": "Für Gehörlose und hörbehinderte Menschen beschreiben",
+      "submit": "Übernehmen"
     }
   },
   "timeline": {
-    "reload": "Reload",
+    "reload": "Erneut laden",
     "settings": {
-      "title": "Settings",
-      "unpin": "Unpin",
-      "column_width": "Column width"
+      "title": "Einstellungen",
+      "unpin": "Loslösen",
+      "column_width": "Spaltenbreite"
     },
-    "mark_as_read": "Mark as read",
+    "mark_as_read": "Als gelesen markieren",
     "notification": {
       "follow": {
-        "title": "Follow",
-        "body": "{user} followed you"
+        "title": "Folgen",
+        "body": "{user} folgte dir"
       },
       "follow_request": {
-        "title": "Follow Request",
-        "body": "{user} requested to follow you"
+        "title": "Follower-Anfrage",
+        "body": "{user} hat angefragt, dir zu folgen"
       },
       "favourite": {
-        "title": "Favourite",
-        "body": "{user} favourited your post"
+        "title": "Favorisieren",
+        "body": "{user} hat deinen Beitrag favorisiert"
       },
       "reblog": {
-        "title": "Boost",
-        "body": "{user} boosted your post"
+        "title": "Teilen",
+        "body": "{user} hat deinen Beitrag geteilt"
       },
       "poll_expired": {
-        "title": "Poll",
-        "body": "{user}'s poll is expired"
+        "title": "Umfrage",
+        "body": "Umfrage von {user} ist abgelaufen"
       },
       "poll_vote": {
-        "title": "Poll",
-        "body": "{user} voted your poll"
+        "title": "Umfrage",
+        "body": "{user} hat bei deiner Umfrage abgestimmt"
       },
       "quote": {
-        "title": "Quote",
-        "body": "{user} quoted your post"
+        "title": "Zitat",
+        "body": "{user} zitierte deinen Beitrag"
       },
       "status": {
         "title": "Status",
-        "body": "{user} just post"
+        "body": "{user} hat einen Beitrag erstellt"
       },
       "update": {
-        "title": "Update",
-        "body": "{user} updated the post"
+        "title": "Aktualisieren",
+        "body": "{user} hat den Beitrag aktualisiert"
       },
       "emoji_reaction": {
-        "title": "Reaction",
-        "body": "{user} reacted your post"
+        "title": "Reaktion",
+        "body": "{user} hat auf deinen Beitrag reagiert"
       },
       "move": {
-        "title": "Move",
-        "body": "{user} migrated to"
+        "title": "Verschieben",
+        "body": "{user} migrierte zu"
       }
     },
     "actions": {
-      "reply": "Reply",
+      "reply": "Antworten",
       "reblog": "Boost",
-      "favourite": "Favourite",
-      "emoji_reaction": "Emoji reaction",
-      "bookmark": "Bookmark",
+      "favourite": "Favorisieren",
+      "emoji_reaction": "Emoji-Reaktion",
+      "bookmark": "Lesezeichen",
       "detail": {
-        "title": "Detail",
-        "browser": "Open original page",
-        "copy": "Copy link to post",
-        "edit": "Edit",
-        "delete": "Delete",
-        "report": "Report {user}",
-        "from_other_account": "React from other accounts"
+        "title": "Details",
+        "browser": "Originalseite öffnen",
+        "copy": "Link in Beitrag kopieren",
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "report": "Melde {user}",
+        "from_other_account": "Von anderen Konten reagieren"
       }
     },
     "status": {
-      "show_more": "Show more",
-      "show_less": "Show less",
-      "media_hidden": "Media hidden",
-      "pinned_post": "Pnned post"
+      "show_more": "Mehr anzeigen",
+      "show_less": "Weniger anzeigen",
+      "media_hidden": "Inhalt verborgen",
+      "pinned_post": "Angehefteter Beitrag"
     },
     "poll": {
-      "vote": "Vote",
-      "refresh": "Refresh",
-      "people": "{count} people",
-      "closed": "Closed",
-      "left": "left"
+      "vote": "Abstimmung",
+      "refresh": "Aktualisieren",
+      "people": "{count} Personen",
+      "closed": "Geschlossen",
+      "left": "links"
     },
-    "new": "Add a new timeline",
-    "home": "Home",
-    "notifications": "Notifications",
-    "favourites": "Favourites",
-    "bookmarks": "Bookmarks",
-    "direct": "Direct messages",
-    "local": "Local",
-    "public": "Federated",
-    "back": "Back"
+    "new": "Neue Zeitleiste hinzufügen",
+    "home": "Hauptseite",
+    "notifications": "Benachrichtigungen",
+    "favourites": "Favoriten",
+    "bookmarks": "Lesezeichen",
+    "direct": "Direktnachrichten",
+    "local": "Lokal",
+    "public": "Föderiert",
+    "back": "Zurück"
   },
   "detail": {
-    "back": "Back",
-    "close": "Close",
-    "pin": "Pin",
-    "follow_tag": "Follow hashtag",
-    "unfollow_tag": "Unfollow hashtag",
+    "back": "Zurück",
+    "close": "Schließen",
+    "pin": "Anheften",
+    "follow_tag": "Hashtag folgen",
+    "unfollow_tag": "Hashtag entfolgen",
     "profile": {
-      "follow": "Follow",
-      "unfollow": "Unfollow",
-      "not_following": "Not Following",
-      "follow_requested": "Follow Requested",
-      "follows_you": "FOLLOWS YOU",
-      "posts": "Posts",
-      "following": "Following",
-      "followers": "Followers",
-      "open_page": "Open original page",
-      "mute": "Mute {user}",
-      "unmute": "Unmute {user}",
-      "block": "Block {user}",
-      "unblock": "Unblock {user}",
-      "unblock_domain": "Unblock domain {server}",
-      "list_management": "Add or Remove from lists",
-      "block_domain": "Block domain {server}"
+      "follow": "Folgen",
+      "unfollow": "Entfolgen",
+      "not_following": "Nicht folgen",
+      "follow_requested": "Folgen angefragt",
+      "follows_you": "FOLGT DIR",
+      "posts": "Beiträge",
+      "following": "Folgt",
+      "followers": "Follower",
+      "open_page": "Originalseite öffnen",
+      "mute": "{user} stummschalten",
+      "unmute": "Stummschaltung von {user} aufheben",
+      "block": "{user} blockieren",
+      "unblock": "Blockierung von {user} aufheben",
+      "unblock_domain": "Sperre von {server} aufheben",
+      "list_management": "Aus Listen hinzufügen oder entfernen",
+      "block_domain": "{server} sperren"
     }
   },
   "report": {
-    "title": "Report {user}",
+    "title": "Melde {user}",
     "category": {
-      "title": "Tell us what's going on with this post",
-      "description": "Choose the best match",
-      "spam": "It's spam",
-      "violation": "It violates server rules",
-      "other": "It's something else",
-      "next": "Next"
+      "title": "Sag uns, was mit diesem Beitrag vor sich geht",
+      "description": "Wähle die passendste Kategorie",
+      "spam": "Das ist Spam",
+      "violation": "Verstoß gegen die Instanzregeln",
+      "other": "Etwas anderes",
+      "next": "Weiter"
     },
     "rules": {
-      "title": "Which rules are being violated?",
-      "description": "Select all that apply",
-      "no_rules": "There is not rule in this server.",
-      "next": "Next"
+      "title": "Welche Regeln werden verletzt?",
+      "description": "Wähle alle zutreffenden Punkte aus",
+      "no_rules": "Es gibt keine Regel auf diesem Server.",
+      "next": "Weiter"
     },
     "statuses": {
-      "title": "Are there any posts that back up this report?",
-      "description": "Select all that apply",
-      "no_status": "There is not status.",
-      "next": "Next"
+      "title": "Gibt es Beiträge, die diesen Bericht unterstützen?",
+      "description": "Wähle alle zutreffenden Punkte aus",
+      "no_status": "Es gibt keinen Status.",
+      "next": "Weiter"
     },
     "comment": {
-      "title": "Is there anything else you think we should know?",
-      "placeholder": "Additional comments",
-      "forward": "Forward to the original server",
-      "next": "Submit"
+      "title": "Gibt es weitere Anmerkungen, von denen wir wissen sollten?",
+      "placeholder": "Zusätzliche Kommentare",
+      "forward": "An den ursprünglichen Server weiterleiten",
+      "next": "Absenden"
     }
   },
   "announcements": {
-    "title": "Announcement @{domain}",
-    "close": "Close"
+    "title": "Ankündigung @{domain}",
+    "close": "Schließen"
   },
   "from_other_account": {
-    "title": "React from other accounts",
+    "title": "Von anderen Konten reagieren",
     "accounts": {
-      "title": "Which account do you want react from?",
-      "next": "Next"
+      "title": "Von welchem Konto möchtest du reagieren?",
+      "next": "Weiter"
     },
     "status": {
-      "title": "React on the status from {account}",
-      "searching": "Searching",
-      "not_found": "Sorry, the status is not found in {server}",
-      "next": "Close"
+      "title": "Auf den Status von {account} reagieren",
+      "searching": "Suchen",
+      "not_found": "Entschuldige, der Status wurde nicht in {server} gefunden",
+      "next": "Schließen"
     }
   },
   "list_memberships": {
-    "title": "List memberships",
-    "search_placeholder": "Search among people you follow"
+    "title": "Mitgliedschaften auflisten",
+    "search_placeholder": "Suche nach Leuten, denen du folgst"
   }
 }
