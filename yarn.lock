@@ -963,9 +963,9 @@
   integrity sha512-Hr5Jfhc9eYOQNPYO5WLDq/n4jqijdHNlDXjuAQkkt+mWdQR+XJToOHrsD4cPaMXpn6KO7y2+wM8AZEs8VpBLVA==
 
 "@types/lodash@^4.14.184":
-  version "4.14.195"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.195.tgz#bafc975b252eb6cea78882ce8a7b6bf22a6de632"
-  integrity sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==
+  version "4.14.196"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.196.tgz#a7c3d6fc52d8d71328b764e28e080b4169ec7a95"
+  integrity sha512-22y3o88f4a94mKljsZcanlNWPzO0uBsBdzLAngf2tp533LzZcQzb6+eZPJ+vCTt+bqF2XnvT9gejTLsAcJAJyQ==
 
 "@types/node@*", "@types/node@^20.3.1":
   version "20.4.5"
@@ -1008,7 +1008,16 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@16 || 17 || 18", "@types/react@^18.2.12":
+"@types/react@*":
+  version "18.2.17"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.17.tgz#baa565b17ddb649c2dac85b5eaf9e9a1fe0f3b4e"
+  integrity sha512-u+e7OlgPPh+aryjOm5UJMX32OvB2E3QASOAqVMY6Ahs90djagxwv2ya0IctglNbNTexC12qCSMZG47KPfy1hAA==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@16 || 17 || 18", "@types/react@^18.2.12":
   version "18.2.15"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.15.tgz#14792b35df676c20ec3cf595b262f8c615a73066"
   integrity sha512-oEjE7TQt1fFTFSbf8kkNuc798ahTUzn3Le67/PWjE8MAfYAD/qB7O8hSTcromLFqHCt9bcdOg5GXMokzTjJ5SA==
@@ -3794,9 +3803,9 @@ rsuite-table@^5.11.0:
     react-is "^17.0.2"
 
 rsuite@^5.35.1:
-  version "5.37.1"
-  resolved "https://registry.yarnpkg.com/rsuite/-/rsuite-5.37.1.tgz#f1e08dbd6f36acb59acf5cb92ce6c7123920fe8e"
-  integrity sha512-VafJoEAGABfXsRgzrGYlKLL7m0F/ghjq/p9ZhRfPuygAC+NASK65c9iYWja9WydpTqOzkeKzemP8QJqPBAgffA==
+  version "5.37.2"
+  resolved "https://registry.yarnpkg.com/rsuite/-/rsuite-5.37.2.tgz#de36ca5b4195121e9a80ea81837a9fa7248245fb"
+  integrity sha512-Z7I5RmZ0D0Zocb7/ndndhFXNoQH+vzcv3eZ4mpcf6AbpkrBSJgo0i4iEJSvF/hE8bU+d5Ztj4oYhDbdTmjxPpQ==
   dependencies:
     "@babel/runtime" "^7.20.1"
     "@juggle/resize-observer" "^3.4.0"
