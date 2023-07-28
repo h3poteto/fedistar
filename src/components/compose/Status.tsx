@@ -313,6 +313,7 @@ const Status: React.FC<Props> = props => {
       spoiler: '',
       status: ''
     })
+    setCW(false)
     if (props.onClose) {
       props.onClose()
     }
@@ -419,6 +420,11 @@ const Status: React.FC<Props> = props => {
         })
       )
     }
+  }
+
+  const toggleCW = () => {
+    setCW(current => !current)
+    setFormValue(current => Object.assign({}, current, { spoiler: '' }))
   }
 
   const EmojiPicker = forwardRef<HTMLDivElement>((props, ref) => (
@@ -536,7 +542,7 @@ const Status: React.FC<Props> = props => {
                 <Icon as={privacyIcon(visibility)} style={{ fontSize: '1.1em' }} />
               </Button>
             </Whisper>
-            <Button appearance="subtle" onClick={() => setCW(previous => !previous)}>
+            <Button appearance="subtle" onClick={() => toggleCW()}>
               <span style={{ fontSize: '0.8em' }}>CW</span>
             </Button>
             <Whisper placement="bottomEnd" delay={100} trigger="click" speaker={LanguageDropdown} preventOverflow>
