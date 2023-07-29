@@ -24,18 +24,29 @@ export default function EditMedia(props: Props) {
     description: ''
   })
   const [loading, setLoading] = useState(false)
+  const [attachment, setAttachment] = useState<Entity.Attachment | null>(null)
 
   const formRef = useRef<any>()
 
   useEffect(() => {
     if (!props.attachment) {
+      setAttachment(null)
       return
     }
-    if (props.attachment.description) {
-      setFormValue({
-        description: props.attachment.description
-      })
+    const f = async () => {
+      const res = await props.client.getMedia(props.attachment.id)
+      setAttachment(res.data)
+      if (res.data.description) {
+        setFormValue({
+          description: res.data.description
+        })
+      } else {
+        setFormValue({
+          description: ''
+        })
+      }
     }
+    f()
   }, [props.attachment, props.client])
 
   const handleSubmit = async () => {
@@ -47,7 +58,7 @@ export default function EditMedia(props: Props) {
     }
     setLoading(true)
     try {
-      await props.client.updateMedia(props.attachment.id, { description: formValue.description })
+      await props.client.updateMedia(attachment.id, { description: formValue.description })
     } finally {
       setLoading(false)
     }
@@ -80,7 +91,7 @@ export default function EditMedia(props: Props) {
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={16}>
             <div style={{ height: '320px', width: '320px' }}>
-              {props.attachment && <Image src={props.attachment.preview_url} fill alt="" style={{ objectFit: 'contain' }} />}
+              {attachment && <Image src={attachment.preview_url} fill alt="" style={{ objectFit: 'contain' }} />}
             </div>
           </FlexboxGrid.Item>
         </FlexboxGrid>
