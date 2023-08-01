@@ -24,6 +24,7 @@ pub enum LocaleType {
     #[serde(rename = "pt-BR")]
     PtBr,
     Fr,
+    De,
 }
 
 pub(crate) fn read_settings(filepath: &PathBuf) -> Result<Settings, String> {
@@ -52,6 +53,7 @@ impl fmt::Display for LocaleType {
             LocaleType::It => write!(f, "it"),
             LocaleType::PtBr => write!(f, "pt-BR"),
             LocaleType::Fr => write!(f, "fr"),
+            LocaleType::De => write!(f, "de"),
         }
     }
 }

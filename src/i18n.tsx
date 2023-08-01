@@ -3,6 +3,7 @@ import ja from '../locales/ja/translation.json'
 import it from '../locales/it/translation.json'
 import pt_BR from '../locales/pt-BR/translation.json'
 import fr from '../locales/fr/translation.json'
+import de from '../locales/de/translation.json'
 import { flattenMessages } from './utils/flattenMessage'
 import { createContext, useState } from 'react'
 import { IntlProvider } from 'react-intl'
@@ -25,7 +26,8 @@ export const IntlProviderWrapper: React.FC<Props> = props => {
     { locale: 'ja', messages: flattenMessages(ja) },
     { locale: 'it', messages: flattenMessages(it) },
     { locale: 'pt-BR', messages: flattenMessages(pt_BR) },
-    { locale: 'fr', messages: flattenMessages(fr) }
+    { locale: 'fr', messages: flattenMessages(fr) },
+    { locale: 'de', messages: flattenMessages(de) }
   ]
   const [lang, setLang] = useState(langs[0])
 
