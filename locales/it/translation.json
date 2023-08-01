@@ -67,7 +67,7 @@
       "remove": "Rimuovi",
       "announcements": "Annunci",
       "lists": "Liste",
-      "followed_hashtags": "Followed Hashtags"
+      "followed_hashtags": "Hashtag seguiti"
     }
   },
   "servers": {
@@ -111,7 +111,7 @@
     }
   },
   "compose": {
-    "title": "Nuovo sondaggio",
+    "title": "Scrivi qualcosa",
     "from": "Da",
     "visibility": {
       "public": "Pubblico",
@@ -123,12 +123,12 @@
       "placeholder": "Scrivi l'avvertenza"
     },
     "status": {
-      "title": "Status",
+      "title": "Messaggio",
       "placeholder": "A cosa stai pensando?"
     },
     "nsfw": {
-      "sensitive": "Suscettibile",
-      "not_sensitive": "Non suscettibile"
+      "sensitive": "Arreca disagio",
+      "not_sensitive": "Non arreca disagio"
     },
     "poll": {
       "add_choice": "Aggiungi opzione",
