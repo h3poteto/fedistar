@@ -141,6 +141,7 @@ export default function ListDetail(props: Props) {
                     client={client}
                     server={server}
                     account={account}
+                    columnWidth="sm"
                     updateStatus={updateStatus}
                     openMedia={props.openMedia}
                     setReplyOpened={() => null}

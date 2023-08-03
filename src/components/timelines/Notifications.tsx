@@ -351,6 +351,7 @@ const Notifications: React.FC<Props> = props => {
                         client={client}
                         server={props.server}
                         account={account}
+                        columnWidth={props.timeline.column_width}
                         updateStatus={updateStatus}
                         openMedia={props.openMedia}
                         setReplyOpened={opened => (replyOpened.current = opened)}

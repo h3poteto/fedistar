@@ -466,6 +466,7 @@ const Timeline: React.FC<Props> = props => {
                       client={client}
                       server={props.server}
                       account={account}
+                      columnWidth={props.timeline.column_width}
                       updateStatus={status => setStatuses(current => updateStatus(current, status))}
                       openMedia={props.openMedia}
                       setReplyOpened={opened => (replyOpened.current = opened)}

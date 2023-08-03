@@ -5,12 +5,14 @@ import Status from '../status/Status'
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import Move from './Move'
+import { ColumnWidth } from 'src/entities/timeline'
 
 type Props = {
   notification: Entity.Notification
   client: MegalodonInterface
   server: Server
   account: Account | null
+  columnWidth: ColumnWidth
   updateStatus: (status: Entity.Status) => void
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setReplyOpened: (opened: boolean) => void
@@ -69,6 +71,7 @@ const notification = (props: Props) => {
             status={props.notification.status}
             server={props.server}
             account={props.account}
+            columnWidth={props.columnWidth}
             updateStatus={props.updateStatus}
             openMedia={props.openMedia}
             setReplyOpened={props.setReplyOpened}
