@@ -15,6 +15,7 @@ import Body from './Body'
 import Actions from './Actions'
 import Poll from './Poll'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { ColumnWidth } from 'src/entities/timeline'
 
 type Props = {
   status: Entity.Status
@@ -22,6 +23,7 @@ type Props = {
   server: Server
   account: Account | null
   pinned?: boolean
+  columnWidth: ColumnWidth
   updateStatus: (status: Entity.Status) => void
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setReplyOpened?: (opened: boolean) => void
@@ -164,7 +166,12 @@ const Status: React.FC<Props> = props => {
           <Body status={status} onClick={statusClicked} />
           {status.poll && <Poll poll={status.poll} client={props.client} pollUpdated={refresh} />}
           {status.media_attachments.length > 0 && (
-            <Attachments attachments={status.media_attachments} sensitive={status.sensitive} openMedia={props.openMedia} />
+            <Attachments
+              attachments={status.media_attachments}
+              sensitive={status.sensitive}
+              openMedia={props.openMedia}
+              columnWidth={props.columnWidth}
+            />
           )}
           {status.emoji_reactions &&
             status.emoji_reactions.map(e => (

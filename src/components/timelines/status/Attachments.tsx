@@ -1,15 +1,18 @@
 import Image from 'next/image'
 import { Entity } from 'megalodon'
-import { Button, IconButton, Tag } from 'rsuite'
+import { Button, IconButton } from 'rsuite'
 import { Icon } from '@rsuite/icons'
-import { BsCameraVideo, BsVolumeUp, BsEyeSlash } from 'react-icons/bs'
-import { useState } from 'react'
+import { BsEyeSlash, BsCaretRightFill, BsVolumeUp } from 'react-icons/bs'
+import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
+import emptyPreview from 'src/black.png'
+import { ColumnWidth } from 'src/entities/timeline'
 
 type Props = {
   attachments: Array<Entity.Attachment>
   sensitive: boolean
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
+  columnWidth: ColumnWidth
 }
 
 const Attachments: React.FC<Props> = props => {
@@ -27,13 +30,87 @@ const Attachments: React.FC<Props> = props => {
         </Button>
       )}
 
-      {!sensitive &&
-        props.attachments.map((media, index) => (
-          <div key={index} style={{ margin: '4px' }}>
-            <Attachment media={media} changeSensitive={changeSensitive} openMedia={() => props.openMedia(props.attachments, index)} />
-          </div>
-        ))}
+      {!sensitive && (
+        <AttachmentBox
+          attachments={props.attachments}
+          openMedia={props.openMedia}
+          changeSensitive={changeSensitive}
+          columnWidth={props.columnWidth}
+        />
+      )}
     </div>
+  )
+}
+
+type AttachmentBoxProps = {
+  attachments: Array<Entity.Attachment>
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
+  changeSensitive: () => void
+  columnWidth: ColumnWidth
+}
+
+function AttachmentBox(props: AttachmentBoxProps) {
+  const [max, setMax] = useState(1)
+  const [remains, setRemains] = useState(0)
+
+  useEffect(() => {
+    let m = 1
+    switch (props.columnWidth) {
+      case 'xs':
+      case 'sm':
+        m = 1
+        break
+      case 'md':
+      case 'lg':
+        m = 2
+        break
+    }
+    setMax(m)
+    const length = props.attachments.length
+    setRemains(length - m)
+  }, [props.attachments, props.columnWidth])
+
+  return (
+    <>
+      <div style={{ display: 'flex' }}>
+        {props.attachments
+          .filter((_, index) => index < max)
+          .map((media, index) => (
+            <div key={index} style={{ margin: '4px' }}>
+              <Attachment
+                media={media}
+                changeSensitive={props.changeSensitive}
+                openMedia={() => props.openMedia(props.attachments, index)}
+              />
+            </div>
+          ))}
+        {remains > 0 && (
+          <div style={{ position: 'relative', margin: '4px', overflow: 'hidden' }}>
+            <div
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                fontSize: '1.4em',
+                cursor: 'pointer'
+              }}
+            >
+              +{remains}
+            </div>
+            <Image
+              width={62}
+              height={128}
+              src={emptyPreview}
+              alt="More attachments"
+              title="More attachments"
+              onClick={() => props.openMedia(props.attachments, max)}
+              style={{ objectFit: 'cover', cursor: 'pointer', borderRadius: '4px' }}
+            />
+          </div>
+        )}
+      </div>
+    </>
   )
 }
 
@@ -46,49 +123,50 @@ type AttachmentProps = {
 const Attachment: React.FC<AttachmentProps> = props => {
   const { media, changeSensitive } = props
 
-  switch (media.type) {
-    case 'gifv':
-      return (
-        <Tag className="attachment" onClick={() => props.openMedia(media)}>
-          <Icon as={BsCameraVideo} style={{ fontSize: '1.2em', paddingRight: '4px' }} />
-          GIF
-        </Tag>
-      )
-    case 'video':
-      return (
-        <Tag className="attachment" onClick={() => props.openMedia(media)}>
-          <Icon as={BsCameraVideo} style={{ fontSize: '1.2em', paddingRight: '4px' }} />
-          VIDEO
-        </Tag>
-      )
-    case 'audio':
-      return (
-        <Tag className="attachment" onClick={() => props.openMedia(media)}>
-          <Icon as={BsVolumeUp} style={{ fontSize: '1.2em', paddingRight: '4px' }} />
-          AUDIO
-        </Tag>
-      )
-    default:
-      return (
-        <div style={{ position: 'relative' }}>
-          <IconButton
-            icon={<Icon as={BsEyeSlash} />}
-            size="sm"
-            appearance="subtle"
-            onClick={changeSensitive}
-            style={{ position: 'absolute', top: '4px', left: '4px' }}
-          />
-          <Image
-            width={128}
-            height={128}
-            src={media.preview_url}
-            alt={media.description ? media.description : media.id}
-            title={media.description ? media.description : media.id}
-            onClick={() => props.openMedia(media)}
-            style={{ objectFit: 'cover', cursor: 'pointer', borderRadius: '4px' }}
-          />
-        </div>
-      )
+  return (
+    <div style={{ position: 'relative' }}>
+      <IconButton
+        icon={<Icon as={BsEyeSlash} />}
+        size="sm"
+        appearance="subtle"
+        onClick={changeSensitive}
+        style={{ position: 'absolute', top: '4px', left: '4px' }}
+      />
+      {(media.type === 'gifv' || media.type === 'video') && (
+        <IconButton
+          icon={<Icon as={BsCaretRightFill} />}
+          circle
+          onClick={() => props.openMedia(media)}
+          style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+        />
+      )}
+      {media.type === 'audio' && (
+        <IconButton
+          icon={<Icon as={BsVolumeUp} />}
+          circle
+          onClick={() => props.openMedia(media)}
+          style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+        />
+      )}
+
+      <Image
+        width={128}
+        height={128}
+        src={previewImage(media)}
+        alt={media.description ? media.description : media.id}
+        title={media.description ? media.description : media.id}
+        onClick={() => props.openMedia(media)}
+        style={{ objectFit: 'cover', cursor: 'pointer', borderRadius: '4px' }}
+      />
+    </div>
+  )
+}
+
+const previewImage = (media: Entity.Attachment) => {
+  if (media.preview_url && media.preview_url.length > 0) {
+    return media.preview_url
+  } else {
+    return emptyPreview
   }
 }
 
