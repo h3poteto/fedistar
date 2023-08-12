@@ -1,4 +1,6 @@
 import { Entity } from 'megalodon'
+import { ThemeType } from './entities/settings'
+import { localeType } from './i18n'
 
 export type ReceiveNotificationPayload = {
   server_id: number
@@ -38,4 +40,12 @@ export type DeleteTimelineStatusPayload = {
 export type ReceiveTimelineConversationPayload = {
   timeline_id: number
   conversation: Entity.Conversation
+}
+
+export type UpdatedSettingsPayload = {
+  appearance: {
+    font_size: number
+    language: localeType
+    color_theme: ThemeType
+  }
 }

@@ -1,5 +1,5 @@
 use serde::{Deserialize, Serialize};
-use serde_json::{from_str, to_string};
+use serde_json::{from_str, to_string, Value};
 use std::{fmt, fs, path::PathBuf};
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
@@ -11,6 +11,7 @@ pub struct Settings {
 pub struct Appearance {
     pub font_size: u32,
     pub language: LocaleType,
+    pub color_theme: ThemeType,
 }
 
 #[derive(Debug, Serialize, Deserialize, sqlx::Type, Clone, PartialEq, Eq)]
@@ -27,6 +28,15 @@ pub enum LocaleType {
     De,
 }
 
+#[derive(Debug, Serialize, Deserialize, sqlx::Type, Clone, PartialEq, Eq)]
+#[sqlx(rename_all = "kebab-case")]
+#[serde(rename_all = "kebab-case")]
+pub enum ThemeType {
+    Dark,
+    Light,
+    HighContrast,
+}
+
 pub(crate) fn read_settings(filepath: &PathBuf) -> Result<Settings, String> {
     let Ok(text) = fs::read_to_string(filepath) else {
         // Default settings
@@ -34,15 +44,37 @@ pub(crate) fn read_settings(filepath: &PathBuf) -> Result<Settings, String> {
             appearance: Appearance {
                 font_size: 14,
                 language: LocaleType::En,
+                color_theme: ThemeType::Dark,
             }
         })
     };
-    from_str::<Settings>(&text).map_err(|err| err.to_string())
+    let updated = update_settings_with_default(filepath, text)?;
+    from_str::<Settings>(&updated).map_err(|err| err.to_string())
 }
 
 pub(crate) fn save_settings(filepath: &PathBuf, settings: &Settings) -> Result<(), String> {
     let str = to_string(settings).map_err(|err| err.to_string())?;
     fs::write(filepath, str).map_err(|err| err.to_string())
+}
+
+pub(crate) fn update_settings_with_default(
+    filepath: &PathBuf,
+    original: String,
+) -> Result<String, String> {
+    let Ok(text) = fs::read_to_string(filepath) else {
+        return Err("Settings file does not exist".to_string())
+    };
+    let Ok(value) = serde_json::from_str::<Value>(text.as_str()) else {
+        return Err("Failed to load json".to_string())
+    };
+    if value["appearance"]["color_theme"] == Value::Null {
+        let mut update = value.clone();
+        update["appearance"]["color_theme"] = Value::String("dark".to_string());
+        let str = update.to_string();
+        let _ = fs::write(filepath, str).map_err(|err| err.to_string());
+        return Ok(update.to_string());
+    }
+    Ok(original)
 }
 
 impl fmt::Display for LocaleType {
