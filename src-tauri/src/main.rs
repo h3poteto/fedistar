@@ -197,6 +197,11 @@ struct UpdatedTimelinePayload {
     timelines: Vec<(entities::Timeline, entities::Server)>,
 }
 
+#[derive(Clone, Serialize)]
+struct UpdatedSettingsPayload {
+    settings: settings::Settings,
+}
+
 #[tauri::command]
 async fn add_timeline(
     app_handle: AppHandle,
@@ -362,8 +367,17 @@ fn read_settings(settings_path: State<'_, PathBuf>) -> Result<settings::Settings
 }
 
 #[tauri::command]
-fn save_settings(settings_path: State<'_, PathBuf>, obj: settings::Settings) -> Result<(), String> {
-    settings::save_settings(&settings_path, &obj)
+fn save_settings(
+    app_handle: AppHandle,
+    settings_path: State<'_, PathBuf>,
+    obj: settings::Settings,
+) -> Result<(), String> {
+    let _ = settings::save_settings(&settings_path, &obj)?;
+    let res = settings::read_settings(&settings_path)?;
+    app_handle
+        .emit_all("updated-settings", UpdatedSettingsPayload { settings: res })
+        .expect("Failed to update-settings event");
+    Ok(())
 }
 
 #[tauri::command]
