@@ -17,7 +17,7 @@ import {
   FormControlProps,
   DatePicker
 } from 'rsuite'
-import { useState, useEffect, useRef, forwardRef, ChangeEvent, useCallback } from 'react'
+import { useState, useEffect, useRef, forwardRef, ChangeEvent, useCallback, useContext } from 'react'
 import { Icon } from '@rsuite/icons'
 import {
   BsEmojiLaughing,
@@ -44,6 +44,7 @@ import AutoCompleteTextarea, { ArgProps as AutoCompleteTextareaProps } from './A
 import languages from 'src/utils/languages'
 import EditMedia from './EditMedia'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { Context } from 'src/theme'
 
 type Props = {
   server: Server
@@ -92,6 +93,7 @@ const model = Schema.Model({
 
 const Status: React.FC<Props> = props => {
   const { formatMessage } = useIntl()
+  const { theme } = useContext(Context)
 
   const [formValue, setFormValue] = useState<FormValue>({
     spoiler: '',
@@ -429,7 +431,15 @@ const Status: React.FC<Props> = props => {
 
   const EmojiPicker = forwardRef<HTMLDivElement>((props, ref) => (
     <Popover ref={ref} {...props}>
-      <Picker data={data} custom={customEmojis} onEmojiSelect={onEmojiSelect} previewPosition="none" set="native" perLine="7" />
+      <Picker
+        data={data}
+        custom={customEmojis}
+        onEmojiSelect={onEmojiSelect}
+        previewPosition="none"
+        set="native"
+        perLine="7"
+        theme={theme === 'high-contrast' ? 'dark' : theme}
+      />
     </Popover>
   ))
 

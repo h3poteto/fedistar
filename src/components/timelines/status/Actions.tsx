@@ -14,7 +14,7 @@ import {
   BsLock
 } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
-import { Dispatch, SetStateAction, ReactElement, useState, forwardRef, useRef } from 'react'
+import { Dispatch, SetStateAction, ReactElement, useState, forwardRef, useRef, useContext } from 'react'
 import { Entity, MegalodonInterface, Response } from 'megalodon'
 import Picker from '@emoji-mart/react'
 
@@ -24,6 +24,7 @@ import { Server } from 'src/entities/server'
 import { data } from 'src/utils/emojiData'
 import { Account } from 'src/entities/account'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { Context } from 'src/theme'
 
 type Props = {
   disabled:
@@ -49,6 +50,7 @@ type Props = {
 
 const Actions: React.FC<Props> = props => {
   const { formatMessage } = useIntl()
+  const { theme } = useContext(Context)
 
   const { status, client } = props
   const [favouriteActivating, setFavouriteActivating] = useState<boolean>(false)
@@ -130,7 +132,14 @@ const Actions: React.FC<Props> = props => {
 
   const EmojiPicker = forwardRef<HTMLDivElement>((props, ref) => (
     <Popover ref={ref} {...props}>
-      <Picker data={data} onEmojiSelect={onEmojiSelect} previewPosition="none" set="native" perLine="6" />
+      <Picker
+        data={data}
+        onEmojiSelect={onEmojiSelect}
+        previewPosition="none"
+        set="native"
+        perLine="6"
+        theme={theme === 'high-contrast' ? 'dark' : theme}
+      />
     </Popover>
   ))
 
