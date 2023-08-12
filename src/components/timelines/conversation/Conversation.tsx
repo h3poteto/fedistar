@@ -6,6 +6,7 @@ import { BsPaperclip } from 'react-icons/bs'
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
 import Body from '../status/Body'
+import { useState } from 'react'
 
 type Props = {
   conversation: Entity.Conversation
@@ -15,6 +16,7 @@ type Props = {
 const Conversation: React.FC<Props> = props => {
   const { conversation } = props
   const account = conversation.accounts[0]
+  const [spoilered, setSpoilered] = useState<boolean>(conversation.last_status && conversation.last_status.spoiler_text.length > 0)
 
   return (
     <div className="conversation">
@@ -46,6 +48,8 @@ const Conversation: React.FC<Props> = props => {
               status={conversation.last_status}
               style={{ color: 'var(--rs-text-tertiary)' }}
               onClick={() => props.selectStatus(conversation.id, conversation.last_status)}
+              spoilered={spoilered}
+              setSpoilered={setSpoilered}
             />
           )}
           {conversation.last_status &&

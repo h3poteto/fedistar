@@ -1,4 +1,4 @@
-import { MouseEventHandler } from 'react'
+import { MouseEventHandler, useState } from 'react'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { Avatar, Button, FlexboxGrid, toaster, Notification } from 'rsuite'
 import { Icon } from '@rsuite/icons'
@@ -160,6 +160,7 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
 const Reaction: React.FC<Props> = props => {
   const { formatMessage } = useIntl()
   const status = props.notification.status
+  const [spoilered, setSpoilered] = useState<boolean>(status.spoiler_text.length > 0)
 
   const refresh = async () => {
     const res = await props.client.getStatus(status.id)
@@ -259,16 +260,21 @@ const Reaction: React.FC<Props> = props => {
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </div>
-          <Body status={status} onClick={statusClicked} />
-          {status.poll && <Poll poll={status.poll} client={props.client} pollUpdated={refresh} />}
-          {status.media_attachments.map((media, index) => (
-            <div key={index}>
-              <Button appearance="subtle" size="sm" onClick={() => props.openMedia(status.media_attachments, index)}>
-                <Icon as={BsPaperclip} />
-                {media.id}
-              </Button>
-            </div>
-          ))}
+          <Body status={status} onClick={statusClicked} spoilered={spoilered} setSpoilered={setSpoilered} />
+          {!spoilered && (
+            <>
+              {status.poll && <Poll poll={status.poll} client={props.client} pollUpdated={refresh} />}
+              {status.media_attachments.map((media, index) => (
+                <div key={index}>
+                  <Button appearance="subtle" size="sm" onClick={() => props.openMedia(status.media_attachments, index)}>
+                    <Icon as={BsPaperclip} />
+                    {media.id}
+                  </Button>
+                </div>
+              ))}
+            </>
+          )}
+
           <div className="toolbox"></div>
         </div>
       </div>

@@ -39,6 +39,7 @@ const Status: React.FC<Props> = props => {
   const { client } = props
   const [showReply, setShowReply] = useState<boolean>(false)
   const [showEdit, setShowEdit] = useState<boolean>(false)
+  const [spoilered, setSpoilered] = useState<boolean>(props.status.spoiler_text.length > 0)
   const toaster = useToaster()
 
   const status = originalStatus(props.status)
@@ -163,22 +164,26 @@ const Status: React.FC<Props> = props => {
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </div>
-          <Body status={status} onClick={statusClicked} />
-          {status.poll && <Poll poll={status.poll} client={props.client} pollUpdated={refresh} />}
-          {status.media_attachments.length > 0 && (
-            <Attachments
-              attachments={status.media_attachments}
-              sensitive={status.sensitive}
-              openMedia={props.openMedia}
-              columnWidth={props.columnWidth}
-            />
+          <Body status={status} onClick={statusClicked} spoilered={spoilered} setSpoilered={setSpoilered} />
+          {!spoilered && (
+            <>
+              {status.poll && <Poll poll={status.poll} client={props.client} pollUpdated={refresh} />}
+              {status.media_attachments.length > 0 && (
+                <Attachments
+                  attachments={status.media_attachments}
+                  sensitive={status.sensitive}
+                  openMedia={props.openMedia}
+                  columnWidth={props.columnWidth}
+                />
+              )}
+              {status.emoji_reactions &&
+                status.emoji_reactions.map(e => (
+                  <Button appearance="subtle" size="sm" key={e.name} onClick={() => emojiClicked(e)}>
+                    {e.name} {e.count}
+                  </Button>
+                ))}
+            </>
           )}
-          {status.emoji_reactions &&
-            status.emoji_reactions.map(e => (
-              <Button appearance="subtle" size="sm" key={e.name} onClick={() => emojiClicked(e)}>
-                {e.name} {e.count}
-              </Button>
-            ))}
           <Actions
             disabled={props.server.account_id === null}
             server={props.server}

@@ -112,6 +112,7 @@ type PostProps = {
 function Post(props: PostProps) {
   const { status, client } = props
   const [showReply, setShowReply] = useState(false)
+  const [spoilered, setSpoilered] = useState(status.spoiler_text.length > 0)
 
   return (
     <>
@@ -137,15 +138,16 @@ function Post(props: PostProps) {
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </div>
-          <Body status={status} />
-          {status.media_attachments.map((media, index) => (
-            <div key={index}>
-              <Button appearance="subtle" size="sm">
-                <Icon as={BsPaperclip} />
-                {media.id}
-              </Button>
-            </div>
-          ))}
+          <Body status={status} spoilered={spoilered} setSpoilered={setSpoilered} />
+          {!spoilered &&
+            status.media_attachments.map((media, index) => (
+              <div key={index}>
+                <Button appearance="subtle" size="sm">
+                  <Icon as={BsPaperclip} />
+                  {media.id}
+                </Button>
+              </div>
+            ))}
           <div className="toolbox">
             <Actions
               disabled={{

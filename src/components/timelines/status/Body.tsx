@@ -1,5 +1,5 @@
 import { Entity } from 'megalodon'
-import { HTMLAttributes, useState } from 'react'
+import { Dispatch, HTMLAttributes, SetStateAction } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Button } from 'rsuite'
 import emojify from 'src/utils/emojify'
@@ -7,11 +7,13 @@ import LinkPreview from './LinkPreview'
 
 type Props = {
   status: Entity.Status
+  spoilered: boolean
+  setSpoilered: Dispatch<SetStateAction<boolean>>
   onClick?: (e: any) => void
 } & HTMLAttributes<HTMLElement>
 
 const Body: React.FC<Props> = props => {
-  const [spoilered, setSpoilered] = useState<boolean>(props.status.spoiler_text.length > 0)
+  const { spoilered, setSpoilered } = props
 
   const spoiler = () => {
     if (props.status.spoiler_text.length > 0) {
