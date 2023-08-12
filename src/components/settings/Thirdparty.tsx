@@ -16,15 +16,15 @@ const Thirdparty: React.FC<Props> = props => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <List style={{ margin: '0 8px', backgroundColor: 'var(--rs-gray-700)' }}>
+        <List style={{ margin: '0 8px', backgroundColor: 'var(--rs-border-secondary)' }}>
           {licenses.map((l, index) => (
             <List.Item
               style={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                backgroundColor: 'var(--rs-gray-700)',
-                boxShadow: '0 -1px 0 var(--rs-gray-600),0 1px 0 var(--rs-gray-600)'
+                backgroundColor: 'var(--rs-border-secondary)',
+                boxShadow: '0 -1px 0 var(--rs-border-primary),0 1px 0 var(--rs-border-primary)'
               }}
               key={index}
             >

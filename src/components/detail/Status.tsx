@@ -133,7 +133,7 @@ const StatusDetail: React.FC<Props> = props => {
 
   return (
     <>
-      <Header style={{ backgroundColor: 'var(--rs-gray-700)' }}>
+      <Header style={{ backgroundColor: 'var(--rs-border-secondary)' }}>
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item>
             <Button appearance="link" onClick={back}>
@@ -148,7 +148,7 @@ const StatusDetail: React.FC<Props> = props => {
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </Header>
-      <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'auto' }} className="timeline-scrollable">
+      <Content style={{ height: '100%', backgroundColor: 'var(--rs-bg-card)', overflowY: 'auto' }} className="timeline-scrollable">
         <List hover style={{ width: 'calc(340px - 6px)' }}>
           {[...ancestors, status, ...descendants]
             .filter(s => s !== null)
@@ -158,8 +158,8 @@ const StatusDetail: React.FC<Props> = props => {
                 style={{
                   paddingTop: '2px',
                   paddingBottom: '2px',
-                  backgroundColor: 'var(--rs-gray-700)',
-                  boxShadow: '0 -1px 0 var(--rs-gray-900),0 1px 0 var(--rs-gray-900)'
+                  backgroundColor: 'var(--rs-border-secondary)',
+                  boxShadow: '0 -1px 0 var(--rs-bg-well),0 1px 0 var(--rs-bg-well)'
                 }}
               >
                 <Status

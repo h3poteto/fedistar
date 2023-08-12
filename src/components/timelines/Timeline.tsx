@@ -350,7 +350,7 @@ const Timeline: React.FC<Props> = props => {
   return (
     <div style={{ width: columnWidth(props.timeline.column_width), minWidth: columnWidth(props.timeline.column_width), margin: '0 4px' }}>
       <Container style={{ height: '100%' }}>
-        <Header style={{ backgroundColor: 'var(--rs-gray-800)' }}>
+        <Header style={{ backgroundColor: 'var(--rs-bg-card)' }}>
           <FlexboxGrid align="middle" justify="space-between">
             <FlexboxGrid.Item style={{ width: 'calc(100% - 80px)' }}>
               <FlexboxGrid align="middle">
@@ -460,7 +460,7 @@ const Timeline: React.FC<Props> = props => {
                 endReached={loadMore}
                 overscan={TIMELINE_STATUSES_COUNT}
                 itemContent={(_, status) => (
-                  <List.Item key={status.id} style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-gray-800)' }}>
+                  <List.Item key={status.id} style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-bg-card)' }}>
                     <Status
                       status={status}
                       client={client}

@@ -51,7 +51,7 @@ const Detail: React.FC<Props> = props => {
     >
       {(p, ref) => (
         <div {...p} ref={ref}>
-          <Container className="profile" style={{ height: '100%', borderLeft: '1px solid var(--rs-gray-600)', overflow: 'hidden' }}>
+          <Container className="profile" style={{ height: '100%', borderLeft: '1px solid var(--rs-border-primary)', overflow: 'hidden' }}>
             {target === 'status' && (
               <Status
                 openMedia={(media: Array<Entity.Attachment>, index: number) =>

@@ -102,7 +102,7 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
       ) : (
         <List>
           {pinned.map(status => (
-            <List.Item key={status.id} style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(rs-gray-800)' }}>
+            <List.Item key={status.id} style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(rs-bg-card)' }}>
               <Status
                 status={status}
                 client={client}
@@ -120,7 +120,7 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
             </List.Item>
           ))}
           {statuses.map(status => (
-            <List.Item key={status.id} style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(rs-gray-800)' }}>
+            <List.Item key={status.id} style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(rs-bg-card)' }}>
               <Status
                 status={status}
                 client={client}

@@ -239,7 +239,7 @@ const New: React.FC<Props> = props => {
   const selectTimeline = () => (
     <div className="add-timeline" style={{ width: '240px', minWidth: '240px', display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Container style={{ height: '100%' }}>
-        <Header style={{ backgroundColor: 'var(--rs-gray-700)' }}>
+        <Header style={{ backgroundColor: 'var(--rs-border-secondary)' }}>
           <FlexboxGrid align="middle" justify="space-between">
             <FlexboxGrid.Item style={{ paddingLeft: '8px', lineHeight: '52px' }}>@{server.domain}</FlexboxGrid.Item>
             <FlexboxGrid.Item>

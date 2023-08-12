@@ -247,7 +247,7 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: var(--rs-gray-700);
+    background-color: var(--rs-progress-bg);
     border-radius: 4px !important;
   }
 
@@ -268,14 +268,14 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: var(--rs-gray-600);
+    background-color: var(--rs-border-primary);
     border-radius: 4px !important;
     opacity: 0;
   }
 
   &::-webkit-scrollbar-track {
     border-radius: 4px !important;
-    background-color: var(--rs-gray-800);
+    background-color: var(--rs-bg-card);
   }
 
   &:hover {

@@ -141,7 +141,7 @@ const Conversations: React.FC<Props> = props => {
   return (
     <div style={{ width: columnWidth(props.timeline.column_width), minWidth: columnWidth(props.timeline.column_width), margin: '0 4px' }}>
       <Container style={{ height: 'calc(100% - 8px)' }}>
-        <Header style={{ backgroundColor: 'var(--rs-gray-800)' }}>
+        <Header style={{ backgroundColor: 'var(--rs-bg-card)' }}>
           <FlexboxGrid align="middle" justify="space-between">
             <FlexboxGrid.Item style={{ width: 'calc(100% - 80px)' }}>
               <FlexboxGrid align="middle">
@@ -222,7 +222,7 @@ const Conversations: React.FC<Props> = props => {
                 itemContent={(_, conversation) => (
                   <List.Item
                     key={conversation.id}
-                    style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-gray-800)' }}
+                    style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-bg-card)' }}
                   >
                     <Conversation conversation={conversation} openMedia={props.openMedia} selectStatus={selectStatus} />
                   </List.Item>

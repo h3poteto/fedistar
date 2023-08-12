@@ -182,7 +182,7 @@ const Profile: React.FC<Props> = props => {
 
   return (
     <>
-      <Header style={{ backgroundColor: 'var(--rs-gray-700)' }}>
+      <Header style={{ backgroundColor: 'var(--rs-border-secondary)' }}>
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item>
             <Button appearance="link" onClick={back}>
@@ -200,7 +200,7 @@ const Profile: React.FC<Props> = props => {
 
       {user && (
         <Content
-          style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)', overflowY: 'auto', overflowX: 'hidden', position: 'relative' }}
+          style={{ height: '100%', backgroundColor: 'var(--rs-bg-card)', overflowY: 'auto', overflowX: 'hidden', position: 'relative' }}
           className="timeline-scrollable"
           onScroll={onScroll}
           ref={scrollerRef}

@@ -234,7 +234,7 @@ const Notifications: React.FC<Props> = props => {
       id={props.timeline.id.toString()}
     >
       <Container style={{ height: '100%' }}>
-        <Header style={{ backgroundColor: 'var(--rs-gray-800)' }}>
+        <Header style={{ backgroundColor: 'var(--rs-bg-card)' }}>
           <FlexboxGrid align="middle" justify="space-between">
             <FlexboxGrid.Item style={{ width: 'calc(100% - 108px)' }}>
               <FlexboxGrid align="middle">
@@ -341,7 +341,7 @@ const Notifications: React.FC<Props> = props => {
                         {
                           paddingTop: '2px',
                           paddingBottom: '2px',
-                          backgroundColor: 'var(--rs-gray-800)'
+                          backgroundColor: 'var(--rs-bg-card)'
                         },
                         shadow
                       )}
