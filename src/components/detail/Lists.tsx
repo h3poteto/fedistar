@@ -52,7 +52,7 @@ export default function ListsDetail(props: Props) {
 
   return (
     <>
-      <Header style={{ backgroundColor: 'var(--rs-gray-700)' }}>
+      <Header style={{ backgroundColor: 'var(--rs-border-secondary)' }}>
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item>
             <Button appearance="link" onClick={back}>
@@ -67,7 +67,7 @@ export default function ListsDetail(props: Props) {
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </Header>
-      <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)' }}>
+      <Content style={{ height: '100%', backgroundColor: 'var(--rs-bg-card)' }}>
         <List style={{ height: '100%' }}>
           {lists.map((list, index) => (
             <List.Item key={index}>

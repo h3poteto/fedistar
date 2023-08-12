@@ -189,7 +189,7 @@ const AutoCompleteList = forwardRef<HTMLDivElement, AutoCompleteListProps>((prop
             key={index}
             onMouseOver={() => props.setHighlight(index)}
             onClick={() => select(index)}
-            style={{ padding: '4px', backgroundColor: highlight === index ? 'var(--rs-primary-900)' : 'inherit' }}
+            style={{ padding: '4px', backgroundColor: highlight === index ? 'var(--rs-radio-tile-checked-disabled-color)' : 'inherit' }}
           >
             {d.code && <span style={{ paddingRight: '4px' }}>{d.code}</span>}
             {d.icon && (

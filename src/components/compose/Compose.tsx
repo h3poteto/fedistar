@@ -86,8 +86,8 @@ const Compose: React.FC<Props> = props => {
   }
 
   return (
-    <Container style={{ backgroundColor: 'var(--rs-gray-700)', height: '100%' }}>
-      <Header style={{ borderBottom: '1px solid var(--rs-divider-border)', backgroundColor: 'var(--rs-gray-600)' }}>
+    <Container style={{ backgroundColor: 'var(--rs-border-secondary)', height: '100%' }}>
+      <Header style={{ borderBottom: '1px solid var(--rs-divider-border)', backgroundColor: 'var(--rs-state-hover-bg)' }}>
         <FlexboxGrid justify="space-between" align="middle">
           <FlexboxGrid.Item style={{ lineHeight: '53px', paddingLeft: '12px', fontSize: '18px' }}>
             <FormattedMessage id="compose.title" />
@@ -99,7 +99,7 @@ const Compose: React.FC<Props> = props => {
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </Header>
-      <Content style={{ height: '100%', margin: '12px', backgroundColor: 'var(--rs-gray-700)' }}>
+      <Content style={{ height: '100%', margin: '12px', backgroundColor: 'var(--rs-border-secondary)' }}>
         <div style={{ fontSize: '1.2em', padding: '12px 0' }}>
           <FormattedMessage id="compose.from" />
         </div>

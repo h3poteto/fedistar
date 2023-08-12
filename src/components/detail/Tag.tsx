@@ -60,7 +60,6 @@ export default function TagDetail(props: Props) {
         setStatuses(res.data)
         const t = await client.getTag(tag)
         setHashtag(t.data)
-        console.log(t.data)
       }
       f()
     }
@@ -132,7 +131,7 @@ export default function TagDetail(props: Props) {
 
   return (
     <>
-      <Header style={{ backgroundColor: 'var(--rs-gray-700)' }}>
+      <Header style={{ backgroundColor: 'var(--rs-border-secondary)' }}>
         <FlexboxGrid justify="space-between">
           <FlexboxGrid.Item>
             <Button appearance="link" onClick={back}>
@@ -164,14 +163,14 @@ export default function TagDetail(props: Props) {
       {statuses.length === 0 ? (
         <Loader style={{ margin: '10em auto' }} />
       ) : (
-        <Content style={{ height: '100%', backgroundColor: 'var(--rs-gray-800)' }}>
+        <Content style={{ height: '100%', backgroundColor: 'var(--rs-bg-card)' }}>
           <List style={{ height: '100%' }}>
             <Virtuoso
               style={{ height: '100%' }}
               data={statuses}
               className="timeline-scrollable"
               itemContent={(_, status) => (
-                <List.Item key={status.id} style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-gray-800)' }}>
+                <List.Item key={status.id} style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-bg-card)' }}>
                   <Status
                     status={status}
                     client={client}
