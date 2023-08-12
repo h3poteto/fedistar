@@ -91,7 +91,8 @@
       "appearance": {
         "title": "Aparência",
         "font_size": "Tamanho da fonte",
-        "language": "Idioma"
+        "language": "Idioma",
+        "color_theme": "Color theme"
       },
       "save": "Salvar",
       "close": "Fechar",
