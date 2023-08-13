@@ -3182,9 +3182,9 @@ makeerror@1.0.12:
     tmpl "1.0.5"
 
 megalodon@^6.1.0:
-  version "6.1.5"
-  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-6.1.5.tgz#385910e6754531bd44c028e6c61539456577d111"
-  integrity sha512-6+1Lg6XDfKbwpOtvI8YZOV0HBhEfArncdhlbM0ndb8XBtZ8OBWMVR2aFtlxPOzzVs+BMpNR0ob32n5sjFj2JHQ==
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-6.2.0.tgz#77ca7622576dc393df15d1282b14a4954edd9b62"
+  integrity sha512-OTnZ8zcg9fhYMTbGDTDEOunSA0/zIqzEu03Ne925aTaAqL7i4gnxiwBHrRusPcA7JS4wnuicAYuwuOXZVrDK0w==
   dependencies:
     "@types/oauth" "^0.9.0"
     "@types/ws" "^8.5.5"
