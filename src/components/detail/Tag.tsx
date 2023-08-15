@@ -58,8 +58,12 @@ export default function TagDetail(props: Props) {
       const f = async () => {
         const res = await client.getTagTimeline(tag)
         setStatuses(res.data)
-        const t = await client.getTag(tag)
-        setHashtag(t.data)
+        try {
+          const t = await client.getTag(tag)
+          setHashtag(t.data)
+        } catch (err) {
+          console.warn(err)
+        }
       }
       f()
     }
