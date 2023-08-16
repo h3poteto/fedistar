@@ -107,6 +107,8 @@ const Status: React.FC<Props> = props => {
   const [language, setLanguage] = useState<string>('en')
   const [editMediaModal, setEditMediaModal] = useState(false)
   const [editMedia, setEditMedia] = useState<Entity.Attachment | null>(null)
+  const [maxCharacters, setMaxCharacters] = useState<number | null>(null)
+  const [remaining, setRemaining] = useState<number | null>(null)
 
   const formRef = useRef<any>()
   const cwRef = useRef<HTMLDivElement>()
@@ -122,6 +124,10 @@ const Status: React.FC<Props> = props => {
     }
 
     const f = async () => {
+      const instance = await props.client.getInstance()
+      if (instance.data.configuration.statuses.max_characters) {
+        setMaxCharacters(instance.data.configuration.statuses.max_characters)
+      }
       const emojis = await props.client.getInstanceCustomEmojis()
       setCustomEmojis([
         {
@@ -219,6 +225,13 @@ const Status: React.FC<Props> = props => {
       }
     }
   }, [props.defaultLanguage, props.client])
+
+  // Set Remaining
+  useEffect(() => {
+    if (maxCharacters) {
+      setRemaining(maxCharacters - formValue.status.length)
+    }
+  }, [maxCharacters, formValue])
 
   const handleSubmit = async () => {
     if (loading) {
@@ -534,6 +547,15 @@ const Status: React.FC<Props> = props => {
               <Icon as={BsEmojiLaughing} style={{ fontSize: '1.2em' }} />
             </Button>
           </Whisper>
+          {remaining !== null && (
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              {remaining >= 0 ? (
+                <span style={{ color: 'var(--rs-text-tertiary)' }}>{remaining}</span>
+              ) : (
+                <span style={{ color: 'red' }}>{remaining}</span>
+              )}
+            </div>
+          )}
         </Form.Group>
         {formValue.poll && <Form.Control name="poll" accepter={PollInputControl} fieldError={formError.poll} />}
         {formValue.scheduled_at && <Form.Control name="scheduled_at" accepter={DatePicker} format="yyyy-MM-dd HH:mm" />}

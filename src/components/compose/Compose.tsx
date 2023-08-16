@@ -72,9 +72,11 @@ const Compose: React.FC<Props> = props => {
     setClient(client)
     const f = async () => {
       const res = await client.verifyAccountCredentials()
-      setDefaultVisibility(res.data.source.privacy as 'public' | 'unlisted' | 'private' | 'direct')
-      setDefaultNSFW(res.data.source.sensitive)
-      setDefaultLanguage(res.data.source.language)
+      if (res.data.source) {
+        setDefaultVisibility(res.data.source.privacy as 'public' | 'unlisted' | 'private' | 'direct')
+        setDefaultNSFW(res.data.source.sensitive)
+        setDefaultLanguage(res.data.source.language)
+      }
     }
     f()
   }, [fromAccount])
