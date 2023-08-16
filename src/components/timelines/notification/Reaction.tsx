@@ -263,7 +263,7 @@ const Reaction: React.FC<Props> = props => {
           <Body status={status} onClick={statusClicked} spoilered={spoilered} setSpoilered={setSpoilered} />
           {!spoilered && (
             <>
-              {status.poll && <Poll poll={status.poll} client={props.client} pollUpdated={refresh} />}
+              {status.poll && <Poll poll={status.poll} client={props.client} pollUpdated={refresh} emojis={status.emojis} />}
               {status.media_attachments.map((media, index) => (
                 <div key={index}>
                   <Button appearance="subtle" size="sm" onClick={() => props.openMedia(status.media_attachments, index)}>

@@ -3,21 +3,23 @@ import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Button, Checkbox, CheckboxGroup, Progress, Radio, RadioGroup } from 'rsuite'
 import Time from 'src/components/utils/Time'
+import emojify from 'src/utils/emojify'
 
 type Props = {
   poll: Entity.Poll
+  emojis: Array<Entity.Emoji>
   client: MegalodonInterface
   pollUpdated: () => void
 }
 
 const Poll: React.FC<Props> = props => {
   if (props.poll.voted || props.poll.expired) {
-    return <PollResult poll={props.poll} client={props.client} pollUpdated={props.pollUpdated} />
+    return <PollResult {...props} />
   } else {
     if (props.poll.multiple) {
-      return <MultiplePoll poll={props.poll} client={props.client} pollUpdated={props.pollUpdated} />
+      return <MultiplePoll {...props} />
     } else {
-      return <SimplePoll poll={props.poll} client={props.client} pollUpdated={props.pollUpdated} />
+      return <SimplePoll {...props} />
     }
   }
 }
@@ -37,7 +39,9 @@ const SimplePoll: React.FC<Props> = props => {
       <RadioGroup value={pollRadio} onChange={value => setPollRadio(parseInt(value.toString()))}>
         {props.poll.options.map((option, index) => (
           <div key={index}>
-            <Radio value={index}>{option.title}</Radio>
+            <Radio value={index}>
+              <span dangerouslySetInnerHTML={{ __html: emojify(option.title, props.emojis) }} />
+            </Radio>
           </div>
         ))}
       </RadioGroup>
@@ -67,7 +71,9 @@ const MultiplePoll: React.FC<Props> = props => {
       <CheckboxGroup value={pollCheck} onChange={value => setPollCheck(value.map(v => parseInt(v.toString())))}>
         {props.poll.options.map((option, index) => (
           <div key={index}>
-            <Checkbox value={index}>{option.title}</Checkbox>
+            <Checkbox value={index}>
+              <span dangerouslySetInnerHTML={{ __html: emojify(option.title, props.emojis) }} />
+            </Checkbox>
           </div>
         ))}
       </CheckboxGroup>
@@ -87,7 +93,9 @@ const PollResult: React.FC<Props> = props => {
     <>
       {props.poll.options.map((option, index) => (
         <div key={index}>
-          <span style={{ paddingLeft: '12px' }}>{option.title}</span>
+          <span style={{ paddingLeft: '12px' }}>
+            <span dangerouslySetInnerHTML={{ __html: emojify(option.title, props.emojis) }} />
+          </span>
           <Progress.Line percent={percent(option.votes_count, props.poll.votes_count)} strokeWidth={5} />
         </div>
       ))}
