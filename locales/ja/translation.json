@@ -67,7 +67,7 @@
       "remove": "削除",
       "announcements": "お知らせ",
       "lists": "リスト",
-      "followed_hashtags": "Followed Hashtags"
+      "followed_hashtags": "フォロー中のハッシュタグ"
     }
   },
   "servers": {
@@ -92,7 +92,7 @@
         "title": "外観",
         "font_size": "フォントサイズ",
         "language": "言語",
-        "color_theme": "Color theme"
+        "color_theme": "カラーテーマ"
       },
       "save": "保存",
       "close": "閉じる",
