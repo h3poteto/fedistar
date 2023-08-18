@@ -164,7 +164,14 @@ const Attachment: React.FC<AttachmentProps> = props => {
 
 const previewImage = (media: Entity.Attachment) => {
   if (media.preview_url && media.preview_url.length > 0) {
-    return media.preview_url
+    switch (media.type) {
+      case 'gifv':
+      case 'video':
+      case 'audio':
+        return emptyPreview
+      default:
+        return media.preview_url
+    }
   } else {
     return emptyPreview
   }
