@@ -3779,9 +3779,9 @@ rsuite-table@^5.11.0:
     react-is "^17.0.2"
 
 rsuite@^5.35.1:
-  version "5.37.4"
-  resolved "https://registry.yarnpkg.com/rsuite/-/rsuite-5.37.4.tgz#2d76292727aec3eb406221e3c10a50fb9d08190f"
-  integrity sha512-Hv9uBRGl9EjjQLYYTKAy0yTbNniywCc2J2qA3IeGkacYp/oYW/g+MY1ASU2FzCFQKt8cNqTcaNbizmKZrV5waQ==
+  version "5.38.0"
+  resolved "https://registry.yarnpkg.com/rsuite/-/rsuite-5.38.0.tgz#b3c63363f6137e8b9ff6027893664356b895f10e"
+  integrity sha512-M3mwI3Jt1kL5OQZFzw57mDn8X+4cDAMG35Oeb7jE0ZSSndKJ8CS4OTifh187ZgDTwvWFyBDrKF3ggCA+1mrG0A==
   dependencies:
     "@babel/runtime" "^7.20.1"
     "@juggle/resize-observer" "^3.4.0"
