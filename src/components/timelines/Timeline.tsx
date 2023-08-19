@@ -347,13 +347,20 @@ const Timeline: React.FC<Props> = props => {
     return false
   }, [firstItemIndex, statuses, setStatuses, unreadStatuses])
 
+  const backToTop = () => {
+    scrollerRef.current.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
   return (
     <div style={{ width: columnWidth(props.timeline.column_width), minWidth: columnWidth(props.timeline.column_width), margin: '0 4px' }}>
       <Container style={{ height: '100%' }}>
         <Header style={{ backgroundColor: 'var(--rs-bg-card)' }}>
           <FlexboxGrid align="middle" justify="space-between">
             <FlexboxGrid.Item style={{ width: 'calc(100% - 80px)' }}>
-              <FlexboxGrid align="middle">
+              <FlexboxGrid align="middle" onClick={backToTop} style={{ cursor: 'pointer' }}>
                 {/** icon **/}
                 <FlexboxGrid.Item
                   style={{
