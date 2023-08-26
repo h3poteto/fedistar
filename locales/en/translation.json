@@ -151,6 +151,9 @@
       "submit": "Apply"
     }
   },
+  "search": {
+    "title": "Search"
+  },
   "timeline": {
     "reload": "Reload",
     "settings": {
