@@ -91,7 +91,7 @@ const AutoCompleteTextarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, 
         return
       }
       case '#': {
-        const res = await props.client.search(token, 'hashtags')
+        const res = await props.client.search(token, { type: 'hashtags' })
         setSuggestList(
           res.data.hashtags.map(tag => ({
             name: `#${tag.name}`
