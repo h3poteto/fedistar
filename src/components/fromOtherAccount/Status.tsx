@@ -30,7 +30,7 @@ export default function Status(props: Props) {
     const f = async () => {
       setSearching(true)
       try {
-        const res = await props.client.search(props.target.url, 'statuses', { resolve: true, limit: 1 })
+        const res = await props.client.search(props.target.url, { type: 'statuses', resolve: true, limit: 1 })
         setStatuses(res.data.statuses)
       } catch (err) {
         console.error(err)
