@@ -1,6 +1,6 @@
 {
   "alert": {
-    "no_server": "There is no server, so please add it at first.",
+    "no_server": "Nie ma serwera, więc najpierw go dodaj.",
     "need_auth": "Musisz autoryzować serwer.",
     "failed_add_server": "Nie udało się połączyć z {domain}, upewnij się, że adres URL serwera jest prawidłowy.",
     "failed_add_application": "Nie udało się dodać aplikacji.",
@@ -26,7 +26,7 @@
   "dialog": {
     "account_not_found": {
       "title": "Nie znaleziono konta",
-      "message": "The account does not exist in the server, do you want to open the account in your browser?",
+      "message": "Konto nie istnieje na serwerze, czy chcesz otworzyć konto w przeglądarce?",
       "button": "Otwórz"
     }
   },
@@ -34,7 +34,7 @@
     "navigator": {
       "servers": {
         "title": "Serwery",
-        "description": "You can remove or authorize servers, please right click.",
+        "description": "Możesz usunąć lub autoryzować serwery, kliknij prawym przyciskiem myszy.",
         "ok": "OK"
       }
     },
@@ -76,7 +76,7 @@
       "domain": "Domena",
       "add": "Dodaj",
       "cancel": "Anuluj",
-      "server_description": "You can also quit without signing in. If that case, you can see only Federated and Local timelines.",
+      "server_description": "Możesz również wyjść bez logowania. W takim przypadku możesz zobaczyć tylko sfederowane i lokalne osi czasu.",
       "sign_in": "Zaloguj się",
       "finish": "Zakończ",
       "authorization_code": "Kod autoryzacji",
@@ -98,7 +98,7 @@
       "close": "Zamknij",
       "validation": {
         "font_size": {
-          "type": "Please enter a valid number",
+          "type": "Wprowadź poprawny numer",
           "range": "Please enter a number from {from} to {to}",
           "required": "Rozmiar czcionki jest wymagany"
         },
@@ -121,11 +121,11 @@
       "direct": "Direct"
     },
     "spoiler": {
-      "placeholder": "Write your warning here"
+      "placeholder": "Wpisz ostrzeżenie tutaj"
     },
     "status": {
       "title": "Status",
-      "placeholder": "What's on your mind?"
+      "placeholder": "Co masz na myśli?"
     },
     "nsfw": {
       "sensitive": "Wrażliwe",
@@ -133,7 +133,7 @@
     },
     "poll": {
       "add_choice": "Dodaj opcję",
-      "multiple": "multiple",
+      "multiple": "wielokrotnego wyboru",
       "simple": "prosta",
       "5min": "5 minut",
       "30min": "30 minut",
@@ -147,7 +147,7 @@
     "post": "Post",
     "edit_attachment": {
       "title": "Edytuj multimedia",
-      "label": "Describe for people who are blind or have low vision",
+      "label": "Wprowadź opis dla niewidomych i niedowidzących",
       "submit": "Zastosuj"
     }
   },
@@ -162,10 +162,10 @@
     "notification": {
       "follow": {
         "title": "Obserwacja",
-        "body": "{user} followed you"
+        "body": "{user} Cię obserwuje"
       },
       "follow_request": {
-        "title": "Follow Request",
+        "title": "Prośba o obserwowanie",
         "body": "{user} requested to follow you"
       },
       "favourite": {
@@ -202,23 +202,23 @@
       },
       "move": {
         "title": "Move",
-        "body": "{user} migrated to"
+        "body": "Użytkownik {user} przeniósł się na"
       }
     },
     "actions": {
       "reply": "Odpowiedz",
       "reblog": "Podbij",
       "favourite": "Ulubione",
-      "emoji_reaction": "Emoji reaction",
+      "emoji_reaction": "Reakcja emoji",
       "bookmark": "Zakładka",
       "detail": {
         "title": "Szczegół",
-        "browser": "Open original page",
-        "copy": "Copy link to post",
+        "browser": "Otwórz oryginalną stronę",
+        "copy": "Skopiuj link do wpisu",
         "edit": "Edytuj",
         "delete": "Usuń",
         "report": "Zgłoś {user}",
-        "from_other_account": "React from other accounts"
+        "from_other_account": "Zareaguj z innych kont"
       }
     },
     "status": {
@@ -230,26 +230,26 @@
     "poll": {
       "vote": "Zagłosuj",
       "refresh": "Odśwież",
-      "people": "{count} people",
+      "people": "{count} ludzi",
       "closed": "Zamknięte",
       "left": "zostało"
     },
-    "new": "Add a new timeline",
+    "new": "Dodaj nową oś czasu",
     "home": "Strona główna",
     "notifications": "Powiadomienia",
     "favourites": "Ulubione",
     "bookmarks": "Zakładki",
-    "direct": "Direct messages",
+    "direct": "Wiadomości prywatne",
     "local": "Lokalne",
-    "public": "Federated",
+    "public": "Sfederowane",
     "back": "Wstecz"
   },
   "detail": {
     "back": "Wstecz",
     "close": "Zamknij",
     "pin": "Przypnij",
-    "follow_tag": "Follow hashtag",
-    "unfollow_tag": "Unfollow hashtag",
+    "follow_tag": "Obserwuj hasztag",
+    "unfollow_tag": "Przestań obserwować hasztag",
     "profile": {
       "follow": "Obserwuj",
       "unfollow": "Przestań obserwować",
@@ -258,55 +258,55 @@
       "follows_you": "OBSERWUJE CIĘ",
       "posts": "Wpisy",
       "following": "Following",
-      "followers": "Followers",
-      "open_page": "Open original page",
+      "followers": "Obserwujący",
+      "open_page": "Otwórz oryginalną stronę",
       "mute": "Wycisz {user}",
       "unmute": "Wycisz {user}",
       "block": "Zablokuj {user}",
-      "unblock": "Unblock {user}",
-      "unblock_domain": "Unblock domain {server}",
-      "list_management": "Add or Remove from lists",
-      "block_domain": "Block domain {server}"
+      "unblock": "Odblokuj {user}",
+      "unblock_domain": "Odblokuj domenę {server}",
+      "list_management": "Dodaj lub usuń z list",
+      "block_domain": "Zablokuj domenę {server}"
     }
   },
   "report": {
     "title": "Zgłoś {user}",
     "category": {
       "title": "Tell us what's going on with this post",
-      "description": "Choose the best match",
+      "description": "Wybierz najbardziej pasującą opcję",
       "spam": "To jest spam",
-      "violation": "It violates server rules",
-      "other": "It's something else",
-      "next": "Next"
+      "violation": "Narusza to zasady serwera",
+      "other": "Coś innego",
+      "next": "Dalej"
     },
     "rules": {
       "title": "Which rules are being violated?",
-      "description": "Select all that apply",
+      "description": "Wybierz wszystkie pasujące",
       "no_rules": "There is not rule in this server.",
-      "next": "Next"
+      "next": "Dalej"
     },
     "statuses": {
       "title": "Are there any posts that back up this report?",
-      "description": "Select all that apply",
-      "no_status": "There is not status.",
-      "next": "Next"
+      "description": "Wybierz wszystkie pasujące",
+      "no_status": "Brak statusu.",
+      "next": "Dalej"
     },
     "comment": {
-      "title": "Is there anything else you think we should know?",
-      "placeholder": "Additional comments",
+      "title": "Czy jest jeszcze coś, co uważasz, że powinniśmy wiedzieć?",
+      "placeholder": "Dodatkowe uwagi",
       "forward": "Forward to the original server",
       "next": "Wyślij"
     }
   },
   "announcements": {
-    "title": "Announcement @{domain}",
+    "title": "Ogłoszenie @{domain}",
     "close": "Zamknij"
   },
   "from_other_account": {
-    "title": "React from other accounts",
+    "title": "Zareaguj z innych kont",
     "accounts": {
       "title": "Which account do you want react from?",
-      "next": "Next"
+      "next": "Dalej"
     },
     "status": {
       "title": "React on the status from {account}",
