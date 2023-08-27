@@ -152,7 +152,11 @@
     }
   },
   "search": {
-    "title": "Search"
+    "title": "Search",
+    "placeholder": "Search or paste URL",
+    "results": {
+      "accounts": "People"
+    }
   },
   "timeline": {
     "reload": "Reload",

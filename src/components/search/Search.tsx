@@ -9,6 +9,7 @@ import { Account } from 'src/entities/account'
 import { invoke } from '@tauri-apps/api/tauri'
 import generator, { MegalodonInterface } from 'megalodon'
 import { USER_AGENT } from 'src/defaults'
+import Results from './Results'
 
 type Props = {
   setOpened: (value: boolean) => void
@@ -75,6 +76,7 @@ export default function Search(props: Props) {
             </Dropdown>
           </FlexboxGrid.Item>
         </FlexboxGrid>
+        {fromAccount && <Results client={client} server={fromAccount[1]} />}
       </Content>
     </Container>
   )

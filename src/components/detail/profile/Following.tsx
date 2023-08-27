@@ -119,7 +119,7 @@ const Following: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, r
       ) : (
         <List>
           {following.map(account => (
-            <List.Item key={account.id} style={{ padding: '4px 0', backgroundColor: 'var(rs-gary-800)' }}>
+            <List.Item key={account.id} style={{ padding: '4px 0' }}>
               <User user={account} relationship={targetRelationship(account)} follow={follow} unfollow={unfollow} />
             </List.Item>
           ))}
