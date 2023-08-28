@@ -155,7 +155,8 @@
     "title": "Search",
     "placeholder": "Search or paste URL",
     "results": {
-      "accounts": "People"
+      "accounts": "People",
+      "more": "Load more"
     }
   },
   "timeline": {

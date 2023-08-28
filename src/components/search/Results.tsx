@@ -1,7 +1,7 @@
 import { Icon } from '@rsuite/icons'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { BsSearch, BsPeople } from 'react-icons/bs'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Input, InputGroup, List, Avatar } from 'rsuite'
@@ -24,6 +24,11 @@ export default function Results(props: Props) {
     const res = await props.client.search(word, { limit: 5 })
     setAccounts(res.data.accounts)
   }
+
+  const loadMoreAccount = useCallback(async () => {
+    const res = await props.client.search(word, { type: 'accounts', limit: 5, offset: accounts.length })
+    setAccounts(prev => prev.concat(res.data.accounts))
+  }, [word, accounts])
 
   const open = (user: Entity.Account) => {
     router.push({ query: { user_id: user.id, server_id: props.server.id, account_id: props.server.account_id } })
@@ -52,6 +57,13 @@ export default function Results(props: Props) {
                 <User user={account} open={open} />
               </List.Item>
             ))}
+            <List.Item
+              key="more"
+              style={{ backgroundColor: 'var(--rs-border-primary)', padding: '1em 0', textAlign: 'center', cursor: 'pointer' }}
+              onClick={() => loadMoreAccount()}
+            >
+              <FormattedMessage id="search.results.more" />
+            </List.Item>
           </List>
         </div>
       )}
