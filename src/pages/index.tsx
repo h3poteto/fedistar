@@ -30,6 +30,7 @@ import ListMemberships from 'src/components/listMemberships/ListMemberships'
 import AddListMember from 'src/components/addListMember/AddListMember'
 import { useIntl } from 'react-intl'
 import { Context } from 'src/i18n'
+import Search from 'src/components/search/Search'
 
 const { scrollLeft } = DOMHelper
 
@@ -40,6 +41,7 @@ function App() {
   const [timelines, setTimelines] = useState<Array<[Timeline, Server]>>([])
   const [unreads, setUnreads] = useState<Array<Unread>>([])
   const [composeOpened, setComposeOpened] = useState<boolean>(false)
+  const [searchOpened, setSearchOpened] = useState<boolean>(false)
   const [style, setStyle] = useState<CSSProperties>({})
   const [highlighted, setHighlighted] = useState<Timeline | null>(null)
 
@@ -149,7 +151,17 @@ function App() {
 
   const toggleCompose = () => {
     if (servers.find(s => s.account !== null)) {
+      setSearchOpened(false)
       setComposeOpened(previous => !previous)
+    } else {
+      toaster.push(alert('info', formatMessage({ id: 'alert.need_auth' })), { placement: 'topStart' })
+    }
+  }
+
+  const toggleSearch = () => {
+    if (servers.find(s => s.account !== null)) {
+      setComposeOpened(false)
+      setSearchOpened(previous => !previous)
     } else {
       toaster.push(alert('info', formatMessage({ id: 'alert.need_auth' })), { placement: 'topStart' })
     }
@@ -223,6 +235,7 @@ function App() {
           openThirdparty={() => dispatch({ target: 'thirdparty', value: true })}
           openSettings={() => dispatch({ target: 'settings', value: true })}
           toggleCompose={toggleCompose}
+          toggleSearch={toggleSearch}
           setHighlighted={setHighlighted}
           setUnreads={setUnreads}
         />
@@ -236,6 +249,19 @@ function App() {
           {(props, ref) => (
             <div {...props} ref={ref} style={{ overflow: 'hidden' }}>
               <Compose setOpened={setComposeOpened} servers={servers} />
+            </div>
+          )}
+        </Animation.Transition>
+        <Animation.Transition
+          in={searchOpened}
+          exitedClassName="compose-exited"
+          exitingClassName="compose-exiting"
+          enteredClassName="compose-entered"
+          enteringClassName="compose-entering"
+        >
+          {(props, ref) => (
+            <div {...props} ref={ref} style={{ overflow: 'hidden' }}>
+              <Search setOpened={setSearchOpened} servers={servers} />
             </div>
           )}
         </Animation.Transition>

@@ -2,7 +2,7 @@ import { invoke } from '@tauri-apps/api/tauri'
 import { Dispatch, ReactElement, SetStateAction, useEffect, useState } from 'react'
 import { Icon } from '@rsuite/icons'
 import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge, FlexboxGrid, useToaster } from 'rsuite'
-import { BsPlus, BsGear, BsPencilSquare } from 'react-icons/bs'
+import { BsPlus, BsGear, BsPencilSquare, BsSearch } from 'react-icons/bs'
 import { Server, ServerSet } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import { Timeline } from 'src/entities/timeline'
@@ -23,6 +23,7 @@ type NavigatorProps = {
   openAuthorize: (server: Server) => void
   openAnnouncements: (server: Server, account: Account) => void
   toggleCompose: () => void
+  toggleSearch: () => void
   openThirdparty: () => void
   openSettings: () => void
   setHighlighted: Dispatch<SetStateAction<Timeline>>
@@ -131,6 +132,9 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
         <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Button appearance="link" size="lg" onClick={props.toggleCompose}>
             <Icon as={BsPencilSquare} style={{ fontSize: '1.4em' }} />
+          </Button>
+          <Button appearance="link" size="lg" onClick={props.toggleSearch}>
+            <Icon as={BsSearch} style={{ fontSize: '1.4em' }} />
           </Button>
         </Sidenav.Body>
       </Sidenav>
