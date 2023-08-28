@@ -156,6 +156,7 @@
     "placeholder": "Search or paste URL",
     "results": {
       "accounts": "People",
+      "hashtags": "Hashtags",
       "more": "Load more"
     }
   },
