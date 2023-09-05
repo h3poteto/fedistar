@@ -151,6 +151,15 @@
       "submit": "適用"
     }
   },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search or paste URL",
+    "results": {
+      "accounts": "People",
+      "hashtags": "Hashtags",
+      "more": "Load more"
+    }
+  },
   "timeline": {
     "reload": "再読み込み",
     "settings": {

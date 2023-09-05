@@ -151,6 +151,15 @@
       "submit": "Apply"
     }
   },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search or paste URL",
+    "results": {
+      "accounts": "People",
+      "hashtags": "Hashtags",
+      "more": "Load more"
+    }
+  },
   "timeline": {
     "reload": "Reload",
     "settings": {

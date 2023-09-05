@@ -41,12 +41,12 @@
     "timeline": {
       "settings": {
         "title": "Ustawienia osi czasu",
-        "description": "You can move and remove the timeline.",
+        "description": "Możesz przenieść lub usunąć oś czasu.",
         "ok": "OK"
       },
       "new": {
         "title": "Dodaj oś czasu",
-        "description": "Click this button to add a timeline.",
+        "description": "Kliknij ten przycisk, aby dodać oś czasu.",
         "ok": "OK"
       }
     }
@@ -99,7 +99,7 @@
       "validation": {
         "font_size": {
           "type": "Wprowadź poprawny numer",
-          "range": "Please enter a number from {from} to {to}",
+          "range": "Wprowadź numer od {from} do {to}",
           "required": "Rozmiar czcionki jest wymagany"
         },
         "language": {
@@ -116,9 +116,9 @@
     "from": "Od",
     "visibility": {
       "public": "Publiczne",
-      "unlisted": "Unlisted",
+      "unlisted": "Niewidoczne",
       "private": "Prywatne",
-      "direct": "Direct"
+      "direct": "Bezpośrednie"
     },
     "spoiler": {
       "placeholder": "Wpisz ostrzeżenie tutaj"
@@ -144,11 +144,20 @@
       "7d": "7 dni"
     },
     "cancel": "Anuluj",
-    "post": "Post",
+    "post": "Opublikuj",
     "edit_attachment": {
       "title": "Edytuj multimedia",
       "label": "Wprowadź opis dla niewidomych i niedowidzących",
       "submit": "Zastosuj"
+    }
+  },
+  "search": {
+    "title": "Szukaj",
+    "placeholder": "Szukaj lub wklej adres URL",
+    "results": {
+      "accounts": "Ludzie",
+      "hashtags": "Hasztagi",
+      "more": "Wczytaj więcej"
     }
   },
   "timeline": {
@@ -166,19 +175,19 @@
       },
       "follow_request": {
         "title": "Prośba o obserwowanie",
-        "body": "{user} requested to follow you"
+        "body": "{user} prosi Cię o pozwolenie na obserwację"
       },
       "favourite": {
         "title": "Ulubione",
-        "body": "{user} favourited your post"
+        "body": "{user} dodał(a) Twój wpis do ulubionych"
       },
       "reblog": {
         "title": "Podbij",
-        "body": "{user} boosted your post"
+        "body": "Twój post został podbity przez {user}"
       },
       "poll_expired": {
         "title": "Ankieta",
-        "body": "{user}'s poll is expired"
+        "body": "Ankieta {user} wygasła"
       },
       "poll_vote": {
         "title": "Ankieta",
@@ -254,10 +263,10 @@
       "follow": "Obserwuj",
       "unfollow": "Przestań obserwować",
       "not_following": "Nie obserwuje",
-      "follow_requested": "Follow Requested",
+      "follow_requested": "Wysłano prośbę o obserwację",
       "follows_you": "OBSERWUJE CIĘ",
       "posts": "Wpisy",
-      "following": "Following",
+      "following": "Obserwuje",
       "followers": "Obserwujący",
       "open_page": "Otwórz oryginalną stronę",
       "mute": "Wycisz {user}",
@@ -272,7 +281,7 @@
   "report": {
     "title": "Zgłoś {user}",
     "category": {
-      "title": "Tell us what's going on with this post",
+      "title": "Powiedz nam, co jest nie tak z tym wpisem",
       "description": "Wybierz najbardziej pasującą opcję",
       "spam": "To jest spam",
       "violation": "Narusza to zasady serwera",
@@ -280,13 +289,13 @@
       "next": "Dalej"
     },
     "rules": {
-      "title": "Which rules are being violated?",
+      "title": "Które zasady zostały złamane?",
       "description": "Wybierz wszystkie pasujące",
-      "no_rules": "There is not rule in this server.",
+      "no_rules": "Na tym serwerze nie ma reguł.",
       "next": "Dalej"
     },
     "statuses": {
-      "title": "Are there any posts that back up this report?",
+      "title": "Czy są jakieś wpisy, które obrazują opisany w zgłoszeniu problem?",
       "description": "Wybierz wszystkie pasujące",
       "no_status": "Brak statusu.",
       "next": "Dalej"
@@ -294,7 +303,7 @@
     "comment": {
       "title": "Czy jest jeszcze coś, co uważasz, że powinniśmy wiedzieć?",
       "placeholder": "Dodatkowe uwagi",
-      "forward": "Forward to the original server",
+      "forward": "Przekaż do oryginalnego serwera",
       "next": "Wyślij"
     }
   },
@@ -305,18 +314,18 @@
   "from_other_account": {
     "title": "Zareaguj z innych kont",
     "accounts": {
-      "title": "Which account do you want react from?",
+      "title": "Z którego konta chcesz zareagować?",
       "next": "Dalej"
     },
     "status": {
-      "title": "React on the status from {account}",
+      "title": "Zareaguj na status z konta {account}",
       "searching": "Wyszukiwanie",
-      "not_found": "Sorry, the status is not found in {server}",
+      "not_found": "Przepraszamy, status nie został znaleziony w {server}",
       "next": "Zamknij"
     }
   },
   "list_memberships": {
     "title": "List memberships",
-    "search_placeholder": "Search among people you follow"
+    "search_placeholder": "Szukaj wśród osób, które obserwujesz"
   }
 }
