@@ -35,14 +35,14 @@ type Props = {
 } & HTMLAttributes<HTMLElement>
 
 const Status: React.FC<Props> = props => {
+  const status = originalStatus(props.status)
+
   const { formatMessage } = useIntl()
   const { client } = props
   const [showReply, setShowReply] = useState<boolean>(false)
   const [showEdit, setShowEdit] = useState<boolean>(false)
-  const [spoilered, setSpoilered] = useState<boolean>(props.status.spoiler_text.length > 0)
+  const [spoilered, setSpoilered] = useState<boolean>(status.spoiler_text.length > 0)
   const toaster = useToaster()
-
-  const status = originalStatus(props.status)
 
   useEffect(() => {
     if (props.setReplyOpened) {
