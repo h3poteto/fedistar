@@ -3809,9 +3809,9 @@ react-use-set@^1.0.0:
   integrity sha512-6BBbOcWc/tOKuwd9gDtdunvOr/g40S0SkCBYvrSJvpI0upzNlHmLoeDvylnoP8PrjQXItClAFxseVGGhEkk7kw==
 
 react-virtuoso@^4.3.9:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/react-virtuoso/-/react-virtuoso-4.5.0.tgz#0bc043b4e3e928e7891aa541dd7e55d5b46db8c8"
-  integrity sha512-OMP6XrzJMMos1vbJZC16RxGW7utAxUMP7i5PNPi6epBNVH7nz+CF/DlmecNBep5wyjLud51dQ5epjb2A0w9W/Q==
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/react-virtuoso/-/react-virtuoso-4.5.1.tgz#74555974d159df0636c6918989150f71aedc53e8"
+  integrity sha512-Jdo9M/T5PcDAczvmXAKwvb/BW0MCMr/cb+3j2m9192zlQgQ+syMdJR42i+Sk80ln5aSNaL1fnxleJzdKsCc4lw==
 
 react-window@^1.8.8:
   version "1.8.9"
