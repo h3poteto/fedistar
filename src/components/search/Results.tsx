@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 import { BsSearch, BsPeople, BsHash, BsChatQuote } from 'react-icons/bs'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { Input, InputGroup, List, Avatar } from 'rsuite'
+import { Input, InputGroup, List, Avatar, Form } from 'rsuite'
 import { Server } from 'src/entities/server'
 import Status from 'src/components/timelines/status/Status'
 import emojify from 'src/utils/emojify'
@@ -97,12 +97,14 @@ export default function Results(props: Props) {
   return (
     <>
       <div style={{ margin: '12px 0' }}>
-        <InputGroup inside>
-          <Input placeholder={formatMessage({ id: 'search.placeholder' })} value={word} onChange={value => setWord(value)} />
-          <InputGroup.Button onClick={() => search(word)}>
-            <Icon as={BsSearch} />
-          </InputGroup.Button>
-        </InputGroup>
+        <Form onCheck={() => search(word)}>
+          <InputGroup inside>
+            <Input placeholder={formatMessage({ id: 'search.placeholder' })} value={word} onChange={value => setWord(value)} />
+            <InputGroup.Button onClick={() => search(word)}>
+              <Icon as={BsSearch} />
+            </InputGroup.Button>
+          </InputGroup>
+        </Form>
       </div>
       {/* accounts */}
       {accounts.length > 0 && (
