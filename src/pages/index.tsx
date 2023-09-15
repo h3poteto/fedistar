@@ -261,7 +261,17 @@ function App() {
         >
           {(props, ref) => (
             <div {...props} ref={ref} style={{ overflow: 'hidden' }}>
-              <Search setOpened={setSearchOpened} servers={servers} />
+              <Search
+                setOpened={setSearchOpened}
+                servers={servers}
+                openMedia={(media: Array<Entity.Attachment>, index: number) =>
+                  dispatch({ target: 'media', value: true, object: media, index: index })
+                }
+                openReport={(status: Entity.Status, client: MegalodonInterface) =>
+                  dispatch({ target: 'report', value: true, object: status, client: client })
+                }
+                openFromOtherAccount={(status: Entity.Status) => dispatch({ target: 'fromOtherAccount', value: true, object: status })}
+              />
             </div>
           )}
         </Animation.Transition>
