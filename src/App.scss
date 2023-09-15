@@ -284,3 +284,30 @@
     }
   }
 }
+
+.sidepanel-scrollable {
+  overflow-y: auto;
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px !important;
+    height: 6px !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--rs-divider-border);
+    border-radius: 4px !important;
+    opacity: 0;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 4px !important;
+    background-color: var(--rs-border-secondary);
+  }
+
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      opacity: 1;
+    }
+  }
+}
