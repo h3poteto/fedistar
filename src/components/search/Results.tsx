@@ -2,15 +2,21 @@ import { Icon } from '@rsuite/icons'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
-import { BsSearch, BsPeople, BsHash } from 'react-icons/bs'
+import { BsSearch, BsPeople, BsHash, BsChatQuote } from 'react-icons/bs'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Input, InputGroup, List, Avatar } from 'rsuite'
 import { Server } from 'src/entities/server'
+import Status from 'src/components/timelines/status/Status'
 import emojify from 'src/utils/emojify'
+import { Account } from 'src/entities/account'
 
 type Props = {
+  account: Account
   server: Server
   client: MegalodonInterface
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
+  openReport: (status: Entity.Status, client: MegalodonInterface) => void
+  openFromOtherAccount: (status: Entity.Status) => void
 }
 
 export default function Results(props: Props) {
@@ -20,11 +26,13 @@ export default function Results(props: Props) {
   const [word, setWord] = useState<string>('')
   const [accounts, setAccounts] = useState<Array<Entity.Account>>([])
   const [hashtags, setHashtags] = useState<Array<Entity.Tag>>([])
+  const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
 
   const search = async (word: string) => {
-    const res = await props.client.search(word, { limit: 5 })
+    const res = await props.client.search(word, { limit: 5, resolve: true })
     setAccounts(res.data.accounts)
     setHashtags(res.data.hashtags)
+    setStatuses(res.data.statuses)
   }
 
   const loadMoreAccount = useCallback(async () => {
@@ -43,6 +51,47 @@ export default function Results(props: Props) {
 
   const openTag = (tag: Entity.Tag) => {
     router.push({ query: { tag: tag.name, server_id: props.server.id, account_id: props.server.account_id } })
+  }
+
+  const setStatusDetail = (statusId: string, serverId: number, accountId?: number) => {
+    if (accountId) {
+      router.push({ query: { status_id: statusId, server_id: serverId, account_id: accountId } })
+    } else {
+      router.push({ query: { status_id: statusId, server_id: serverId } })
+    }
+  }
+
+  const setAccountDetail = (userId: string, serverId: number, accountId?: number) => {
+    if (accountId) {
+      router.push({ query: { user_id: userId, server_id: serverId, account_id: accountId } })
+    } else {
+      router.push({ query: { user_id: userId, server_id: serverId } })
+    }
+  }
+
+  const setTagDetail = (tag: string, serverId: number, accountId?: number) => {
+    if (accountId) {
+      router.push({ query: { tag: tag, server_id: serverId, account_id: accountId } })
+    } else {
+      router.push({ query: { tag: tag, server_id: serverId } })
+    }
+  }
+
+  const updateStatus = (status: Entity.Status) => {
+    const renew = statuses.map(s => {
+      if (s.id === status.id) {
+        return status
+      } else if (s.reblog && s.reblog.id === status.id) {
+        return Object.assign({}, s, { reblog: status })
+      } else if (status.reblog && s.id === status.reblog.id) {
+        return status.reblog
+      } else if (status.reblog && s.reblog && s.reblog.id === status.reblog.id) {
+        return Object.assign({}, s, { reblog: status.reblog })
+      } else {
+        return s
+      }
+    })
+    setStatuses(renew)
   }
 
   return (
@@ -100,6 +149,37 @@ export default function Results(props: Props) {
             >
               <FormattedMessage id="search.results.more" />
             </List.Item>
+          </List>
+        </div>
+      )}
+      {/* statuses */}
+      {statuses.length > 0 && (
+        <div style={{ width: '100%' }}>
+          <div style={{ fontSize: '1.2em', margin: '0.4em 0' }}>
+            <Icon as={BsChatQuote} style={{ fontSize: '1.2em', marginRight: '0.2em' }} />
+            <FormattedMessage id="search.results.statuses" />
+          </div>
+          <List>
+            {statuses.map((status, index) => (
+              <List.Item key={index} style={{ backgroundColor: 'var(--rs-border-primary)', padding: '4px 0' }}>
+                <div style={{ padding: '12px 8px', cursor: 'pointer' }}>
+                  <Status
+                    status={status}
+                    client={props.client}
+                    server={props.server}
+                    account={props.account}
+                    columnWidth="xs"
+                    updateStatus={updateStatus}
+                    openMedia={props.openMedia}
+                    setStatusDetail={setStatusDetail}
+                    setAccountDetail={setAccountDetail}
+                    setTagDetail={setTagDetail}
+                    openReport={props.openReport}
+                    openFromOtherAccount={props.openFromOtherAccount}
+                  />
+                </div>
+              </List.Item>
+            ))}
           </List>
         </div>
       )}

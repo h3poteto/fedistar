@@ -14,6 +14,9 @@ import Results from './Results'
 type Props = {
   setOpened: (value: boolean) => void
   servers: Array<ServerSet>
+  openMedia: (media: Array<Entity.Attachment>, index: number) => void
+  openReport: (status: Entity.Status, client: MegalodonInterface) => void
+  openFromOtherAccount: (status: Entity.Status) => void
 }
 
 export default function Search(props: Props) {
@@ -76,7 +79,16 @@ export default function Search(props: Props) {
             </Dropdown>
           </FlexboxGrid.Item>
         </FlexboxGrid>
-        {fromAccount && <Results client={client} server={fromAccount[1]} />}
+        {fromAccount && (
+          <Results
+            client={client}
+            server={fromAccount[1]}
+            account={fromAccount[0]}
+            openMedia={props.openMedia}
+            openReport={props.openReport}
+            openFromOtherAccount={props.openFromOtherAccount}
+          />
+        )}
       </Content>
     </Container>
   )
