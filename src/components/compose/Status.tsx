@@ -532,6 +532,7 @@ const Status: React.FC<Props> = props => {
             placeholder={formatMessage({ id: 'compose.status.placeholder' })}
             emojis={customEmojis}
             client={props.client}
+            style={{ fontSize: '1em' }}
           />
           {/** delay is required to fix popover position **/}
           <Whisper
