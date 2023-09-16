@@ -67,7 +67,7 @@ export default function Search(props: Props) {
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </Header>
-      <Content style={{ height: '100%', margin: '12px', backgroundColor: 'var(--rs-border-secondary)' }}>
+      <Content style={{ height: '100%', padding: '12px', backgroundColor: 'var(--rs-border-secondary)' }} className="sidepanel-scrollable">
         <FlexboxGrid>
           <FlexboxGrid.Item>
             <Dropdown renderToggle={(props, ref) => renderAccountIcon(props, ref, fromAccount)} onSelect={selectAccount}>
