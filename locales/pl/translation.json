@@ -157,6 +157,7 @@
     "results": {
       "accounts": "Ludzie",
       "hashtags": "Hasztagi",
+      "statuses": "Statusy",
       "more": "Wczytaj więcej"
     }
   },
@@ -191,26 +192,26 @@
       },
       "poll_vote": {
         "title": "Ankieta",
-        "body": "{user} voted your poll"
+        "body": "{user} zagłosował/a w twojej ankiecie"
       },
       "quote": {
         "title": "Cytat",
-        "body": "{user} quoted your post"
+        "body": "Twój post został zacytowany przez {user}"
       },
       "status": {
         "title": "Status",
-        "body": "{user} just post"
+        "body": "{user} opublikował/a wpis"
       },
       "update": {
         "title": "Aktualizuj",
-        "body": "{user} updated the post"
+        "body": "{user} zaktualizował/a post"
       },
       "emoji_reaction": {
         "title": "Reakcja",
-        "body": "{user} reacted your post"
+        "body": "{user} zareagował/a na twój post"
       },
       "move": {
-        "title": "Move",
+        "title": "Przesunięcie",
         "body": "Użytkownik {user} przeniósł się na"
       }
     },
@@ -325,7 +326,7 @@
     }
   },
   "list_memberships": {
-    "title": "List memberships",
+    "title": "Lista członków",
     "search_placeholder": "Szukaj wśród osób, które obserwujesz"
   }
 }

@@ -157,6 +157,7 @@
     "results": {
       "accounts": "People",
       "hashtags": "Hashtags",
+      "statuses": "Statuses",
       "more": "Load more"
     }
   },
