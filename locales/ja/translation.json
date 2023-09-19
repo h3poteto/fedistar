@@ -152,13 +152,13 @@
     }
   },
   "search": {
-    "title": "Search",
-    "placeholder": "Search or paste URL",
+    "title": "検索",
+    "placeholder": "検索またはURLを入力",
     "results": {
-      "accounts": "People",
-      "hashtags": "Hashtags",
-      "statuses": "Statuses",
-      "more": "Load more"
+      "accounts": "ユーザー",
+      "hashtags": "ハッシュタグ",
+      "statuses": "投稿",
+      "more": "もっと見る"
     }
   },
   "timeline": {
