@@ -7,11 +7,11 @@ pub struct Account {
     pub username: String,
     pub account_id: String,
     pub avatar: Option<String>,
-    // Misskey does not provide client_id.
+    // Firefish does not provide client_id.
     pub client_id: Option<String>,
     pub client_secret: String,
     pub access_token: String,
-    // Mastodon and Misskey does not provide refresh_token.
+    // Mastodon and Firefish does not provide refresh_token.
     pub refresh_token: Option<String>,
     pub usual: bool,
 }
