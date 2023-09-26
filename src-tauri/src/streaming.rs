@@ -71,7 +71,7 @@ pub async fn start_user(
     );
     let instance = client.get_instance().await.map_err(|e| e.to_string())?;
     let Some(urls) = instance.json.urls else {
-        return Err("Streaming does not exist".to_string())
+        return Err("Streaming does not exist".to_string());
     };
     let streaming_url = urls.streaming_api;
 
@@ -100,15 +100,17 @@ pub async fn start_user(
         }
         Message::Notification(mes) => {
             log::debug!("receive notification");
-            app_handle
-                .emit_all(
-                    "receive-notification",
-                    ReceiveNotificationPayload {
-                        server_id,
-                        notification: mes,
-                    },
-                )
-                .expect("Failed to send receive-notification event");
+            if mes.account.is_some() {
+                app_handle
+                    .emit_all(
+                        "receive-notification",
+                        ReceiveNotificationPayload {
+                            server_id,
+                            notification: mes,
+                        },
+                    )
+                    .expect("Failed to send receive-notification event");
+            }
         }
         Message::StatusUpdate(mes) => {
             log::debug!("receive status updated");
@@ -160,7 +162,7 @@ pub async fn start(
     );
     let instance = client.get_instance().await.map_err(|e| e.to_string())?;
     let Some(urls) = instance.json.urls else {
-        return Err("Streaming does not exist".to_string())
+        return Err("Streaming does not exist".to_string());
     };
     let streaming_url = urls.streaming_api;
 

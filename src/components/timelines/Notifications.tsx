@@ -125,7 +125,7 @@ const Notifications: React.FC<Props> = props => {
       options = Object.assign({}, options, { max_id: maxId })
     }
     const res = await client.getNotifications(options)
-    return res.data
+    return res.data.filter(n => !!n.account)
   }
 
   const closeOptionPopover = () => triggerRef?.current.close()
