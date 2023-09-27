@@ -81,6 +81,7 @@
       "finish": "Beenden",
       "authorization_code": "Autorisierungscode",
       "authorization_help": "Bitte füge den Autorisierungscode aus deinem Browser ein",
+      "without_code_authorize": "Please approve Fedistar in your browser, and after you approve it please authorize",
       "authorize": "Autorisieren",
       "loading": "Wird geladen"
     }
