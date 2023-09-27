@@ -3327,10 +3327,10 @@ makeerror@1.0.12:
   dependencies:
     tmpl "1.0.5"
 
-megalodon@^8.0.0:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-8.0.1.tgz#76dc2762bcf0411430cf8dea3645c02fd5bf4457"
-  integrity sha512-JkdITfLMepG6COxs3J2YK2s/PYEMPerk0bRoTJsXezISB8uuM7P2KjDP0bOakd7NikjG5EjOhbxE2hl+ACcccA==
+megalodon@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/megalodon/-/megalodon-8.1.0.tgz#76dedd58e456cd73abccf61b533c80fd560e88a0"
+  integrity sha512-7tl6iHOBX8JbAv4ka0o85r9/Ulvf9lQv0KUkB/7W0hiMWqluH3sbTCZbkBU+2Hq1kIwWCAuyZB3gxcbn8FoZIg==
   dependencies:
     "@types/oauth" "^0.9.2"
     "@types/ws" "^8.5.5"

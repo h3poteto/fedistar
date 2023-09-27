@@ -100,16 +100,7 @@ async fn add_application(
     );
 
     let options = megalodon::megalodon::AppInputOptions {
-        redirect_uris: None,
-        scopes: Some(
-            [
-                "read".to_string(),
-                "write".to_string(),
-                "follow".to_string(),
-            ]
-            .to_vec(),
-        ),
-        website: None,
+        ..Default::default()
     };
     let app_data = client
         .register_app(String::from("Fedistar"), &options)
@@ -142,11 +133,17 @@ async fn authorize_code(
     let client_id = app.client_id;
     let client_secret = app.client_secret;
 
+    let authorization_code = if let Some(session_token) = app.session_token {
+        session_token
+    } else {
+        code.to_string()
+    };
+
     let token_data = client
         .fetch_access_token(
             client_id.clone(),
             client_secret.clone(),
-            code.to_string(),
+            authorization_code,
             megalodon::default::NO_REDIRECT.to_string(),
         )
         .await
