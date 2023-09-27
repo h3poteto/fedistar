@@ -48,6 +48,7 @@ const notification = (props: Props) => {
     case 'status':
     case 'update':
     case 'emoji_reaction':
+    case 'reaction':
       if (props.notification.status) {
         return (
           <Reaction

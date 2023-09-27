@@ -58,6 +58,7 @@ const generateNotification = (
         formatMessage({ id: 'timeline.notification.update.body' }, { user: notification.account.acct })
       ]
     case 'emoji_reaction':
+    case 'reaction':
       return [
         formatMessage({ id: 'timeline.notification.emoji_reaction.title' }),
         formatMessage({ id: 'timeline.notification.emoji_reaction.body' }, { user: notification.account.acct })
