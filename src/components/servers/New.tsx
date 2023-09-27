@@ -17,7 +17,7 @@ const New: React.FC<Props> = props => {
   const { formatMessage } = useIntl()
 
   const [server, setServer] = useState<Server>()
-  const [app, setApp] = useState<OAuth.AppDataFromServer>()
+  const [app, setApp] = useState<OAuth.AppData>()
   const [loading, setLoading] = useState<boolean>(false)
   const [domain, setDomain] = useState('')
   const [code, setCode] = useState('')
@@ -48,7 +48,7 @@ const New: React.FC<Props> = props => {
   async function addApplication() {
     setLoading(true)
     try {
-      const res = await invoke<OAuth.AppDataFromServer>('add_application', { url: server.base_url })
+      const res = await invoke<OAuth.AppData>('add_application', { url: server.base_url })
       setApp(res)
     } catch (err) {
       console.error(err)
@@ -141,15 +141,21 @@ const New: React.FC<Props> = props => {
         )}
         {app !== undefined && (
           <Form fluid onChange={o => setCode(o.code)}>
-            <Form.Group>
-              <Form.ControlLabel>
-                <FormattedMessage id="servers.new.authorization_code" />
-              </Form.ControlLabel>
-              <Form.Control name="code" />
-              <Form.HelpText>
-                <FormattedMessage id="servers.new.authorization_help" />
-              </Form.HelpText>
-            </Form.Group>
+            {app.session_token ? (
+              <div style={{ margin: '1em 0' }}>
+                <FormattedMessage id="servers.new.without_code_authorize" />
+              </div>
+            ) : (
+              <Form.Group>
+                <Form.ControlLabel>
+                  <FormattedMessage id="servers.new.authorization_code" />
+                </Form.ControlLabel>
+                <Form.Control name="code" />
+                <Form.HelpText>
+                  <FormattedMessage id="servers.new.authorization_help" />
+                </Form.HelpText>
+              </Form.Group>
+            )}
             <Form.Group>
               <ButtonToolbar>
                 <Button appearance="primary" onClick={() => authorizeCode()}>
