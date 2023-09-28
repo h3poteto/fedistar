@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "fedistar",
-    "version": "1.7.0"
+    "version": "1.7.1"
   },
   "tauri": {
     "allowlist": {
