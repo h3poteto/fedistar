@@ -81,6 +81,7 @@
       "finish": "Terminer",
       "authorization_code": "Code d'autorisation",
       "authorization_help": "Veuillez coller le code d'autorisation de votre navigateur",
+      "without_code_authorize": "Please approve Fedistar in your browser, and after you approve it please authorize",
       "authorize": "Autoriser",
       "loading": "Chargement"
     }
@@ -157,6 +158,7 @@
     "results": {
       "accounts": "People",
       "hashtags": "Hashtags",
+      "statuses": "Statuses",
       "more": "Load more"
     }
   },
