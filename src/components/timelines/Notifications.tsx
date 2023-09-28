@@ -213,8 +213,12 @@ const Notifications: React.FC<Props> = props => {
 
   const loadMore = useCallback(async () => {
     console.debug('appending')
-    const append = await loadNotifications(client, notifications[notifications.length - 1].id)
-    setNotifications(last => [...last, ...append])
+    try {
+      const append = await loadNotifications(client, notifications[notifications.length - 1].id)
+      setNotifications(last => [...last, ...append])
+    } catch (err) {
+      console.error(err)
+    }
   }, [client, notifications, setNotifications])
 
   const prependUnreads = useCallback(() => {
