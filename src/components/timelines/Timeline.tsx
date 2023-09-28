@@ -333,8 +333,12 @@ const Timeline: React.FC<Props> = props => {
         break
     }
 
-    const append = await loadTimeline(props.timeline, client, maxId)
-    setStatuses(last => [...last, ...append])
+    try {
+      const append = await loadTimeline(props.timeline, client, maxId)
+      setStatuses(last => [...last, ...append])
+    } catch (err) {
+      console.error(err)
+    }
   }, [client, statuses, setStatuses, nextMaxId])
 
   const prependUnreads = useCallback(() => {
