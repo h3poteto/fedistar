@@ -2,6 +2,7 @@
   "name": "fedistar",
   "version": "1.7.1",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "dev": "next dev -p 1420",
     "build": "next build && next export -o dist",
     "tauri": "tauri",
