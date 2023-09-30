@@ -11,6 +11,7 @@ This is a Fediverse client application for desktop. It is supporting
 - Mastodon
 - Pleroma
 - Friendica
+- Firefish
 - Akkoma (Unofficial)
 - Wildebeest (Unofficial)
 
@@ -68,8 +69,8 @@ And install Node.js.
 ```
 $ git clone git@github.com:h3poteto/fedistar.git
 $ cd fedistar
-$ yarn install
-$ yarn tauri dev
+$ pnpm install
+$ pnpm tauri dev
 ```
 
 ## Sponsors
