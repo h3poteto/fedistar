@@ -153,10 +153,10 @@
     }
   },
   "search": {
-    "title": "Search",
-    "placeholder": "Search or paste URL",
+    "title": "Cerca",
+    "placeholder": "Cerca o incolla URL",
     "results": {
-      "accounts": "People",
+      "accounts": "Persone",
       "hashtags": "Hashtags",
       "statuses": "Statuses",
       "more": "Load more"
