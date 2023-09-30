@@ -81,7 +81,7 @@
       "finish": "Fine",
       "authorization_code": "Codice di autorizzazione",
       "authorization_help": "Per favore, incolla il codice di autorizzazione dal tuo browser",
-      "without_code_authorize": "Please approve Fedistar in your browser, and after you approve it please authorize",
+      "without_code_authorize": "Occorre approvare la App Fedistar nel proprio browser e, successivamente, usare il codice di autorizzazione",
       "authorize": "Autorizza",
       "loading": "Caricamento"
     }
@@ -157,9 +157,9 @@
     "placeholder": "Cerca o incolla URL",
     "results": {
       "accounts": "Persone",
-      "hashtags": "Hashtags",
-      "statuses": "Statuses",
-      "more": "Load more"
+      "hashtags": "Hashtag",
+      "statuses": "Pubblicazioni",
+      "more": "Leggi di più"
     }
   },
   "timeline": {
