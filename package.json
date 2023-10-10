@@ -46,7 +46,7 @@
     "react-icons": "^4.9.0",
     "react-intl": "^6.4.4",
     "react-virtuoso": "^4.3.9",
-    "rsuite": "^5.35.1",
+    "rsuite": "^5.40.0",
     "sanitize-html": "^2.10.0"
   },
   "devDependencies": {
