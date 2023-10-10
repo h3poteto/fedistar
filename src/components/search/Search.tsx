@@ -7,7 +7,7 @@ import { renderAccountIcon } from '../compose/Compose'
 import { useState, useEffect } from 'react'
 import { Account } from 'src/entities/account'
 import { invoke } from '@tauri-apps/api/tauri'
-import generator, { MegalodonInterface } from 'megalodon'
+import generator, { MegalodonInterface, Entity } from 'megalodon'
 import { USER_AGENT } from 'src/defaults'
 import Results from './Results'
 
