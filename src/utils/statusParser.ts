@@ -1,3 +1,5 @@
+import { Entity } from 'megalodon'
+
 export type ParsedAccount = {
   username: string
   acct: string

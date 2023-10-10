@@ -19,7 +19,7 @@ import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/tauri'
 import { listen } from '@tauri-apps/api/event'
 import { useEffect, useState, forwardRef, useRef, useCallback, Dispatch, SetStateAction } from 'react'
-import generator, { MegalodonInterface } from 'megalodon'
+import generator, { MegalodonInterface, Entity } from 'megalodon'
 import { Virtuoso } from 'react-virtuoso'
 
 import { Account } from 'src/entities/account'

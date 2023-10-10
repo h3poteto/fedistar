@@ -18,7 +18,7 @@ import {
   Radio,
   useToaster
 } from 'rsuite'
-import generator, { MegalodonInterface } from 'megalodon'
+import generator, { MegalodonInterface, Entity } from 'megalodon'
 import parse from 'parse-link-header'
 
 import FailoverImg from 'src/utils/failoverImg'
