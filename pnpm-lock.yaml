@@ -45,7 +45,7 @@ dependencies:
     specifier: ^4.3.9
     version: 4.5.1(react-dom@18.2.0)(react@18.2.0)
   rsuite:
-    specifier: ^5.35.1
+    specifier: ^5.40.0
     version: 5.40.0(react-dom@18.2.0)(react@18.2.0)
   sanitize-html:
     specifier: ^2.10.0
