@@ -65,7 +65,7 @@
     "jsdom": "^22.1.0",
     "sass": "^1.63.2",
     "tauri-snap-packager": "^0.1.0",
-    "ts-jest": "^29.1.0",
+    "ts-jest": "^29.1.1",
     "typescript": "^5.1.3"
   }
 }
