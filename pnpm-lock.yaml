@@ -25,7 +25,7 @@ dependencies:
     version: 8.1.1
   next:
     specifier: ^13.4.5
-    version: 13.5.2(@babel/core@7.22.17)(react-dom@18.2.0)(react@18.2.0)(sass@1.68.0)
+    version: 13.5.2(@babel/core@7.22.17)(react-dom@18.2.0)(react@18.2.0)(sass@1.69.1)
   parse-link-header:
     specifier: ^2.0.0
     version: 2.0.0
@@ -92,8 +92,8 @@ devDependencies:
     specifier: ^22.1.0
     version: 22.1.0
   sass:
-    specifier: ^1.63.2
-    version: 1.68.0
+    specifier: ^1.69.1
+    version: 1.69.1
   tauri-snap-packager:
     specifier: ^0.1.0
     version: 0.1.0
@@ -3611,7 +3611,7 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
-  /next@13.5.2(@babel/core@7.22.17)(react-dom@18.2.0)(react@18.2.0)(sass@1.68.0):
+  /next@13.5.2(@babel/core@7.22.17)(react-dom@18.2.0)(react@18.2.0)(sass@1.69.1):
     resolution: {integrity: sha512-vog4UhUaMYAzeqfiAAmgB/QWLW7p01/sg+2vn6bqc/CxHFYizMzLv6gjxKzl31EVFkfl/F+GbxlKizlkTE9RdA==}
     engines: {node: '>=16.14.0'}
     hasBin: true
@@ -3633,7 +3633,7 @@ packages:
       postcss: 8.4.14
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      sass: 1.68.0
+      sass: 1.69.1
       styled-jsx: 5.1.1(@babel/core@7.22.17)(react@18.2.0)
       watchpack: 2.4.0
       zod: 3.21.4
@@ -4217,8 +4217,8 @@ packages:
       postcss: 8.4.27
     dev: false
 
-  /sass@1.68.0:
-    resolution: {integrity: sha512-Lmj9lM/fef0nQswm1J2HJcEsBUba4wgNx2fea6yJHODREoMFnwRpZydBnX/RjyXw2REIwdkbqE4hrTo4qfDBUA==}
+  /sass@1.69.1:
+    resolution: {integrity: sha512-nc969GvTVz38oqKgYYVHM/Iq7Yl33IILy5uqaH2CWSiSUmRCvw+UR7tA3845Sp4BD5ykCUimvrT3k1EjTwpVUA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
