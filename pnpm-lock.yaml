@@ -15,7 +15,7 @@ dependencies:
     specifier: ^1.3.0
     version: 1.4.0
   dayjs:
-    specifier: ^1.11.8
+    specifier: ^1.11.10
     version: 1.11.10
   emoji-mart:
     specifier: ^5.5.2
