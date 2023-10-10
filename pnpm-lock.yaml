@@ -39,7 +39,7 @@ dependencies:
     specifier: ^4.9.0
     version: 4.11.0(react@18.2.0)
   react-intl:
-    specifier: ^6.4.4
+    specifier: ^6.4.7
     version: 6.4.7(react@18.2.0)(typescript@5.2.2)
   react-virtuoso:
     specifier: ^4.3.9
