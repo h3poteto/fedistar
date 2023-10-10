@@ -3,6 +3,7 @@
   "extends": [
     "config:base"
   ],
+  "rangeStrategy": "bump",
   "prConcurrentLimit": 20,
   "prHourlyLimit": 20
 }
