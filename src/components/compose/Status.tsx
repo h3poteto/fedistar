@@ -229,7 +229,7 @@ const Status: React.FC<Props> = props => {
   // Set Remaining
   useEffect(() => {
     if (maxCharacters) {
-      setRemaining(maxCharacters - formValue.status.length)
+      setRemaining(maxCharacters - formValue.status.length - formValue.spoiler.length)
     }
   }, [maxCharacters, formValue])
 
