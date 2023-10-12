@@ -68,7 +68,7 @@ jobs:
           target: aarch64-apple-darwin
 
       - name: Install app dependencies and build web
-        run: pnpm install --frozen-lockfile && pnpm build
+        run: pnpm install --frozen-lockfile
 
       - name: Build the app
         uses: tauri-apps/tauri-action@dev
@@ -82,13 +82,15 @@ jobs:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           APPLE_PROVIDER_SHORT_NAME: ${{ secrets.APPLE_PROVIDER_SHORT_NAME }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         with:
           tagName: v__VERSION__ # tauri-action replaces \_\_VERSION\_\_ with the app version
           releaseName: '__VERSION__'
           releaseBody: 'See the assets to download this version and install.'
           releaseDraft: true
           prerelease: false
-          args: -- --target universal-apple-darwin
+          tauriScript: pnpm tauri
+          args: --target universal-apple-darwin
 
   release-windows:
     runs-on: windows-latest
