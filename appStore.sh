@@ -6,6 +6,6 @@ INSTALLER_KEY="3rd Party Mac Developer Installer: Akira Fukushima (HB4N6B2YVM)"
 RESULT_PATH="Fedistar.pkg"
 
 pnpm run clean
-pnpm run tauri build -- --target universal-apple-darwin
+pnpm run tauri build --target universal-apple-darwin
 
 productbuild --component "$APP_PATH" /Applications --sign "$INSTALLER_KEY" "$RESULT_PATH"
