@@ -88,7 +88,7 @@ const Compose: React.FC<Props> = props => {
   }
 
   return (
-    <Container style={{ backgroundColor: 'var(--rs-border-secondary)', height: '100%' }}>
+    <Container style={{ backgroundColor: 'var(--rs-border-secondary)', height: '100%', overflowY: 'auto' }}>
       <Header style={{ borderBottom: '1px solid var(--rs-divider-border)', backgroundColor: 'var(--rs-state-hover-bg)' }}>
         <FlexboxGrid justify="space-between" align="middle">
           <FlexboxGrid.Item style={{ lineHeight: '53px', paddingLeft: '12px', fontSize: '18px' }}>
