@@ -65,11 +65,11 @@ devDependencies:
     specifier: ^2.0.1
     version: 2.0.1
   '@types/react':
-    specifier: ^18.2.12
-    version: 18.2.22
+    specifier: ^18.2.31
+    version: 18.2.31
   '@types/react-dom':
-    specifier: ^18.2.4
-    version: 18.2.7
+    specifier: ^18.2.14
+    version: 18.2.14
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.7.5
     version: 6.7.5(@typescript-eslint/parser@6.7.5)(eslint@8.49.0)(typescript@5.2.2)
@@ -1133,7 +1133,7 @@ packages:
   /@types/hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-YIQtIg4PKr7ZyqNPZObpxfHsHEmuB8dXCxd6qVcGuQVDK2bpsF7bYNnBJ4Nn7giuACZg+WewExgrtAJ3XnA4Xw==}
     dependencies:
-      '@types/react': 18.2.22
+      '@types/react': 18.2.31
       hoist-non-react-statics: 3.3.2
     dev: false
 
@@ -1181,20 +1181,20 @@ packages:
   /@types/prop-types@15.7.6:
     resolution: {integrity: sha512-RK/kBbYOQQHLYj9Z95eh7S6t7gq4Ojt/NT8HTk8bWVhA5DaF+5SMnxHKkP4gPNN3wAZkKP+VjAf0ebtYzf+fxg==}
 
-  /@types/react-dom@18.2.7:
-    resolution: {integrity: sha512-GRaAEriuT4zp9N4p1i8BDBYmEyfo+xQ3yHjJU4eiK5NDa1RmUZG+unZABUTK4/Ox/M+GaHwb6Ow8rUITrtjszA==}
+  /@types/react-dom@18.2.14:
+    resolution: {integrity: sha512-V835xgdSVmyQmI1KLV2BEIUgqEuinxp9O4G6g3FqO/SqLac049E53aysv0oEFD2kHfejeKU+ZqL2bcFWj9gLAQ==}
     dependencies:
-      '@types/react': 18.2.22
+      '@types/react': 18.2.31
     dev: true
 
   /@types/react-window@1.8.5:
     resolution: {integrity: sha512-V9q3CvhC9Jk9bWBOysPGaWy/Z0lxYcTXLtLipkt2cnRj1JOSFNF7wqGpkScSXMgBwC+fnVRg/7shwgddBG5ICw==}
     dependencies:
-      '@types/react': 18.2.22
+      '@types/react': 18.2.31
     dev: false
 
-  /@types/react@18.2.22:
-    resolution: {integrity: sha512-60fLTOLqzarLED2O3UQImc/lsNRgG0jE/a1mPW9KjMemY0LMITWEsbS4VvZ4p6rorEHd5YKxxmMKSDK505GHpA==}
+  /@types/react@18.2.31:
+    resolution: {integrity: sha512-c2UnPv548q+5DFh03y8lEDeMfDwBn9G3dRwfkrxQMo/dOtRHUUO57k6pHvBIfH/VF4Nh+98mZ5aaSe+2echD5g==}
     dependencies:
       '@types/prop-types': 15.7.6
       '@types/scheduler': 0.16.3
@@ -3976,7 +3976,7 @@ packages:
       '@formatjs/intl-displaynames': 6.5.2
       '@formatjs/intl-listformat': 7.4.2
       '@types/hoist-non-react-statics': 3.3.2
-      '@types/react': 18.2.22
+      '@types/react': 18.2.31
       hoist-non-react-statics: 3.3.2
       intl-messageformat: 10.5.3
       react: 18.2.0
