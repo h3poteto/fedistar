@@ -62,8 +62,8 @@ devDependencies:
     specifier: ^20.8.8
     version: 20.8.8
   '@types/parse-link-header':
-    specifier: ^2.0.1
-    version: 2.0.1
+    specifier: ^2.0.2
+    version: 2.0.2
   '@types/react':
     specifier: ^18.2.31
     version: 18.2.31
@@ -1176,11 +1176,11 @@ packages:
   /@types/oauth@0.9.3:
     resolution: {integrity: sha512-avZiwxSz/WS6EaEjhchzXKgWtlGGYGnEVJoHuQuDLHf7gIW1Gmm9eIxOMuJ6umQNNKZkJ3Uy+C/rLzEvL3I8Sw==}
     dependencies:
-      '@types/node': 20.8.4
+      '@types/node': 20.8.8
     dev: false
 
-  /@types/parse-link-header@2.0.1:
-    resolution: {integrity: sha512-BrKNSrRTqn3UkMXvdVtr/znJch0PMBpEvEP8oBkxDx7eEGntuFLI+WpA5HGsNHK4SlqyhaMa+Ks0ViwyixQB5w==}
+  /@types/parse-link-header@2.0.2:
+    resolution: {integrity: sha512-RKU5SIF0oyM2ZI0ubw66FkM/0RJUv/r84I7vJcXkcICcfeOpd1WXfpcqkFJPaWli5z3YdxMsfWojyU5uofT6sA==}
     dev: true
 
   /@types/prop-types@15.7.6:
@@ -1219,7 +1219,7 @@ packages:
   /@types/ws@8.5.8:
     resolution: {integrity: sha512-flUksGIQCnJd6sZ1l5dqCEG/ksaoAg/eUwiLAGTJQcfgvZJKF++Ta4bJA6A5aPSJmsr+xlseHn4KLgVlNnvPTg==}
     dependencies:
-      '@types/node': 20.8.4
+      '@types/node': 20.8.8
     dev: false
 
   /@types/yargs-parser@21.0.0:
