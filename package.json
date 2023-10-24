@@ -63,7 +63,7 @@
     "eslint-plugin-react": "^7.33.2",
     "jest": "^29.7.0",
     "jsdom": "^22.1.0",
-    "sass": "^1.69.1",
+    "sass": "^1.69.4",
     "tauri-snap-packager": "^0.1.0",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
