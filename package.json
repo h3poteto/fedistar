@@ -47,7 +47,7 @@
     "react-intl": "^6.4.7",
     "react-virtuoso": "^4.3.9",
     "rsuite": "^5.40.0",
-    "sanitize-html": "^2.10.0"
+    "sanitize-html": "^2.11.0"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.2",
