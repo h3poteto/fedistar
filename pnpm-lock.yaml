@@ -62,8 +62,8 @@ devDependencies:
     specifier: ^20.8.8
     version: 20.8.8
   '@types/parse-link-header':
-    specifier: ^2.0.1
-    version: 2.0.1
+    specifier: ^2.0.2
+    version: 2.0.2
   '@types/react':
     specifier: ^18.2.31
     version: 18.2.31
@@ -1179,8 +1179,8 @@ packages:
       '@types/node': 20.8.8
     dev: false
 
-  /@types/parse-link-header@2.0.1:
-    resolution: {integrity: sha512-BrKNSrRTqn3UkMXvdVtr/znJch0PMBpEvEP8oBkxDx7eEGntuFLI+WpA5HGsNHK4SlqyhaMa+Ks0ViwyixQB5w==}
+  /@types/parse-link-header@2.0.2:
+    resolution: {integrity: sha512-RKU5SIF0oyM2ZI0ubw66FkM/0RJUv/r84I7vJcXkcICcfeOpd1WXfpcqkFJPaWli5z3YdxMsfWojyU5uofT6sA==}
     dev: true
 
   /@types/prop-types@15.7.6:
