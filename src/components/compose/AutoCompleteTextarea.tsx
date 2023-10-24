@@ -27,17 +27,28 @@ const AutoCompleteTextarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, 
   const [matchWord, setMatchWord] = useState('')
 
   const triggerRef = useRef<any>()
+  const shouldOpen = useRef<boolean>(false)
+  const valueRef = useRef<string>('')
 
   useEffect(() => {
     init(data)
   }, [])
+
+  useEffect(() => {
+    valueRef.current = currentValue
+  }, [currentValue])
 
   const onChange: PrependParameters<React.ChangeEventHandler<HTMLInputElement>, [value: string]> = (value, event) => {
     const [start, token] = textAtCursorMatchesToken(value, event.target.selectionStart)
     if (!start || !token) {
       closeSuggestion()
     } else {
-      openSuggestion(start, token)
+      setTimeout(() => {
+        if (valueRef.current === value) {
+          shouldOpen.current = true
+          openSuggestion(start, token)
+        }
+      }, 500)
     }
     setCurrentValue(value)
     props.onChange(value)
@@ -49,7 +60,9 @@ const AutoCompleteTextarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, 
     setStartIndex(0)
     setMatchWord('')
     triggerRef.current.close()
+    shouldOpen.current = false
   }
+
   const openSuggestion = async (start: number, token: string) => {
     switch (token.charAt(0)) {
       case ':': {
@@ -72,34 +85,41 @@ const AutoCompleteTextarea: React.ForwardRefRenderFunction<HTMLTextAreaElement, 
             }))
           )
           .flatMap(e => e)
-        setSuggestList([...emojis, ...custom])
-        setStartIndex(start)
-        setMatchWord(token)
-        triggerRef.current.open()
+        if (shouldOpen.current) {
+          setSuggestList([...emojis, ...custom])
+          setStartIndex(start)
+          setMatchWord(token)
+          triggerRef.current.open()
+        }
         return
       }
       case '@': {
         const res = await props.client.searchAccount(token.replace('@', ''))
-        setSuggestList(
-          res.data.map(a => ({
-            name: `@${a.acct}`
-          }))
-        )
-        setStartIndex(start)
-        setMatchWord(token)
-        triggerRef.current.open()
+        if (shouldOpen.current) {
+          setSuggestList(
+            res.data.map(a => ({
+              name: `@${a.acct}`
+            }))
+          )
+          setStartIndex(start)
+          setMatchWord(token)
+          triggerRef.current.open()
+        }
         return
       }
       case '#': {
         const res = await props.client.search(token, { type: 'hashtags' })
-        setSuggestList(
-          res.data.hashtags.map(tag => ({
-            name: `#${tag.name}`
-          }))
-        )
-        setStartIndex(start)
-        setMatchWord(token)
-        triggerRef.current.open()
+        if (shouldOpen.current) {
+          setSuggestList(
+            res.data.hashtags.map(tag => ({
+              name: `#${tag.name}`
+            }))
+          )
+          setStartIndex(start)
+          setMatchWord(token)
+          triggerRef.current.open()
+        }
+        return
       }
     }
   }
