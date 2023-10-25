@@ -45,8 +45,8 @@ dependencies:
     specifier: ^4.6.2
     version: 4.6.2(react-dom@18.2.0)(react@18.2.0)
   rsuite:
-    specifier: ^5.40.0
-    version: 5.40.0(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^5.41.0
+    version: 5.41.0(react-dom@18.2.0)(react@18.2.0)
   sanitize-html:
     specifier: ^2.11.0
     version: 2.11.0
@@ -4149,8 +4149,8 @@ packages:
     resolution: {integrity: sha512-APM0Gt1KoXBz0iIkkdB/kfvGOwC4UuJFeG/c+yV7wSc7q96cG/kJ0HiYCnzivD9SB53cLV1MlHFNfOuPaadYSw==}
     dev: true
 
-  /rsuite-table@5.12.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-Di7PPjVgoAYs+FANJ37xKfcInw/MK7+wvxDEVDvfsM0zCiXGTnfQMv+ahXEcBAEU776fMlLAQWbCpXIUzXCHFg==}
+  /rsuite-table@5.14.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-zuxofj33T7AFmhQnYoBuPsC9MazrRZPNUirR6UMg90Vl19rKPZXa3+qx95OtXEHKXGwVzldZrPg0r6uSofeDkQ==}
     peerDependencies:
       prop-types: ^15.7.2
       react: '>=16.8.0'
@@ -4168,8 +4168,8 @@ packages:
       react-is: 17.0.2
     dev: false
 
-  /rsuite@5.40.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-zhfbbhuWKXjTrvWnFw6Cu+FOHGZlPRwUkP8lnhTmfCI5r4Mp10J4ShgfdeGeqWEMwq9Hz58I540WoDV20PZseQ==}
+  /rsuite@5.41.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-NFt28jck86EvfA26n2YIfcI2INrE7/yFxIqt2/p+AzfAUhLnam9bKHtX5ASvfPi4ph1hlpt6pzZ54tgJcDIikg==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
@@ -4190,7 +4190,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       react-use-set: 1.0.0(react@18.2.0)
       react-window: 1.8.9(react-dom@18.2.0)(react@18.2.0)
-      rsuite-table: 5.12.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
+      rsuite-table: 5.14.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
       schema-typed: 2.1.3
     dev: false
 
