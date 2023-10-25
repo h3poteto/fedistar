@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "fedistar",
-    "version": "1.7.2"
+    "version": "1.7.3"
   },
   "tauri": {
     "allowlist": {
@@ -39,7 +39,7 @@
         "icons/icon.ico"
       ],
       "identifier": "net.fedistar",
-      "longDescription": "Multi-column Mastodon and Pleroma client for desktop",
+      "longDescription": "Multi-column Fediverse client for desktop. Supporting Mastodon, Pleroma, Friendica, and Firefish.",
       "macOS": {
         "entitlements": "../entitlements.plist",
         "exceptionDomain": "",
@@ -49,7 +49,7 @@
         "signingIdentity": null
       },
       "resources": [],
-      "shortDescription": "Multi-column Mastodon and Pleroma client for desktop",
+      "shortDescription": "Multi-column Fediverse client for desktop",
       "targets": "all",
       "windows": {
         "certificateThumbprint": null,
