@@ -81,7 +81,7 @@
       "finish": "Beenden",
       "authorization_code": "Autorisierungscode",
       "authorization_help": "Bitte füge den Autorisierungscode aus deinem Browser ein",
-      "without_code_authorize": "Please approve Fedistar in your browser, and after you approve it please authorize",
+      "without_code_authorize": "Bitte genehmige Fedistar in deinem Browser, und nachdem du Fedistar genehmigt hast, bitte autorisieren",
       "authorize": "Autorisieren",
       "loading": "Wird geladen"
     }
@@ -93,7 +93,7 @@
         "title": "Darstellung",
         "font_size": "Schriftgröße",
         "language": "Sprache",
-        "color_theme": "Color theme"
+        "color_theme": "Farb-Design"
       },
       "save": "Speichern",
       "close": "Schließen",
@@ -153,13 +153,13 @@
     }
   },
   "search": {
-    "title": "Search",
-    "placeholder": "Search or paste URL",
+    "title": "Suchen",
+    "placeholder": "Suchen oder URL einfügen",
     "results": {
-      "accounts": "People",
+      "accounts": "Personen",
       "hashtags": "Hashtags",
-      "statuses": "Statuses",
-      "more": "Load more"
+      "statuses": "Zustände",
+      "more": "Mehr laden"
     }
   },
   "timeline": {
