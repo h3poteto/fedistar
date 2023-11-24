@@ -34,6 +34,7 @@ const Profile: React.FC<Props> = props => {
   const { formatMessage } = useIntl()
 
   const [client, setClient] = useState<MegalodonInterface | null>(null)
+  const [myself, setMyself] = useState<Entity.Account | null>(null)
   const [account, setAccount] = useState<Account | null>(null)
   const [server, setServer] = useState<Server | null>(null)
   const [user, setUser] = useState<Entity.Account | null>(null)
@@ -59,6 +60,8 @@ const Profile: React.FC<Props> = props => {
         setServer(server)
         cli = generator(server.sns, server.base_url, account.access_token, 'Fedistar')
         setClient(cli)
+        const u = await cli.verifyAccountCredentials()
+        setMyself(u.data)
       } else if (router.query.server_id) {
         const server = await invoke<Server>('get_server', { id: parseInt(router.query.server_id.toString()) })
         setAccount(null)
@@ -231,7 +234,7 @@ const Profile: React.FC<Props> = props => {
               <FlexboxGrid.Item>
                 <FlexboxGrid style={{ gap: '8px' }}>
                   <FlexboxGrid.Item>
-                    <FollowButton relationship={relationship} follow={follow} unfollow={unfollow} />
+                    <FollowButton relationship={relationship} follow={follow} unfollow={unfollow} myself={myself} user={user} />
                   </FlexboxGrid.Item>
                   <FlexboxGrid.Item>
                     <Whisper
@@ -246,6 +249,7 @@ const Profile: React.FC<Props> = props => {
                             top,
                             onClose,
                             client,
+                            myself,
                             user,
                             relationship,
                             onChange: () => {
@@ -320,6 +324,7 @@ type ProfileMenuProps = {
   top?: number
   onClose: (delay?: number) => NodeJS.Timeout | void
   client: MegalodonInterface
+  myself: Entity.Account
   user: Entity.Account
   relationship: Entity.Relationship | null
   onChange: () => void
@@ -327,7 +332,7 @@ type ProfileMenuProps = {
 }
 
 const profileMenu = (
-  { className, left, top, onClose, client, user, relationship, onChange, openAddListMember }: ProfileMenuProps,
+  { className, left, top, onClose, client, myself, user, relationship, onChange, openAddListMember }: ProfileMenuProps,
   ref: React.RefCallback<HTMLElement>
 ): ReactElement => {
   const domain = domainFromAcct(user.acct)
@@ -381,14 +386,14 @@ const profileMenu = (
         {relationship && (
           <>
             <Dropdown.Separator />
-            <Dropdown.Item eventKey="mute">
+            <Dropdown.Item eventKey="mute" disabled={myself.acct === user.acct}>
               {relationship.muting ? (
                 <FormattedMessage id="detail.profile.unmute" values={{ user: `@${user.username}` }} />
               ) : (
                 <FormattedMessage id="detail.profile.mute" values={{ user: `@${user.username}` }} />
               )}
             </Dropdown.Item>
-            <Dropdown.Item eventKey="block">
+            <Dropdown.Item eventKey="block" disabled={myself.acct === user.acct}>
               {relationship.blocking ? (
                 <FormattedMessage id="detail.profile.unblock" values={{ user: `@${user.username}` }} />
               ) : (
@@ -402,7 +407,7 @@ const profileMenu = (
             {domain && (
               <>
                 <Dropdown.Separator />
-                <Dropdown.Item eventKey="domain_block">
+                <Dropdown.Item eventKey="domain_block" disabled={myself.acct === user.acct}>
                   {relationship.domain_blocking ? (
                     <FormattedMessage id="detail.profile.unblock_domain" values={{ server: domain }} />
                   ) : (
@@ -430,6 +435,8 @@ const precision = (num: number): string => {
 
 type FollowButtonProps = {
   relationship: Entity.Relationship
+  myself: Entity.Account
+  user: Entity.Account
   follow: () => Promise<void>
   unfollow: () => Promise<void>
 }
@@ -442,6 +449,9 @@ const FollowButton: React.FC<FollowButtonProps> = props => {
   const [unfollowColor, setUnfollowColor] = useState<'blue' | 'red'>('blue')
 
   if (!props.relationship) {
+    return null
+  }
+  if (props.user.acct === props.myself.acct) {
     return null
   }
   if (props.relationship.following) {
