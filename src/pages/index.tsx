@@ -128,12 +128,18 @@ function App() {
   useEffect(() => {
     if (!highlighted) return
     if (!spaceRef.current) return
-    setTimeout(() => {
-      const node = document.getElementById(highlighted.id.toString())
-      if (node) {
-        scrollLeft(spaceRef.current, node.offsetLeft)
-      }
-    }, 500)
+    const node = document.getElementById(highlighted.id.toString())
+    if (node) {
+      scrollLeft(spaceRef.current, node.offsetLeft)
+    } else {
+      // Retry to scroll
+      setTimeout(() => {
+        const node = document.getElementById(highlighted.id.toString())
+        if (node) {
+          scrollLeft(spaceRef.current, node.offsetLeft)
+        }
+      }, 500)
+    }
   }, [highlighted])
 
   const handleKeyPress = useCallback(async (event: KeyboardEvent) => {
