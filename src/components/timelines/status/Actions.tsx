@@ -190,7 +190,7 @@ const Actions: React.FC<Props> = props => {
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>
           {/** delay is required to fix popover position **/}
-          <Whisper trigger="click" placement="bottomEnd" delay={100} ref={emojiPickerRef} speaker={<EmojiPicker />}>
+          <Whisper trigger="click" preventOverflow delay={100} ref={emojiPickerRef} speaker={<EmojiPicker />}>
             <IconButton
               appearance="link"
               icon={<Icon as={BsEmojiSmile} />}
@@ -202,7 +202,6 @@ const Actions: React.FC<Props> = props => {
         <FlexboxGrid.Item>
           <Whisper
             trigger="click"
-            placement="bottom"
             preventOverflow
             speaker={({ className, left, top, onClose }, ref) =>
               detailMenu(
