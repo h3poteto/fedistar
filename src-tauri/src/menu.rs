@@ -84,3 +84,9 @@ pub fn menu() -> Menu {
     }
     menu
 }
+
+pub fn media_menu() -> Menu {
+    let submenu = Submenu::new("File", Menu::new().add_native_item(MenuItem::CloseWindow));
+    let menu = Menu::new().add_submenu(submenu);
+    menu
+}

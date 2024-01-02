@@ -4,6 +4,7 @@ import { Entity } from 'megalodon'
 import { ReactElement, useCallback, useEffect, useState } from 'react'
 import { Icon } from '@rsuite/icons'
 import { BsChevronRight, BsChevronLeft } from 'react-icons/bs'
+import { invoke } from '@tauri-apps/api/tauri'
 
 type Props = {
   index: number
@@ -88,6 +89,10 @@ const Media: React.FC<Props> = props => {
 }
 
 const mediaComponent = (media: Entity.Attachment): ReactElement => {
+  const externalWindow = async (url: string) => {
+    await invoke('open_media', { mediaUrl: url })
+  }
+
   switch (media.type) {
     case 'gifv':
       return (
@@ -109,7 +114,8 @@ const mediaComponent = (media: Entity.Attachment): ReactElement => {
           fill
           alt={media.description ? media.description : media.id}
           title={media.description ? media.description : media.id}
-          style={{ objectFit: 'contain' }}
+          style={{ objectFit: 'contain', cursor: 'pointer' }}
+          onClick={() => externalWindow(media.url)}
         />
       )
   }

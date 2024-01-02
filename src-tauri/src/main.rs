@@ -2,12 +2,12 @@
     all(not(debug_assertions), target_os = "windows"),
     windows_subsystem = "windows"
 )]
-use std::{fs::OpenOptions, path::PathBuf, str::FromStr, sync::Arc};
-
+use base64::{engine::general_purpose, Engine};
 use megalodon::{self, oauth};
+use rust_i18n::t;
 use serde::Serialize;
+use std::{fs::OpenOptions, path::PathBuf, str::FromStr, sync::Arc};
 use tauri::{async_runtime::Mutex, AppHandle, Manager, State};
-
 mod database;
 mod entities;
 mod favicon;
@@ -463,6 +463,21 @@ async fn frontend_log(message: String, level: String) -> () {
     ()
 }
 
+#[tauri::command]
+async fn open_media(app_handle: AppHandle, media_url: String) -> () {
+    let encoded = general_purpose::STANDARD_NO_PAD.encode(media_url.clone());
+
+    let _ = tauri::WindowBuilder::new(
+        &app_handle,
+        encoded,
+        tauri::WindowUrl::External(media_url.parse().unwrap()),
+    )
+    .menu(menu::media_menu())
+    .title(t!("media.title"))
+    .build()
+    .expect("failed to build media window");
+}
+
 async fn start_timeline_streaming(
     app_handle: Arc<AppHandle>,
     sqlite_pool: &sqlx::SqlitePool,
@@ -646,6 +661,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             switch_devtools,
             frontend_log,
             update_column_width,
+            open_media,
         ])
         .setup(|app| {
             let app_handle = app.handle();
