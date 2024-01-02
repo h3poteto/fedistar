@@ -2,11 +2,12 @@ import Image from 'next/image'
 import { Entity } from 'megalodon'
 import { Button, IconButton } from 'rsuite'
 import { Icon } from '@rsuite/icons'
-import { BsEyeSlash, BsCaretRightFill, BsVolumeUp } from 'react-icons/bs'
+import { BsEyeSlash, BsCaretRightFill, BsVolumeUp, BsBoxArrowUpRight } from 'react-icons/bs'
 import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import emptyPreview from 'src/black.png'
 import { ColumnWidth } from 'src/entities/timeline'
+import { invoke } from '@tauri-apps/api/tauri'
 
 type Props = {
   attachments: Array<Entity.Attachment>
@@ -123,6 +124,10 @@ type AttachmentProps = {
 const Attachment: React.FC<AttachmentProps> = props => {
   const { media, changeSensitive } = props
 
+  const externalWindow = async (url: string) => {
+    await invoke('open_media', { mediaUrl: url })
+  }
+
   return (
     <div style={{ position: 'relative' }}>
       <IconButton
@@ -131,6 +136,13 @@ const Attachment: React.FC<AttachmentProps> = props => {
         appearance="subtle"
         onClick={changeSensitive}
         style={{ position: 'absolute', top: '4px', left: '4px' }}
+      />
+      <IconButton
+        icon={<Icon as={BsBoxArrowUpRight} />}
+        size="sm"
+        appearance="subtle"
+        onClick={() => externalWindow(media.url)}
+        style={{ position: 'absolute', top: '4px', right: '4px' }}
       />
       {(media.type === 'gifv' || media.type === 'video') && (
         <IconButton
