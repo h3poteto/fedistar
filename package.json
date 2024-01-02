@@ -4,7 +4,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "next dev -p 1420",
-    "build": "next build && next export -o dist",
+    "build": "next build",
     "tauri": "tauri",
     "snap": "tauri-snap-packager",
     "lint": "eslint src --ext ts,tsx",
