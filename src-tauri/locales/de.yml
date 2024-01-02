@@ -4,3 +4,5 @@ app_menu:
   help: Hilfe
   window: Fenster
   crash_reporting: Absturzbericht
+media:
+  title: Media
