@@ -50,6 +50,9 @@ dependencies:
   sanitize-html:
     specifier: ^2.11.0
     version: 2.11.0
+  tauri-plugin-window-state-api:
+    specifier: github:tauri-apps/tauri-plugin-window-state#v1
+    version: github.com/tauri-apps/tauri-plugin-window-state/91fafb628cd0c83ad52bdf9029cad212381f740a
 
 devDependencies:
   '@tauri-apps/cli':
@@ -4831,3 +4834,11 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  github.com/tauri-apps/tauri-plugin-window-state/91fafb628cd0c83ad52bdf9029cad212381f740a:
+    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/91fafb628cd0c83ad52bdf9029cad212381f740a}
+    name: tauri-plugin-window-state-api
+    version: 0.0.0
+    dependencies:
+      '@tauri-apps/api': 1.5.3
+    dev: false

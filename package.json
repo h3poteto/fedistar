@@ -47,7 +47,8 @@
     "react-intl": "^6.5.5",
     "react-virtuoso": "^4.6.2",
     "rsuite": "5.48.1",
-    "sanitize-html": "^2.11.0"
+    "sanitize-html": "^2.11.0",
+    "tauri-plugin-window-state-api": "github:tauri-apps/tauri-plugin-window-state#v1"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.9",
