@@ -629,6 +629,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     rust_i18n::set_locale(res.appearance.language.to_string().as_str());
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_window_state::Builder::default().build())
         .menu(menu::menu())
         .on_menu_event(|event| match event.menu_item_id() {
             "crash_reporting" => {
