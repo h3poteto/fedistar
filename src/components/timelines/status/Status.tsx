@@ -131,19 +131,17 @@ const Status: React.FC<Props> = props => {
       {rebloggedHeader(props.status)}
       <div style={{ display: 'flex' }}>
         {/** icon **/}
-        <div style={{ width: '56px' }}>
-          <div style={{ margin: '6px' }}>
-            <Avatar
-              src={status.account.avatar}
-              onClick={() => props.setAccountDetail(status.account.id, props.server.id, props.account?.id)}
-              style={{ cursor: 'pointer' }}
-              title={status.account.acct}
-              alt={status.account.acct}
-            />
-          </div>
+        <div style={{ width: '56px', padding: '6px', boxSizing: 'border-box' }}>
+          <Avatar
+            src={status.account.avatar}
+            onClick={() => props.setAccountDetail(status.account.id, props.server.id, props.account?.id)}
+            style={{ cursor: 'pointer' }}
+            title={status.account.acct}
+            alt={status.account.acct}
+          />
         </div>
         {/** status **/}
-        <div style={{ paddingRight: '8px', width: 'calc(100% - 56px)' }}>
+        <div style={{ paddingRight: '8px', width: `calc(100% - 56px)`, boxSizing: 'border-box' }}>
           <div className="metadata">
             <FlexboxGrid>
               {/** account name **/}
