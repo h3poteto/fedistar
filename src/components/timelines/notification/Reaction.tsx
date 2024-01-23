@@ -234,19 +234,17 @@ const Reaction: React.FC<Props> = props => {
       {/** body **/}
       <div style={{ display: 'flex', color: 'var(--rs-text-tertiary)' }}>
         {/** icon **/}
-        <div style={{ width: '56px' }}>
-          <div style={{ margin: '6px' }}>
-            <Avatar
-              src={status.account.avatar}
-              onClick={() => props.setAccountDetail(status.account)}
-              style={{ cursor: 'pointer' }}
-              title={status.account.acct}
-              alt={status.account.acct}
-            />
-          </div>
+        <div style={{ width: '56px', padding: '6px', boxSizing: 'border-box' }}>
+          <Avatar
+            src={status.account.avatar}
+            onClick={() => props.setAccountDetail(status.account)}
+            style={{ cursor: 'pointer' }}
+            title={status.account.acct}
+            alt={status.account.acct}
+          />
         </div>
         {/** status **/}
-        <div style={{ paddingRight: '8px', width: 'calc(100% - 56px)' }}>
+        <div style={{ paddingRight: '8px', width: 'calc(100% - 56px)', boxSizing: 'border-box' }}>
           <div className="metadata">
             <FlexboxGrid>
               {/** account name **/}
