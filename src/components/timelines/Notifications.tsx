@@ -55,6 +55,7 @@ const Notifications: React.FC<Props> = props => {
   const [firstItemIndex, setFirstItemIndex] = useState(TIMELINE_MAX_STATUSES)
   const [loading, setLoading] = useState<boolean>(false)
   const [marker, setMarker] = useState<Marker | null>(null)
+  const [pleromaUnreads, setPleromaUnreads] = useState<Array<string>>([])
 
   const scrollerRef = useRef<HTMLElement | null>(null)
   const triggerRef = useRef(null)
@@ -77,15 +78,7 @@ const Notifications: React.FC<Props> = props => {
       } finally {
         setLoading(false)
       }
-      try {
-        const res = await client.getMarkers(['notifications'])
-        const marker = res.data as Entity.Marker
-        if (marker.notifications) {
-          setMarker(marker.notifications)
-        }
-      } catch (err) {
-        console.error(err)
-      }
+      updateMarker(client)
     }
     f()
 
@@ -93,7 +86,7 @@ const Notifications: React.FC<Props> = props => {
       if (ev.payload.server_id !== props.server.id) {
         return
       }
-
+      updateMarker(client)
       if (replyOpened.current || (scrollerRef.current && scrollerRef.current.scrollTop > 10)) {
         setUnreadNotifications(last => {
           if (last.find(n => n.id === ev.payload.notification.id)) {
@@ -118,6 +111,16 @@ const Notifications: React.FC<Props> = props => {
       prependUnreads()
     }
   }, [replyOpened.current])
+
+  useEffect(() => {
+    // In pleroma, last_read_id is incorrect.
+    // Items that have not been marked may also be read. So, if marker has unread_count, we should use it for unreads.
+    if (marker && marker.unread_count) {
+      const allNotifications = unreadNotifications.concat(notifications)
+      const unreads = allNotifications.slice(0, marker.unread_count).map(n => n.id)
+      setPleromaUnreads(unreads)
+    }
+  }, [marker, unreadNotifications, notifications])
 
   const loadNotifications = async (client: MegalodonInterface, maxId?: string): Promise<Array<Entity.Notification>> => {
     let options = { limit: TIMELINE_STATUSES_COUNT }
@@ -167,6 +170,18 @@ const Notifications: React.FC<Props> = props => {
       router.push({ query: { tag: tag, server_id: serverId, account_id: accountId } })
     } else {
       router.push({ query: { tag: tag, server_id: serverId } })
+    }
+  }
+
+  const updateMarker = async (client: MegalodonInterface) => {
+    try {
+      const res = await client.getMarkers(['notifications'])
+      const marker = res.data as Entity.Marker
+      if (marker.notifications) {
+        setMarker(marker.notifications)
+      }
+    } catch (err) {
+      console.error(err)
     }
   }
 
@@ -339,11 +354,14 @@ const Notifications: React.FC<Props> = props => {
                 atTopStateChange={prependUnreads}
                 endReached={loadMore}
                 overscan={TIMELINE_STATUSES_COUNT}
-                itemContent={(index, notification) => {
+                itemContent={(_, notification) => {
                   let shadow = {}
-                  const order = index - TIMELINE_MAX_STATUSES
-                  if (marker && (parseInt(marker.last_read_id) < parseInt(notification.id) || order < marker.unread_count)) {
-                    shadow = { boxShadow: '2px 0 1px var(--rs-primary-700) inset' }
+                  if (marker) {
+                    if (marker.unread_count && pleromaUnreads.includes(notification.id)) {
+                      shadow = { boxShadow: '2px 0 1px var(--rs-primary-700) inset' }
+                    } else if (parseInt(marker.last_read_id) < parseInt(notification.id)) {
+                      shadow = { boxShadow: '2px 0 1px var(--rs-primary-700) inset' }
+                    }
                   }
                   return (
                     <List.Item
