@@ -209,7 +209,7 @@ const Notifications: React.FC<Props> = props => {
         setMarker(marker.notifications)
       }
     } catch {
-      toast.push(alert('error', formatMessage({ id: 'falert.failed_mark' })), { placement: 'topStart' })
+      toast.push(alert('error', formatMessage({ id: 'alert.failed_mark' })), { placement: 'topStart' })
     }
   }
 
