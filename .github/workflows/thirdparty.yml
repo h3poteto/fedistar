@@ -33,7 +33,7 @@ jobs:
     - name: Check
       run: |
         pnpm run thirdparty
-    - uses: peter-evans/create-pull-request@v5
+    - uses: peter-evans/create-pull-request@v6
       with:
         commit-message: "[Auto update] Thirdparty libraries list"
         branch: auto-update/thirdparty
