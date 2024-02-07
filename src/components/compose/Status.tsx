@@ -35,7 +35,7 @@ import {
 import { Entity, MegalodonInterface } from 'megalodon'
 import Picker from '@emoji-mart/react'
 
-import { data } from 'src/utils/emojiData'
+import { data, mapCustomEmojiCategory } from 'src/utils/emojiData'
 import { Server } from 'src/entities/server'
 import { CustomEmojiCategory } from 'src/entities/emoji'
 import alert from 'src/components/utils/alert'
@@ -129,24 +129,7 @@ const Status: React.FC<Props> = props => {
         setMaxCharacters(instance.data.configuration.statuses.max_characters)
       }
       const emojis = await props.client.getInstanceCustomEmojis()
-      setCustomEmojis([
-        {
-          id: props.server.domain,
-          name: props.server.domain,
-          emojis: emojis.data
-            .map(emoji => ({
-              name: emoji.shortcode,
-              image: emoji.url
-            }))
-            .filter((e, i, array) => array.findIndex(ar => e.name === ar.name) === i)
-            .map(e => ({
-              id: e.name,
-              name: e.name,
-              keywords: [e.name],
-              skins: [{ src: e.image, shortcodes: `:${e.name}:` }]
-            }))
-        }
-      ])
+      setCustomEmojis(mapCustomEmojiCategory(props.server.domain, emojis.data))
     }
     f()
   }, [props.server, props.client])

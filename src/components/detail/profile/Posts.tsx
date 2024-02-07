@@ -5,7 +5,9 @@ import { List, Loader } from 'rsuite'
 import Status from 'src/components/timelines/status/Status'
 import { TIMELINE_STATUSES_COUNT } from 'src/defaults'
 import { Account } from 'src/entities/account'
+import { CustomEmojiCategory } from 'src/entities/emoji'
 import { Server } from 'src/entities/server'
+import { mapCustomEmojiCategory } from 'src/utils/emojiData'
 
 export type FuncProps = {
   loadMore: () => Promise<void>
@@ -27,6 +29,7 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [loadingMore, setLoadingMore] = useState<boolean>(false)
+  const [customEmojis, setCustomEmojis] = useState<Array<CustomEmojiCategory>>([])
 
   const router = useRouter()
 
@@ -41,6 +44,8 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
       } finally {
         setLoading(false)
       }
+      const emojis = await client.getInstanceCustomEmojis()
+      setCustomEmojis(mapCustomEmojiCategory(props.server.domain, emojis.data))
     }
     f()
   }, [user, client])
@@ -116,6 +121,7 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
                 setTagDetail={setTagDetail}
                 openReport={props.openReport}
                 openFromOtherAccount={props.openFromOtherAccount}
+                customEmojis={customEmojis}
               />
             </List.Item>
           ))}
@@ -133,6 +139,7 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
                 setTagDetail={setTagDetail}
                 openReport={props.openReport}
                 openFromOtherAccount={props.openFromOtherAccount}
+                customEmojis={customEmojis}
               />
             </List.Item>
           ))}

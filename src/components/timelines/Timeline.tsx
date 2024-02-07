@@ -55,6 +55,8 @@ import { useRouter } from 'next/router'
 import { Instruction } from 'src/entities/instruction'
 import timelineName from 'src/utils/timelineName'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { CustomEmojiCategory } from 'src/entities/emoji'
+import { mapCustomEmojiCategory } from 'src/utils/emojiData'
 
 type Props = {
   timeline: Timeline
@@ -76,6 +78,7 @@ const Timeline: React.FC<Props> = props => {
   // This parameter is used only favourite. Because it is not receive streaming, and max_id in link header is required for favourite.
   const [nextMaxId, setNextMaxId] = useState<string | null>(null)
   const [walkthrough, setWalkthrough] = useState<boolean>(false)
+  const [customEmojis, setCustomEmojis] = useState<Array<CustomEmojiCategory>>([])
 
   const scrollerRef = useRef<HTMLElement | null>(null)
   const triggerRef = useRef(null)
@@ -107,6 +110,9 @@ const Timeline: React.FC<Props> = props => {
       } finally {
         setLoading(false)
       }
+
+      const emojis = await client.getInstanceCustomEmojis()
+      setCustomEmojis(mapCustomEmojiCategory(props.server.domain, emojis.data))
 
       const instruction = await invoke<Instruction>('get_instruction')
       if (instruction.instruction == 1) {
@@ -486,6 +492,7 @@ const Timeline: React.FC<Props> = props => {
                       setTagDetail={setTagDetail}
                       openReport={props.openReport}
                       openFromOtherAccount={props.openFromOtherAccount}
+                      customEmojis={customEmojis}
                     />
                   </List.Item>
                 )}

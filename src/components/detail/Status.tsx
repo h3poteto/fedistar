@@ -10,6 +10,8 @@ import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import Status from '../timelines/status/Status'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { CustomEmojiCategory } from 'src/entities/emoji'
+import { mapCustomEmojiCategory } from 'src/utils/emojiData'
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
@@ -25,23 +27,27 @@ const StatusDetail: React.FC<Props> = props => {
   const [status, setStatus] = useState<Entity.Status | null>(null)
   const [ancestors, setAncestors] = useState<Array<Entity.Status>>([])
   const [descendants, setDescendants] = useState<Array<Entity.Status>>([])
+  const [customEmojis, setCustomEmojis] = useState<Array<CustomEmojiCategory>>([])
 
   const router = useRouter()
 
   useEffect(() => {
     const f = async () => {
       let cli: MegalodonInterface
+      let server: Server
       if (router.query.account_id && router.query.server_id) {
-        const [account, server] = await invoke<[Account, Server]>('get_account', {
+        const [account, s] = await invoke<[Account, Server]>('get_account', {
           id: parseInt(router.query.account_id.toLocaleString())
         })
-        setServer(server)
+        server = s
+        setServer(s)
         setAccount(account)
         cli = generator(server.sns, server.base_url, account.access_token, 'Fedistar')
         setClient(cli)
       } else if (router.query.server_id) {
-        const server = await invoke<Server>('get_server', { id: parseInt(router.query.server_id.toString()) })
-        setServer(server)
+        const s = await invoke<Server>('get_server', { id: parseInt(router.query.server_id.toString()) })
+        server = s
+        setServer(s)
         setAccount(null)
         cli = generator(server.sns, server.base_url, undefined, 'Fedistar')
         setClient(cli)
@@ -51,6 +57,11 @@ const StatusDetail: React.FC<Props> = props => {
         setStatus(res.data)
       } else {
         setStatus(null)
+      }
+
+      if (cli) {
+        const emojis = await cli.getInstanceCustomEmojis()
+        setCustomEmojis(mapCustomEmojiCategory(server.domain, emojis.data))
       }
     }
     f()
@@ -175,6 +186,7 @@ const StatusDetail: React.FC<Props> = props => {
                   setTagDetail={setTagDetail}
                   openReport={props.openReport}
                   openFromOtherAccount={props.openFromOtherAccount}
+                  customEmojis={customEmojis}
                 />
               </List.Item>
             ))}

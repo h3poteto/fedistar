@@ -11,6 +11,8 @@ import Actions from '../timelines/status/Actions'
 import { Account } from 'src/entities/account'
 import Reply from 'src/components/compose/Status'
 import { FormattedMessage } from 'react-intl'
+import { CustomEmojiCategory } from 'src/entities/emoji'
+import { mapCustomEmojiCategory } from 'src/utils/emojiData'
 
 type Props = {
   target: Entity.Status
@@ -22,6 +24,7 @@ type Props = {
 export default function Status(props: Props) {
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [searching, setSearching] = useState(false)
+  const [customEmojis, setCustomEmojis] = useState<Array<CustomEmojiCategory>>([])
 
   useEffect(() => {
     if (props.client === null) {
@@ -37,6 +40,9 @@ export default function Status(props: Props) {
       } finally {
         setSearching(false)
       }
+
+      const emojis = await props.client.getInstanceCustomEmojis()
+      setCustomEmojis(mapCustomEmojiCategory(props.server.domain, emojis.data))
     }
     f()
   }, [props.client, props.target])
@@ -83,6 +89,7 @@ export default function Status(props: Props) {
                 updateStatus={replaceStatus}
                 server={props.server}
                 account={props.account}
+                customEmojis={customEmojis}
               />
             ))
           ) : (
@@ -107,6 +114,7 @@ type PostProps = {
   status: Entity.Status
   client: MegalodonInterface
   updateStatus: (status: Entity.Status) => void
+  customEmojis: Array<CustomEmojiCategory>
 }
 
 function Post(props: PostProps) {
@@ -164,6 +172,7 @@ function Post(props: PostProps) {
               client={client}
               setShowReply={setShowReply}
               updateStatus={props.updateStatus}
+              customEmojis={props.customEmojis}
             />
           </div>
         </FlexboxGrid.Item>

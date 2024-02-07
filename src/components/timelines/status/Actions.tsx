@@ -25,6 +25,7 @@ import { data } from 'src/utils/emojiData'
 import { Account } from 'src/entities/account'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Context } from 'src/theme'
+import { CustomEmojiCategory } from 'src/entities/emoji'
 
 type Props = {
   disabled:
@@ -46,6 +47,7 @@ type Props = {
   updateStatus: (status: Entity.Status) => void
   openReport?: () => void
   openFromOtherAccount?: () => void
+  customEmojis: Array<CustomEmojiCategory>
 }
 
 const Actions: React.FC<Props> = props => {
@@ -130,10 +132,11 @@ const Actions: React.FC<Props> = props => {
     emojiPickerRef?.current.close()
   }
 
-  const EmojiPicker = forwardRef<HTMLDivElement>((props, ref) => (
-    <Popover ref={ref} {...props}>
+  const EmojiPicker = forwardRef<HTMLDivElement>((prop, ref) => (
+    <Popover ref={ref} {...prop}>
       <Picker
         data={data}
+        custom={props.customEmojis}
         onEmojiSelect={onEmojiSelect}
         previewPosition="none"
         set="native"
