@@ -38,7 +38,17 @@ const actionIcon = (notification: Entity.Notification) => {
     case 'update':
       return <Icon as={BsPencil} color="cyan" />
     case 'emoji_reaction':
-      return <span dangerouslySetInnerHTML={{ __html: notification.emoji }} />
+    case 'reaction':
+      if (notification.reaction) {
+        if (notification.reaction.url) {
+          return <img src={notification.reaction.url} style={{ height: '18px' }} />
+        } else {
+          return <span dangerouslySetInnerHTML={{ __html: notification.reaction.name }} />
+        }
+      } else {
+        return null
+      }
+
     default:
       return null
   }
@@ -140,6 +150,7 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
         />
       )
     case 'emoji_reaction':
+    case 'reaction':
       return (
         <span
           style={{ color: 'var(--rs-text-secondary)', cursor: 'pointer' }}

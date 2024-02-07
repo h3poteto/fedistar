@@ -21,8 +21,8 @@ dependencies:
     specifier: ^5.5.2
     version: 5.5.2
   megalodon:
-    specifier: 9.1.2
-    version: 9.1.2
+    specifier: 9.2.0
+    version: 9.2.0
   next:
     specifier: ^14.1.0
     version: 14.1.0(@babel/core@7.22.17)(react-dom@18.2.0)(react@18.2.0)(sass@1.70.0)
@@ -432,8 +432,8 @@ packages:
       '@babel/helper-validator-identifier': 7.22.19
       to-fast-properties: 2.0.0
 
-  /@badgateway/oauth2-client@2.2.4:
-    resolution: {integrity: sha512-R9MJWnf9gT5a38hNmAN4CFBB9yshvEVNYPb9iPgX7JIUAaqHjl3csivDcJESH3riRJMFVOEOqV4BsjamyYbsBg==}
+  /@badgateway/oauth2-client@2.3.0:
+    resolution: {integrity: sha512-nLbACuhaKIo9AjaE/HK1zvRU0yzsSOX94yarEyKLq1FNzf9b74YReZrKVfF7EkQfNli+TpL11750s01/oyEf2w==}
     engines: {node: '>= 14'}
     dev: false
 
@@ -1523,10 +1523,10 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /axios@1.6.3:
-    resolution: {integrity: sha512-fWyNdeawGam70jXSVlKl+SUNVcL6j6W79CuSIPfi6HnDUmSCH6gyUys/HrqHeA/wU0Az41rRgean494d0Jb+ww==}
+  /axios@1.6.7:
+    resolution: {integrity: sha512-/hDJGff6/c7u0hDkvkGxR/oy6CbCs8ziCsC7SqmhjfozqiJGc8Z11wrv9z9lYfY4K8l+H9TpjcMDX0xOZmx+RA==}
     dependencies:
-      follow-redirects: 1.15.3
+      follow-redirects: 1.15.5
       form-data: 4.0.0
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
@@ -2339,8 +2339,8 @@ packages:
     resolution: {integrity: sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==}
     dev: true
 
-  /follow-redirects@1.15.3:
-    resolution: {integrity: sha512-1VzOtuEM8pC9SFU1E+8KfTjZyMztRsgEfwQl44z8A25uy13jSzTj6dyK2Df52iV0vgHCfBwLhDWevLn95w5v6Q==}
+  /follow-redirects@1.15.5:
+    resolution: {integrity: sha512-vSFWUON1B+yAw1VN4xMfxgn5fTUiaOzAJCKBwIIgT/+7CuGy9+r+5gITvP62j3RmaD5Ph65UaERdOSRGUzZtgw==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -2852,12 +2852,12 @@ packages:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
     dev: true
 
-  /isomorphic-ws@5.0.0(ws@8.14.2):
+  /isomorphic-ws@5.0.0(ws@8.16.0):
     resolution: {integrity: sha512-muId7Zzn9ywDsyXgTIafTry2sV3nySZeUDe6YedVd1Hvuuep5AsIlqK+XefWpYTyJG5e503F2xIuT2lcU6rCSw==}
     peerDependencies:
       ws: '*'
     dependencies:
-      ws: 8.14.2
+      ws: 8.16.0
     dev: false
 
   /istanbul-lib-coverage@3.2.0:
@@ -3518,20 +3518,20 @@ packages:
       tmpl: 1.0.5
     dev: true
 
-  /megalodon@9.1.2:
-    resolution: {integrity: sha512-P4Muu7gVUCLJdRVSTbF4X3KSlq40GVsm5HBm0Rz+YJlF2hKwd6Hze7maP7x+TzllS870weJFqcM97EJa1DmSlw==}
+  /megalodon@9.2.0:
+    resolution: {integrity: sha512-zyn4jBIwu1/fdRqt0wKziTQHNfJrjxHd1i3YFD9aN7Kx6GXgk50s02Df/fwJPI0psegX+Q0a1U4DAgbdOE7wSg==}
     engines: {node: '>=15.0.0'}
     dependencies:
-      '@badgateway/oauth2-client': 2.2.4
+      '@badgateway/oauth2-client': 2.3.0
       '@types/ws': 8.5.10
-      axios: 1.6.3
+      axios: 1.6.7
       dayjs: 1.11.10
       events: 3.3.0
       form-data: 4.0.0
-      isomorphic-ws: 5.0.0(ws@8.14.2)
+      isomorphic-ws: 5.0.0(ws@8.16.0)
       object-assign-deep: 0.4.0
       uuid: 9.0.1
-      ws: 8.14.2
+      ws: 8.16.0
     transitivePeerDependencies:
       - bufferutil
       - debug
@@ -4753,19 +4753,6 @@ packages:
       signal-exit: 3.0.7
     dev: true
 
-  /ws@8.14.2:
-    resolution: {integrity: sha512-wEBG1ftX4jcglPxgFCMJmZ2PLtSbJ2Peg6TmpJFTbe9GZYOQCDPdMYu/Tm0/bGZkw8paZnJY45J4K2PZrLYq8g==}
-    engines: {node: '>=10.0.0'}
-    peerDependencies:
-      bufferutil: ^4.0.1
-      utf-8-validate: '>=5.0.2'
-    peerDependenciesMeta:
-      bufferutil:
-        optional: true
-      utf-8-validate:
-        optional: true
-    dev: false
-
   /ws@8.16.0:
     resolution: {integrity: sha512-HS0c//TP7Ina87TfiPUz1rQzMhHrl/SG2guqRcTOIUYD2q8uhUdNHZYJUaQ8aTGPzCh+c6oawMKW35nFl1dxyQ==}
     engines: {node: '>=10.0.0'}
@@ -4777,7 +4764,6 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
-    dev: true
 
   /xml-name-validator@5.0.0:
     resolution: {integrity: sha512-EvGK8EJ3DhaHfbRlETOWAS5pO9MZITeauHKJyb8wyajUfQUenkIg2MvLDTZ4T/TgIcm3HU0TFBgWWboAZ30UHg==}
