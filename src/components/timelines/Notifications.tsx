@@ -68,42 +68,41 @@ const Notifications: React.FC<Props> = props => {
       setLoading(true)
       const [account, _] = await invoke<[Account, Server]>('get_account', { id: props.server.account_id })
       setAccount(account)
-      const client = generator(props.server.sns, props.server.base_url, account.access_token, 'Fedistar')
-      setClient(client)
+      const cli = generator(props.server.sns, props.server.base_url, account.access_token, 'Fedistar')
+      setClient(cli)
       try {
-        const res = await loadNotifications(client)
+        const res = await loadNotifications(cli)
         setNotifications(res)
       } catch {
         toast.push(alert('error', formatMessage({ id: 'alert.failed_load' }, { timeline: 'notifications' })), { placement: 'topStart' })
       } finally {
         setLoading(false)
       }
-      updateMarker(client)
-    }
-    f()
+      updateMarker(cli)
+      listen<ReceiveNotificationPayload>('receive-notification', ev => {
+        if (ev.payload.server_id !== props.server.id) {
+          return
+        }
+        updateMarker(cli)
+        if (replyOpened.current || (scrollerRef.current && scrollerRef.current.scrollTop > 10)) {
+          setUnreadNotifications(last => {
+            if (last.find(n => n.id === ev.payload.notification.id)) {
+              return last
+            }
+            return [ev.payload.notification].concat(last)
+          })
+          return
+        }
 
-    listen<ReceiveNotificationPayload>('receive-notification', ev => {
-      if (ev.payload.server_id !== props.server.id) {
-        return
-      }
-      updateMarker(client)
-      if (replyOpened.current || (scrollerRef.current && scrollerRef.current.scrollTop > 10)) {
-        setUnreadNotifications(last => {
+        setNotifications(last => {
           if (last.find(n => n.id === ev.payload.notification.id)) {
             return last
           }
-          return [ev.payload.notification].concat(last)
+          return [ev.payload.notification].concat(last).slice(0, TIMELINE_STATUSES_COUNT)
         })
-        return
-      }
-
-      setNotifications(last => {
-        if (last.find(n => n.id === ev.payload.notification.id)) {
-          return last
-        }
-        return [ev.payload.notification].concat(last).slice(0, TIMELINE_STATUSES_COUNT)
       })
-    })
+    }
+    f()
   }, [])
 
   useEffect(() => {
@@ -173,9 +172,9 @@ const Notifications: React.FC<Props> = props => {
     }
   }
 
-  const updateMarker = async (client: MegalodonInterface) => {
+  const updateMarker = async (cli: MegalodonInterface) => {
     try {
-      const res = await client.getMarkers(['notifications'])
+      const res = await cli.getMarkers(['notifications'])
       const marker = res.data as Entity.Marker
       if (marker.notifications) {
         setMarker(marker.notifications)
@@ -203,11 +202,7 @@ const Notifications: React.FC<Props> = props => {
       if (props.server.sns === 'pleroma') {
         await client.readNotifications({ max_id: notifications[0].id })
       }
-      const res = await client.getMarkers(['notifications'])
-      const marker = res.data as Entity.Marker
-      if (marker.notifications) {
-        setMarker(marker.notifications)
-      }
+      await updateMarker(client)
     } catch {
       toast.push(alert('error', formatMessage({ id: 'alert.failed_mark' })), { placement: 'topStart' })
     }
