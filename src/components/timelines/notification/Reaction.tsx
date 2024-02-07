@@ -41,7 +41,7 @@ const actionIcon = (notification: Entity.Notification) => {
     case 'reaction':
       if (notification.reaction) {
         if (notification.reaction.url) {
-          return <img src={notification.reaction.url} style={{ height: '18px' }} />
+          return <img src={notification.reaction.url} style={{ height: '16px' }} />
         } else {
           return <span dangerouslySetInnerHTML={{ __html: notification.reaction.name }} />
         }
@@ -229,16 +229,18 @@ const Reaction: React.FC<Props> = props => {
     <div>
       {/** action **/}
       <FlexboxGrid align="middle" style={{ paddingRight: '8px' }}>
-        <FlexboxGrid.Item colspan={20}>
+        <FlexboxGrid.Item colspan={22}>
           <div style={{ display: 'flex', alignItems: 'middle' }}>
             {/** icon **/}
-            <div style={{ paddingRight: '8px', textAlign: 'right', width: '56px' }}>{actionIcon(props.notification)}</div>
-            <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <div style={{ paddingRight: '4px', paddingLeft: '8px', width: '32px', boxSizing: 'border-box' }}>
+              {actionIcon(props.notification)}
+            </div>
+            <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: 'calc(100% - 32px)' }}>
               {actionText(props.notification, props.setAccountDetail)}
             </div>
           </div>
         </FlexboxGrid.Item>
-        <FlexboxGrid.Item colspan={4} style={{ textAlign: 'right', color: 'var(--rs-text-secondary)' }}>
+        <FlexboxGrid.Item colspan={2} style={{ textAlign: 'right', color: 'var(--rs-text-secondary)' }}>
           <Time time={props.notification.created_at} />
         </FlexboxGrid.Item>
       </FlexboxGrid>
