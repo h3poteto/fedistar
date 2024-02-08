@@ -126,7 +126,11 @@ const Actions: React.FC<Props> = props => {
   }
 
   const onEmojiSelect = async emoji => {
-    const res = await props.client.createEmojiReaction(props.status.id, emoji.native)
+    let name = emoji.shortcodes
+    if (emoji.native) {
+      name = emoji.native
+    }
+    const res = await props.client.createEmojiReaction(props.status.id, name)
     props.updateStatus(res.data)
 
     emojiPickerRef?.current.close()
