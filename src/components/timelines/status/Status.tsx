@@ -178,7 +178,15 @@ const Status: React.FC<Props> = props => {
               )}
               {status.emoji_reactions &&
                 status.emoji_reactions.map(e => (
-                  <Button appearance="subtle" size="sm" key={e.name} onClick={() => emojiClicked(e)} active={e.me}>
+                  <Button
+                    appearance="subtle"
+                    size="sm"
+                    key={e.name}
+                    onClick={() => emojiClicked(e)}
+                    active={e.me}
+                    disabled={e.name.includes('@')}
+                    title={e.name}
+                  >
                     {e.url ? (
                       <>
                         <img src={e.url} style={{ height: '20px' }} /> <span style={{ marginLeft: '0.2em' }}>{e.count}</span>
