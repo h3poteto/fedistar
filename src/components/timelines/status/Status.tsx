@@ -181,6 +181,7 @@ const Status: React.FC<Props> = props => {
                   <Button appearance="subtle" size="sm" key={e.name} onClick={() => emojiClicked(e)} active={e.me}>
                     {e.url ? (
                       <>
+                        {/** TODO: Do not allow external server's reaction **/}
                         <img src={e.url} style={{ height: '20px' }} /> <span style={{ marginLeft: '0.2em' }}>{e.count}</span>
                       </>
                     ) : (

@@ -126,7 +126,7 @@ const Actions: React.FC<Props> = props => {
   }
 
   const onEmojiSelect = async emoji => {
-    let name = emoji.shortcodes
+    let name = emoji.name
     if (emoji.native) {
       name = emoji.native
     }

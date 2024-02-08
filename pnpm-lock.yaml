@@ -21,8 +21,8 @@ dependencies:
     specifier: ^5.5.2
     version: 5.5.2
   megalodon:
-    specifier: 9.2.0
-    version: 9.2.0
+    specifier: 9.2.1
+    version: 9.2.1
   next:
     specifier: ^14.1.0
     version: 14.1.0(@babel/core@7.22.17)(react-dom@18.2.0)(react@18.2.0)(sass@1.70.0)
@@ -3518,8 +3518,8 @@ packages:
       tmpl: 1.0.5
     dev: true
 
-  /megalodon@9.2.0:
-    resolution: {integrity: sha512-zyn4jBIwu1/fdRqt0wKziTQHNfJrjxHd1i3YFD9aN7Kx6GXgk50s02Df/fwJPI0psegX+Q0a1U4DAgbdOE7wSg==}
+  /megalodon@9.2.1:
+    resolution: {integrity: sha512-b+HYdqg6vYcdOs3tlb6XZBmLOP90RXEBy7/4i588ImUvAIXl+H/JmtiukODaZRjllBsml8DpclvNe3bTs8cvLg==}
     engines: {node: '>=15.0.0'}
     dependencies:
       '@badgateway/oauth2-client': 2.3.0
