@@ -234,10 +234,17 @@ const pinnedHeader = (pinned?: boolean) => {
     return (
       <div style={{ color: 'var(--rs-text-tertiary)' }}>
         <div style={{ alignItems: 'middle', display: 'flex' }}>
-          <div style={{ paddingRight: '8px', textAlign: 'right', width: '56px' }}>
+          <div style={{ paddingRight: '4px', paddingLeft: '8px', width: '32px', boxSizing: 'border-box' }}>
             <Icon as={BsPin} />
           </div>
-          <div>
+          <div
+            style={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              width: 'calc(100% - 32px)'
+            }}
+          >
             <FormattedMessage id="timeline.status.pinned_post" />
           </div>
         </div>
@@ -253,10 +260,17 @@ const rebloggedHeader = (status: Entity.Status) => {
     return (
       <div style={{ color: 'var(--rs-text-tertiary)' }}>
         <div style={{ alignItems: 'middle', display: 'flex' }}>
-          <div style={{ paddingRight: '8px', textAlign: 'right', width: '56px' }}>
+          <div style={{ paddingRight: '4px', paddingLeft: '8px', width: '32px', boxSizing: 'border-box' }}>
             <Icon as={BsArrowRepeat} style={{ color: 'green' }} />
           </div>
-          <div>
+          <div
+            style={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              width: 'calc(100% - 32px)'
+            }}
+          >
             <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
           </div>
         </div>
