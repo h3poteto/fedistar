@@ -11,6 +11,8 @@ import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import Status from '../timelines/status/Status'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { CustomEmojiCategory } from 'src/entities/emoji'
+import { mapCustomEmojiCategory } from 'src/utils/emojiData'
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
@@ -27,6 +29,7 @@ export default function ListDetail(props: Props) {
   const [account, setAccount] = useState<Account | null>(null)
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [list, setList] = useState<Entity.List | null>(null)
+  const [customEmojis, setCustomEmojis] = useState<Array<CustomEmojiCategory>>([])
 
   useEffect(() => {
     const f = async () => {
@@ -42,6 +45,9 @@ export default function ListDetail(props: Props) {
         const listID = router.query.list_id.toString()
         const res = await cli.getList(listID)
         setList(res.data)
+
+        const emojis = await cli.getInstanceCustomEmojis()
+        setCustomEmojis(mapCustomEmojiCategory(server.domain, emojis.data))
       }
     }
 
@@ -149,6 +155,7 @@ export default function ListDetail(props: Props) {
                     setTagDetail={setTagDetail}
                     openReport={props.openReport}
                     openFromOtherAccount={props.openFromOtherAccount}
+                    customEmojis={customEmojis}
                   />
                 </List.Item>
               )}

@@ -49,7 +49,7 @@ const Follow: React.FC<Props> = props => {
     <div onClick={() => props.setAccountDetail(props.notification.account)} style={{ cursor: 'pointer' }}>
       {/** action **/}
       <FlexboxGrid style={{ paddingRight: '8px' }}>
-        <FlexboxGrid.Item colspan={22} style={{ display: 'flex', alignItems: 'middle' }}>
+        <FlexboxGrid.Item colspan={20} style={{ display: 'flex', alignItems: 'middle' }}>
           {/** icon **/}
           <div style={{ paddingRight: '4px', paddingLeft: '8px', width: '32px', boxSizing: 'border-box' }}>
             <Icon as={BsPersonPlus} color="cyan" />
@@ -58,7 +58,7 @@ const Follow: React.FC<Props> = props => {
             {actionText(props.notification)}
           </div>
         </FlexboxGrid.Item>
-        <FlexboxGrid.Item colspan={2} style={{ textAlign: 'right', color: 'var(--rs-text-tertiary)' }}>
+        <FlexboxGrid.Item colspan={4} style={{ textAlign: 'right', color: 'var(--rs-text-tertiary)' }}>
           <Time time={props.notification.created_at} />
         </FlexboxGrid.Item>
       </FlexboxGrid>

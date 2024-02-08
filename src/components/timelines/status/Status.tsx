@@ -16,6 +16,7 @@ import Actions from './Actions'
 import Poll from './Poll'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { ColumnWidth } from 'src/entities/timeline'
+import { CustomEmojiCategory } from 'src/entities/emoji'
 
 type Props = {
   status: Entity.Status
@@ -32,6 +33,7 @@ type Props = {
   setTagDetail: (tag: string, serverId: number, accountId?: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  customEmojis: Array<CustomEmojiCategory>
 } & HTMLAttributes<HTMLElement>
 
 const Status: React.FC<Props> = props => {
@@ -201,6 +203,7 @@ const Status: React.FC<Props> = props => {
             updateStatus={props.updateStatus}
             openReport={() => props.openReport(status, props.client)}
             openFromOtherAccount={() => props.openFromOtherAccount(status)}
+            customEmojis={props.customEmojis}
           />
         </div>
       </div>

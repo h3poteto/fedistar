@@ -229,7 +229,7 @@ const Reaction: React.FC<Props> = props => {
     <div>
       {/** action **/}
       <FlexboxGrid align="middle" style={{ paddingRight: '8px' }}>
-        <FlexboxGrid.Item colspan={22}>
+        <FlexboxGrid.Item colspan={20}>
           <div style={{ display: 'flex', alignItems: 'middle' }}>
             {/** icon **/}
             <div style={{ paddingRight: '4px', paddingLeft: '8px', width: '32px', boxSizing: 'border-box' }}>
@@ -240,7 +240,7 @@ const Reaction: React.FC<Props> = props => {
             </div>
           </div>
         </FlexboxGrid.Item>
-        <FlexboxGrid.Item colspan={2} style={{ textAlign: 'right', color: 'var(--rs-text-secondary)' }}>
+        <FlexboxGrid.Item colspan={4} style={{ textAlign: 'right', color: 'var(--rs-text-secondary)' }}>
           <Time time={props.notification.created_at} />
         </FlexboxGrid.Item>
       </FlexboxGrid>

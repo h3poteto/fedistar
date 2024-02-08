@@ -9,6 +9,8 @@ import { Server } from 'src/entities/server'
 import Status from 'src/components/timelines/status/Status'
 import emojify from 'src/utils/emojify'
 import { Account } from 'src/entities/account'
+import { CustomEmojiCategory } from 'src/entities/emoji'
+import { mapCustomEmojiCategory } from 'src/utils/emojiData'
 
 type Props = {
   account: Account
@@ -27,12 +29,15 @@ export default function Results(props: Props) {
   const [accounts, setAccounts] = useState<Array<Entity.Account>>([])
   const [hashtags, setHashtags] = useState<Array<Entity.Tag>>([])
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
+  const [customEmojis, setCustomEmojis] = useState<Array<CustomEmojiCategory>>([])
 
   const search = async (word: string) => {
     const res = await props.client.search(word, { limit: 5, resolve: true })
     setAccounts(res.data.accounts)
     setHashtags(res.data.hashtags)
     setStatuses(res.data.statuses)
+    const emojis = await props.client.getInstanceCustomEmojis()
+    setCustomEmojis(mapCustomEmojiCategory(props.server.domain, emojis.data))
   }
 
   const loadMoreAccount = useCallback(async () => {
@@ -178,6 +183,7 @@ export default function Results(props: Props) {
                     setTagDetail={setTagDetail}
                     openReport={props.openReport}
                     openFromOtherAccount={props.openFromOtherAccount}
+                    customEmojis={customEmojis}
                   />
                 </div>
               </List.Item>

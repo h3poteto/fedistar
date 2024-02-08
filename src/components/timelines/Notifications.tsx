@@ -35,6 +35,8 @@ import { useRouter } from 'next/router'
 import timelineName from 'src/utils/timelineName'
 import { Marker } from 'src/entities/marker'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { CustomEmojiCategory } from 'src/entities/emoji'
+import { mapCustomEmojiCategory } from 'src/utils/emojiData'
 
 type Props = {
   timeline: Timeline
@@ -56,6 +58,7 @@ const Notifications: React.FC<Props> = props => {
   const [loading, setLoading] = useState<boolean>(false)
   const [marker, setMarker] = useState<Marker | null>(null)
   const [pleromaUnreads, setPleromaUnreads] = useState<Array<string>>([])
+  const [customEmojis, setCustomEmojis] = useState<Array<CustomEmojiCategory>>([])
 
   const scrollerRef = useRef<HTMLElement | null>(null)
   const triggerRef = useRef(null)
@@ -79,6 +82,9 @@ const Notifications: React.FC<Props> = props => {
         setLoading(false)
       }
       updateMarker(cli)
+      const emojis = await cli.getInstanceCustomEmojis()
+      setCustomEmojis(mapCustomEmojiCategory(props.server.domain, emojis.data))
+
       listen<ReceiveNotificationPayload>('receive-notification', ev => {
         if (ev.payload.server_id !== props.server.id) {
           return
@@ -384,6 +390,7 @@ const Notifications: React.FC<Props> = props => {
                         setTagDetail={setTagDetail}
                         openReport={props.openReport}
                         openFromOtherAccount={props.openFromOtherAccount}
+                        customEmojis={customEmojis}
                       />
                     </List.Item>
                   )

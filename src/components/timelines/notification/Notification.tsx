@@ -6,6 +6,7 @@ import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import Move from './Move'
 import { ColumnWidth } from 'src/entities/timeline'
+import { CustomEmojiCategory } from 'src/entities/emoji'
 
 type Props = {
   notification: Entity.Notification
@@ -21,6 +22,7 @@ type Props = {
   setTagDetail: (tag: string, serverId: number, accountId?: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  customEmojis: Array<CustomEmojiCategory>
 }
 
 const notification = (props: Props) => {
@@ -81,6 +83,7 @@ const notification = (props: Props) => {
             setTagDetail={props.setTagDetail}
             openReport={props.openReport}
             openFromOtherAccount={props.openFromOtherAccount}
+            customEmojis={props.customEmojis}
           />
         )
       } else {
