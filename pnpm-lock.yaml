@@ -55,6 +55,9 @@ dependencies:
     version: github.com/tauri-apps/tauri-plugin-window-state/91fafb628cd0c83ad52bdf9029cad212381f740a
 
 devDependencies:
+  '@h3poteto/tauri-snap-packager':
+    specifier: 0.2.1
+    version: 0.2.1
   '@tauri-apps/cli':
     specifier: ^1.5.9
     version: 1.5.9
@@ -97,9 +100,6 @@ devDependencies:
   sass:
     specifier: ^1.70.0
     version: 1.70.0
-  tauri-snap-packager:
-    specifier: github:h3poteto/tauri-snap-packager#main
-    version: github.com/h3poteto/tauri-snap-packager/8d5157aa93685f88298be74fac3f437753b66bd8
   ts-jest:
     specifier: ^29.1.2
     version: 29.1.2(@babel/core@7.22.17)(jest@29.7.0)(typescript@5.3.3)
@@ -555,6 +555,13 @@ packages:
       tslib: 2.6.2
       typescript: 5.3.3
     dev: false
+
+  /@h3poteto/tauri-snap-packager@0.2.1:
+    resolution: {integrity: sha512-TZstV34o+754TuF9Zs63cQ+bznhzpd85kdfJGW9DxgBHk4QO9fJ26C5b/yih2mibf1R3xlrSUD7GHiXsQ0VCGQ==}
+    hasBin: true
+    dependencies:
+      js-yaml: 4.1.0
+    dev: true
 
   /@humanwhocodes/config-array@0.11.13:
     resolution: {integrity: sha512-JSBDMiDKSzQVngfRjOdFXgFfklaXI4K9nLF49Auh21lmBWRLIK3+xTErTWD4KU54pb6coM6ESE7Awz/FNU3zgQ==}
@@ -4812,15 +4819,6 @@ packages:
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
-    dev: true
-
-  github.com/h3poteto/tauri-snap-packager/8d5157aa93685f88298be74fac3f437753b66bd8:
-    resolution: {tarball: https://codeload.github.com/h3poteto/tauri-snap-packager/tar.gz/8d5157aa93685f88298be74fac3f437753b66bd8}
-    name: tauri-snap-packager
-    version: 0.1.0
-    hasBin: true
-    dependencies:
-      js-yaml: 4.1.0
     dev: true
 
   github.com/tauri-apps/tauri-plugin-window-state/91fafb628cd0c83ad52bdf9029cad212381f740a:

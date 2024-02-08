@@ -1,0 +1,52 @@
+name: Snap
+
+on:
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+
+permissions: write-all
+
+jobs:
+  snap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Node.js setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Rust setup
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+      - name: Install snapcraft
+        run: |
+          sudo snap install snapcraft --classic
+          sudo snap install multipass
+          # To avoid: https://github.com/canonical/multipass/issues/2620
+          sudo gpasswd -a $USER sudo
+          sudo adduser $USER kvm
+          sudo chown -R $USER /dev/kvm
+      - name: Install app dependencies and build web
+        run: pnpm install --frozen-lockfile && pnpm tauri build
+
+      - name: Build snap
+        run: |
+          sudo chown runner:sudo /var/snap/multipass/common/multipass_socket
+          pnpm run snap
+      - name: Confirm
+        run: tree src-tauri/target/snap
