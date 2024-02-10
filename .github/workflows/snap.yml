@@ -1,7 +1,10 @@
 name: Snap
 
 on:
-  pull_request:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
 
 env:
   CARGO_TERM_COLOR: always
@@ -12,6 +15,9 @@ jobs:
   snap:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      SNAPCRAFT_BUILD_ENVIRONMENT: lxd
+      SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
 
     steps:
       - name: Checkout repository
@@ -33,20 +39,21 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+      - name: Setup LXD
+        uses: canonical/setup-lxd@main
+        with:
+          channel: latest/stable
       - name: Install snapcraft
         run: |
           sudo snap install snapcraft --classic
-          sudo snap install multipass
-          # To avoid: https://github.com/canonical/multipass/issues/2620
-          sudo gpasswd -a $USER sudo
-          sudo adduser $USER kvm
-          sudo chown -R $USER /dev/kvm
-      - name: Install app dependencies and build web
+          sudo snap install lxd
+      - name: Install app dependencies and build
         run: pnpm install --frozen-lockfile && pnpm tauri build
 
       - name: Build snap
         run: |
-          sudo chown runner:sudo /var/snap/multipass/common/multipass_socket
           pnpm run snap
-      - name: Confirm
-        run: tree src-tauri/target/snap
+      - name: Publish
+        working-directory: src-tauri/target
+        run: |
+          snapcraft upload ./*.snap --release beta
