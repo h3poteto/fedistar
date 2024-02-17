@@ -77,88 +77,88 @@
       "add": "添加",
       "cancel": "取消",
       "server_description": "您也可以不经登录退出。如果是这种情况，您只能看到联邦和本地时间线。",
-      "sign_in": "Sign In",
-      "finish": "Finish",
-      "authorization_code": "Authorization Code",
-      "authorization_help": "Please paste the authorization code from your browser",
-      "without_code_authorize": "Please approve Fedistar in your browser, and after you approve it please authorize",
-      "authorize": "Authorize",
-      "loading": "Loading"
+      "sign_in": "登入",
+      "finish": "完成",
+      "authorization_code": "授权码",
+      "authorization_help": "请粘贴浏览器中显示的授权码",
+      "without_code_authorize": "请在您的浏览器中批准 Fedistar，并在批准后进行授权",
+      "authorize": "授权",
+      "loading": "正在加载"
     }
   },
   "settings": {
     "settings": {
-      "title": "Settings",
+      "title": "设置",
       "appearance": {
-        "title": "Appearance",
-        "font_size": "Font size",
-        "language": "Language",
-        "color_theme": "Color theme"
+        "title": "外观",
+        "font_size": "字体大小",
+        "language": "语言",
+        "color_theme": "颜色主题"
       },
-      "save": "Save",
-      "close": "Close",
+      "save": "保存",
+      "close": "关闭",
       "validation": {
         "font_size": {
-          "type": "Please enter a valid number",
-          "range": "Please enter a number from {from} to {to}",
-          "required": "Font size is required"
+          "type": "请输入有效的数字",
+          "range": "请输入从 {from} 到 {to} 的数字",
+          "required": "字体大小需填写"
         },
         "language": {
-          "required": "Language is required"
+          "required": "语言需填写"
         }
       }
     },
     "thirdparty": {
-      "title": "Third-party licenses"
+      "title": "第三方许可证"
     }
   },
   "compose": {
-    "title": "New Post",
-    "from": "From",
+    "title": "新帖文",
+    "from": "发送自",
     "visibility": {
-      "public": "Public",
-      "unlisted": "Unlisted",
-      "private": "Private",
-      "direct": "Direct"
+      "public": "公开",
+      "unlisted": "不公开",
+      "private": "仅关注者",
+      "direct": "私信"
     },
     "spoiler": {
-      "placeholder": "Write your warning here"
+      "placeholder": "在此写下您的警告"
     },
     "status": {
-      "title": "Status",
-      "placeholder": "What's on your mind?"
+      "title": "状态",
+      "placeholder": "在想什么？"
     },
     "nsfw": {
-      "sensitive": "Sensitive",
-      "not_sensitive": "Not sensitive"
+      "sensitive": "敏感",
+      "not_sensitive": "不敏感"
     },
     "poll": {
-      "add_choice": "Add a choice",
-      "multiple": "multiple",
-      "simple": "simple",
-      "5min": "5 minutes",
-      "30min": "30 minutes",
-      "1h": "1 hour",
-      "6h": "6 hours",
-      "1d": "1 day",
-      "3d": "3 days",
-      "7d": "7 days"
+      "add_choice": "添加一个选项",
+      "multiple": "多选",
+      "simple": "单选",
+      "5min": "5 分钟",
+      "30min": "30 分钟",
+      "1h": "1 小时",
+      "6h": "6 小时",
+      "1d": "1 天",
+      "3d": "3 天",
+      "7d": "7 天"
     },
-    "cancel": "Cancel",
-    "post": "Post",
+    "cancel": "取消",
+    "post": "发布",
     "edit_attachment": {
-      "title": "Edit media",
-      "label": "Describe for people who are blind or have low vision",
-      "submit": "Apply"
+      "title": "编辑媒体",
+      "label": "为视障人士添加描述",
+      "submit": "应用"
     }
   },
   "search": {
-    "title": "Search",
-    "placeholder": "Search or paste URL",
+    "title": "搜索",
+    "placeholder": "搜索或粘贴 URL",
     "results": {
-      "accounts": "People",
-      "hashtags": "Hashtags",
-      "statuses": "Statuses",
+      "accounts": "用户",
+      "hashtags": "话题标签",
+      "statuses": "状态",
       "more": "加载更多"
     }
   },
@@ -229,105 +229,105 @@
         "edit": "编辑",
         "delete": "删除",
         "report": "举报 {user}",
-        "from_other_account": "React from other accounts"
+        "from_other_account": "用其它账号回应"
       }
     },
     "status": {
-      "show_more": "Show more",
-      "show_less": "Show less",
-      "media_hidden": "Media hidden",
-      "pinned_post": "Pnned post"
+      "show_more": "展开",
+      "show_less": "收起",
+      "media_hidden": "媒体已被隐藏",
+      "pinned_post": "置顶帖文"
     },
     "poll": {
-      "vote": "Vote",
-      "refresh": "Refresh",
-      "people": "{count} people",
-      "closed": "Closed",
-      "left": "left"
+      "vote": "投票",
+      "refresh": "刷新",
+      "people": "{count} 人",
+      "closed": "已关闭",
+      "left": "剩余"
     },
-    "new": "Add a new timeline",
-    "home": "Home",
-    "notifications": "Notifications",
-    "favourites": "Favourites",
-    "bookmarks": "Bookmarks",
-    "direct": "Direct messages",
-    "local": "Local",
-    "public": "Federated",
-    "back": "Back"
+    "new": "添加新的时间线",
+    "home": "主页",
+    "notifications": "通知",
+    "favourites": "收藏",
+    "bookmarks": "书签",
+    "direct": "私信",
+    "local": "本地",
+    "public": "联邦",
+    "back": "返回"
   },
   "detail": {
-    "back": "Back",
-    "close": "Close",
-    "pin": "Pin",
-    "follow_tag": "Follow hashtag",
-    "unfollow_tag": "Unfollow hashtag",
+    "back": "返回",
+    "close": "关闭",
+    "pin": "置顶",
+    "follow_tag": "关注话题标签",
+    "unfollow_tag": "取消关注话题标签",
     "profile": {
-      "follow": "Follow",
-      "unfollow": "Unfollow",
-      "not_following": "Not Following",
-      "follow_requested": "Follow Requested",
-      "follows_you": "FOLLOWS YOU",
-      "posts": "Posts",
-      "following": "Following",
-      "followers": "Followers",
-      "open_page": "Open original page",
-      "mute": "Mute {user}",
-      "unmute": "Unmute {user}",
-      "block": "Block {user}",
-      "unblock": "Unblock {user}",
-      "unblock_domain": "Unblock domain {server}",
-      "list_management": "Add or Remove from lists",
-      "block_domain": "Block domain {server}"
+      "follow": "关注",
+      "unfollow": "取消关注",
+      "not_following": "未关注",
+      "follow_requested": "已发送关注请求",
+      "follows_you": "关注了您",
+      "posts": "帖文",
+      "following": "正在关注",
+      "followers": "关注者",
+      "open_page": "打开原始页面",
+      "mute": "静音 {user}",
+      "unmute": "取消静音 {user}",
+      "block": "屏蔽 {user}",
+      "unblock": "取消屏蔽 {user}",
+      "unblock_domain": "取消屏蔽域名 {server}",
+      "list_management": "从列表中添加或移除",
+      "block_domain": "屏蔽域名 {server}"
     }
   },
   "report": {
-    "title": "Report {user}",
+    "title": "举报 {user}",
     "category": {
-      "title": "Tell us what's going on with this post",
-      "description": "Choose the best match",
-      "spam": "It's spam",
-      "violation": "It violates server rules",
-      "other": "It's something else",
-      "next": "Next"
+      "title": "告诉我们此帖文存在的问题",
+      "description": "选择最佳匹配",
+      "spam": "它是垃圾信息",
+      "violation": "它违反了服务器规则",
+      "other": "其它原因",
+      "next": "下一步"
     },
     "rules": {
-      "title": "Which rules are being violated?",
-      "description": "Select all that apply",
-      "no_rules": "There is not rule in this server.",
-      "next": "Next"
+      "title": "它违反了哪些规则？",
+      "description": "选择所有适用项",
+      "no_rules": "此服务器没有规则。",
+      "next": "下一步"
     },
     "statuses": {
-      "title": "Are there any posts that back up this report?",
-      "description": "Select all that apply",
-      "no_status": "There is not status.",
-      "next": "Next"
+      "title": "是否有任何帖文支持此举报？",
+      "description": "选择所有适用项",
+      "no_status": "没有状态。",
+      "next": "下一步"
     },
     "comment": {
-      "title": "Is there anything else you think we should know?",
-      "placeholder": "Additional comments",
-      "forward": "Forward to the original server",
-      "next": "Submit"
+      "title": "还有什么您认为我们应该知道的吗？",
+      "placeholder": "备注",
+      "forward": "转发到原始服务器",
+      "next": "提交"
     }
   },
   "announcements": {
-    "title": "Announcement @{domain}",
-    "close": "Close"
+    "title": "公告 @{domain}",
+    "close": "关闭"
   },
   "from_other_account": {
-    "title": "React from other accounts",
+    "title": "用其它账号回应",
     "accounts": {
-      "title": "Which account do you want react from?",
-      "next": "Next"
+      "title": "您想要从哪个账号做出回应？",
+      "next": "下一步"
     },
     "status": {
-      "title": "React on the status from {account}",
-      "searching": "Searching",
-      "not_found": "Sorry, the status is not found in {server}",
-      "next": "Close"
+      "title": "以 {account} 回应此状态",
+      "searching": "正在搜索",
+      "not_found": "抱歉，未在 {server} 中找到此状态",
+      "next": "关闭"
     }
   },
   "list_memberships": {
-    "title": "List memberships",
-    "search_placeholder": "Search among people you follow"
+    "title": "列表成员",
+    "search_placeholder": "搜索您关注的人"
   }
 }
