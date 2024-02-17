@@ -1,82 +1,82 @@
 {
   "alert": {
-    "no_server": "There is no server, so please add it at first.",
-    "need_auth": "You need to authorize a server.",
-    "failed_add_server": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
-    "failed_add_application": "Failed to add application.",
-    "failed_authorize": "Failed to authorize.",
-    "failed_post": "Failed to post status.",
-    "failed_load": "Failed to load {timeline}.",
-    "failed_mark": "Failed to mark as read",
-    "failed_unreblog": "Failed to unboost",
-    "failed_reblog": "Failed to boost",
-    "failed_unfavourite": "Failed to unfavourite",
-    "failed_favourite": "Failed to favourite",
-    "failed_unbookmark": "Failed to unbookmark",
-    "failed_bookmark": "Failed to bookmark",
-    "failed_follow": "Failed to follow",
-    "failed_unfollow": "Failed to unfollow",
-    "validation_error": "Validation error.",
-    "validation_attachments_length": "You can't attach over {limit} files.",
-    "validation_attachments_type": "You can attach only images or videos",
-    "upload_error": "Failed to upload your file",
-    "failed_to_report": "Faild to send the report",
-    "notifications_not_found": "Failed to find notifications"
+    "no_server": "没有服务器，请先添加。",
+    "need_auth": "您需要授权服务器。",
+    "failed_add_server": "无法连接到 {domain}，请确保服务器 URL 有效或正确。",
+    "failed_add_application": "无法添加应用程序。",
+    "failed_authorize": "无法授权。",
+    "failed_post": "无法发布状态。",
+    "failed_load": "无法加载 {timeline}。",
+    "failed_mark": "无法标记为已读",
+    "failed_unreblog": "无法取消转帖",
+    "failed_reblog": "无法转帖",
+    "failed_unfavourite": "无法取消收藏",
+    "failed_favourite": "无法收藏",
+    "failed_unbookmark": "无法取消书签",
+    "failed_bookmark": "无法添加书签",
+    "failed_follow": "无法关注",
+    "failed_unfollow": "无法取消关注",
+    "validation_error": "验证错误。",
+    "validation_attachments_length": "您不能附加超过 {limit} 个文件。",
+    "validation_attachments_type": "您只能附加图像或视频",
+    "upload_error": "无法上传您的文件",
+    "failed_to_report": "无法发送举报",
+    "notifications_not_found": "无法找到通知"
   },
   "dialog": {
     "account_not_found": {
-      "title": "Account not found",
-      "message": "The account does not exist in the server, do you want to open the account in your browser?",
-      "button": "Open"
+      "title": "未找到账号",
+      "message": "此账号不存在于服务器中，您是否要在浏览器中打开此账号？",
+      "button": "打开"
     }
   },
   "walkthrough": {
     "navigator": {
       "servers": {
-        "title": "Servers",
-        "description": "You can remove or authorize servers, please right click.",
-        "ok": "OK"
+        "title": "服务器",
+        "description": "您可以删除或授权服务器，请右键点击。",
+        "ok": "确定"
       }
     },
     "timeline": {
       "settings": {
-        "title": "Timeline settings",
-        "description": "You can move and remove the timeline.",
-        "ok": "OK"
+        "title": "时间线设置",
+        "description": "您可以移动和移除时间线。",
+        "ok": "确定"
       },
       "new": {
-        "title": "Add a timeline",
-        "description": "Click this button to add a timeline.",
-        "ok": "OK"
+        "title": "添加时间线",
+        "description": "点击此按钮添加时间线。",
+        "ok": "确定"
       }
     }
   },
   "navigator": {
     "add_server": {
-      "title": "Add a new server"
+      "title": "添加新服务器"
     },
     "settings": {
-      "title": "Settings",
-      "app_menu": "Toggle app menu",
-      "settings": "Settings",
-      "thirdparty": "Third-party licenses"
+      "title": "设置",
+      "app_menu": "切换应用菜单",
+      "settings": "设置",
+      "thirdparty": "第三方许可证"
     },
     "servers": {
-      "authorize": "Authorize",
-      "profile": "Open profile",
-      "remove": "Remove",
-      "announcements": "Announcements",
-      "lists": "Lists",
-      "followed_hashtags": "Followed Hashtags"
+      "authorize": "授权",
+      "profile": "打开个人资料",
+      "remove": "移除",
+      "announcements": "公告",
+      "lists": "列表",
+      "followed_hashtags": "关注的话题标签"
     }
   },
   "servers": {
     "new": {
-      "title": "Add Server",
-      "domain": "Domain",
-      "add": "Add",
-      "cancel": "Cancel",
-      "server_description": "You can also quit without signing in. If that case, you can see only Federated and Local timelines.",
+      "title": "添加服务器",
+      "domain": "域名",
+      "add": "添加",
+      "cancel": "取消",
+      "server_description": "您也可以不经登录退出。如果是这种情况，您只能看到联邦和本地时间线。",
       "sign_in": "Sign In",
       "finish": "Finish",
       "authorization_code": "Authorization Code",
@@ -159,76 +159,76 @@
       "accounts": "People",
       "hashtags": "Hashtags",
       "statuses": "Statuses",
-      "more": "Load more"
+      "more": "加载更多"
     }
   },
   "timeline": {
-    "reload": "Reload",
+    "reload": "刷新",
     "settings": {
-      "title": "Settings",
-      "unpin": "Unpin",
-      "column_width": "Column width"
+      "title": "设置",
+      "unpin": "取消置顶",
+      "column_width": "列宽"
     },
-    "mark_as_read": "Mark as read",
+    "mark_as_read": "标为已读",
     "notification": {
       "follow": {
-        "title": "Follow",
-        "body": "{user} followed you"
+        "title": "关注",
+        "body": "{user} 关注了您"
       },
       "follow_request": {
-        "title": "Follow Request",
-        "body": "{user} requested to follow you"
+        "title": "关注请求",
+        "body": "{user} 向您发送了关注请求"
       },
       "favourite": {
-        "title": "Favourite",
-        "body": "{user} favourited your post"
+        "title": "收藏",
+        "body": "{user} 收藏了您的帖文"
       },
       "reblog": {
-        "title": "Boost",
-        "body": "{user} boosted your post"
+        "title": "转发",
+        "body": "{user} 转发了您的帖文"
       },
       "poll_expired": {
-        "title": "Poll",
-        "body": "{user}'s poll is expired"
+        "title": "投票",
+        "body": "{user} 的投票已截止"
       },
       "poll_vote": {
-        "title": "Poll",
-        "body": "{user} voted your poll"
+        "title": "投票",
+        "body": "{user} 参与了您的投票"
       },
       "quote": {
-        "title": "Quote",
-        "body": "{user} quoted your post"
+        "title": "引用",
+        "body": "{user} 引用了您的帖文"
       },
       "status": {
-        "title": "Status",
-        "body": "{user} just post"
+        "title": "状态",
+        "body": "{user} 刚刚发布"
       },
       "update": {
-        "title": "Update",
-        "body": "{user} updated the post"
+        "title": "更新",
+        "body": "{user} 更新了帖文"
       },
       "emoji_reaction": {
-        "title": "Reaction",
-        "body": "{user} reacted your post"
+        "title": "表情回应",
+        "body": "{user} 表情回应了您的帖文"
       },
       "move": {
-        "title": "Move",
-        "body": "{user} migrated to"
+        "title": "移动",
+        "body": "{user} 已迁移到"
       }
     },
     "actions": {
-      "reply": "Reply",
-      "reblog": "Boost",
-      "favourite": "Favourite",
-      "emoji_reaction": "Emoji reaction",
-      "bookmark": "Bookmark",
+      "reply": "回复",
+      "reblog": "转发",
+      "favourite": "收藏",
+      "emoji_reaction": "表情回应",
+      "bookmark": "书签",
       "detail": {
-        "title": "Detail",
-        "browser": "Open original page",
-        "copy": "Copy link to post",
-        "edit": "Edit",
-        "delete": "Delete",
-        "report": "Report {user}",
+        "title": "更多",
+        "browser": "打开原始页面",
+        "copy": "复制帖文链接",
+        "edit": "编辑",
+        "delete": "删除",
+        "report": "举报 {user}",
         "from_other_account": "React from other accounts"
       }
     },
