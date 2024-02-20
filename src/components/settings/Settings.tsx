@@ -41,6 +41,10 @@ const languages = [
   {
     label: 'German',
     value: 'de'
+  },
+  {
+    label: 'Chinese Simplified',
+    value: 'zh-CN'
   }
 ]
 
