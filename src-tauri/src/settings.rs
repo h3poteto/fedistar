@@ -26,6 +26,9 @@ pub enum LocaleType {
     PtBr,
     Fr,
     De,
+    #[sqlx(rename = "zh-CN")]
+    #[serde(rename = "zh-CN")]
+    ZhCN,
 }
 
 #[derive(Debug, Serialize, Deserialize, sqlx::Type, Clone, PartialEq, Eq)]
@@ -45,8 +48,8 @@ pub(crate) fn read_settings(filepath: &PathBuf) -> Result<Settings, String> {
                 font_size: 14,
                 language: LocaleType::En,
                 color_theme: ThemeType::Dark,
-            }
-        })
+            },
+        });
     };
     let updated = update_settings_with_default(filepath, text)?;
     from_str::<Settings>(&updated).map_err(|err| err.to_string())
@@ -62,10 +65,10 @@ pub(crate) fn update_settings_with_default(
     original: String,
 ) -> Result<String, String> {
     let Ok(text) = fs::read_to_string(filepath) else {
-        return Err("Settings file does not exist".to_string())
+        return Err("Settings file does not exist".to_string());
     };
     let Ok(value) = serde_json::from_str::<Value>(text.as_str()) else {
-        return Err("Failed to load json".to_string())
+        return Err("Failed to load json".to_string());
     };
     if value["appearance"]["color_theme"] == Value::Null {
         let mut update = value.clone();
@@ -86,6 +89,7 @@ impl fmt::Display for LocaleType {
             LocaleType::PtBr => write!(f, "pt-BR"),
             LocaleType::Fr => write!(f, "fr"),
             LocaleType::De => write!(f, "de"),
+            LocaleType::ZhCN => write!(f, "zh-CN"),
         }
     }
 }
