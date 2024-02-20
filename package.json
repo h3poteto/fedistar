@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.5.10",
-    "@types/jest": "^29.5.11",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.11.10",
     "@types/parse-link-header": "^2.0.3",
     "@types/react": "^18.2.48",
