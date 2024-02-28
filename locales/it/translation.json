@@ -236,7 +236,9 @@
       "show_more": "Leggi di più",
       "show_less": "Leggi di meno",
       "media_hidden": "Allegati nascosti",
-      "pinned_post": "Post selezionato"
+      "pinned_post": "Post selezionato",
+      "filtered": "Filtered",
+      "show_anyway": "Show anyway"
     },
     "poll": {
       "vote": "Vota",
