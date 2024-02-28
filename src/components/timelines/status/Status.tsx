@@ -201,7 +201,7 @@ const Status: React.FC<Props> = props => {
                     key={e.name}
                     onClick={() => emojiClicked(e)}
                     active={e.me}
-                    disabled={e.name.includes('@')}
+                    disabled={e.name.includes('@') && props.server.sns === 'firefish'}
                     title={e.name}
                   >
                     {e.url ? (
