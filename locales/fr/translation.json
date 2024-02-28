@@ -236,7 +236,9 @@
       "show_more": "Voir plus",
       "show_less": "Voir moins",
       "media_hidden": "Média caché",
-      "pinned_post": "Message épinglé"
+      "pinned_post": "Message épinglé",
+      "filtered": "Filtered",
+      "show_anyway": "Show anyway"
     },
     "poll": {
       "vote": "Voter",

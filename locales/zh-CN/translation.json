@@ -236,7 +236,9 @@
       "show_more": "展开",
       "show_less": "收起",
       "media_hidden": "媒体已被隐藏",
-      "pinned_post": "置顶帖文"
+      "pinned_post": "置顶帖文",
+      "filtered": "Filtered",
+      "show_anyway": "Show anyway"
     },
     "poll": {
       "vote": "投票",

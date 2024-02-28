@@ -236,7 +236,9 @@
       "show_more": "Pokaż więcej",
       "show_less": "Pokaż mniej",
       "media_hidden": "Media ukryte",
-      "pinned_post": "Przypięty wpis"
+      "pinned_post": "Przypięty wpis",
+      "filtered": "Filtered",
+      "show_anyway": "Show anyway"
     },
     "poll": {
       "vote": "Zagłosuj",

@@ -236,7 +236,9 @@
       "show_more": "もっと見る",
       "show_less": "隠す",
       "media_hidden": "非表示のメディア",
-      "pinned_post": "ピン留めされた投稿"
+      "pinned_post": "ピン留めされた投稿",
+      "filtered": "Filtered",
+      "show_anyway": "Show anyway"
     },
     "poll": {
       "vote": "投票",
