@@ -81,6 +81,7 @@
       "finish": "Finish",
       "authorization_code": "Authorization Code",
       "authorization_help": "Please paste the authorization code from your browser",
+      "without_code_authorize": "Please approve Fedistar in your browser, and after you approve it please authorize",
       "authorize": "Authorize",
       "loading": "Loading"
     }
@@ -235,7 +236,9 @@
       "show_more": "Show more",
       "show_less": "Show less",
       "media_hidden": "Media hidden",
-      "pinned_post": "Pnned post"
+      "pinned_post": "Pnned post",
+      "filtered": "Filtered",
+      "show_anyway": "Show anyway"
     },
     "poll": {
       "vote": "Vote",
