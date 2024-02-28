@@ -59,6 +59,7 @@ const Notifications: React.FC<Props> = props => {
   const [marker, setMarker] = useState<Marker | null>(null)
   const [pleromaUnreads, setPleromaUnreads] = useState<Array<string>>([])
   const [customEmojis, setCustomEmojis] = useState<Array<CustomEmojiCategory>>([])
+  const [filters, setFilters] = useState<Array<Entity.Filter>>([])
 
   const scrollerRef = useRef<HTMLElement | null>(null)
   const triggerRef = useRef(null)
@@ -73,6 +74,8 @@ const Notifications: React.FC<Props> = props => {
       setAccount(account)
       const cli = generator(props.server.sns, props.server.base_url, account.access_token, 'Fedistar')
       setClient(cli)
+      const f = await loadFilter(cli)
+      setFilters(f)
       try {
         const res = await loadNotifications(cli)
         setNotifications(res)
@@ -126,6 +129,15 @@ const Notifications: React.FC<Props> = props => {
       setPleromaUnreads(unreads)
     }
   }, [marker, unreadNotifications, notifications])
+
+  const loadFilter = async (client: MegalodonInterface): Promise<Array<Entity.Filter>> => {
+    try {
+      const res = await client.getFilters()
+      return res.data.filter(f => f.context.includes('notifications'))
+    } catch (err) {
+      console.warn(err)
+    }
+  }
 
   const loadNotifications = async (client: MegalodonInterface, maxId?: string): Promise<Array<Entity.Notification>> => {
     let options = { limit: TIMELINE_STATUSES_COUNT }
@@ -391,6 +403,7 @@ const Notifications: React.FC<Props> = props => {
                         openReport={props.openReport}
                         openFromOtherAccount={props.openFromOtherAccount}
                         customEmojis={customEmojis}
+                        filters={filters}
                       />
                     </List.Item>
                   )

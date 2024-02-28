@@ -30,6 +30,7 @@ export default function ListDetail(props: Props) {
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [list, setList] = useState<Entity.List | null>(null)
   const [customEmojis, setCustomEmojis] = useState<Array<CustomEmojiCategory>>([])
+  const [filters, setFilters] = useState<Array<Entity.Filter>>([])
 
   useEffect(() => {
     const f = async () => {
@@ -42,6 +43,8 @@ export default function ListDetail(props: Props) {
         const cli = generator(server.sns, server.base_url, account.access_token, 'Fedistar')
         setClient(cli)
 
+        const f = await loadFilter(cli)
+        setFilters(f)
         const listID = router.query.list_id.toString()
         const res = await cli.getList(listID)
         setList(res.data)
@@ -63,6 +66,15 @@ export default function ListDetail(props: Props) {
       f()
     }
   }, [list, client])
+
+  const loadFilter = async (client: MegalodonInterface): Promise<Array<Entity.Filter>> => {
+    try {
+      const res = await client.getFilters()
+      return res.data.filter(f => f.context.includes('home'))
+    } catch (err) {
+      console.warn(err)
+    }
+  }
 
   const back = () => {
     router.back()
@@ -156,6 +168,7 @@ export default function ListDetail(props: Props) {
                     openReport={props.openReport}
                     openFromOtherAccount={props.openFromOtherAccount}
                     customEmojis={customEmojis}
+                    filters={filters}
                   />
                 </List.Item>
               )}

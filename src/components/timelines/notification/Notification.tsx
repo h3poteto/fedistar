@@ -23,6 +23,7 @@ type Props = {
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
   customEmojis: Array<CustomEmojiCategory>
+  filters: Array<Entity.Filter>
 }
 
 const notification = (props: Props) => {
@@ -84,6 +85,7 @@ const notification = (props: Props) => {
             openReport={props.openReport}
             openFromOtherAccount={props.openFromOtherAccount}
             customEmojis={props.customEmojis}
+            filters={props.filters}
           />
         )
       } else {

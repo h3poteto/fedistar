@@ -79,6 +79,7 @@ const Timeline: React.FC<Props> = props => {
   const [nextMaxId, setNextMaxId] = useState<string | null>(null)
   const [walkthrough, setWalkthrough] = useState<boolean>(false)
   const [customEmojis, setCustomEmojis] = useState<Array<CustomEmojiCategory>>([])
+  const [filters, setFilters] = useState<Array<Entity.Filter>>([])
 
   const scrollerRef = useRef<HTMLElement | null>(null)
   const triggerRef = useRef(null)
@@ -95,6 +96,8 @@ const Timeline: React.FC<Props> = props => {
         setAccount(account)
         client = generator(props.server.sns, props.server.base_url, account.access_token, 'Fedistar')
         setClient(client)
+        const f = await loadFilter(props.timeline, client)
+        setFilters(f)
       } else {
         client = generator(props.server.sns, props.server.base_url, undefined, 'Fedistar')
         setClient(client)
@@ -191,6 +194,28 @@ const Timeline: React.FC<Props> = props => {
       prependUnreads()
     }
   }, [replyOpened.current])
+
+  const loadFilter = async (tl: Timeline, client: MegalodonInterface): Promise<Array<Entity.Filter>> => {
+    try {
+      const res = await client.getFilters()
+      let context = 'home'
+      switch (tl.kind) {
+        case 'home':
+          context = 'home'
+          break
+        case 'local':
+        case 'public':
+          context = 'public'
+          break
+        default:
+          context = 'home'
+          break
+      }
+      return res.data.filter(f => f.context.includes(context))
+    } catch (err) {
+      console.warn(err)
+    }
+  }
 
   const loadTimeline = async (tl: Timeline, client: MegalodonInterface, maxId?: string): Promise<Array<Entity.Status>> => {
     let options = { limit: TIMELINE_STATUSES_COUNT }
@@ -493,6 +518,7 @@ const Timeline: React.FC<Props> = props => {
                       openReport={props.openReport}
                       openFromOtherAccount={props.openFromOtherAccount}
                       customEmojis={customEmojis}
+                      filters={filters}
                     />
                   </List.Item>
                 )}
