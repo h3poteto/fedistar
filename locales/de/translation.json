@@ -236,7 +236,9 @@
       "show_more": "Mehr anzeigen",
       "show_less": "Weniger anzeigen",
       "media_hidden": "Inhalt verborgen",
-      "pinned_post": "Angehefteter Beitrag"
+      "pinned_post": "Angehefteter Beitrag",
+      "filtered": "Filtered",
+      "show_anyway": "Show anyway"
     },
     "poll": {
       "vote": "Abstimmung",
