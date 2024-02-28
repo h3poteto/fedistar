@@ -34,6 +34,7 @@ type Props = {
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
   customEmojis: Array<CustomEmojiCategory>
+  filters?: Array<Entity.Filter>
 } & HTMLAttributes<HTMLElement>
 
 const Status: React.FC<Props> = props => {
@@ -44,6 +45,8 @@ const Status: React.FC<Props> = props => {
   const [showReply, setShowReply] = useState<boolean>(false)
   const [showEdit, setShowEdit] = useState<boolean>(false)
   const [spoilered, setSpoilered] = useState<boolean>(status.spoiler_text.length > 0)
+  const [ignoreFilter, setIgnoreFilter] = useState<boolean>(false)
+
   const toaster = useToaster()
 
   useEffect(() => {
@@ -125,6 +128,20 @@ const Status: React.FC<Props> = props => {
   const refresh = async () => {
     const res = await props.client.getStatus(props.status.id)
     props.updateStatus(res.data)
+  }
+
+  if (
+    !ignoreFilter &&
+    props.filters?.map(f => f.phrase).filter(keyword => props.status.content.toLowerCase().includes(keyword.toLowerCase())).length > 0
+  ) {
+    return (
+      <div className="status" style={{ textAlign: 'center', paddingTop: '0.2em', paddingBottom: '0.2em' }}>
+        <FormattedMessage id="timeline.status.filtered" />
+        <Button appearance="subtle" size="sm" onClick={() => setIgnoreFilter(true)} style={{ marginLeft: '0.2em' }}>
+          <FormattedMessage id="timeline.status.show_anyway" />
+        </Button>
+      </div>
+    )
   }
 
   return (
