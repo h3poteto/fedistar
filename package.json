@@ -51,7 +51,7 @@
     "tauri-plugin-window-state-api": "github:tauri-apps/tauri-plugin-window-state#v1"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.5.10",
+    "@tauri-apps/cli": "^1.5.11",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.20",
     "@types/parse-link-header": "^2.0.3",
