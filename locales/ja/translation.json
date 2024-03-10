@@ -237,8 +237,8 @@
       "show_less": "隠す",
       "media_hidden": "非表示のメディア",
       "pinned_post": "ピン留めされた投稿",
-      "filtered": "Filtered",
-      "show_anyway": "Show anyway"
+      "filtered": "フィルターされました",
+      "show_anyway": "表示する"
     },
     "poll": {
       "vote": "投票",
