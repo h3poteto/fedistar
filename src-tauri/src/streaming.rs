@@ -69,13 +69,8 @@ pub async fn start_user(
         Some(account.access_token.clone()),
         Some(String::from("fedistar")),
     );
-    let instance = client.get_instance().await.map_err(|e| e.to_string())?;
-    let Some(urls) = instance.json.urls else {
-        return Err("Streaming does not exist".to_string());
-    };
-    let streaming_url = urls.streaming_api;
 
-    let streaming = client.user_streaming(streaming_url);
+    let streaming = client.user_streaming().await;
 
     log::info!(
         "user streaming is started for {}@{}",
@@ -160,31 +155,26 @@ pub async fn start(
         account.clone().and_then(|a| Some(a.access_token)),
         Some(String::from("fedistar")),
     );
-    let instance = client.get_instance().await.map_err(|e| e.to_string())?;
-    let Some(urls) = instance.json.urls else {
-        return Err("Streaming does not exist".to_string());
-    };
-    let streaming_url = urls.streaming_api;
 
     let streaming: Box<dyn megalodon::Streaming + Send + Sync>;
     match timeline.kind {
         entities::timeline::Kind::Public => {
-            streaming = client.public_streaming(streaming_url);
+            streaming = client.public_streaming().await;
         }
         entities::timeline::Kind::Local => {
-            streaming = client.local_streaming(streaming_url);
+            streaming = client.local_streaming().await;
         }
         entities::timeline::Kind::Direct => {
-            streaming = client.direct_streaming(streaming_url);
+            streaming = client.direct_streaming().await;
         }
         entities::timeline::Kind::List => match &timeline.list_id {
             None => return Err(format!("could not find list_id for {} ", timeline.name)),
             Some(list_id) => {
-                streaming = client.list_streaming(streaming_url, list_id.to_string());
+                streaming = client.list_streaming(list_id.to_string()).await;
             }
         },
         entities::timeline::Kind::Tag => {
-            streaming = client.tag_streaming(streaming_url, timeline.name.clone());
+            streaming = client.tag_streaming(timeline.name.clone()).await;
         }
         _ => return Err(format!("{} is not supported", timeline.name)),
     }
