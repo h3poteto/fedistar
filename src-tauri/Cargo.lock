@@ -3796,9 +3796,9 @@ checksum = "d29ab0c6d3fc0ee92fe66e2d99f700eab17a8d57d1c1d3b748380fb20baa78cd"
 
 [[package]]
 name = "scraper"
-version = "0.18.0"
+version = "0.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3693f9a0203d49a7ba8f38aa915316b3d535c1862d03dae7009cb71a3408b36a"
+checksum = "5b80b33679ff7a0ea53d37f3b39de77ea0c75b12c5805ac43ec0c33b3051af1b"
 dependencies = [
  "ahash 0.8.6",
  "cssparser 0.31.2",
