@@ -45,8 +45,8 @@ dependencies:
     specifier: 4.6.3
     version: 4.6.3(react-dom@18.2.0)(react@18.2.0)
   rsuite:
-    specifier: 5.54.0
-    version: 5.54.0(react-dom@18.2.0)(react@18.2.0)
+    specifier: 5.55.1
+    version: 5.55.1(react-dom@18.2.0)(react@18.2.0)
   sanitize-html:
     specifier: ^2.12.1
     version: 2.12.1
@@ -1940,8 +1940,8 @@ packages:
       esutils: 2.0.3
     dev: true
 
-  /dom-lib@3.1.6:
-    resolution: {integrity: sha512-xXEhStHDoAyfhnz8mqDwZ9rnqdqz/9BcrKd1UEw6BlA/l17emFb2dK7q8IX8ArU31pScSU9otEnL6wzvpoT5aw==}
+  /dom-lib@3.3.1:
+    resolution: {integrity: sha512-N2mpo8qQmB9wIMZJVjER+BSh4GJiZZ7S6EjnMtyETcXo90hpITUDXpUhqOcfXZ2ZefytuYYKTZMp3CGR2X+tDA==}
     dependencies:
       '@babel/runtime': 7.22.15
     dev: false
@@ -4126,7 +4126,7 @@ packages:
       '@juggle/resize-observer': 3.4.0
       '@rsuite/icons': 1.0.3(react-dom@18.2.0)(react@18.2.0)
       classnames: 2.3.2
-      dom-lib: 3.1.6
+      dom-lib: 3.3.1
       lodash: 4.17.21
       prop-types: 15.8.1
       react: 18.2.0
@@ -4134,8 +4134,8 @@ packages:
       react-is: 17.0.2
     dev: false
 
-  /rsuite@5.54.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-oCKnYeKVDcR+xerk6etdPb3Xa4oBbS3PRBkFOSHzJ7BL4lH0yYaCxRROnFSNSLF8inXMoB1cyxrHAkzVjeQxFw==}
+  /rsuite@5.55.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-kAoYeXYaUzk/172sr1yKOu5P2Ufohtf++YAgIJ2+/HrOBBb1OlFifiLoRg0MfrExhHnd9QyqQpcToIL0Ek1VmA==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
@@ -4149,7 +4149,7 @@ packages:
       '@types/react-window': 1.8.5
       classnames: 2.3.2
       date-fns: 2.30.0
-      dom-lib: 3.1.6
+      dom-lib: 3.3.1
       lodash: 4.17.21
       prop-types: 15.8.1
       react: 18.2.0
