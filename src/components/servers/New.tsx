@@ -98,7 +98,7 @@ const New: React.FC<Props> = props => {
       </Modal.Header>
       <Modal.Body>
         {server === undefined && (
-          <Form fluid onChange={o => setDomain(o.domain)}>
+          <Form fluid formValue={{ domain: domain }} onChange={o => setDomain(o.domain)}>
             <Form.Group>
               <Form.ControlLabel>
                 <FormattedMessage id="servers.new.domain" />
@@ -140,7 +140,7 @@ const New: React.FC<Props> = props => {
           </Form>
         )}
         {app !== undefined && (
-          <Form fluid onChange={o => setCode(o.code)}>
+          <Form fluid formValue={{ code: code }} onChange={o => setCode(o.code)}>
             {app.session_token ? (
               <div style={{ margin: '1em 0' }}>
                 <FormattedMessage id="servers.new.without_code_authorize" />
