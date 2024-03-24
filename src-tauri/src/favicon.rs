@@ -3,16 +3,16 @@ use scraper::{Html, Selector};
 
 pub async fn get_favicon_url(url: &str) -> Option<String> {
     let Ok(client) = reqwest::Client::builder().user_agent("fedistar").build() else {
-        return None
+        return None;
     };
     match client.get(url).send().await {
         Err(err) => {
-            log::error!("{:#?}", err);
+            tracing::error!("{:#?}", err);
             None
         }
         Ok(res) => match parse_location(res).await {
             Err(err) => {
-                log::error!("{:#?}", err);
+                tracing::error!("{:#?}", err);
                 None
             }
             Ok(list) => {

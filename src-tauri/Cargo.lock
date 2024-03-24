@@ -1147,7 +1147,6 @@ dependencies = [
  "base64 0.21.0",
  "directories",
  "futures",
- "log",
  "megalodon",
  "once_cell",
  "open 5.1.2",
@@ -1162,6 +1161,7 @@ dependencies = [
  "tauri-build",
  "tauri-plugin-window-state",
  "tokio",
+ "tracing",
  "url",
 ]
 
