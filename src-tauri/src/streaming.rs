@@ -72,7 +72,7 @@ pub async fn start_user(
 
     let streaming = client.user_streaming().await;
 
-    log::info!(
+    tracing::info!(
         "user streaming is started for {}@{}",
         account.username,
         server.domain
@@ -82,7 +82,7 @@ pub async fn start_user(
 
     let s = streaming.listen(Box::new(move |message| match message {
         Message::Update(mes) => {
-            log::debug!("receive update");
+            tracing::debug!("receive update");
             app_handle
                 .emit_all(
                     "receive-home-status",
@@ -94,7 +94,7 @@ pub async fn start_user(
                 .expect("Failed to send receive-home-status event");
         }
         Message::Notification(mes) => {
-            log::debug!("receive notification");
+            tracing::debug!("receive notification");
             if mes.account.is_some() {
                 app_handle
                     .emit_all(
@@ -108,7 +108,7 @@ pub async fn start_user(
             }
         }
         Message::StatusUpdate(mes) => {
-            log::debug!("receive status updated");
+            tracing::debug!("receive status updated");
             app_handle
                 .emit_all(
                     "receive-home-status-update",
@@ -120,7 +120,7 @@ pub async fn start_user(
                 .expect("Failed to send receive-home-status-update event");
         }
         Message::Delete(status_id) => {
-            log::debug!("receive delete");
+            tracing::debug!("receive delete");
             app_handle
                 .emit_all(
                     "delete-home-status",
@@ -180,14 +180,14 @@ pub async fn start(
     }
 
     if let Some(account) = account {
-        log::info!(
+        tracing::info!(
             "{} streaming is started for {}@{}",
             timeline.name,
             account.username,
             server.domain
         );
     } else {
-        log::info!(
+        tracing::info!(
             "{} streaming is started for @{}",
             timeline.name,
             server.domain
@@ -198,7 +198,7 @@ pub async fn start(
 
     let s = streaming.listen(Box::new(move |message| match message {
         Message::Update(mes) => {
-            log::debug!("receive update");
+            tracing::debug!("receive update");
             app_handle
                 .emit_all(
                     "receive-timeline-status",
@@ -210,7 +210,7 @@ pub async fn start(
                 .expect("Failed to receive-timeline-status event");
         }
         Message::StatusUpdate(mes) => {
-            log::debug!("receive status update");
+            tracing::debug!("receive status update");
             app_handle
                 .emit_all(
                     "receive-timeline-status-update",
@@ -222,7 +222,7 @@ pub async fn start(
                 .expect("Failed to receive-timeline-status-update event");
         }
         Message::Delete(status_id) => {
-            log::debug!("receive delete");
+            tracing::debug!("receive delete");
             app_handle
                 .emit_all(
                     "delete-timeline-status",
@@ -234,7 +234,7 @@ pub async fn start(
                 .expect("Failed to delete-timeline-status event");
         }
         Message::Conversation(conversation) => {
-            log::debug!("receive conversation");
+            tracing::debug!("receive conversation");
             app_handle
                 .emit_all(
                     "receive-timeline-conversation",

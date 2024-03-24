@@ -6,7 +6,7 @@ use base64::{engine::general_purpose, Engine};
 use megalodon::{self, oauth};
 use rust_i18n::t;
 use serde::Serialize;
-use std::{fs::OpenOptions, path::PathBuf, str::FromStr, sync::Arc};
+use std::{env, fs::OpenOptions, path::PathBuf, str::FromStr, sync::Arc};
 use tauri::{async_runtime::Mutex, AppHandle, Manager, State};
 mod database;
 mod entities;
@@ -49,11 +49,11 @@ async fn add_server(
     let url = format!("https://{}", domain);
 
     let icon = favicon::get_favicon_url(&url).await;
-    log::info!("The favicon for {} is {:#?}", &url, icon);
+    tracing::info!("The favicon for {} is {:#?}", &url, icon);
     let sns = megalodon::detector(url.as_str())
         .await
         .map_err(|e| e.to_string())?;
-    log::info!("The SNS for {} is {}", &url, sns);
+    tracing::info!("The SNS for {} is {}", &url, sns);
 
     let server = entities::Server::new(0, domain.to_string(), url, sns.to_string(), icon);
     let created = database::add_server(&sqlite_pool, server)
@@ -455,10 +455,10 @@ async fn update_instruction(
 #[tauri::command]
 async fn frontend_log(message: String, level: String) -> () {
     match level.as_str() {
-        "error" => log::error!("[front] {}", message),
-        "warn" => log::warn!("[front] {}", message),
-        "info" => log::info!("[front] {}", message),
-        _ => log::debug!("[front] {}", message),
+        "error" => tracing::error!("[front] {}", message),
+        "warn" => tracing::warn!("[front] {}", message),
+        "info" => tracing::info!("[front] {}", message),
+        _ => tracing::debug!("[front] {}", message),
     }
     ()
 }
@@ -501,12 +501,12 @@ async fn start_timeline_streaming(
 
     tauri::async_runtime::spawn(async move {
         match streaming::start(app_handle, &server, &timeline, account).await {
-            Ok(()) => log::info!(
+            Ok(()) => tracing::info!(
                 "{} streaming is finished for @{}",
                 timeline.name,
                 server.domain
             ),
-            Err(err) => log::error!("{}", err),
+            Err(err) => tracing::error!("{}", err),
         }
     });
 
@@ -520,12 +520,12 @@ async fn start_user_streaming(
 ) -> Result<(), String> {
     tauri::async_runtime::spawn(async move {
         match streaming::start_user(app_handle, &server, &account).await {
-            Ok(()) => log::info!(
+            Ok(()) => tracing::info!(
                 "user streaming is finished for {}@{}",
                 account.username,
                 server.domain
             ),
-            Err(err) => log::error!("{}", err),
+            Err(err) => tracing::error!("{}", err),
         }
     });
 
@@ -561,8 +561,19 @@ async fn start_streamings(
 }
 
 fn init_logger(logfile_path: std::path::PathBuf) {
+    let log_level = match env::var("LOG_LEVEL") {
+        Ok(level) => match level.to_lowercase().as_str() {
+            "error" => simplelog::LevelFilter::Error,
+            "warn" => simplelog::LevelFilter::Warn,
+            "info" => simplelog::LevelFilter::Info,
+            "debug" => simplelog::LevelFilter::Debug,
+            "trace" => simplelog::LevelFilter::Trace,
+            _ => simplelog::LevelFilter::Info,
+        },
+        Err(_) => simplelog::LevelFilter::Info,
+    };
     let mut logger: Vec<Box<dyn simplelog::SharedLogger>> = vec![simplelog::WriteLogger::new(
-        simplelog::LevelFilter::Info,
+        log_level,
         simplelog::ConfigBuilder::new()
             .set_time_format_rfc3339()
             .build(),
@@ -669,8 +680,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             let cloned_pool = sqlite_pool.clone();
             tauri::async_runtime::spawn(async move {
                 match start_streamings(app_handle, &cloned_pool).await {
-                    Ok(()) => log::info!("user streamings are kicked for all accounts"),
-                    Err(e) => log::error!("{}", e.to_string()),
+                    Ok(()) => tracing::info!("user streamings are kicked for all accounts"),
+                    Err(e) => tracing::error!("{}", e.to_string()),
                 }
             });
 
