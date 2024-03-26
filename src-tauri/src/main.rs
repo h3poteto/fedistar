@@ -561,7 +561,7 @@ async fn start_streamings(
 }
 
 fn init_logger(logfile_path: std::path::PathBuf) {
-    let log_level = match env::var("LOG_LEVEL") {
+    let log_level = match env::var("FEDISTAR_LOG_LEVEL") {
         Ok(level) => match level.to_lowercase().as_str() {
             "error" => simplelog::LevelFilter::Error,
             "warn" => simplelog::LevelFilter::Warn,
