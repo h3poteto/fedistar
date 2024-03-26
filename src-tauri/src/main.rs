@@ -92,12 +92,7 @@ async fn add_application(
     url: &str,
 ) -> Result<oauth::AppData, String> {
     let sns = megalodon::detector(url).await.map_err(|e| e.to_string())?;
-    let client = megalodon::generator(
-        sns,
-        url.clone().to_string(),
-        None,
-        Some(String::from("fedistar")),
-    );
+    let client = megalodon::generator(sns, url.to_string(), None, Some(String::from("fedistar")));
 
     let options = megalodon::megalodon::AppInputOptions {
         ..Default::default()
@@ -107,8 +102,9 @@ async fn add_application(
         .await
         .map_err(|e| e.to_string())?;
 
-    let url = app_data.url.clone();
-    open::that(url.expect("URL is not found")).expect("Failed to open the URL");
+    let url = app_data.url.clone().expect("URL is not found");
+    tracing::info!("Opening the URL: {}", url);
+    open::that_detached(url).expect("Failed to open the URL");
     Ok(app_data)
 }
 
@@ -644,7 +640,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .menu(menu::menu())
         .on_menu_event(|event| match event.menu_item_id() {
             "crash_reporting" => {
-                open::that("https://fedistar.net/help#crash_reporting")
+                open::that_detached("https://fedistar.net/help#crash_reporting")
                     .expect("Failed to open the URL");
             }
             _ => {}
