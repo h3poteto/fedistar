@@ -1,8 +1,8 @@
 app_menu:
-  file: File
-  edit: Edit
-  help: Help
-  window: Window
-  crash_reporting: Crash Report
+  file: 文件
+  edit: 编辑
+  help: 帮助
+  window: 窗口
+  crash_reporting: 崩溃报告
 media:
-  title: Media
+  title: 媒体
