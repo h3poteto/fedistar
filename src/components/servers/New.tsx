@@ -6,6 +6,8 @@ import { OAuth } from 'megalodon'
 import alert from '../utils/alert'
 import { parseDomain } from 'src/utils/domainParser'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { BsClipboard } from 'react-icons/bs'
+import { Icon } from '@rsuite/icons'
 
 type Props = {
   open: boolean
@@ -89,6 +91,10 @@ const New: React.FC<Props> = props => {
     props.onClose()
   }
 
+  const copyText = (text: string) => {
+    navigator.clipboard.writeText(text)
+  }
+
   return (
     <Modal backdrop="static" keyboard={true} open={props.open} onClose={() => close()}>
       <Modal.Header>
@@ -141,6 +147,35 @@ const New: React.FC<Props> = props => {
         )}
         {app !== undefined && (
           <Form fluid formValue={{ code: code }} onChange={o => setCode(o.code)}>
+            <p>
+              <FormattedMessage id="servers.new.authorization_url" />
+            </p>
+            <div
+              style={{
+                backgroundColor: 'var(--rs-gray-800)',
+                width: '80%',
+                padding: '8px 0 8px 12px',
+                borderRadius: '4px',
+                margin: '8px 0',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}
+            >
+              <span
+                className="no-scrollbar"
+                style={{
+                  width: '90%',
+                  whiteSpace: 'nowrap',
+                  overflowX: 'auto'
+                }}
+              >
+                {app.url}
+              </span>
+              <Button appearance="link" onClick={() => copyText(app.url)}>
+                <Icon as={BsClipboard} />
+              </Button>
+            </div>
             {app.session_token ? (
               <div style={{ margin: '1em 0' }}>
                 <FormattedMessage id="servers.new.without_code_authorize" />

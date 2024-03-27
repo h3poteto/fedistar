@@ -82,6 +82,7 @@
       "authorization_code": "Authorization Code",
       "authorization_help": "Please paste the authorization code from your browser",
       "without_code_authorize": "Please approve Fedistar in your browser, and after you approve it please authorize",
+      "authorization_url": "Normally, the browser will open automatically, but if it doesn't, please open the following URL in your browser and approve it.",
       "authorize": "Authorize",
       "loading": "Loading"
     }
