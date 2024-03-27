@@ -22,7 +22,6 @@ tokio = { version = "1.36", features = ["full"] }
 futures = "0.3"
 directories = "5.0"
 megalodon = "0.13.2"
-open = "5.1"
 tracing = "0.1.40"
 reqwest = { version = "0.11", features = ["json", "multipart", "stream"] }
 scraper = "0.19"
