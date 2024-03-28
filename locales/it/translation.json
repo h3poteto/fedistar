@@ -82,6 +82,7 @@
       "authorization_code": "Codice di autorizzazione",
       "authorization_help": "Per favore, incolla il codice di autorizzazione dal tuo browser",
       "without_code_authorize": "Occorre approvare la App Fedistar nel proprio browser e, successivamente, usare il codice di autorizzazione",
+      "authorization_url": "Normally, the browser will open automatically, but if it doesn't, please open the following URL in your browser and approve it.",
       "authorize": "Autorizza",
       "loading": "Caricamento"
     }
