@@ -42,8 +42,8 @@ dependencies:
     specifier: ^6.6.3
     version: 6.6.3(react@18.2.0)(typescript@5.3.3)
   react-virtuoso:
-    specifier: 4.6.3
-    version: 4.6.3(react-dom@18.2.0)(react@18.2.0)
+    specifier: 4.7.6
+    version: 4.7.6(react-dom@18.2.0)(react@18.2.0)
   rsuite:
     specifier: 5.57.0
     version: 5.57.0(react-dom@18.2.0)(react@18.2.0)
@@ -4061,8 +4061,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-virtuoso@4.6.3(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-NcoSsf4B0OCx7U8i2s+VWe8b9e+FWzcN/5ly4hKjErynBzGONbWORZ1C5amUlWrPi6+HbUQ2PjnT4OpyQIpP9A==}
+  /react-virtuoso@4.7.6(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-6Olcf8LB2wmFHAAfhGH6oAoFlWx1aVWY5LdN4ABPKrhsIAuQT6kYiN1SBaWCvDhbx+AAGhYxlgmC8e6xnjPutQ==}
     engines: {node: '>=10'}
     peerDependencies:
       react: '>=16 || >=17 || >= 18'
