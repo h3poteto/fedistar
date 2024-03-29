@@ -6,7 +6,7 @@ use base64::{engine::general_purpose, Engine};
 use megalodon::{self, oauth};
 use rust_i18n::t;
 use serde::Serialize;
-use std::{env, fs::OpenOptions, path::PathBuf, str::FromStr, sync::Arc};
+use std::{env, fs::OpenOptions, path::PathBuf, str::FromStr, sync::Arc, thread};
 use tauri::{api::shell, async_runtime::Mutex, AppHandle, Manager, State};
 mod database;
 mod entities;
@@ -105,7 +105,14 @@ async fn add_application(
 
     let url = app_data.url.clone().expect("URL is not found");
     tracing::info!("Opening the URL: {}", url);
-    shell::open(&app_handle.shell_scope(), url, None).expect("Failed to open the URL");
+
+    let scope = app_handle.shell_scope().clone();
+    thread::spawn(move || match shell::open(&scope, url, None) {
+        Ok(_) => {}
+        Err(e) => {
+            tracing::error!("Failed to open the URL: {}", e);
+        }
+    });
     Ok(app_data)
 }
 
