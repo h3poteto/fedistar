@@ -428,6 +428,7 @@ async fn init_instruction(
 }
 
 #[tauri::command]
+#[allow(unused_variables)]
 async fn switch_devtools(app_handle: AppHandle) -> () {
     #[cfg(any(feature = "devtools", debug_assertions))]
     {
@@ -576,6 +577,7 @@ fn init_logger(logfile_path: std::path::PathBuf) {
         },
         Err(_) => simplelog::LevelFilter::Info,
     };
+    #[allow(unused_mut)]
     let mut logger: Vec<Box<dyn simplelog::SharedLogger>> = vec![simplelog::WriteLogger::new(
         log_level,
         simplelog::ConfigBuilder::new()
@@ -606,6 +608,8 @@ fn init_logger(logfile_path: std::path::PathBuf) {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     use tauri::async_runtime::block_on;
+    #[allow(unused_assignments)]
+    #[allow(unused_mut)]
     let mut base_dir: &str = "fedistar";
     const DATABASE_FILE: &str = "fedistar.db";
     const LOGFILE_PATH: &str = "fedistar.log";
