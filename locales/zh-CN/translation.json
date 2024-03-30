@@ -82,7 +82,7 @@
       "authorization_code": "授权码",
       "authorization_help": "请粘贴浏览器中显示的授权码",
       "without_code_authorize": "请在您的浏览器中批准 Fedistar，并在批准后进行授权",
-      "authorization_url": "Normally, the browser will open automatically, but if it doesn't, please open the following URL in your browser and approve it.",
+      "authorization_url": "通常，浏览器会自动打开，但如果它没有打开，请在您的浏览器中打开下面的 URL 并批准。",
       "authorize": "授权",
       "loading": "正在加载"
     }
