@@ -45,8 +45,8 @@ dependencies:
     specifier: 4.6.3
     version: 4.6.3(react-dom@18.2.0)(react@18.2.0)
   rsuite:
-    specifier: 5.57.0
-    version: 5.57.0(react-dom@18.2.0)(react@18.2.0)
+    specifier: 5.59.0
+    version: 5.59.0(react-dom@18.2.0)(react@18.2.0)
   sanitize-html:
     specifier: ^2.13.0
     version: 2.13.0
@@ -4209,8 +4209,8 @@ packages:
       react-is: 17.0.2
     dev: false
 
-  /rsuite@5.57.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-8bpjw+D4GfoSCQYlFyw8j2kSN2cmDaXG1bXu86CfQhe8ejeQrGx1yFD2CObWpLFUZYqHRUBKAVykiNxphxSEaQ==}
+  /rsuite@5.59.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-yc69AYmqLN2rvZER2kTr4dmo0QKWGyUj4NMdnMJ5diOZrPA8Tp/ofSdRqm9BbNvHIIfRHDbnwgx+xv8s1GVD1Q==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
