@@ -11,16 +11,19 @@ import { findLink, findAccount, findTag, accountMatch, ParsedAccount } from 'src
 import Body from '../status/Body'
 import Poll from '../status/Poll'
 import { Server } from 'src/entities/server'
+import { Account } from 'src/entities/account'
 import { useIntl } from 'react-intl'
 
 type Props = {
   server: Server
+  account: Account | null
   notification: Entity.Notification
   client: MegalodonInterface
   updateStatus: (status: Entity.Status) => void
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   setAccountDetail: (account: Entity.Account) => void
   setTagDetail: (tag: string, serverId: number) => void
+  setStatusDetail: (statusId: string, serverId: number, accountId?: number) => void
 }
 
 const actionIcon = (notification: Entity.Notification) => {
@@ -222,7 +225,13 @@ const Reaction: React.FC<Props> = props => {
       open(url)
       e.preventDefault()
       e.stopPropagation()
+    } else {
+      props.setStatusDetail(status.id, props.server.id, props.account.id)
     }
+  }
+
+  const openStatus = () => {
+    props.setStatusDetail(status.id, props.server.id, props.account.id)
   }
 
   return (
@@ -267,7 +276,7 @@ const Reaction: React.FC<Props> = props => {
               </FlexboxGrid.Item>
               {/** timestamp **/}
               <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right' }}>
-                <Time time={status.created_at} />
+                <Time time={status.created_at} onClick={openStatus} />
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </div>
