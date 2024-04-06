@@ -53,8 +53,13 @@ const StatusDetail: React.FC<Props> = props => {
         setClient(cli)
       }
       if (router.query.status_id) {
+        setAncestors([])
+        setDescendants([])
         const res = await cli.getStatus(router.query.status_id.toString())
         setStatus(res.data)
+        const c = await cli.getStatusContext(router.query.status_id as string)
+        setAncestors(c.data.ancestors)
+        setDescendants(c.data.descendants)
       } else {
         setStatus(null)
       }
@@ -66,19 +71,6 @@ const StatusDetail: React.FC<Props> = props => {
     }
     f()
   }, [router.query.status_id, router.query.server_id, router.query.account_id])
-
-  useEffect(() => {
-    setAncestors([])
-    setDescendants([])
-    if (status) {
-      const f = async () => {
-        const c = await client.getStatusContext(status.id)
-        setAncestors(c.data.ancestors)
-        setDescendants(c.data.descendants)
-      }
-      f()
-    }
-  }, [status, client])
 
   const back = () => {
     router.back()
