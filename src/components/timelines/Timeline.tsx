@@ -66,7 +66,7 @@ type Props = {
   openFromOtherAccount: (status: Entity.Status) => void
 }
 
-const Timeline: React.FC<Props> = props => {
+export default function TimelineColumn(props: Props) {
   const { formatMessage } = useIntl()
 
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
@@ -610,5 +610,3 @@ const deleteStatus = (statuses: Array<Entity.Status>, deleted_id: string): Array
     }
   })
 }
-
-export default Timeline

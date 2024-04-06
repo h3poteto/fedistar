@@ -2,7 +2,7 @@ import { invoke } from '@tauri-apps/api/tauri'
 import { useEffect, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { InputNumber, Modal, Panel, Form, Schema, ButtonToolbar, Button, InputPicker } from 'rsuite'
-import { Settings, ThemeType } from 'src/entities/settings'
+import { Settings as SettingsType, ThemeType } from 'src/entities/settings'
 import { localeType } from 'src/i18n'
 
 type Props = {
@@ -63,7 +63,7 @@ const themes = [
   }
 ]
 
-const Settings: React.FC<Props> = props => {
+export default function Settings(props: Props) {
   const { formatMessage } = useIntl()
   const [formValue, setFormValue] = useState<FormValue>({
     font_size: 14,
@@ -81,14 +81,14 @@ const Settings: React.FC<Props> = props => {
 
   useEffect(() => {
     const f = async () => {
-      const settings = await invoke<Settings>('read_settings')
+      const settings = await invoke<SettingsType>('read_settings')
       setFormValue(current => Object.assign({}, current, settings.appearance))
     }
     f()
   }, [])
 
   const handleSubmit = async () => {
-    const settings: Settings = {
+    const settings: SettingsType = {
       appearance: {
         font_size: Number(formValue.font_size),
         language: formValue.language,
@@ -143,5 +143,3 @@ const Settings: React.FC<Props> = props => {
     </Modal>
   )
 }
-
-export default Settings
