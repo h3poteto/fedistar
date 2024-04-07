@@ -275,7 +275,7 @@ const Reaction: React.FC<Props> = props => {
                 <span>@{status.account.acct}</span>
               </FlexboxGrid.Item>
               {/** timestamp **/}
-              <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right' }}>
+              <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', cursor: 'pointer' }}>
                 <Time time={status.created_at} onClick={openStatus} />
               </FlexboxGrid.Item>
             </FlexboxGrid>

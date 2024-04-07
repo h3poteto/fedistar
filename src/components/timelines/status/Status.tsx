@@ -135,7 +135,7 @@ const Status: React.FC<Props> = props => {
     props.filters?.map(f => f.phrase).filter(keyword => props.status.content.toLowerCase().includes(keyword.toLowerCase())).length > 0
   ) {
     return (
-      <div className="status" style={{ textAlign: 'center', paddingTop: '0.2em', paddingBottom: '0.2em' }}>
+      <div className="status" style={{ textAlign: 'center', paddingTop: '0.5em', paddingBottom: '0.5em' }}>
         <FormattedMessage id="timeline.status.filtered" />
         <Button appearance="subtle" size="sm" onClick={() => setIgnoreFilter(true)} style={{ marginLeft: '0.2em' }}>
           <FormattedMessage id="timeline.status.show_anyway" />
