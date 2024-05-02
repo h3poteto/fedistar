@@ -35,7 +35,7 @@
   "dependencies": {
     "@emoji-mart/react": "^1.1.1",
     "@rsuite/icons": "^1.0.3",
-    "@tauri-apps/api": "1.5.3",
+    "@tauri-apps/api": "1.5.4",
     "dayjs": "^1.11.11",
     "emoji-mart": "^5.5.2",
     "megalodon": "10.0.0",
@@ -51,7 +51,7 @@
     "tauri-plugin-window-state-api": "github:tauri-apps/tauri-plugin-window-state#v1"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.5.11",
+    "@tauri-apps/cli": "^1.5.12",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.8",
     "@types/parse-link-header": "^2.0.3",
