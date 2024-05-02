@@ -38,7 +38,7 @@
     "@tauri-apps/api": "1.5.4",
     "dayjs": "^1.11.11",
     "emoji-mart": "^5.6.0",
-    "megalodon": "10.0.0",
+    "megalodon": "10.0.1",
     "next": "^14.2.3",
     "parse-link-header": "^2.0.0",
     "react": "18.2.0",
