@@ -125,6 +125,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "arc-swap"
+version = "1.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "69f7f8c3906b62b754cd5326047894316021dcfe5a194c8ea52bdd94934a3457"
+
+[[package]]
 name = "async-broadcast"
 version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3734,9 +3740,9 @@ dependencies = [
 
 [[package]]
 name = "rust-i18n"
-version = "3.0.0"
+version = "3.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a6abbdc814f0f4346da52a5039e2a46015fa84357788956bb500be2a56bf453e"
+checksum = "9dcd94370631e5658a0a23635f7f47e43d06a00ad948e0bb5de79b00d85b880c"
 dependencies = [
  "globwalk",
  "once_cell",
@@ -3765,10 +3771,11 @@ dependencies = [
 
 [[package]]
 name = "rust-i18n-support"
-version = "3.0.0"
+version = "3.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c473e9fdd5cf78f114df7b8287b15e4007725bb32cd7cd01b28dfc19226fe2ac"
+checksum = "399801f4d955abf1c3ce3ce2215dc76bd40beb4ae39e3a84936b21a79ce2caa5"
 dependencies = [
+ "arc-swap",
  "globwalk",
  "lazy_static",
  "normpath",
@@ -3779,6 +3786,7 @@ dependencies = [
  "serde_json",
  "serde_yaml",
  "toml 0.7.4",
+ "triomphe",
 ]
 
 [[package]]
@@ -5468,6 +5476,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "52984d277bdf2a751072b5df30ec0377febdb02f7696d64c2d7d54630bac4303"
 dependencies = [
  "serde_json",
+]
+
+[[package]]
+name = "triomphe"
+version = "0.1.11"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "859eb650cfee7434994602c3a68b25d77ad9e68c8a6cd491616ef86661382eb3"
+dependencies = [
+ "arc-swap",
+ "serde",
+ "stable_deref_trait",
 ]
 
 [[package]]
