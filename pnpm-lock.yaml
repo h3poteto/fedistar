@@ -7,7 +7,7 @@ settings:
 dependencies:
   '@emoji-mart/react':
     specifier: ^1.1.1
-    version: 1.1.1(emoji-mart@5.5.2)(react@18.3.1)
+    version: 1.1.1(emoji-mart@5.6.0)(react@18.3.1)
   '@rsuite/icons':
     specifier: ^1.0.3
     version: 1.0.3(react-dom@18.3.1)(react@18.3.1)
@@ -18,8 +18,8 @@ dependencies:
     specifier: ^1.11.11
     version: 1.11.11
   emoji-mart:
-    specifier: ^5.5.2
-    version: 5.5.2
+    specifier: ^5.6.0
+    version: 5.6.0
   megalodon:
     specifier: 10.0.0
     version: 10.0.0
@@ -441,13 +441,13 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@emoji-mart/react@1.1.1(emoji-mart@5.5.2)(react@18.3.1):
+  /@emoji-mart/react@1.1.1(emoji-mart@5.6.0)(react@18.3.1):
     resolution: {integrity: sha512-NMlFNeWgv1//uPsvLxvGQoIerPuVdXwK/EUek8OOkJ6wVOWPUizRBJU0hDqWZCOROVpfBgCemaC3m6jDOXi03g==}
     peerDependencies:
       emoji-mart: ^5.2
       react: ^16.8 || ^17 || ^18
     dependencies:
-      emoji-mart: 5.5.2
+      emoji-mart: 5.6.0
       react: 18.3.1
     dev: false
 
@@ -2006,8 +2006,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /emoji-mart@5.5.2:
-    resolution: {integrity: sha512-Sqc/nso4cjxhOwWJsp9xkVm8OF5c+mJLZJFoFfzRuKO+yWiN7K8c96xmtughYb0d/fZ8UC6cLIQ/p4BR6Pv3/A==}
+  /emoji-mart@5.6.0:
+    resolution: {integrity: sha512-eJp3QRe79pjwa+duv+n7+5YsNhRcMl812EcFVwrnRvYKoNPoQb5qxU8DG6Bgwji0akHdp6D4Ln6tYLG58MFSow==}
     dev: false
 
   /emoji-regex@8.0.0:
