@@ -20,7 +20,7 @@ jobs:
           node-version: 20
       - uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: 9
       - name: Rust setup
         uses: actions-rs/toolchain@v1
         with:
@@ -60,7 +60,7 @@ jobs:
           node-version: 20
       - uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: 9
       - name: Rust setup
         uses: actions-rs/toolchain@v1
         with:
@@ -106,7 +106,7 @@ jobs:
           node-version: 20
       - uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: 9
       - name: Rust setup
         uses: actions-rs/toolchain@v1
         with:
