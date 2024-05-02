@@ -15,8 +15,8 @@ dependencies:
     specifier: 1.5.3
     version: 1.5.3
   dayjs:
-    specifier: ^1.11.10
-    version: 1.11.10
+    specifier: ^1.11.11
+    version: 1.11.11
   emoji-mart:
     specifier: ^5.5.2
     version: 5.5.2
@@ -1883,8 +1883,8 @@ packages:
       '@babel/runtime': 7.22.15
     dev: false
 
-  /dayjs@1.11.10:
-    resolution: {integrity: sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==}
+  /dayjs@1.11.11:
+    resolution: {integrity: sha512-okzr3f11N6WuqYtZSvm+F776mB41wRZMhKP+hc34YdW+KmtYYK9iqvHSwo2k9FEH3fhGXvOPV6yz2IcSrfRUDg==}
     dev: false
 
   /debug@4.3.4:
@@ -3593,7 +3593,7 @@ packages:
       '@badgateway/oauth2-client': 2.3.0
       '@types/ws': 8.5.10
       axios: 1.6.7
-      dayjs: 1.11.10
+      dayjs: 1.11.11
       events: 3.3.0
       form-data: 4.0.0
       isomorphic-ws: 5.0.0(ws@8.16.0)
