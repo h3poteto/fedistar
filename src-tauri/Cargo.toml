@@ -28,7 +28,7 @@ scraper = "0.19"
 url = "2.5"
 simplelog = "0.12"
 once_cell = "1.19.0"
-rust-i18n = "3"
+rust-i18n = "3.0.1"
 base64 = "0.21"
 tauri-plugin-window-state = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 
