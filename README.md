@@ -12,8 +12,8 @@ This is a Fediverse client application for desktop. It is supporting
 - Pleroma
 - Friendica
 - Firefish
+- Gotosocial
 - Akkoma (Unofficial)
-- Wildebeest (Unofficial)
 
 ![screenshot](screenshot.png)
 
