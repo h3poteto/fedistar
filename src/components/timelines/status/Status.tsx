@@ -322,11 +322,16 @@ async function searchAccount(account: ParsedAccount, status: Entity.Status, clie
       if (user) return user
     }
   }
-  const res = await client.searchAccount(account.url, { resolve: true })
-  if (res.data.length === 0) return null
-  const user = accountMatch(res.data, account, server.domain)
-  if (user) return user
-  return null
+  try {
+    const res = await client.lookupAccount(account.acct)
+    return res.data
+  } catch (e) {
+    const res = await client.searchAccount(account.url, { resolve: true })
+    if (res.data.length === 0) return null
+    const user = accountMatch(res.data, account, server.domain)
+    if (user) return user
+    return null
+  }
 }
 
 function notification(
