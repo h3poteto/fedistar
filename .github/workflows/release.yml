@@ -21,10 +21,7 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 9
-      - name: Rust setup
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+      - uses: dtolnay/rust-toolchain@stable
 
       - name: Install dependencies
         run: |
@@ -61,11 +58,9 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 9
-      - name: Rust setup
-        uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@stable
         with:
-          toolchain: stable
-          target: aarch64-apple-darwin
+          targets: aarch64-apple-darwin,x86_64-apple-darwin
 
       - name: Install app dependencies and build web
         run: pnpm install --frozen-lockfile
@@ -107,10 +102,7 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 9
-      - name: Rust setup
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+      - uses: dtolnay/rust-toolchain@stable
 
       - name: Install app dependencies and build web
         run: pnpm install --frozen-lockfile && pnpm build
