@@ -86,6 +86,7 @@ export default function TimelineColumn(props: Props) {
   const replyOpened = useRef<boolean>(false)
   const toast = useToaster()
   const router = useRouter()
+  const appending = useRef(true)
 
   useEffect(() => {
     const f = async () => {
@@ -349,7 +350,8 @@ export default function TimelineColumn(props: Props) {
   }
 
   const loadMore = useCallback(async () => {
-    console.debug('appending')
+    if (!appending.current) return
+    console.debug('appending', props.timeline)
     let maxId = null
     switch (props.timeline.kind) {
       case 'favourites':
@@ -366,6 +368,7 @@ export default function TimelineColumn(props: Props) {
 
     try {
       const append = await loadTimeline(props.timeline, client, maxId)
+      appending.current = append.length > 0
       setStatuses(last => [...last, ...append])
     } catch (err) {
       console.error(err)
@@ -373,7 +376,7 @@ export default function TimelineColumn(props: Props) {
   }, [client, statuses, setStatuses, nextMaxId])
 
   const prependUnreads = useCallback(() => {
-    console.debug('prepending')
+    console.debug('prepending', props.timeline)
     const unreads = unreadStatuses.slice().reverse().slice(0, TIMELINE_STATUSES_COUNT).reverse()
     const remains = unreadStatuses.slice(0, -1 * TIMELINE_STATUSES_COUNT)
     setUnreadStatuses(() => remains)
