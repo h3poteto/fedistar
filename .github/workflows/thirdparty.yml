@@ -20,10 +20,7 @@ jobs:
     - uses: pnpm/action-setup@v2
       with:
         version: 9
-    - uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-        override: true
+    - uses: dtolnay/rust-toolchain@stable
     - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4
     - name: Install packages
       run: |

@@ -30,10 +30,7 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 9
-      - name: Rust setup
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+      - uses: dtolnay/rust-toolchain@stable
 
       - name: Install dependencies
         run: |
