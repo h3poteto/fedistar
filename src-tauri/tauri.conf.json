@@ -69,7 +69,9 @@
         "height": 600,
         "resizable": true,
         "title": "Fedistar",
-        "width": 800
+        "width": 800,
+        "minWidth": 348,
+        "minHeight": 320
       }
     ]
   }
