@@ -13,6 +13,9 @@ import Poll from '../status/Poll'
 import { Server } from 'src/entities/server'
 import { Account } from 'src/entities/account'
 import { useIntl } from 'react-intl'
+import Actions from '../status/Actions'
+import { CustomEmojiCategory } from 'src/entities/emoji'
+import Reply from 'src/components/compose/Status'
 
 type Props = {
   server: Server
@@ -24,6 +27,9 @@ type Props = {
   setAccountDetail: (account: Entity.Account) => void
   setTagDetail: (tag: string, serverId: number) => void
   setStatusDetail: (statusId: string, serverId: number, accountId?: number) => void
+  openReport: (status: Entity.Status, client: MegalodonInterface) => void
+  openFromOtherAccount: (status: Entity.Status) => void
+  customEmojis: Array<CustomEmojiCategory>
 }
 
 const actionIcon = (notification: Entity.Notification) => {
@@ -175,6 +181,8 @@ const Reaction: React.FC<Props> = props => {
   const { formatMessage } = useIntl()
   const status = props.notification.status
   const [spoilered, setSpoilered] = useState<boolean>(status.spoiler_text.length > 0)
+  const [showReply, setShowReply] = useState<boolean>(false)
+  const [showEdit, setShowEdit] = useState<boolean>(false)
 
   const refresh = async () => {
     const res = await props.client.getStatus(status.id)
@@ -295,9 +303,43 @@ const Reaction: React.FC<Props> = props => {
             </>
           )}
 
-          <div className="toolbox"></div>
+          <Actions
+            disabled={props.server.account_id === null}
+            server={props.server}
+            account={props.account}
+            status={status}
+            client={props.client}
+            setShowReply={setShowReply}
+            setShowEdit={setShowEdit}
+            updateStatus={props.updateStatus}
+            openReport={() => props.openReport(status, props.client)}
+            openFromOtherAccount={() => props.openFromOtherAccount(status)}
+            customEmojis={props.customEmojis}
+          />
         </div>
       </div>
+      {showReply && (
+        <div style={{ padding: '8px 12px' }}>
+          <Reply
+            client={props.client}
+            server={props.server}
+            account={props.account}
+            in_reply_to={status}
+            onClose={() => setShowReply(false)}
+          />
+        </div>
+      )}
+      {showEdit && (
+        <div style={{ padding: '8px 12px' }}>
+          <Reply
+            client={props.client}
+            server={props.server}
+            account={props.account}
+            edit_target={status}
+            onClose={() => setShowEdit(false)}
+          />
+        </div>
+      )}
     </div>
   )
 }
