@@ -64,6 +64,9 @@ const notification = (props: Props) => {
             setTagDetail={(tag, serverId) => props.setTagDetail(tag, serverId, props.account?.id)}
             setAccountDetail={account => props.setAccountDetail(account.id, props.server.id, props.account?.id)}
             setStatusDetail={props.setStatusDetail}
+            openReport={props.openReport}
+            openFromOtherAccount={props.openFromOtherAccount}
+            customEmojis={props.customEmojis}
           />
         )
       } else {
