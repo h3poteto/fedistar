@@ -7,7 +7,7 @@ use megalodon::{self, oauth};
 use rust_i18n::t;
 use serde::Serialize;
 use std::{env, fs::OpenOptions, path::PathBuf, str::FromStr, sync::Arc, thread};
-use tauri::{api::shell, async_runtime::Mutex, AppHandle, Manager, State};
+use tauri::{async_runtime::Mutex, AppHandle, Manager, State};
 mod database;
 mod entities;
 mod favicon;
@@ -88,7 +88,6 @@ async fn remove_server(
 
 #[tauri::command]
 async fn add_application(
-    app_handle: AppHandle,
     _sqlite_pool: State<'_, sqlx::SqlitePool>,
     url: &str,
 ) -> Result<oauth::AppData, String> {
@@ -106,8 +105,7 @@ async fn add_application(
     let url = app_data.url.clone().expect("URL is not found");
     tracing::info!("Opening the URL: {}", url);
 
-    let scope = app_handle.shell_scope().clone();
-    thread::spawn(move || match shell::open(&scope, url, None) {
+    thread::spawn(move || match open::that(url) {
         Ok(_) => {}
         Err(e) => {
             tracing::error!("Failed to open the URL: {}", e);
@@ -652,12 +650,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .menu(menu::menu())
         .on_menu_event(|event| match event.menu_item_id() {
             "crash_reporting" => {
-                shell::open(
-                    &event.window().app_handle().shell_scope(),
-                    "https://fedistar.net/help#crash_reporting",
-                    None,
-                )
-                .expect("Failed to open the URL");
+                open::that("https://fedistar.net/help#crash_reporting")
+                    .expect("Failed to open the URL");
             }
             _ => {}
         })
