@@ -277,7 +277,7 @@ const Profile: React.FC<Props> = props => {
             <div className="bio">
               <div
                 dangerouslySetInnerHTML={{ __html: user.note }}
-                style={{ overflow: 'hidden', wordBreak: 'break-all' }}
+                style={{ overflow: 'hidden', wordBreak: 'break-word' }}
                 onClick={onClick}
               />
             </div>
@@ -288,7 +288,7 @@ const Profile: React.FC<Props> = props => {
                 borderRadius: '4px',
                 margin: '16px 0',
                 overflow: 'hidden',
-                wordBreak: 'break-all'
+                wordBreak: 'break-word'
               }}
               onClick={onClick}
             >
