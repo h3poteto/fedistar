@@ -55,7 +55,7 @@ importers:
         version: 2.13.0
       tauri-plugin-window-state-api:
         specifier: github:tauri-apps/tauri-plugin-window-state#v1
-        version: https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/002cf15f6a1e4969a678a4ade680cd60477a8a53
+        version: https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/83324932be7d2bf0cc68202bacf5427d9270dcbd
     devDependencies:
       '@h3poteto/tauri-snap-packager':
         specifier: 0.2.1
@@ -103,8 +103,8 @@ importers:
         specifier: ^1.77.2
         version: 1.77.2
       ts-jest:
-        specifier: ^29.1.3
-        version: 29.1.3(@babel/core@7.22.17)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.22.17))(jest@29.7.0(@types/node@20.12.12))(typescript@5.4.5)
+        specifier: ^29.1.5
+        version: 29.1.5(@babel/core@7.22.17)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.22.17))(jest@29.7.0(@types/node@20.12.12))(typescript@5.4.5)
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -354,6 +354,7 @@ packages:
   '@humanwhocodes/config-array@0.13.0':
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
     engines: {node: '>=10.10.0'}
+    deprecated: Use @eslint/config-array instead
 
   '@humanwhocodes/module-importer@1.0.1':
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
@@ -361,6 +362,7 @@ packages:
 
   '@humanwhocodes/object-schema@2.0.3':
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
+    deprecated: Use @eslint/object-schema instead
 
   '@humanwhocodes/retry@0.3.0':
     resolution: {integrity: sha512-d2CGZR2o7fS6sWB7DG/3a95bGKQyHMACZ5aW8qGkkqQpUoZV6C0X7Pc7l4ZNMZkfNBf4VWNe9E1jRsf0G146Ew==}
@@ -553,10 +555,6 @@ packages:
 
   '@swc/helpers@0.5.5':
     resolution: {integrity: sha512-KGYxvIOXcceOAbEk4bi/dVLEK9z8sZ0uBB3Il5b1rhfClSpcX0yfRO0KmTkqR2cnQDymwLB+25ZyMzICg/cm/A==}
-
-  '@tauri-apps/api@1.5.3':
-    resolution: {integrity: sha512-zxnDjHHKjOsrIzZm6nO5Xapb/BxqUq1tc7cGkFXsFkGTsSWgCPH1D8mm0XS9weJY2OaR73I3k3S+b7eSzJDfqA==}
-    engines: {node: '>= 14.6.0', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
 
   '@tauri-apps/api@1.5.6':
     resolution: {integrity: sha512-LH5ToovAHnDVe5Qa9f/+jW28I6DeMhos8bNDtBOmmnaDpPmJmYLyHdeDblAWWWYc7KKRDg9/66vMuKyq0WIeFA==}
@@ -2388,8 +2386,8 @@ packages:
   symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
 
-  tauri-plugin-window-state-api@https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/002cf15f6a1e4969a678a4ade680cd60477a8a53:
-    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/002cf15f6a1e4969a678a4ade680cd60477a8a53}
+  tauri-plugin-window-state-api@https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/83324932be7d2bf0cc68202bacf5427d9270dcbd:
+    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/83324932be7d2bf0cc68202bacf5427d9270dcbd}
     version: 0.0.0
 
   test-exclude@6.0.0:
@@ -2424,8 +2422,8 @@ packages:
     peerDependencies:
       typescript: '>=4.2.0'
 
-  ts-jest@29.1.3:
-    resolution: {integrity: sha512-6L9qz3ginTd1NKhOxmkP0qU3FyKjj5CPoY+anszfVn6Pmv/RIKzhiMCsH7Yb7UvJR9I2A64rm4zQl531s2F1iw==}
+  ts-jest@29.1.5:
+    resolution: {integrity: sha512-UuClSYxM7byvvYfyWdFI+/2UxMmwNyJb0NPkZPQE2hew3RurV7l7zURgOHAd/1I1ZdPpe3GUsXNXAcN8TFKSIg==}
     engines: {node: ^14.15.0 || ^16.10.0 || ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -3180,8 +3178,6 @@ snapshots:
     dependencies:
       '@swc/counter': 0.1.3
       tslib: 2.6.2
-
-  '@tauri-apps/api@1.5.3': {}
 
   '@tauri-apps/api@1.5.6': {}
 
@@ -5406,9 +5402,9 @@ snapshots:
 
   symbol-tree@3.2.4: {}
 
-  tauri-plugin-window-state-api@https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/002cf15f6a1e4969a678a4ade680cd60477a8a53:
+  tauri-plugin-window-state-api@https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/83324932be7d2bf0cc68202bacf5427d9270dcbd:
     dependencies:
-      '@tauri-apps/api': 1.5.3
+      '@tauri-apps/api': 1.5.6
 
   test-exclude@6.0.0:
     dependencies:
@@ -5441,7 +5437,7 @@ snapshots:
     dependencies:
       typescript: 5.4.5
 
-  ts-jest@29.1.3(@babel/core@7.22.17)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.22.17))(jest@29.7.0(@types/node@20.12.12))(typescript@5.4.5):
+  ts-jest@29.1.5(@babel/core@7.22.17)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.22.17))(jest@29.7.0(@types/node@20.12.12))(typescript@5.4.5):
     dependencies:
       bs-logger: 0.2.6
       fast-json-stable-stringify: 2.1.0
