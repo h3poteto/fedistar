@@ -23,7 +23,7 @@ futures = "0.3.30"
 directories = "5.0.1"
 megalodon = "0.13.7"
 tracing = "0.1.40"
-reqwest = { version = ">=0.12.4", features = ["json", "multipart", "stream"] }
+reqwest = { version = ">=0.12.5", features = ["json", "multipart", "stream"] }
 scraper = "0.19"
 url = "2.5.2"
 simplelog = "0.12.2"
