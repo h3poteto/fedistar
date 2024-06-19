@@ -24,8 +24,8 @@ importers:
         specifier: ^5.6.0
         version: 5.6.0
       megalodon:
-        specifier: 10.0.1
-        version: 10.0.1
+        specifier: 10.0.2
+        version: 10.0.2
       next:
         specifier: ^14.2.3
         version: 14.2.3(@babel/core@7.22.17)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.77.2)
@@ -838,8 +838,8 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  axios@1.6.8:
-    resolution: {integrity: sha512-v/ZHtJDU39mDpyBoFVkETcd/uNdxrWRrg3bKpOKzXFA6Bvqopts6ALSMU3y6ijYxbw2B+wPrIv46egTzJXCLGQ==}
+  axios@1.7.2:
+    resolution: {integrity: sha512-2A8QhOMrbomlDuiLeK9XibIBzuHeRcqqNOHp0Cyp5EoJ1IFDh+XZH3A6BkXtv0K4gFGCI0Y4BM7B1wOEi0Rmgw==}
 
   babel-jest@29.7.0:
     resolution: {integrity: sha512-BrvGY3xZSwEcCzKvKsCi2GgHqDqsYkOP4/by5xCgIwGXQxIEh+8ew3gmrE1y7XRR6LHZIj6yLYnUi/mm2KXKBg==}
@@ -1886,8 +1886,8 @@ packages:
   makeerror@1.0.12:
     resolution: {integrity: sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg==}
 
-  megalodon@10.0.1:
-    resolution: {integrity: sha512-LcICkX3zNFAKAAaqf6DfuL1WNZejtYML/gPPntFOQK/gHaiiiOk4jIZNL9IeF7plWDWzyBvu3UCSUx5UnTbVZQ==}
+  megalodon@10.0.2:
+    resolution: {integrity: sha512-bRqdJOXgiC6EKYGeN2ghcmghtvoaIzgchC77g51xkbIcy6y7XGl3kB7dLoMAciwLZtVKcf9rEX703nfgzySRIg==}
     engines: {node: '>=20.12.2'}
 
   memoize-one@5.2.1:
@@ -2555,8 +2555,8 @@ packages:
   url-parse@1.5.10:
     resolution: {integrity: sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==}
 
-  uuid@9.0.1:
-    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
+  uuid@10.0.0:
+    resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
     hasBin: true
 
   v8-to-istanbul@9.1.0:
@@ -2622,6 +2622,18 @@ packages:
 
   ws@8.17.0:
     resolution: {integrity: sha512-uJq6108EgZMAl20KagGkzCKfMEjxmKvZHG7Tlq0Z6nOky7YF7aq4mOx6xK8TJ/i1LeK4Qus7INktacctDgY8Ow==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
+  ws@8.17.1:
+    resolution: {integrity: sha512-6XQFvXTkbfUOZOKKILFG1PDK2NDQs4azKQl26T0YS5CxqWLgXajbPZ+h4gZekJyRqFU8pvnbAbbs/3TgRPy+GQ==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -3559,7 +3571,7 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.0.0
 
-  axios@1.6.8:
+  axios@1.7.2:
     dependencies:
       follow-redirects: 1.15.6
       form-data: 4.0.0
@@ -4498,9 +4510,9 @@ snapshots:
 
   isobject@3.0.1: {}
 
-  isomorphic-ws@5.0.0(ws@8.17.0):
+  isomorphic-ws@5.0.0(ws@8.17.1):
     dependencies:
-      ws: 8.17.0
+      ws: 8.17.1
 
   istanbul-lib-coverage@3.2.0: {}
 
@@ -4968,18 +4980,18 @@ snapshots:
     dependencies:
       tmpl: 1.0.5
 
-  megalodon@10.0.1:
+  megalodon@10.0.2:
     dependencies:
       '@badgateway/oauth2-client': 2.3.0
       '@types/ws': 8.5.10
-      axios: 1.6.8
+      axios: 1.7.2
       dayjs: 1.11.11
       events: 3.3.0
       form-data: 4.0.0
-      isomorphic-ws: 5.0.0(ws@8.17.0)
+      isomorphic-ws: 5.0.0(ws@8.17.1)
       object-assign-deep: 0.4.0
-      uuid: 9.0.1
-      ws: 8.17.0
+      uuid: 10.0.0
+      ws: 8.17.1
     transitivePeerDependencies:
       - bufferutil
       - debug
@@ -5703,7 +5715,7 @@ snapshots:
       querystringify: 2.2.0
       requires-port: 1.0.0
 
-  uuid@9.0.1: {}
+  uuid@10.0.0: {}
 
   v8-to-istanbul@9.1.0:
     dependencies:
@@ -5796,6 +5808,8 @@ snapshots:
       signal-exit: 3.0.7
 
   ws@8.17.0: {}
+
+  ws@8.17.1: {}
 
   xml-name-validator@5.0.0: {}
 
