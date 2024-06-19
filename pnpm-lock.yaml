@@ -10,10 +10,10 @@ importers:
     dependencies:
       '@emoji-mart/react':
         specifier: ^1.1.1
-        version: 1.1.1(emoji-mart@5.6.0)(react@18.2.0)
+        version: 1.1.1(emoji-mart@5.6.0)(react@18.3.1)
       '@rsuite/icons':
         specifier: ^1.0.3
-        version: 1.0.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 1.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tauri-apps/api':
         specifier: 1.5.6
         version: 1.5.6
@@ -28,28 +28,28 @@ importers:
         version: 10.0.2
       next:
         specifier: ^14.2.4
-        version: 14.2.4(@babel/core@7.22.17)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.77.6)
+        version: 14.2.4(@babel/core@7.22.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6)
       parse-link-header:
         specifier: ^2.0.0
         version: 2.0.0
       react:
-        specifier: 18.2.0
-        version: 18.2.0
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: 18.2.0
-        version: 18.2.0(react@18.2.0)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       react-icons:
         specifier: ^5.2.1
-        version: 5.2.1(react@18.2.0)
+        version: 5.2.1(react@18.3.1)
       react-intl:
         specifier: ^6.6.8
-        version: 6.6.8(react@18.2.0)(typescript@5.4.5)
+        version: 6.6.8(react@18.3.1)(typescript@5.4.5)
       react-virtuoso:
         specifier: 4.7.11
-        version: 4.7.11(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 4.7.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rsuite:
         specifier: 5.60.2
-        version: 5.60.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 5.60.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       sanitize-html:
         specifier: ^2.13.0
         version: 2.13.0
@@ -73,11 +73,11 @@ importers:
         specifier: ^2.0.3
         version: 2.0.3
       '@types/react':
-        specifier: 18.2.74
-        version: 18.2.74
+        specifier: 18.3.3
+        version: 18.3.3
       '@types/react-dom':
-        specifier: 18.2.24
-        version: 18.2.24
+        specifier: 18.3.0
+        version: 18.3.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.13.1
         version: 7.13.1(@typescript-eslint/parser@7.13.1(eslint@9.5.0)(typescript@5.4.5))(eslint@9.5.0)(typescript@5.4.5)
@@ -669,14 +669,14 @@ packages:
   '@types/prop-types@15.7.6':
     resolution: {integrity: sha512-RK/kBbYOQQHLYj9Z95eh7S6t7gq4Ojt/NT8HTk8bWVhA5DaF+5SMnxHKkP4gPNN3wAZkKP+VjAf0ebtYzf+fxg==}
 
-  '@types/react-dom@18.2.24':
-    resolution: {integrity: sha512-cN6upcKd8zkGy4HU9F1+/s98Hrp6D4MOcippK4PoE8OZRngohHZpbJn1GsaDLz87MqvHNoT13nHvNqM9ocRHZg==}
+  '@types/react-dom@18.3.0':
+    resolution: {integrity: sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==}
 
   '@types/react-window@1.8.5':
     resolution: {integrity: sha512-V9q3CvhC9Jk9bWBOysPGaWy/Z0lxYcTXLtLipkt2cnRj1JOSFNF7wqGpkScSXMgBwC+fnVRg/7shwgddBG5ICw==}
 
-  '@types/react@18.2.74':
-    resolution: {integrity: sha512-9AEqNZZyBx8OdZpxzQlaFEVCSFUM2YXJH46yPOiOpm078k6ZLOCcuAzGum/zK8YBwY+dbahVNbHrbgrAwIRlqw==}
+  '@types/react@18.3.3':
+    resolution: {integrity: sha512-hti/R0pS0q1/xx+TsI73XIqk26eBsISZ2R0wUijXIngRK9R/e7Xw/cXVxQK7R5JjW+SV4zGcn5hXjudkN/pLIw==}
 
   '@types/stack-utils@2.0.1':
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==}
@@ -2127,10 +2127,10 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  react-dom@18.2.0:
-    resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
+  react-dom@18.3.1:
+    resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
     peerDependencies:
-      react: ^18.2.0
+      react: ^18.3.1
 
   react-icons@5.2.1:
     resolution: {integrity: sha512-zdbW5GstTzXaVKvGSyTaBalt7HSfuK5ovrzlpyiWHAFXndXTdd/1hdDHI4xBM1Mn7YriT6aqESucFl9kEXzrdw==}
@@ -2174,8 +2174,8 @@ packages:
       react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
       react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
 
-  react@18.2.0:
-    resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
+  react@18.3.1:
+    resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
     engines: {node: '>=0.10.0'}
 
   readdirp@3.6.0:
@@ -2890,10 +2890,10 @@ snapshots:
 
   '@bcoe/v8-coverage@0.2.3': {}
 
-  '@emoji-mart/react@1.1.1(emoji-mart@5.6.0)(react@18.2.0)':
+  '@emoji-mart/react@1.1.1(emoji-mart@5.6.0)(react@18.3.1)':
     dependencies:
       emoji-mart: 5.6.0
-      react: 18.2.0
+      react: 18.3.1
 
   '@eslint-community/eslint-utils@4.4.0(eslint@9.5.0)':
     dependencies:
@@ -3218,15 +3218,15 @@ snapshots:
 
   '@rsuite/icon-font@4.0.0': {}
 
-  '@rsuite/icons@1.0.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@rsuite/icons@1.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.22.15
       '@rsuite/icon-font': 4.0.0
       classnames: 2.3.2
       insert-css: 2.0.0
       lodash: 4.17.21
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@sinclair/typebox@0.27.8': {}
 
@@ -3319,7 +3319,7 @@ snapshots:
 
   '@types/hoist-non-react-statics@3.3.2':
     dependencies:
-      '@types/react': 18.2.74
+      '@types/react': 18.3.3
       hoist-non-react-statics: 3.3.2
 
   '@types/istanbul-lib-coverage@2.0.4': {}
@@ -3347,15 +3347,15 @@ snapshots:
 
   '@types/prop-types@15.7.6': {}
 
-  '@types/react-dom@18.2.24':
+  '@types/react-dom@18.3.0':
     dependencies:
-      '@types/react': 18.2.74
+      '@types/react': 18.3.3
 
   '@types/react-window@1.8.5':
     dependencies:
-      '@types/react': 18.2.74
+      '@types/react': 18.3.3
 
-  '@types/react@18.2.74':
+  '@types/react@18.3.3':
     dependencies:
       '@types/prop-types': 15.7.6
       csstype: 3.1.2
@@ -5029,7 +5029,7 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  next@14.2.4(@babel/core@7.22.17)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.77.6):
+  next@14.2.4(@babel/core@7.22.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6):
     dependencies:
       '@next/env': 14.2.4
       '@swc/helpers': 0.5.5
@@ -5037,9 +5037,9 @@ snapshots:
       caniuse-lite: 1.0.30001581
       graceful-fs: 4.2.11
       postcss: 8.4.31
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      styled-jsx: 5.1.1(@babel/core@7.22.17)(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      styled-jsx: 5.1.1(@babel/core@7.22.17)(react@18.3.1)
     optionalDependencies:
       '@next/swc-darwin-arm64': 14.2.4
       '@next/swc-darwin-x64': 14.2.4
@@ -5222,17 +5222,17 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  react-dom@18.2.0(react@18.2.0):
+  react-dom@18.3.1(react@18.3.1):
     dependencies:
       loose-envify: 1.4.0
-      react: 18.2.0
+      react: 18.3.1
       scheduler: 0.23.2
 
-  react-icons@5.2.1(react@18.2.0):
+  react-icons@5.2.1(react@18.3.1):
     dependencies:
-      react: 18.2.0
+      react: 18.3.1
 
-  react-intl@6.6.8(react@18.2.0)(typescript@5.4.5):
+  react-intl@6.6.8(react@18.3.1)(typescript@5.4.5):
     dependencies:
       '@formatjs/ecma402-abstract': 2.0.0
       '@formatjs/icu-messageformat-parser': 2.7.8
@@ -5240,10 +5240,10 @@ snapshots:
       '@formatjs/intl-displaynames': 6.6.8
       '@formatjs/intl-listformat': 7.5.7
       '@types/hoist-non-react-statics': 3.3.2
-      '@types/react': 18.2.74
+      '@types/react': 18.3.3
       hoist-non-react-statics: 3.3.2
       intl-messageformat: 10.5.14
-      react: 18.2.0
+      react: 18.3.1
       tslib: 2.6.2
     optionalDependencies:
       typescript: 5.4.5
@@ -5254,23 +5254,23 @@ snapshots:
 
   react-is@18.2.0: {}
 
-  react-use-set@1.0.0(react@18.2.0):
+  react-use-set@1.0.0(react@18.3.1):
     dependencies:
-      react: 18.2.0
+      react: 18.3.1
 
-  react-virtuoso@4.7.11(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  react-virtuoso@4.7.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
-  react-window@1.8.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  react-window@1.8.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.22.15
       memoize-one: 5.2.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
-  react@18.2.0:
+  react@18.3.1:
     dependencies:
       loose-envify: 1.4.0
 
@@ -5329,24 +5329,24 @@ snapshots:
 
   rrweb-cssom@0.7.0: {}
 
-  rsuite-table@5.18.2(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  rsuite-table@5.18.2(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.22.15
       '@juggle/resize-observer': 3.4.0
-      '@rsuite/icons': 1.0.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@rsuite/icons': 1.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       classnames: 2.3.2
       dom-lib: 3.3.1
       lodash: 4.17.21
       prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       react-is: 17.0.2
 
-  rsuite@5.60.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  rsuite@5.60.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.22.15
       '@juggle/resize-observer': 3.4.0
-      '@rsuite/icons': 1.0.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@rsuite/icons': 1.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/chai': 4.3.6
       '@types/lodash': 4.14.198
       '@types/prop-types': 15.7.6
@@ -5356,11 +5356,11 @@ snapshots:
       dom-lib: 3.3.1
       lodash: 4.17.21
       prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-use-set: 1.0.0(react@18.2.0)
-      react-window: 1.8.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      rsuite-table: 5.18.2(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-use-set: 1.0.0(react@18.3.1)
+      react-window: 1.8.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      rsuite-table: 5.18.2(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       schema-typed: 2.2.2
 
   run-parallel@1.2.0:
@@ -5559,10 +5559,10 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  styled-jsx@5.1.1(@babel/core@7.22.17)(react@18.2.0):
+  styled-jsx@5.1.1(@babel/core@7.22.17)(react@18.3.1):
     dependencies:
       client-only: 0.0.1
-      react: 18.2.0
+      react: 18.3.1
     optionalDependencies:
       '@babel/core': 7.22.17
 
