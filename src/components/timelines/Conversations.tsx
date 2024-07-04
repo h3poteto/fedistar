@@ -79,7 +79,7 @@ const Conversations: React.FC<Props> = props => {
     f()
 
     listen<ReceiveTimelineConversationPayload>('receive-timeline-conversation', ev => {
-      if (ev.payload.timeline_id !== props.timeline.id) {
+      if (ev.payload.timeline_id !== props.timeline.id || ev.payload.server_id !== props.server.id) {
         return
       }
 

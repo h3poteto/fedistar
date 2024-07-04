@@ -159,7 +159,11 @@ export default function TimelineColumn(props: Props) {
       })
     } else {
       listen<ReceiveTimelineStatusPayload>('receive-timeline-status', ev => {
-        if (ev.payload.timeline_id !== props.timeline.id) {
+        if (
+          ev.payload.timeline_id !== props.timeline.id ||
+          ev.payload.server_id !== props.server.id ||
+          ev.payload.name !== props.timeline.name
+        ) {
           return
         }
 
@@ -172,7 +176,11 @@ export default function TimelineColumn(props: Props) {
       })
 
       listen<ReceiveTimelineStatusUpdatePayload>('receive-timeline-status-update', ev => {
-        if (ev.payload.timeline_id !== props.timeline.id) {
+        if (
+          ev.payload.timeline_id !== props.timeline.id ||
+          ev.payload.server_id !== props.server.id ||
+          ev.payload.name !== props.timeline.name
+        ) {
           return
         }
 
@@ -181,7 +189,11 @@ export default function TimelineColumn(props: Props) {
       })
 
       listen<DeleteTimelineStatusPayload>('delete-timeline-status', ev => {
-        if (ev.payload.timeline_id !== props.timeline.id) {
+        if (
+          ev.payload.timeline_id !== props.timeline.id ||
+          ev.payload.server_id !== props.server.id ||
+          ev.payload.name !== props.timeline.name
+        ) {
           return
         }
         setUnreadStatuses(last => deleteStatus(last, ev.payload.status_id))

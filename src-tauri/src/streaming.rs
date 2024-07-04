@@ -32,24 +32,31 @@ pub struct ReceiveNotificationPayload {
 
 #[derive(Clone, Serialize)]
 pub struct ReceiveTimelineStatusPayload {
+    server_id: i64,
     timeline_id: i64,
+    name: String,
     status: megalodon::entities::Status,
 }
 
 #[derive(Clone, Serialize)]
 pub struct ReceiveTimelineStatusUpdatePayload {
+    server_id: i64,
     timeline_id: i64,
+    name: String,
     status: megalodon::entities::Status,
 }
 
 #[derive(Clone, Serialize)]
 pub struct DeleteTimelineStatusPayload {
+    server_id: i64,
     timeline_id: i64,
+    name: String,
     status_id: String,
 }
 
 #[derive(Clone, Serialize)]
 pub struct ReceiveTimelineConversationPayload {
+    server_id: i64,
     timeline_id: i64,
     conversation: megalodon::entities::Conversation,
 }
@@ -195,6 +202,8 @@ pub async fn start(
     }
 
     let timeline_id = timeline.id;
+    let server_id = server.id;
+    let name = timeline.name.clone();
 
     let s = streaming.listen(Box::new(move |message| match message {
         Message::Update(mes) => {
@@ -203,7 +212,9 @@ pub async fn start(
                 .emit_all(
                     "receive-timeline-status",
                     ReceiveTimelineStatusPayload {
+                        server_id,
                         timeline_id,
+                        name: name.clone(),
                         status: mes,
                     },
                 )
@@ -215,7 +226,9 @@ pub async fn start(
                 .emit_all(
                     "receive-timeline-status-update",
                     ReceiveTimelineStatusUpdatePayload {
+                        server_id,
                         timeline_id,
+                        name: name.clone(),
                         status: mes,
                     },
                 )
@@ -227,7 +240,9 @@ pub async fn start(
                 .emit_all(
                     "delete-timeline-status",
                     DeleteTimelineStatusPayload {
+                        server_id,
                         timeline_id,
+                        name: name.clone(),
                         status_id,
                     },
                 )
@@ -239,6 +254,7 @@ pub async fn start(
                 .emit_all(
                     "receive-timeline-conversation",
                     ReceiveTimelineConversationPayload {
+                        server_id,
                         timeline_id,
                         conversation,
                     },
