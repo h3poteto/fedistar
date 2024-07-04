@@ -24,6 +24,7 @@ type Props = {
   openFromOtherAccount: (status: Entity.Status) => void
   customEmojis: Array<CustomEmojiCategory>
   filters: Array<Entity.Filter>
+  locale: string
 }
 
 const notification = (props: Props) => {
@@ -67,6 +68,7 @@ const notification = (props: Props) => {
             openReport={props.openReport}
             openFromOtherAccount={props.openFromOtherAccount}
             customEmojis={props.customEmojis}
+            locale={props.locale}
           />
         )
       } else {
@@ -91,6 +93,7 @@ const notification = (props: Props) => {
             openFromOtherAccount={props.openFromOtherAccount}
             customEmojis={props.customEmojis}
             filters={props.filters}
+            locale={props.locale}
           />
         )
       } else {

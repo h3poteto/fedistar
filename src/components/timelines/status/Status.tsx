@@ -35,6 +35,7 @@ type Props = {
   openFromOtherAccount: (status: Entity.Status) => void
   customEmojis: Array<CustomEmojiCategory>
   filters?: Array<Entity.Filter>
+  locale: string
 } & HTMLAttributes<HTMLElement>
 
 const Status: React.FC<Props> = props => {
@@ -229,6 +230,7 @@ const Status: React.FC<Props> = props => {
             openReport={() => props.openReport(status, props.client)}
             openFromOtherAccount={() => props.openFromOtherAccount(status)}
             customEmojis={props.customEmojis}
+            locale={props.locale}
           />
         </div>
       </div>

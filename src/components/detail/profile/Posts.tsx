@@ -21,6 +21,7 @@ type ArgProps = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  locale: string
 }
 
 const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) => {
@@ -122,6 +123,7 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
                 openReport={props.openReport}
                 openFromOtherAccount={props.openFromOtherAccount}
                 customEmojis={customEmojis}
+                locale={props.locale}
               />
             </List.Item>
           ))}
@@ -140,6 +142,7 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
                 openReport={props.openReport}
                 openFromOtherAccount={props.openFromOtherAccount}
                 customEmojis={customEmojis}
+                locale={props.locale}
               />
             </List.Item>
           ))}

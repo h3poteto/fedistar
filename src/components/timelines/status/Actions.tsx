@@ -48,6 +48,7 @@ type Props = {
   openReport?: () => void
   openFromOtherAccount?: () => void
   customEmojis: Array<CustomEmojiCategory>
+  locale: string
 }
 
 const Actions: React.FC<Props> = props => {
@@ -125,6 +126,8 @@ const Actions: React.FC<Props> = props => {
     props.updateStatus(res.data)
   }
 
+  const simpleLocale = props.locale ? props.locale.split('-')[0] : 'en'
+
   const onEmojiSelect = async emoji => {
     let name = emoji.name
     if (emoji.native) {
@@ -146,6 +149,7 @@ const Actions: React.FC<Props> = props => {
         set="native"
         perLine="6"
         theme={theme === 'high-contrast' ? 'dark' : theme}
+        locale={simpleLocale}
       />
     </Popover>
   ))

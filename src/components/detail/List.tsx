@@ -18,6 +18,7 @@ type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  locale: string
 }
 
 export default function ListDetail(props: Props) {
@@ -169,6 +170,7 @@ export default function ListDetail(props: Props) {
                     openFromOtherAccount={props.openFromOtherAccount}
                     customEmojis={customEmojis}
                     filters={filters}
+                    locale={props.locale}
                   />
                 </List.Item>
               )}
