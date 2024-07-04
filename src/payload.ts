@@ -24,21 +24,28 @@ export type DeleteHomeStatusPayload = {
 
 export type ReceiveTimelineStatusPayload = {
   timeline_id: number
+  server_id: number
+  name: string
   status: Entity.Status
 }
 
 export type ReceiveTimelineStatusUpdatePayload = {
   timeline_id: number
+  server_id: number
+  name: string
   status: Entity.Status
 }
 
 export type DeleteTimelineStatusPayload = {
   timeline_id: number
+  server_id: number
+  name: string
   status_id: string
 }
 
 export type ReceiveTimelineConversationPayload = {
   timeline_id: number
+  server_id: number
   conversation: Entity.Conversation
 }
 
