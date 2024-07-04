@@ -48,8 +48,8 @@ importers:
         specifier: 4.7.11
         version: 4.7.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rsuite:
-        specifier: 5.60.2
-        version: 5.60.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 5.65.0
+        version: 5.65.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       sanitize-html:
         specifier: ^2.13.0
         version: 2.13.0
@@ -635,9 +635,6 @@ packages:
 
   '@types/babel__traverse@7.20.1':
     resolution: {integrity: sha512-MitHFXnhtgwsGZWtT68URpOvLN4EREih1u3QtQiN4VdAxWKRVvGCSvw/Qth0M0Qq3pJpnGOu5JaM/ydK7OGbqg==}
-
-  '@types/chai@4.3.6':
-    resolution: {integrity: sha512-VOVRLM1mBxIRxydiViqPcKn6MIxZytrbMpd6RJLIWKxUNr3zux8no0Oc7kJx0WAPIitgZ0gkrDS+btlqQpubpw==}
 
   '@types/graceful-fs@4.1.6':
     resolution: {integrity: sha512-Sig0SNORX9fdW+bQuTEovKj3uHcUL6LQKbCrrqb1X7J6/ReAbhCXRAhc+SMejhLELFj2QcyuxmUooZ4bt5ReSw==}
@@ -2234,15 +2231,15 @@ packages:
   rrweb-cssom@0.7.0:
     resolution: {integrity: sha512-KlSv0pm9kgQSRxXEMgtivPJ4h826YHsuob8pSHcfSZsSXGtvpEAie8S0AnXuObEJ7nhikOb4ahwxDm0H2yW17g==}
 
-  rsuite-table@5.18.2:
-    resolution: {integrity: sha512-IelmlHraExYgrkT13WWVENhCywWjBxPkpF2zpsqvMcwzaNAg9lHaVVyajcOKczqGB24NGRE6WgBF5n1RC6XAww==}
+  rsuite-table@5.18.3:
+    resolution: {integrity: sha512-Rua79XndYY+UdCUpBuH1Ew5qa54y6zLZ0RNRnudKgamksrV1j+rUhcCsA03a5ZY+b8DXTwct4V/Q6K9q/cJT5w==}
     peerDependencies:
       prop-types: ^15.7.2
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
 
-  rsuite@5.60.2:
-    resolution: {integrity: sha512-Yy+b8/xQIfYTnWT7WGNQpaGKxBVWe4TQXBVX940roX/N4tGHeS2uCwDi0/RKRb1eeaYx+zn8wLDV44WEMp4sMQ==}
+  rsuite@5.65.0:
+    resolution: {integrity: sha512-0cVNTVtyE1Cg9qoSoTk92wKlFs2fkrSjaV90zmmaOR3Jk08UlS8QNkiV4XZb3xBqI+ZSQbNDrcOjys0rlB56RQ==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
@@ -3310,8 +3307,6 @@ snapshots:
   '@types/babel__traverse@7.20.1':
     dependencies:
       '@babel/types': 7.22.17
-
-  '@types/chai@4.3.6': {}
 
   '@types/graceful-fs@4.1.6':
     dependencies:
@@ -5329,7 +5324,7 @@ snapshots:
 
   rrweb-cssom@0.7.0: {}
 
-  rsuite-table@5.18.2(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  rsuite-table@5.18.3(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.22.15
       '@juggle/resize-observer': 3.4.0
@@ -5342,12 +5337,11 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       react-is: 17.0.2
 
-  rsuite@5.60.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  rsuite@5.65.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.22.15
       '@juggle/resize-observer': 3.4.0
       '@rsuite/icons': 1.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@types/chai': 4.3.6
       '@types/lodash': 4.14.198
       '@types/prop-types': 15.7.6
       '@types/react-window': 1.8.5
@@ -5360,7 +5354,7 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       react-use-set: 1.0.0(react@18.3.1)
       react-window: 1.8.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      rsuite-table: 5.18.2(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      rsuite-table: 5.18.3(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       schema-typed: 2.2.2
 
   run-parallel@1.2.0:
