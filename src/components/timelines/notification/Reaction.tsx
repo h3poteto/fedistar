@@ -328,6 +328,7 @@ const Reaction: React.FC<Props> = props => {
             account={props.account}
             in_reply_to={status}
             onClose={() => setShowReply(false)}
+            locale={props.locale}
           />
         </div>
       )}
@@ -339,6 +340,7 @@ const Reaction: React.FC<Props> = props => {
             account={props.account}
             edit_target={status}
             onClose={() => setShowEdit(false)}
+            locale={props.locale}
           />
         </div>
       )}

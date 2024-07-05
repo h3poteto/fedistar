@@ -261,7 +261,7 @@ function App() {
         >
           {(props, ref) => (
             <div {...props} ref={ref} style={{ overflow: 'hidden' }}>
-              <Compose setOpened={setComposeOpened} servers={servers} />
+              <Compose setOpened={setComposeOpened} servers={servers} locale={locale} />
             </div>
           )}
         </Animation.Transition>

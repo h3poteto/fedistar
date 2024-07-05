@@ -39,6 +39,7 @@ export const renderAccountIcon = (props: any, ref: any, account: [Account, Serve
 type Props = {
   setOpened: (value: boolean) => void
   servers: Array<ServerSet>
+  locale: string
 }
 
 const Compose: React.FC<Props> = props => {
@@ -127,6 +128,7 @@ const Compose: React.FC<Props> = props => {
             defaultVisibility={defaultVisibility}
             defaultNSFW={defaultNSFW}
             defaultLanguage={defaultLanguage}
+            locale={props.locale}
           />
         )}
       </Content>

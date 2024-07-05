@@ -183,7 +183,14 @@ function Post(props: PostProps) {
       </FlexboxGrid>
       {showReply && (
         <div style={{ padding: '8px 12px' }}>
-          <Reply client={client} server={props.server} account={props.account} in_reply_to={status} onClose={() => setShowReply(false)} />
+          <Reply
+            client={client}
+            server={props.server}
+            account={props.account}
+            in_reply_to={status}
+            onClose={() => setShowReply(false)}
+            locale={props.locale}
+          />
         </div>
       )}
     </>

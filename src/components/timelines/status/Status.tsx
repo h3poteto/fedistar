@@ -236,12 +236,26 @@ const Status: React.FC<Props> = props => {
       </div>
       {showReply && (
         <div style={{ padding: '8px 12px' }}>
-          <Reply client={client} server={props.server} account={props.account} in_reply_to={status} onClose={() => setShowReply(false)} />
+          <Reply
+            client={client}
+            server={props.server}
+            account={props.account}
+            in_reply_to={status}
+            onClose={() => setShowReply(false)}
+            locale={props.locale}
+          />
         </div>
       )}
       {showEdit && (
         <div style={{ padding: '8px 12px' }}>
-          <Reply client={client} server={props.server} account={props.account} edit_target={status} onClose={() => setShowEdit(false)} />
+          <Reply
+            client={client}
+            server={props.server}
+            account={props.account}
+            edit_target={status}
+            onClose={() => setShowEdit(false)}
+            locale={props.locale}
+          />
         </div>
       )}
     </div>
