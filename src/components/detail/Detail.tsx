@@ -17,6 +17,7 @@ type Props = {
   openFromOtherAccount: (status: Entity.Status) => void
   openListMemberships: (list: Entity.List, client: MegalodonInterface) => void
   openAddListMember: (user: Entity.Account, client: MegalodonInterface) => void
+  locale: string
 }
 
 const Detail: React.FC<Props> = props => {
@@ -59,6 +60,7 @@ const Detail: React.FC<Props> = props => {
                 }
                 openReport={props.openReport}
                 openFromOtherAccount={props.openFromOtherAccount}
+                locale={props.locale}
               />
             )}
             {target === 'profile' && (
@@ -67,14 +69,25 @@ const Detail: React.FC<Props> = props => {
                 openReport={props.openReport}
                 openFromOtherAccount={props.openFromOtherAccount}
                 openAddListMember={props.openAddListMember}
+                locale={props.locale}
               />
             )}
             {target === 'tag' && (
-              <TagDetail openMedia={props.openMedia} openReport={props.openReport} openFromOtherAccount={props.openFromOtherAccount} />
+              <TagDetail
+                openMedia={props.openMedia}
+                openReport={props.openReport}
+                openFromOtherAccount={props.openFromOtherAccount}
+                locale={props.locale}
+              />
             )}
             {target === 'lists' && <ListsDetail openListMemberships={props.openListMemberships} />}
             {target === 'list' && (
-              <ListDetail openMedia={props.openMedia} openReport={props.openReport} openFromOtherAccount={props.openFromOtherAccount} />
+              <ListDetail
+                openMedia={props.openMedia}
+                openReport={props.openReport}
+                openFromOtherAccount={props.openFromOtherAccount}
+                locale={props.locale}
+              />
             )}
             {target === 'followed_hashtags' && <FollowedHashtags />}
           </Container>

@@ -35,6 +35,7 @@ type Props = {
   openFromOtherAccount: (status: Entity.Status) => void
   customEmojis: Array<CustomEmojiCategory>
   filters?: Array<Entity.Filter>
+  locale: string
 } & HTMLAttributes<HTMLElement>
 
 const Status: React.FC<Props> = props => {
@@ -229,17 +230,32 @@ const Status: React.FC<Props> = props => {
             openReport={() => props.openReport(status, props.client)}
             openFromOtherAccount={() => props.openFromOtherAccount(status)}
             customEmojis={props.customEmojis}
+            locale={props.locale}
           />
         </div>
       </div>
       {showReply && (
         <div style={{ padding: '8px 12px' }}>
-          <Reply client={client} server={props.server} account={props.account} in_reply_to={status} onClose={() => setShowReply(false)} />
+          <Reply
+            client={client}
+            server={props.server}
+            account={props.account}
+            in_reply_to={status}
+            onClose={() => setShowReply(false)}
+            locale={props.locale}
+          />
         </div>
       )}
       {showEdit && (
         <div style={{ padding: '8px 12px' }}>
-          <Reply client={client} server={props.server} account={props.account} edit_target={status} onClose={() => setShowEdit(false)} />
+          <Reply
+            client={client}
+            server={props.server}
+            account={props.account}
+            edit_target={status}
+            onClose={() => setShowEdit(false)}
+            locale={props.locale}
+          />
         </div>
       )}
     </div>

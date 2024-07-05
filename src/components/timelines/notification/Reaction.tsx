@@ -30,6 +30,7 @@ type Props = {
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
   customEmojis: Array<CustomEmojiCategory>
+  locale: string
 }
 
 const actionIcon = (notification: Entity.Notification) => {
@@ -315,6 +316,7 @@ const Reaction: React.FC<Props> = props => {
             openReport={() => props.openReport(status, props.client)}
             openFromOtherAccount={() => props.openFromOtherAccount(status)}
             customEmojis={props.customEmojis}
+            locale={props.locale}
           />
         </div>
       </div>
@@ -326,6 +328,7 @@ const Reaction: React.FC<Props> = props => {
             account={props.account}
             in_reply_to={status}
             onClose={() => setShowReply(false)}
+            locale={props.locale}
           />
         </div>
       )}
@@ -337,6 +340,7 @@ const Reaction: React.FC<Props> = props => {
             account={props.account}
             edit_target={status}
             onClose={() => setShowEdit(false)}
+            locale={props.locale}
           />
         </div>
       )}

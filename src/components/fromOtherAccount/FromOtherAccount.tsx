@@ -12,6 +12,7 @@ type Props = {
   opened: boolean
   status: Entity.Status
   close: () => void
+  locale: string
 }
 
 export default function FromOtherAccount(props: Props) {
@@ -54,6 +55,7 @@ export default function FromOtherAccount(props: Props) {
             reset()
             props.close()
           }}
+          locale={props.locale}
         />
       )
     }

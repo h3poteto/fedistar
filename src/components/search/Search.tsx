@@ -17,6 +17,7 @@ type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  locale: string
 }
 
 export default function Search(props: Props) {
@@ -87,6 +88,7 @@ export default function Search(props: Props) {
             openMedia={props.openMedia}
             openReport={props.openReport}
             openFromOtherAccount={props.openFromOtherAccount}
+            locale={props.locale}
           />
         )}
       </Content>

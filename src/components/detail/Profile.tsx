@@ -27,6 +27,7 @@ type Props = {
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
   openAddListMember: (user: Entity.Account, client: MegalodonInterface) => void
+  locale: string
 }
 
 const Profile: React.FC<Props> = props => {
@@ -163,6 +164,7 @@ const Profile: React.FC<Props> = props => {
             openMedia={props.openMedia}
             openReport={props.openReport}
             openFromOtherAccount={props.openFromOtherAccount}
+            locale={props.locale}
             ref={postsRef}
           />
         )

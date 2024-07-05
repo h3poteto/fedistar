@@ -44,6 +44,7 @@ function App() {
   const [searchOpened, setSearchOpened] = useState<boolean>(false)
   const [style, setStyle] = useState<CSSProperties>({})
   const [highlighted, setHighlighted] = useState<Timeline | null>(null)
+  const [locale, setLocale] = useState<string>('en')
 
   const [modalState, dispatch] = useReducer(modalReducer, initialModalState)
   const spaceRef = useRef<HTMLDivElement>()
@@ -155,6 +156,7 @@ function App() {
       })
       switchLang(res.appearance.language)
       dayjs.locale(res.appearance.language)
+      setLocale(res.appearance.language)
       document.documentElement.setAttribute('lang', res.appearance.language)
     })
   }
@@ -209,6 +211,7 @@ function App() {
       <FromOtherAccount
         opened={modalState.fromOtherAccount.opened}
         status={modalState.fromOtherAccount.object}
+        locale={locale}
         close={() => dispatch({ target: 'fromOtherAccount', value: false, object: null })}
       />
       {modalState.announcements.object && (
@@ -258,7 +261,7 @@ function App() {
         >
           {(props, ref) => (
             <div {...props} ref={ref} style={{ overflow: 'hidden' }}>
-              <Compose setOpened={setComposeOpened} servers={servers} />
+              <Compose setOpened={setComposeOpened} servers={servers} locale={locale} />
             </div>
           )}
         </Animation.Transition>
@@ -274,6 +277,7 @@ function App() {
               <Search
                 setOpened={setSearchOpened}
                 servers={servers}
+                locale={locale}
                 openMedia={(media: Array<Entity.Attachment>, index: number) =>
                   dispatch({ target: 'media', value: true, object: media, index: index })
                 }
@@ -293,6 +297,7 @@ function App() {
               unreads={unreads}
               setUnreads={setUnreads}
               key={timeline[0].id}
+              locale={locale}
               openMedia={(media: Array<Entity.Attachment>, index: number) =>
                 dispatch({ target: 'media', value: true, object: media, index: index })
               }
@@ -306,6 +311,7 @@ function App() {
         </Content>
         <Detail
           dispatch={dispatch}
+          locale={locale}
           openMedia={(media: Array<Entity.Attachment>, index: number) =>
             dispatch({ target: 'media', value: true, object: media, index: index })
           }

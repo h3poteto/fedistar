@@ -20,6 +20,7 @@ type Props = {
   account: Account
   client: MegalodonInterface | null
   next: () => void
+  locale: string
 }
 export default function Status(props: Props) {
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
@@ -90,6 +91,7 @@ export default function Status(props: Props) {
                 server={props.server}
                 account={props.account}
                 customEmojis={customEmojis}
+                locale={props.locale}
               />
             ))
           ) : (
@@ -115,6 +117,7 @@ type PostProps = {
   client: MegalodonInterface
   updateStatus: (status: Entity.Status) => void
   customEmojis: Array<CustomEmojiCategory>
+  locale: string
 }
 
 function Post(props: PostProps) {
@@ -173,13 +176,21 @@ function Post(props: PostProps) {
               setShowReply={setShowReply}
               updateStatus={props.updateStatus}
               customEmojis={props.customEmojis}
+              locale={props.locale}
             />
           </div>
         </FlexboxGrid.Item>
       </FlexboxGrid>
       {showReply && (
         <div style={{ padding: '8px 12px' }}>
-          <Reply client={client} server={props.server} account={props.account} in_reply_to={status} onClose={() => setShowReply(false)} />
+          <Reply
+            client={client}
+            server={props.server}
+            account={props.account}
+            in_reply_to={status}
+            onClose={() => setShowReply(false)}
+            locale={props.locale}
+          />
         </div>
       )}
     </>

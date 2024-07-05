@@ -14,6 +14,7 @@ type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  locale: string
 }
 
 const Show: React.FC<Props> = props => {
@@ -27,6 +28,7 @@ const Show: React.FC<Props> = props => {
         openMedia={props.openMedia}
         openReport={props.openReport}
         openFromOtherAccount={props.openFromOtherAccount}
+        locale={props.locale}
       />
     )
   } else if (props.timeline.kind === 'direct') {
@@ -39,6 +41,7 @@ const Show: React.FC<Props> = props => {
         openMedia={props.openMedia}
         openReport={props.openReport}
         openFromOtherAccount={props.openFromOtherAccount}
+        locale={props.locale}
       />
     )
   }

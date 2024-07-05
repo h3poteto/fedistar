@@ -64,6 +64,7 @@ type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  locale: string
 }
 
 export default function TimelineColumn(props: Props) {
@@ -535,6 +536,7 @@ export default function TimelineColumn(props: Props) {
                       openFromOtherAccount={props.openFromOtherAccount}
                       customEmojis={customEmojis}
                       filters={filters}
+                      locale={props.locale}
                     />
                   </List.Item>
                 )}

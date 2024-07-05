@@ -56,6 +56,7 @@ type Props = {
   defaultNSFW?: boolean
   defaultLanguage?: string | null
   onClose?: () => void
+  locale: string
 }
 
 type FormValue = {
@@ -425,6 +426,8 @@ const Status: React.FC<Props> = props => {
     setFormValue(current => Object.assign({}, current, { spoiler: '' }))
   }
 
+  const simpleLocale = props.locale ? props.locale.split('-')[0] : 'en'
+
   const EmojiPicker = forwardRef<HTMLDivElement>((props, ref) => (
     <Popover ref={ref} {...props}>
       <Picker
@@ -435,6 +438,7 @@ const Status: React.FC<Props> = props => {
         set="native"
         perLine="7"
         theme={theme === 'high-contrast' ? 'dark' : theme}
+        locale={simpleLocale}
       />
     </Popover>
   ))

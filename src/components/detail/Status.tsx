@@ -17,6 +17,7 @@ type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  locale: string
 }
 
 const StatusDetail: React.FC<Props> = props => {
@@ -179,6 +180,7 @@ const StatusDetail: React.FC<Props> = props => {
                   openReport={props.openReport}
                   openFromOtherAccount={props.openFromOtherAccount}
                   customEmojis={customEmojis}
+                  locale={props.locale}
                 />
               </List.Item>
             ))}
