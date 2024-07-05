@@ -27,23 +27,23 @@ const languages = [
     value: 'ja'
   },
   {
-    label: 'Italian',
+    label: 'italiano',
     value: 'it'
   },
   {
-    label: 'Brazilian Portuguese',
+    label: 'português brasileiro',
     value: 'pt-BR'
   },
   {
-    label: 'French',
+    label: 'français',
     value: 'fr'
   },
   {
-    label: 'German',
+    label: 'Deutsch',
     value: 'de'
   },
   {
-    label: 'Chinese Simplified',
+    label: '简体字',
     value: 'zh-CN'
   }
 ]
