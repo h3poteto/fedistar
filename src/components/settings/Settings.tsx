@@ -27,38 +27,38 @@ const languages = [
     value: 'ja'
   },
   {
-    label: 'Italian',
+    label: 'italiano',
     value: 'it'
   },
   {
-    label: 'Brazilian Portuguese',
+    label: 'português brasileiro',
     value: 'pt-BR'
   },
   {
-    label: 'French',
+    label: 'français',
     value: 'fr'
   },
   {
-    label: 'German',
+    label: 'Deutsch',
     value: 'de'
   },
   {
-    label: 'Chinese Simplified',
+    label: '简体字',
     value: 'zh-CN'
   }
 ]
 
 const themes = [
   {
-    label: 'Dark',
+    key: 'settings.settings.appearance.theme.light',
     value: 'dark'
   },
   {
-    label: 'Light',
+    key: 'settings.settings.appearance.theme.dark',
     value: 'light'
   },
   {
-    label: 'HighContrast',
+    key: 'settings.settings.appearance.theme.high_contrast',
     value: 'high-contrast'
   }
 ]
@@ -99,6 +99,11 @@ export default function Settings(props: Props) {
     props.reloadAppearance()
   }
 
+  const colorTheme = themes.map(theme => ({
+    label: formatMessage({ id: theme.key }),
+    value: theme.value
+  }))
+
   return (
     <Modal backdrop="static" keyboard={true} open={props.open} onClose={props.onClose}>
       <Modal.Header>
@@ -125,7 +130,7 @@ export default function Settings(props: Props) {
               <Form.ControlLabel>
                 <FormattedMessage id="settings.settings.appearance.color_theme" />
               </Form.ControlLabel>
-              <Form.Control name="color_theme" accepter={InputPicker} cleanable={false} data={themes} />
+              <Form.Control name="color_theme" accepter={InputPicker} cleanable={false} data={colorTheme} />
             </Form.Group>
           </Panel>
           <Form.Group>
