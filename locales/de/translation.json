@@ -94,7 +94,12 @@
         "title": "Darstellung",
         "font_size": "Schriftgröße",
         "language": "Sprache",
-        "color_theme": "Farb-Design"
+        "color_theme": "Farb-Design",
+        "theme": {
+          "light": "Light",
+          "dark": "Dark",
+          "high_contrast": "High contrast"
+        }
       },
       "save": "Speichern",
       "close": "Schließen",
