@@ -94,7 +94,12 @@
         "title": "Wygląd",
         "font_size": "Rozmiar czcionki",
         "language": "Język",
-        "color_theme": "Motyw kolorystyczny"
+        "color_theme": "Motyw kolorystyczny",
+        "theme": {
+          "light": "Light",
+          "dark": "Dark",
+          "high_contrast": "High contrast"
+        }
       },
       "save": "Zapisz",
       "close": "Zamknij",
