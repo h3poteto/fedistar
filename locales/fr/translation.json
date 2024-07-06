@@ -94,7 +94,12 @@
         "title": "Apparence",
         "font_size": "Taille de la police",
         "language": "Langue",
-        "color_theme": "Color theme"
+        "color_theme": "Color theme",
+        "theme": {
+          "light": "Light",
+          "dark": "Dark",
+          "high_contrast": "High contrast"
+        }
       },
       "save": "Sauvegarder",
       "close": "Fermer",
