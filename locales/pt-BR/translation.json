@@ -94,7 +94,12 @@
         "title": "Aparência",
         "font_size": "Tamanho da fonte",
         "language": "Idioma",
-        "color_theme": "Color theme"
+        "color_theme": "Color theme",
+        "theme": {
+          "light": "Light",
+          "dark": "Dark",
+          "high_contrast": "High contrast"
+        }
       },
       "save": "Salvar",
       "close": "Fechar",
