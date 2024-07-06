@@ -94,7 +94,12 @@
         "title": "外観",
         "font_size": "フォントサイズ",
         "language": "言語",
-        "color_theme": "カラーテーマ"
+        "color_theme": "カラーテーマ",
+        "theme": {
+          "light": "Light",
+          "dark": "Dark",
+          "high_contrast": "High contrast"
+        }
       },
       "save": "保存",
       "close": "閉じる",
