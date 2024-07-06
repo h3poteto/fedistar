@@ -94,7 +94,12 @@
         "title": "外观",
         "font_size": "字体大小",
         "language": "语言",
-        "color_theme": "颜色主题"
+        "color_theme": "颜色主题",
+        "theme": {
+          "light": "Light",
+          "dark": "Dark",
+          "high_contrast": "High contrast"
+        }
       },
       "save": "保存",
       "close": "关闭",

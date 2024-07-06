@@ -94,7 +94,12 @@
         "title": "Appearance",
         "font_size": "Font size",
         "language": "Language",
-        "color_theme": "Color theme"
+        "color_theme": "Color theme",
+        "theme": {
+          "light": "Light",
+          "dark": "Dark",
+          "high_contrast": "High contrast"
+        }
       },
       "save": "Save",
       "close": "Close",

@@ -94,7 +94,12 @@
         "title": "Aspetto",
         "font_size": "Dimensione caratteri",
         "language": "Lingua",
-        "color_theme": "Tema cromatico"
+        "color_theme": "Tema cromatico",
+        "theme": {
+          "light": "Light",
+          "dark": "Dark",
+          "high_contrast": "High contrast"
+        }
       },
       "save": "Salva",
       "close": "Chiudi",
