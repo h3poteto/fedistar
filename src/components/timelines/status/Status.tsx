@@ -109,10 +109,6 @@ const Status: React.FC<Props> = props => {
       open(url)
       e.preventDefault()
       e.stopPropagation()
-    } else {
-      if (props.setStatusDetail) {
-        props.setStatusDetail(props.status.id, props.server.id, props.account?.id)
-      }
     }
   }
 
