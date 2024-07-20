@@ -140,7 +140,7 @@ const Actions: React.FC<Props> = props => {
   }
 
   const EmojiPicker = forwardRef<HTMLDivElement>((prop, ref) => (
-    <Popover ref={ref} {...prop}>
+    <div ref={ref} {...prop} style={{ position: 'absolute' }}>
       <Picker
         data={data}
         custom={props.customEmojis}
@@ -151,7 +151,7 @@ const Actions: React.FC<Props> = props => {
         theme={theme === 'high-contrast' ? 'dark' : theme}
         locale={simpleLocale}
       />
-    </Popover>
+    </div>
   ))
 
   return (
