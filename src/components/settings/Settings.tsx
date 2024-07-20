@@ -51,11 +51,11 @@ const languages = [
 const themes = [
   {
     key: 'settings.settings.appearance.theme.light',
-    value: 'dark'
+    value: 'light'
   },
   {
     key: 'settings.settings.appearance.theme.dark',
-    value: 'light'
+    value: 'dark'
   },
   {
     key: 'settings.settings.appearance.theme.high_contrast',
