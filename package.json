@@ -67,6 +67,6 @@
     "sass": "^1.77.8",
     "@h3poteto/tauri-snap-packager": "0.2.1",
     "ts-jest": "^29.2.3",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.4"
   }
 }
