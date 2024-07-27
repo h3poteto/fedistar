@@ -155,6 +155,7 @@ export default function TagDetail(props: Props) {
               <Icon as={BsChevronLeft} style={{ fontSize: '1.4em' }} />
               <FormattedMessage id="detail.back" />
             </Button>
+            <span>#{decodeURI(tag)}</span>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item>
             {hashtag && hashtag.following && (
