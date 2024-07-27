@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 import { BsSearch, BsPeople, BsHash, BsChatQuote, BsBackspace } from 'react-icons/bs'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { Input, InputGroup, List, Avatar, Form, Loader } from 'rsuite'
+import { Input, InputGroup, List, Avatar, Form, Loader, Accordion } from 'rsuite'
 import { Server } from 'src/entities/server'
 import Status from 'src/components/timelines/status/Status'
 import emojify from 'src/utils/emojify'
@@ -131,89 +131,100 @@ export default function Results(props: Props) {
           </InputGroup>
         </Form>
       </div>
-      {/* accounts */}
-      {accounts.length > 0 && (
-        <div style={{ width: '100%' }}>
-          <div style={{ fontSize: '1.2em', margin: '0.4em 0' }}>
-            <Icon as={BsPeople} style={{ fontSize: '1.2em', marginRight: '0.2em' }} />
-            <FormattedMessage id="search.results.accounts" />
-          </div>
-          <List>
-            {accounts.map((account, index) => (
-              <List.Item key={index} style={{ backgroundColor: 'var(--rs-border-primary)', padding: '4px 0' }}>
-                <User user={account} open={openUser} />
+      <Accordion className="search-results">
+        {accounts.length > 0 && (
+          <Accordion.Panel
+            header={
+              <div>
+                <Icon as={BsPeople} style={{ fontSize: '1.2em', marginRight: '0.2em' }} />
+                <FormattedMessage id="search.results.accounts" />
+              </div>
+            }
+            defaultExpanded
+          >
+            <List>
+              {accounts.map((account, index) => (
+                <List.Item key={index} style={{ backgroundColor: 'var(--rs-border-primary)', padding: '4px 0' }}>
+                  <User user={account} open={openUser} />
+                </List.Item>
+              ))}
+              <List.Item
+                key="more"
+                style={{ backgroundColor: 'var(--rs-border-primary)', padding: '1em 0', textAlign: 'center', cursor: 'pointer' }}
+                onClick={() => loadMoreAccount()}
+                disabled={loadingAccount}
+              >
+                {loadingAccount ? <Loader /> : <FormattedMessage id="search.results.more" />}
               </List.Item>
-            ))}
-            <List.Item
-              key="more"
-              style={{ backgroundColor: 'var(--rs-border-primary)', padding: '1em 0', textAlign: 'center', cursor: 'pointer' }}
-              onClick={() => loadMoreAccount()}
-              disabled={loadingAccount}
-            >
-              {loadingAccount ? <Loader /> : <FormattedMessage id="search.results.more" />}
-            </List.Item>
-          </List>
-        </div>
-      )}
-      {/* hashtags */}
-      {hashtags.length > 0 && (
-        <div style={{ width: '100%' }}>
-          <div style={{ fontSize: '1.2em', margin: '0.4em 0' }}>
-            <Icon as={BsHash} style={{ fontSize: '1.2em', marginRight: '0.2em' }} />
-            <FormattedMessage id="search.results.hashtags" />
-          </div>
-          <List>
-            {hashtags.map((tag, index) => (
-              <List.Item key={index} style={{ backgroundColor: 'var(--rs-border-primary)', padding: '4px 0' }}>
-                <div style={{ padding: '12px 8px', cursor: 'pointer' }} onClick={() => openTag(tag)}>
-                  #{tag.name}
-                </div>
+            </List>
+          </Accordion.Panel>
+        )}
+        {hashtags.length > 0 && (
+          <Accordion.Panel
+            header={
+              <div>
+                <Icon as={BsHash} style={{ fontSize: '1.2em', marginRight: '0.2em' }} />
+                <FormattedMessage id="search.results.hashtags" />
+              </div>
+            }
+            defaultExpanded
+          >
+            <List>
+              {hashtags.map((tag, index) => (
+                <List.Item key={index} style={{ backgroundColor: 'var(--rs-border-primary)', padding: '4px 0' }}>
+                  <div style={{ padding: '12px 8px', cursor: 'pointer' }} onClick={() => openTag(tag)}>
+                    #{tag.name}
+                  </div>
+                </List.Item>
+              ))}
+              <List.Item
+                key="more"
+                style={{ backgroundColor: 'var(--rs-border-primary)', padding: '1em 0', textAlign: 'center', cursor: 'pointer' }}
+                onClick={() => loadMoreHashtag()}
+                disabled={loadingHashtag}
+              >
+                {loadingHashtag ? <Loader /> : <FormattedMessage id="search.results.more" />}
               </List.Item>
-            ))}
-            <List.Item
-              key="more"
-              style={{ backgroundColor: 'var(--rs-border-primary)', padding: '1em 0', textAlign: 'center', cursor: 'pointer' }}
-              onClick={() => loadMoreHashtag()}
-              disabled={loadingHashtag}
-            >
-              {loadingHashtag ? <Loader /> : <FormattedMessage id="search.results.more" />}
-            </List.Item>
-          </List>
-        </div>
-      )}
-      {/* statuses */}
-      {statuses.length > 0 && (
-        <div style={{ width: '100%' }}>
-          <div style={{ fontSize: '1.2em', margin: '0.4em 0' }}>
-            <Icon as={BsChatQuote} style={{ fontSize: '1.2em', marginRight: '0.2em' }} />
-            <FormattedMessage id="search.results.statuses" />
-          </div>
-          <List>
-            {statuses.map((status, index) => (
-              <List.Item key={index} style={{ backgroundColor: 'var(--rs-border-primary)', padding: '4px 0' }}>
-                <div style={{ padding: '12px 8px', cursor: 'pointer' }}>
-                  <Status
-                    status={status}
-                    client={props.client}
-                    server={props.server}
-                    account={props.account}
-                    columnWidth="xs"
-                    updateStatus={updateStatus}
-                    openMedia={props.openMedia}
-                    setStatusDetail={setStatusDetail}
-                    setAccountDetail={setAccountDetail}
-                    setTagDetail={setTagDetail}
-                    openReport={props.openReport}
-                    openFromOtherAccount={props.openFromOtherAccount}
-                    customEmojis={customEmojis}
-                    locale={props.locale}
-                  />
-                </div>
-              </List.Item>
-            ))}
-          </List>
-        </div>
-      )}
+            </List>
+          </Accordion.Panel>
+        )}
+        {statuses.length > 0 && (
+          <Accordion.Panel
+            header={
+              <div>
+                <Icon as={BsChatQuote} style={{ fontSize: '1.2em', marginRight: '0.2em' }} />
+                <FormattedMessage id="search.results.statuses" />
+              </div>
+            }
+            defaultExpanded
+          >
+            <List>
+              {statuses.map((status, index) => (
+                <List.Item key={index} style={{ backgroundColor: 'var(--rs-border-primary)', padding: '4px 0' }}>
+                  <div style={{ padding: '12px 8px', cursor: 'pointer' }}>
+                    <Status
+                      status={status}
+                      client={props.client}
+                      server={props.server}
+                      account={props.account}
+                      columnWidth="xs"
+                      updateStatus={updateStatus}
+                      openMedia={props.openMedia}
+                      setStatusDetail={setStatusDetail}
+                      setAccountDetail={setAccountDetail}
+                      setTagDetail={setTagDetail}
+                      openReport={props.openReport}
+                      openFromOtherAccount={props.openFromOtherAccount}
+                      customEmojis={customEmojis}
+                      locale={props.locale}
+                    />
+                  </div>
+                </List.Item>
+              ))}
+            </List>
+          </Accordion.Panel>
+        )}
+      </Accordion>
     </>
   )
 }
