@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 import { BsSearch, BsPeople, BsHash, BsChatQuote, BsBackspace } from 'react-icons/bs'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { Input, InputGroup, List, Avatar, Form } from 'rsuite'
+import { Input, InputGroup, List, Avatar, Form, Loader } from 'rsuite'
 import { Server } from 'src/entities/server'
 import Status from 'src/components/timelines/status/Status'
 import emojify from 'src/utils/emojify'
@@ -31,6 +31,8 @@ export default function Results(props: Props) {
   const [hashtags, setHashtags] = useState<Array<Entity.Tag>>([])
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
   const [customEmojis, setCustomEmojis] = useState<Array<CustomEmojiCategory>>([])
+  const [loadingAccount, setLoadingAccount] = useState<boolean>(false)
+  const [loadingHashtag, setLoadingHashtag] = useState<boolean>(false)
 
   const search = async (word: string) => {
     const res = await props.client.search(word, { limit: 5, resolve: true })
@@ -42,12 +44,18 @@ export default function Results(props: Props) {
   }
 
   const loadMoreAccount = useCallback(async () => {
-    const res = await props.client.search(word, { type: 'accounts', limit: 5, offset: accounts.length })
+    setLoadingAccount(true)
+    const res = await props.client.search(word, { type: 'accounts', limit: 5, offset: accounts.length }).finally(() => {
+      setLoadingAccount(false)
+    })
     setAccounts(prev => prev.concat(res.data.accounts))
   }, [word, accounts])
 
   const loadMoreHashtag = useCallback(async () => {
-    const res = await props.client.search(word, { type: 'hashtags', limit: 5, offset: hashtags.length })
+    setLoadingHashtag(true)
+    const res = await props.client.search(word, { type: 'hashtags', limit: 5, offset: hashtags.length }).finally(() => {
+      setLoadingHashtag(false)
+    })
     setHashtags(prev => prev.concat(res.data.hashtags))
   }, [word, hashtags])
 
@@ -133,8 +141,9 @@ export default function Results(props: Props) {
               key="more"
               style={{ backgroundColor: 'var(--rs-border-primary)', padding: '1em 0', textAlign: 'center', cursor: 'pointer' }}
               onClick={() => loadMoreAccount()}
+              disabled={loadingAccount}
             >
-              <FormattedMessage id="search.results.more" />
+              {loadingAccount ? <Loader /> : <FormattedMessage id="search.results.more" />}
             </List.Item>
           </List>
         </div>
@@ -158,8 +167,9 @@ export default function Results(props: Props) {
               key="more"
               style={{ backgroundColor: 'var(--rs-border-primary)', padding: '1em 0', textAlign: 'center', cursor: 'pointer' }}
               onClick={() => loadMoreHashtag()}
+              disabled={loadingHashtag}
             >
-              <FormattedMessage id="search.results.more" />
+              {loadingHashtag ? <Loader /> : <FormattedMessage id="search.results.more" />}
             </List.Item>
           </List>
         </div>
