@@ -48,8 +48,8 @@ importers:
         specifier: 4.7.13
         version: 4.7.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rsuite:
-        specifier: 5.65.1
-        version: 5.65.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 5.68.0
+        version: 5.68.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       sanitize-html:
         specifier: ^2.13.0
         version: 2.13.0
@@ -2243,8 +2243,8 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
 
-  rsuite@5.65.1:
-    resolution: {integrity: sha512-/HLfrPwVwngTQyfjYkm5aTEgp42r2H+pAIffe4MTKsp3N3h9u/RZO3OACLNVN9vQ979P7GIR7cmyrQ1X3ZkQjw==}
+  rsuite@5.68.0:
+    resolution: {integrity: sha512-KNzeUS/G/Y7sfSlWIxEmvLFMrH1ojRfduMc1sjq+DW2hRXnOD9HdOPQL7iMA76BD+wCq1Vti5lL8xrtlrSFK8A==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
@@ -5280,7 +5280,7 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       react-is: 17.0.2
 
-  rsuite@5.65.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  rsuite@5.68.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.22.15
       '@juggle/resize-observer': 3.4.0
