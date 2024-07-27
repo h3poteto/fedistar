@@ -161,6 +161,8 @@
   "search": {
     "title": "検索",
     "placeholder": "検索またはURLを入力",
+    "search": "Search",
+    "clear": "Clear",
     "results": {
       "accounts": "ユーザー",
       "hashtags": "ハッシュタグ",
