@@ -159,12 +159,22 @@ export default function TagDetail(props: Props) {
           </FlexboxGrid.Item>
           <FlexboxGrid.Item>
             {hashtag && hashtag.following && (
-              <Button appearance="link" onClick={unfollowHashtag} title={formatMessage({ id: 'detail.unfollow_tag' })}>
+              <Button
+                appearance="link"
+                onClick={unfollowHashtag}
+                title={formatMessage({ id: 'detail.unfollow_tag' })}
+                disabled={account === null}
+              >
                 <Icon as={BsPersonX} style={{ fontSize: '1.2em' }} />
               </Button>
             )}
             {hashtag && !hashtag.following && (
-              <Button appearance="link" onClick={followHashtag} title={formatMessage({ id: 'detail.follow_tag' })}>
+              <Button
+                appearance="link"
+                onClick={followHashtag}
+                title={formatMessage({ id: 'detail.follow_tag' })}
+                disabled={account === null}
+              >
                 <Icon as={BsPersonPlus} style={{ fontSize: '1.2em' }} />
               </Button>
             )}
