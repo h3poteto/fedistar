@@ -315,3 +315,15 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.search-results {
+  h2.rs-panel-header {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .rs-panel-body {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
