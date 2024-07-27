@@ -161,6 +161,8 @@
   "search": {
     "title": "搜索",
     "placeholder": "搜索或粘贴 URL",
+    "search": "Search",
+    "clear": "Clear",
     "results": {
       "accounts": "用户",
       "hashtags": "话题标签",
