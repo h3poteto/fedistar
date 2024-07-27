@@ -161,6 +161,8 @@
   "search": {
     "title": "Search",
     "placeholder": "Search or paste URL",
+    "search": "Search",
+    "clear": "Clear",
     "results": {
       "accounts": "People",
       "hashtags": "Hashtags",
