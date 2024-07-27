@@ -2,7 +2,7 @@ import { Icon } from '@rsuite/icons'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
-import { BsSearch, BsPeople, BsHash, BsChatQuote } from 'react-icons/bs'
+import { BsSearch, BsPeople, BsHash, BsChatQuote, BsBackspace } from 'react-icons/bs'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { Input, InputGroup, List, Avatar, Form } from 'rsuite'
 import { Server } from 'src/entities/server'
@@ -106,8 +106,12 @@ export default function Results(props: Props) {
         <Form onCheck={() => search(word)}>
           <InputGroup inside>
             <Input placeholder={formatMessage({ id: 'search.placeholder' })} value={word} onChange={value => setWord(value)} />
-            <InputGroup.Button onClick={() => search(word)}>
-              <Icon as={BsSearch} />
+            <InputGroup.Button onClick={() => setWord('')}>
+              {word.length === 0 ? (
+                <Icon as={BsSearch} title={formatMessage({ id: 'search.search' })} />
+              ) : (
+                <Icon as={BsBackspace} title={formatMessage({ id: 'search.clear' })} />
+              )}
             </InputGroup.Button>
           </InputGroup>
         </Form>
