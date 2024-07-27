@@ -108,13 +108,20 @@ export default function Results(props: Props) {
     setStatuses(renew)
   }
 
+  const clear = () => {
+    setWord('')
+    setAccounts([])
+    setHashtags([])
+    setStatuses([])
+  }
+
   return (
     <>
       <div style={{ margin: '12px 0' }}>
         <Form onCheck={() => search(word)}>
           <InputGroup inside>
             <Input placeholder={formatMessage({ id: 'search.placeholder' })} value={word} onChange={value => setWord(value)} />
-            <InputGroup.Button onClick={() => setWord('')}>
+            <InputGroup.Button onClick={() => clear()}>
               {word.length === 0 ? (
                 <Icon as={BsSearch} title={formatMessage({ id: 'search.search' })} />
               ) : (
