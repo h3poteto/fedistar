@@ -67,7 +67,7 @@
       "remove": "Remover",
       "announcements": "Avisos",
       "lists": "Listas",
-      "followed_hashtags": "Followed Hashtags"
+      "followed_hashtags": "Hashtags seguidas"
     }
   },
   "servers": {
@@ -81,8 +81,8 @@
       "finish": "Concluir",
       "authorization_code": "Código de autorização",
       "authorization_help": "Por favor, cole o código de autorização do seu navegador",
-      "without_code_authorize": "Please approve Fedistar in your browser, and after you approve it please authorize",
-      "authorization_url": "Normally, the browser will open automatically, but if it doesn't, please open the following URL in your browser and approve it.",
+      "without_code_authorize": "Por favor, aprove o Fedistar no seu navegador e, depois, autorize",
+      "authorization_url": "Normalmente, o navegador abrirá automaticamente, mas se isso não acontecer, por favor, abra a URL a seguir no seu navegador e aprove.",
       "authorize": "Autorizar",
       "loading": "Carregando"
     }
@@ -94,11 +94,11 @@
         "title": "Aparência",
         "font_size": "Tamanho da fonte",
         "language": "Idioma",
-        "color_theme": "Color theme",
+        "color_theme": "Tema de cores",
         "theme": {
-          "light": "Light",
-          "dark": "Dark",
-          "high_contrast": "High contrast"
+          "light": "Claro",
+          "dark": "Escuro",
+          "high_contrast": "Alto contraste"
         }
       },
       "save": "Salvar",
@@ -159,15 +159,15 @@
     }
   },
   "search": {
-    "title": "Search",
-    "placeholder": "Search or paste URL",
-    "search": "Search",
-    "clear": "Clear",
+    "title": "Pesquisar",
+    "placeholder": "Pesquisar ou colar URL",
+    "search": "Pesquisar",
+    "clear": "Limpar",
     "results": {
-      "accounts": "People",
+      "accounts": "Pessoas",
       "hashtags": "Hashtags",
-      "statuses": "Statuses",
-      "more": "Load more"
+      "statuses": "Status",
+      "more": "Carregar mais"
     }
   },
   "timeline": {
@@ -245,8 +245,8 @@
       "show_less": "Mostrar menos",
       "media_hidden": "Mídia oculta",
       "pinned_post": "Publicação fixada",
-      "filtered": "Filtered",
-      "show_anyway": "Show anyway"
+      "filtered": "Filtrado",
+      "show_anyway": "Mostrar mesmo assim"
     },
     "poll": {
       "vote": "Votar",
