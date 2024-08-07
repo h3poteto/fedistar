@@ -1,6 +1,6 @@
 {
   "name": "fedistar",
-  "version": "1.9.9",
+  "version": "1.9.10",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "next dev -p 1420",

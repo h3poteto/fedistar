@@ -1,14 +1,14 @@
 {
   "build": {
-    "beforeDevCommand": "yarn dev",
-    "beforeBuildCommand": "yarn build",
+    "beforeDevCommand": "pnpm dev",
+    "beforeBuildCommand": "pnpm build",
     "devPath": "http://localhost:1420",
     "distDir": "../out",
     "withGlobalTauri": false
   },
   "package": {
     "productName": "fedistar",
-    "version": "1.9.9"
+    "version": "1.9.10"
   },
   "tauri": {
     "allowlist": {
