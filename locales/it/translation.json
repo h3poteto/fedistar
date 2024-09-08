@@ -82,7 +82,7 @@
       "authorization_code": "Codice di autorizzazione",
       "authorization_help": "Per favore, incolla il codice di autorizzazione dal tuo browser",
       "without_code_authorize": "Occorre approvare la App Fedistar nel proprio browser e, successivamente, usare il codice di autorizzazione",
-      "authorization_url": "Normally, the browser will open automatically, but if it doesn't, please open the following URL in your browser and approve it.",
+      "authorization_url": "Normalmente, il browser si aprirà automaticamente, se non dovesse succedere, si prega di aprire manualmente il seguente URL nel browser e approvarlo.",
       "authorize": "Autorizza",
       "loading": "Caricamento"
     }
@@ -96,9 +96,9 @@
         "language": "Lingua",
         "color_theme": "Tema cromatico",
         "theme": {
-          "light": "Light",
-          "dark": "Dark",
-          "high_contrast": "High contrast"
+          "light": "Chiaro",
+          "dark": "Scuro",
+          "high_contrast": "Contrasto elevato"
         }
       },
       "save": "Salva",
@@ -161,8 +161,8 @@
   "search": {
     "title": "Cerca",
     "placeholder": "Cerca o incolla URL",
-    "search": "Search",
-    "clear": "Clear",
+    "search": "Cerca",
+    "clear": "Pulisci",
     "results": {
       "accounts": "Persone",
       "hashtags": "Hashtag",
