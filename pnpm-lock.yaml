@@ -45,8 +45,8 @@ importers:
         specifier: ^6.6.8
         version: 6.6.8(react@18.3.1)(typescript@5.5.4)
       react-virtuoso:
-        specifier: 4.7.13
-        version: 4.7.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 4.10.4
+        version: 4.10.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rsuite:
         specifier: 5.68.0
         version: 5.68.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -55,7 +55,7 @@ importers:
         version: 2.13.0
       tauri-plugin-window-state-api:
         specifier: github:tauri-apps/tauri-plugin-window-state#v1
-        version: https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/1abc39dce68e3da8377230b83b7792cd4c86c50a
+        version: https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/aa0b2a9cbf96f87a172e999670be79c4bb5d67dd
     devDependencies:
       '@h3poteto/tauri-snap-packager':
         specifier: 0.2.1
@@ -2162,8 +2162,8 @@ packages:
     peerDependencies:
       react: '>=16.8.0'
 
-  react-virtuoso@4.7.13:
-    resolution: {integrity: sha512-rabPhipwJ8rdA6TDk1vdVqVoU6eOkWukqoC1pNQVBCsvjBvIeJMi9nO079s0L7EsRzAxFFQNahX+8vuuY4F1Qg==}
+  react-virtuoso@4.10.4:
+    resolution: {integrity: sha512-G/gprhTbK+lzMxoo/iStcZxVEGph/cIhc3WANEpt92RuMw+LiCZOmBfKoeoZOHlm/iyftTrDJhGaTCpxyucnkQ==}
     engines: {node: '>=10'}
     peerDependencies:
       react: '>=16 || >=17 || >= 18'
@@ -2420,8 +2420,8 @@ packages:
   symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
 
-  tauri-plugin-window-state-api@https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/1abc39dce68e3da8377230b83b7792cd4c86c50a:
-    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/1abc39dce68e3da8377230b83b7792cd4c86c50a}
+  tauri-plugin-window-state-api@https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/aa0b2a9cbf96f87a172e999670be79c4bb5d67dd:
+    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/aa0b2a9cbf96f87a172e999670be79c4bb5d67dd}
     version: 0.0.0
 
   test-exclude@6.0.0:
@@ -5196,7 +5196,7 @@ snapshots:
     dependencies:
       react: 18.3.1
 
-  react-virtuoso@4.7.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-virtuoso@4.10.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -5493,7 +5493,7 @@ snapshots:
 
   symbol-tree@3.2.4: {}
 
-  tauri-plugin-window-state-api@https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/1abc39dce68e3da8377230b83b7792cd4c86c50a:
+  tauri-plugin-window-state-api@https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/aa0b2a9cbf96f87a172e999670be79c4bb5d67dd:
     dependencies:
       '@tauri-apps/api': 1.6.0
 
