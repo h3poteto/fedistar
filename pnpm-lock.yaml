@@ -73,8 +73,8 @@ importers:
         specifier: ^2.0.3
         version: 2.0.3
       '@types/react':
-        specifier: 18.3.3
-        version: 18.3.3
+        specifier: 18.3.5
+        version: 18.3.5
       '@types/react-dom':
         specifier: 18.3.0
         version: 18.3.0
@@ -672,8 +672,8 @@ packages:
   '@types/react-window@1.8.5':
     resolution: {integrity: sha512-V9q3CvhC9Jk9bWBOysPGaWy/Z0lxYcTXLtLipkt2cnRj1JOSFNF7wqGpkScSXMgBwC+fnVRg/7shwgddBG5ICw==}
 
-  '@types/react@18.3.3':
-    resolution: {integrity: sha512-hti/R0pS0q1/xx+TsI73XIqk26eBsISZ2R0wUijXIngRK9R/e7Xw/cXVxQK7R5JjW+SV4zGcn5hXjudkN/pLIw==}
+  '@types/react@18.3.5':
+    resolution: {integrity: sha512-WeqMfGJLGuLCqHGYRGHxnKrXcTitc6L/nBUWfWPcTarG3t9PsquqUMuVeXZeca+mglY4Vo5GZjCi0A3Or2lnxA==}
 
   '@types/stack-utils@2.0.1':
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==}
@@ -3302,7 +3302,7 @@ snapshots:
 
   '@types/hoist-non-react-statics@3.3.2':
     dependencies:
-      '@types/react': 18.3.3
+      '@types/react': 18.3.5
       hoist-non-react-statics: 3.3.2
 
   '@types/istanbul-lib-coverage@2.0.4': {}
@@ -3332,13 +3332,13 @@ snapshots:
 
   '@types/react-dom@18.3.0':
     dependencies:
-      '@types/react': 18.3.3
+      '@types/react': 18.3.5
 
   '@types/react-window@1.8.5':
     dependencies:
-      '@types/react': 18.3.3
+      '@types/react': 18.3.5
 
-  '@types/react@18.3.3':
+  '@types/react@18.3.5':
     dependencies:
       '@types/prop-types': 15.7.6
       csstype: 3.1.2
@@ -5183,7 +5183,7 @@ snapshots:
       '@formatjs/intl-displaynames': 6.6.8
       '@formatjs/intl-listformat': 7.5.7
       '@types/hoist-non-react-statics': 3.3.2
-      '@types/react': 18.3.3
+      '@types/react': 18.3.5
       hoist-non-react-statics: 3.3.2
       intl-messageformat: 10.5.14
       react: 18.3.1
