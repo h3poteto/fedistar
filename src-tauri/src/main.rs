@@ -3,6 +3,7 @@
     windows_subsystem = "windows"
 )]
 use base64::{engine::general_purpose, Engine};
+use font_kit::source::SystemSource;
 use megalodon::{self, oauth};
 use rust_i18n::t;
 use serde::Serialize;
@@ -481,6 +482,14 @@ async fn open_media(app_handle: AppHandle, media_url: String) -> () {
     .expect("failed to build media window");
 }
 
+#[tauri::command]
+async fn list_fonts() -> Result<Vec<String>, String> {
+    let font_source = SystemSource::new();
+    let fonts = font_source.all_families().expect("failed to list fonts");
+
+    Ok(fonts)
+}
+
 async fn start_timeline_streaming(
     app_handle: Arc<AppHandle>,
     sqlite_pool: &sqlx::SqlitePool,
@@ -680,6 +689,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             frontend_log,
             update_column_width,
             open_media,
+            list_fonts,
         ])
         .setup(|app| {
             let app_handle = app.handle();

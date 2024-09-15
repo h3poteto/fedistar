@@ -13,6 +13,7 @@ type Props = {
 
 type FormValue = {
   font_size: number
+  font_family: string | null
   language: localeType
   color_theme: ThemeType
 }
@@ -67,14 +68,17 @@ export default function Settings(props: Props) {
   const { formatMessage } = useIntl()
   const [formValue, setFormValue] = useState<FormValue>({
     font_size: 14,
+    font_family: null,
     language: 'en',
     color_theme: 'dark'
   })
+  const [fontList, setFontList] = useState<Array<{ label: string; value: string }>>([])
 
   const model = Schema.Model<FormValue>({
     font_size: Schema.Types.NumberType(formatMessage({ id: 'settings.settings.validation.font_size.type' }))
       .range(1, 30, formatMessage({ id: 'settings.settings.validation.font_size.range' }, { from: 1, to: 30 }))
       .isRequired(formatMessage({ id: 'settings.settings.validation.font_size.required' })),
+    font_family: Schema.Types.StringType(),
     language: Schema.Types.StringType().isRequired(formatMessage({ id: 'settings.settings.validation.language.required' })),
     color_theme: Schema.Types.StringType()
   })
@@ -83,6 +87,8 @@ export default function Settings(props: Props) {
     const f = async () => {
       const settings = await invoke<SettingsType>('read_settings')
       setFormValue(current => Object.assign({}, current, settings.appearance))
+      const f = await invoke<Array<string>>('list_fonts')
+      setFontList(f.map(f => ({ label: f, value: f })))
     }
     f()
   }, [])
@@ -91,6 +97,7 @@ export default function Settings(props: Props) {
     const settings: SettingsType = {
       appearance: {
         font_size: Number(formValue.font_size),
+        font_family: formValue.font_family,
         language: formValue.language,
         color_theme: formValue.color_theme
       }
@@ -125,6 +132,12 @@ export default function Settings(props: Props) {
                 <FormattedMessage id="settings.settings.appearance.font_size" />
               </Form.ControlLabel>
               <Form.Control name="font_size" accepter={InputNumber} postfix="px" />
+            </Form.Group>
+            <Form.Group controlId="font_family">
+              <Form.ControlLabel>
+                <FormattedMessage id="settings.settings.appearance.font_family" />
+              </Form.ControlLabel>
+              <Form.Control name="font_family" accepter={InputPicker} cleanable={true} data={fontList} />
             </Form.Group>
             <Form.Group controlId="color_theme">
               <Form.ControlLabel>

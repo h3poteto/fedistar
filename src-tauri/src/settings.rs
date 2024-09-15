@@ -10,6 +10,7 @@ pub struct Settings {
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct Appearance {
     pub font_size: u32,
+    pub font_family: Option<String>,
     pub language: LocaleType,
     pub color_theme: ThemeType,
 }
@@ -46,6 +47,7 @@ pub(crate) fn read_settings(filepath: &PathBuf) -> Result<Settings, String> {
         return Ok(Settings {
             appearance: Appearance {
                 font_size: 14,
+                font_family: None,
                 language: LocaleType::En,
                 color_theme: ThemeType::Dark,
             },
