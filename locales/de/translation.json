@@ -93,6 +93,7 @@
       "appearance": {
         "title": "Darstellung",
         "font_size": "Schriftgröße",
+        "font_family": "Font family",
         "language": "Sprache",
         "color_theme": "Farb-Design",
         "theme": {
