@@ -34,6 +34,19 @@ import Search from 'src/components/search/Search'
 
 const { scrollLeft } = DOMHelper
 
+const defaultFontFaimly = [
+  'Apple-System',
+  'Hiragino Kaku Gothic ProN',
+  'Hiragino Sans GB',
+  'Arial',
+  'Helvetica',
+  'PingFang SC',
+  'Meiryo',
+  'Microsoft YaHei',
+  'STXihei',
+  'sans-serif'
+]
+
 function App() {
   const { formatMessage } = useIntl()
 
@@ -152,7 +165,11 @@ function App() {
   const loadAppearance = () => {
     invoke<Settings>('read_settings').then(res => {
       setStyle({
-        fontSize: res.appearance.font_size
+        fontSize: res.appearance.font_size,
+        fontFamily: [res.appearance.font_family]
+          .concat(defaultFontFaimly)
+          .filter(f => f !== null)
+          .join(',')
       })
       switchLang(res.appearance.language)
       dayjs.locale(res.appearance.language)

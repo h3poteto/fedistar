@@ -32,6 +32,7 @@ rust-i18n = "3.0.1"
 base64 = "0.21"
 tauri-plugin-window-state = { git = "https://github.com/tauri-apps/plugins-workspace", branch = "v1" }
 open = "5.3.0"
+font-kit = "0.14.2"
 
 [features]
 # by default Tauri runs in production mode
