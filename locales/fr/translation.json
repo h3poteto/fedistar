@@ -93,6 +93,7 @@
       "appearance": {
         "title": "Apparence",
         "font_size": "Taille de la police",
+        "font_family": "Font family",
         "language": "Langue",
         "color_theme": "Color theme",
         "theme": {

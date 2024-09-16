@@ -93,6 +93,7 @@
       "appearance": {
         "title": "外観",
         "font_size": "フォントサイズ",
+        "font_family": "Font family",
         "language": "言語",
         "color_theme": "カラーテーマ",
         "theme": {

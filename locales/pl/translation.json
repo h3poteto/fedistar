@@ -93,6 +93,7 @@
       "appearance": {
         "title": "Wygląd",
         "font_size": "Rozmiar czcionki",
+        "font_family": "Font family",
         "language": "Język",
         "color_theme": "Motyw kolorystyczny",
         "theme": {

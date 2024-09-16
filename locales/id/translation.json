@@ -93,6 +93,7 @@
       "appearance": {
         "title": "Appearance",
         "font_size": "Font size",
+        "font_family": "Font family",
         "language": "Language",
         "color_theme": "Color theme",
         "theme": {
