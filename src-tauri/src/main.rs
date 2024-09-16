@@ -485,7 +485,11 @@ async fn open_media(app_handle: AppHandle, media_url: String) -> () {
 #[tauri::command]
 async fn list_fonts() -> Result<Vec<String>, String> {
     let font_source = SystemSource::new();
-    let fonts = font_source.all_families().expect("failed to list fonts");
+    let fonts = font_source.all_families().map_err(|e| {
+        let err = e.to_string();
+        tracing::error!("Failed to get font families {}", err);
+        err
+    })?;
 
     Ok(fonts)
 }
