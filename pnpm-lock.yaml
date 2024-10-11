@@ -48,8 +48,8 @@ importers:
         specifier: 4.10.4
         version: 4.10.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rsuite:
-        specifier: 5.68.0
-        version: 5.68.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 5.72.0
+        version: 5.72.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       sanitize-html:
         specifier: ^2.13.0
         version: 2.13.0
@@ -2236,15 +2236,15 @@ packages:
   rrweb-cssom@0.7.1:
     resolution: {integrity: sha512-TrEMa7JGdVm0UThDJSx7ddw5nVm3UJS9o9CCIZ72B1vSyEZoziDqBYP3XIoi/12lKrJR8rE3jeFHMok2F/Mnsg==}
 
-  rsuite-table@5.18.3:
-    resolution: {integrity: sha512-Rua79XndYY+UdCUpBuH1Ew5qa54y6zLZ0RNRnudKgamksrV1j+rUhcCsA03a5ZY+b8DXTwct4V/Q6K9q/cJT5w==}
+  rsuite-table@5.19.1:
+    resolution: {integrity: sha512-PsG+z3GfwywDvPVEjZYVZcel0M6zOBAx2HKTgYLfct/yAzXJWPgW/eVuv9+8KmkcKzAh03UVYQdB88Gp7+RlGg==}
     peerDependencies:
       prop-types: ^15.7.2
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
 
-  rsuite@5.68.0:
-    resolution: {integrity: sha512-KNzeUS/G/Y7sfSlWIxEmvLFMrH1ojRfduMc1sjq+DW2hRXnOD9HdOPQL7iMA76BD+wCq1Vti5lL8xrtlrSFK8A==}
+  rsuite@5.72.0:
+    resolution: {integrity: sha512-LusHiNnzEwBb7RhA2ASVIAkfgQwJItFMI4sBW0gLRo2b5W32ivWC7HbDvB4LvVGPnFdsClUU/wcY4PEykfxx8A==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
@@ -5272,7 +5272,7 @@ snapshots:
 
   rrweb-cssom@0.7.1: {}
 
-  rsuite-table@5.18.3(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  rsuite-table@5.19.1(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.22.15
       '@juggle/resize-observer': 3.4.0
@@ -5285,7 +5285,7 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       react-is: 17.0.2
 
-  rsuite@5.68.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  rsuite@5.72.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.22.15
       '@juggle/resize-observer': 3.4.0
@@ -5302,7 +5302,7 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       react-use-set: 1.0.0(react@18.3.1)
       react-window: 1.8.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      rsuite-table: 5.18.3(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      rsuite-table: 5.19.1(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       schema-typed: 2.2.2
 
   run-parallel@1.2.0:
