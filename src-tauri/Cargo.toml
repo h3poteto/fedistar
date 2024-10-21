@@ -19,7 +19,7 @@ serde = { version = "1.0.204", features = ["derive"] }
 tauri = { version = "1.7.2", features = ["api-all"] }
 sqlx  = { version = "0.8.0", features = ["runtime-tokio-rustls", "sqlite", "migrate"] }
 tokio = { version = "1.40.0", features = ["full"] }
-futures = "0.3.30"
+futures = "0.3.31"
 directories = "5.0.1"
 megalodon = "0.13.7"
 tracing = "0.1.40"
