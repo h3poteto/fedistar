@@ -222,7 +222,8 @@ const Notifications: React.FC<Props> = props => {
         await client.readNotifications({ max_id: notifications[0].id })
       }
       await updateMarker(client)
-    } catch {
+    } catch (err) {
+      console.error(err)
       toast.push(alert('error', formatMessage({ id: 'alert.failed_mark' })), { placement: 'topStart' })
     }
   }
