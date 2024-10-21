@@ -12,8 +12,8 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1(emoji-mart@5.6.0)(react@18.3.1)
       '@rsuite/icons':
-        specifier: ^1.0.3
-        version: 1.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^1.2.0
+        version: 1.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tauri-apps/api':
         specifier: 1.6.0
         version: 1.6.0
@@ -609,12 +609,6 @@ packages:
 
   '@rsuite/icon-font@4.0.0':
     resolution: {integrity: sha512-rZTgpTH3H3HLczCA2rnkWfoMKm0ZXoRzsrkVujfP/FfslnKUMvO6w56pa8pCvhWGpNEPUsLS2ULnFGpTEcup/Q==}
-
-  '@rsuite/icons@1.0.3':
-    resolution: {integrity: sha512-qkjYFn1v5YV9eH57Q4AJ8CwsQYfILun2wdoxhQg5+xYxkIu6UyF8vTMmpOzLvcybTE7D8STm4dH7vhpyhPOC7g==}
-    peerDependencies:
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
 
   '@rsuite/icons@1.2.0':
     resolution: {integrity: sha512-/R4LhKYmORoA8TS6aNtDWQm65h3PSx3AGSvmn3nxPRUfXdWCf9P6Zntv+6q4w996SOglmfnCaCN4sx2c+JDI2w==}
@@ -1541,9 +1535,6 @@ packages:
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
-
-  insert-css@2.0.0:
-    resolution: {integrity: sha512-xGq5ISgcUP5cvGkS2MMFLtPDBtrtQPSFfC6gA6U8wHKqfjTIMZLZNxOItQnoSjdOzlXOLU/yD32RKC4SvjNbtA==}
 
   internal-slot@1.0.7:
     resolution: {integrity: sha512-NGnrKwXzSms2qUUih/ILZ5JBqNTSa1+ZmP6flaIp6KmSElgE9qdndzS3cqjrDovwFdmwsGsLdeFgB6suw+1e9g==}
@@ -3303,16 +3294,6 @@ snapshots:
 
   '@rsuite/icon-font@4.0.0': {}
 
-  '@rsuite/icons@1.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@babel/runtime': 7.22.15
-      '@rsuite/icon-font': 4.0.0
-      classnames: 2.3.2
-      insert-css: 2.0.0
-      lodash: 4.17.21
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-
   '@rsuite/icons@1.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@rsuite/icon-font': 4.0.0
@@ -4397,8 +4378,6 @@ snapshots:
       wrappy: 1.0.2
 
   inherits@2.0.4: {}
-
-  insert-css@2.0.0: {}
 
   internal-slot@1.0.7:
     dependencies:
