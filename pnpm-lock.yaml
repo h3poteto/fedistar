@@ -24,8 +24,8 @@ importers:
         specifier: ^5.6.0
         version: 5.6.0
       megalodon:
-        specifier: 10.0.5
-        version: 10.0.5
+        specifier: 10.0.6
+        version: 10.0.6
       next:
         specifier: ^14.2.17
         version: 14.2.17(@babel/core@7.22.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.3)
@@ -1974,9 +1974,9 @@ packages:
   makeerror@1.0.12:
     resolution: {integrity: sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg==}
 
-  megalodon@10.0.5:
-    resolution: {integrity: sha512-4JkmM+etcqguD+z8zOSAOpGdq9kiam7dIzQBegMn1bVTnaj5cyIb+Ssf8OxCd29ToYdbEDBreCketPNmqMqzDA==}
-    engines: {node: '>=20.18.0'}
+  megalodon@10.0.6:
+    resolution: {integrity: sha512-r2LMuFV3Hl+IU2vEUm7fjFDnju/j7LjfMJz51+DjLppVXqwbCD3Fpjx2L+hzC6UTQClQ1x4qu+QTo+Y/PlD3rQ==}
+    engines: {node: '>=22.11.0'}
 
   memoize-one@5.2.1:
     resolution: {integrity: sha512-zYiwtZUcYyXKo/np96AGZAckk+FWWsUdJ3cHGGmld7+AhvcWmQyGCYUh1hc4Q/pkOhb65dQR/pqCyK0cOaHz4Q==}
@@ -2612,8 +2612,8 @@ packages:
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
-  uuid@10.0.0:
-    resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
+  uuid@11.0.3:
+    resolution: {integrity: sha512-d0z310fCWv5dJwnX1Y/MncBAqGMKEzlBb1AOf7z9K8ALnd0utBX/msg/fA0+sbyN1ihbMsLhrBlnl1ak7Wa0rg==}
     hasBin: true
 
   v8-to-istanbul@9.1.0:
@@ -5022,7 +5022,7 @@ snapshots:
     dependencies:
       tmpl: 1.0.5
 
-  megalodon@10.0.5:
+  megalodon@10.0.6:
     dependencies:
       '@badgateway/oauth2-client': 2.4.2
       '@types/ws': 8.5.12
@@ -5032,7 +5032,7 @@ snapshots:
       form-data: 4.0.0
       isomorphic-ws: 5.0.0(ws@8.18.0)
       object-assign-deep: 0.4.0
-      uuid: 10.0.0
+      uuid: 11.0.3
       ws: 8.18.0
     transitivePeerDependencies:
       - bufferutil
@@ -5705,7 +5705,7 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  uuid@10.0.0: {}
+  uuid@11.0.3: {}
 
   v8-to-istanbul@9.1.0:
     dependencies:
