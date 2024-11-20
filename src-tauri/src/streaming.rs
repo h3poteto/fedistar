@@ -75,7 +75,8 @@ pub async fn start_user(
         url,
         Some(account.access_token.clone()),
         Some(String::from("fedistar")),
-    );
+    )
+    .map_err(|err| err.to_string())?;
 
     let streaming = client.user_streaming().await;
 
@@ -161,7 +162,8 @@ pub async fn start(
         url,
         account.clone().and_then(|a| Some(a.access_token)),
         Some(String::from("fedistar")),
-    );
+    )
+    .map_err(|err| err.to_string())?;
 
     let streaming: Box<dyn megalodon::Streaming + Send + Sync>;
     match timeline.kind {

@@ -93,7 +93,8 @@ async fn add_application(
     url: &str,
 ) -> Result<oauth::AppData, String> {
     let sns = megalodon::detector(url).await.map_err(|e| e.to_string())?;
-    let client = megalodon::generator(sns, url.to_string(), None, Some(String::from("fedistar")));
+    let client = megalodon::generator(sns, url.to_string(), None, Some(String::from("fedistar")))
+        .map_err(|err| err.to_string())?;
 
     let options = megalodon::megalodon::AppInputOptions {
         ..Default::default()
@@ -131,7 +132,8 @@ async fn authorize_code(
         server.base_url.clone().to_string(),
         None,
         Some(String::from("fedistar")),
-    );
+    )
+    .map_err(|err| err.to_string())?;
 
     let client_id = app.client_id;
     let client_secret = app.client_secret;
@@ -157,7 +159,8 @@ async fn authorize_code(
         server.base_url.clone().to_string(),
         Some(token_data.access_token.clone()),
         Some(String::from("fedistar")),
-    );
+    )
+    .map_err(|err| err.to_string())?;
 
     let account_data = authorized_client
         .verify_account_credentials()
