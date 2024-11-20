@@ -42,6 +42,14 @@ const Detail: React.FC<Props> = props => {
     }
   }, [router.query])
 
+  const setStatusDetail = (statusId: string, serverId: number, accountId?: number) => {
+    if (accountId) {
+      router.push({ query: { status_id: statusId, server_id: serverId, account_id: accountId } })
+    } else {
+      router.push({ query: { status_id: statusId, server_id: serverId } })
+    }
+  }
+
   return (
     <Animation.Transition
       in={target !== null}
@@ -60,6 +68,7 @@ const Detail: React.FC<Props> = props => {
                 }
                 openReport={props.openReport}
                 openFromOtherAccount={props.openFromOtherAccount}
+                setStatusDetail={setStatusDetail}
                 locale={props.locale}
               />
             )}
@@ -69,6 +78,7 @@ const Detail: React.FC<Props> = props => {
                 openReport={props.openReport}
                 openFromOtherAccount={props.openFromOtherAccount}
                 openAddListMember={props.openAddListMember}
+                setStatusDetail={setStatusDetail}
                 locale={props.locale}
               />
             )}
@@ -77,6 +87,7 @@ const Detail: React.FC<Props> = props => {
                 openMedia={props.openMedia}
                 openReport={props.openReport}
                 openFromOtherAccount={props.openFromOtherAccount}
+                setStatusDetail={setStatusDetail}
                 locale={props.locale}
               />
             )}
@@ -86,6 +97,7 @@ const Detail: React.FC<Props> = props => {
                 openMedia={props.openMedia}
                 openReport={props.openReport}
                 openFromOtherAccount={props.openFromOtherAccount}
+                setStatusDetail={setStatusDetail}
                 locale={props.locale}
               />
             )}
