@@ -17,6 +17,7 @@ type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
+  setStatusDetail: (statusId: string, serverId: number, accountId?: number) => void
   locale: string
 }
 
@@ -175,6 +176,7 @@ const StatusDetail: React.FC<Props> = props => {
                   updateStatus={updateStatus}
                   openMedia={props.openMedia}
                   setReplyOpened={() => null}
+                  setStatusDetail={props.setStatusDetail}
                   setAccountDetail={setAccountDetail}
                   setTagDetail={setTagDetail}
                   openReport={props.openReport}
