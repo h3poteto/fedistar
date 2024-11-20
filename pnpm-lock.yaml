@@ -24,8 +24,8 @@ importers:
         specifier: ^5.6.0
         version: 5.6.0
       megalodon:
-        specifier: 10.0.6
-        version: 10.0.6
+        specifier: 10.0.7
+        version: 10.0.7
       next:
         specifier: ^14.2.17
         version: 14.2.17(@babel/core@7.22.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.3)
@@ -784,8 +784,8 @@ packages:
   '@types/stack-utils@2.0.1':
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==}
 
-  '@types/ws@8.5.12':
-    resolution: {integrity: sha512-3tPRkv1EtkDpzlgyKyI8pGsGZAGPEaXeu0DOj5DI25Ja91bdAYddYHbADRYVrZMRbfW+1l5YwXVDKohDJNQxkQ==}
+  '@types/ws@8.5.13':
+    resolution: {integrity: sha512-osM/gWBTPKgHV8XkTunnegTRIsvF6owmf5w+JtAfOw472dptdm0dlGv4xCt6GwQRcC2XVOvvRE/0bAoQcL2QkA==}
 
   '@types/yargs-parser@21.0.0':
     resolution: {integrity: sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==}
@@ -1974,8 +1974,8 @@ packages:
   makeerror@1.0.12:
     resolution: {integrity: sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg==}
 
-  megalodon@10.0.6:
-    resolution: {integrity: sha512-r2LMuFV3Hl+IU2vEUm7fjFDnju/j7LjfMJz51+DjLppVXqwbCD3Fpjx2L+hzC6UTQClQ1x4qu+QTo+Y/PlD3rQ==}
+  megalodon@10.0.7:
+    resolution: {integrity: sha512-gz8mwfN3sp269fqpkd9znopK8U6rhuJKtlyI7sQyzk4d6VxpVIX730FBjACNz3Io4bWo9DJdQBH5XOO/FCHDzg==}
     engines: {node: '>=22.11.0'}
 
   memoize-one@5.2.1:
@@ -3475,7 +3475,7 @@ snapshots:
 
   '@types/stack-utils@2.0.1': {}
 
-  '@types/ws@8.5.12':
+  '@types/ws@8.5.13':
     dependencies:
       '@types/node': 22.9.1
 
@@ -5022,10 +5022,10 @@ snapshots:
     dependencies:
       tmpl: 1.0.5
 
-  megalodon@10.0.6:
+  megalodon@10.0.7:
     dependencies:
       '@badgateway/oauth2-client': 2.4.2
-      '@types/ws': 8.5.12
+      '@types/ws': 8.5.13
       axios: 1.7.7
       dayjs: 1.11.13
       events: 3.3.0
