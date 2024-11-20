@@ -2,67 +2,51 @@
   "build": {
     "beforeDevCommand": "pnpm dev",
     "beforeBuildCommand": "pnpm build",
-    "devPath": "http://localhost:1420",
-    "distDir": "../out",
-    "withGlobalTauri": false
+    "frontendDist": "../out",
+    "devUrl": "http://localhost:1420"
   },
-  "package": {
-    "productName": "fedistar",
-    "version": "1.9.13"
-  },
-  "tauri": {
-    "allowlist": {
-      "all": true,
-      "notification": {
-        "all": true
-      },
-      "shell": {
-        "open": true
-      },
-      "globalShortcut": {
-        "all": true
-      }
+  "bundle": {
+    "active": true,
+    "category": "SocialNetworking",
+    "copyright": "",
+    "targets": "all",
+    "externalBin": [],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": ""
     },
-    "bundle": {
-      "active": true,
-      "category": "SocialNetworking",
-      "copyright": "",
+    "longDescription": "Multi-column Fediverse client for desktop. Supporting Mastodon, Pleroma, Friendica, Gotosocial, and Firefish.",
+    "macOS": {
+      "entitlements": "../entitlements.plist",
+      "exceptionDomain": "",
+      "frameworks": [],
+      "minimumSystemVersion": "14.0",
+      "providerShortName": null,
+      "signingIdentity": null
+    },
+    "resources": [],
+    "shortDescription": "Multi-column Fediverse client for desktop",
+    "linux": {
       "deb": {
         "depends": []
-      },
-      "externalBin": [],
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "identifier": "net.fedistar",
-      "longDescription": "Multi-column Fediverse client for desktop. Supporting Mastodon, Pleroma, Friendica, Gotosocial, and Firefish.",
-      "macOS": {
-        "entitlements": "../entitlements.plist",
-        "exceptionDomain": "",
-        "frameworks": [],
-        "minimumSystemVersion": "14.0",
-        "providerShortName": null,
-        "signingIdentity": null
-      },
-      "resources": [],
-      "shortDescription": "Multi-column Fediverse client for desktop",
-      "targets": "all",
-      "windows": {
-        "certificateThumbprint": null,
-        "digestAlgorithm": "sha256",
-        "timestampUrl": ""
       }
-    },
-    "security": {
-      "csp": null
-    },
-    "updater": {
-      "active": false
-    },
+    }
+  },
+  "productName": "fedistar",
+  "mainBinaryName": "fedistar",
+  "version": "1.9.13",
+  "identifier": "net.fedistar",
+  "plugins": {},
+  "app": {
+    "withGlobalTauri": false,
     "windows": [
       {
         "fullscreen": false,
@@ -71,8 +55,12 @@
         "title": "Fedistar",
         "width": 800,
         "minWidth": 348,
-        "minHeight": 320
+        "minHeight": 320,
+        "useHttpsScheme": true
       }
-    ]
+    ],
+    "security": {
+      "csp": null
+    }
   }
 }

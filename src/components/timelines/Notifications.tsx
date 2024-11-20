@@ -16,7 +16,7 @@ import {
 } from 'rsuite'
 import { BsBell, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsCheck2, BsArrowClockwise } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
-import { invoke } from '@tauri-apps/api/tauri'
+import { invoke } from '@tauri-apps/api/core'
 import { listen } from '@tauri-apps/api/event'
 import { useEffect, useState, forwardRef, useRef, useCallback, Dispatch, SetStateAction } from 'react'
 import generator, { MegalodonInterface, Entity } from 'megalodon'

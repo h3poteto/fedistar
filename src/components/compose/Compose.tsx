@@ -2,7 +2,7 @@ import { Container, Header, Content, FlexboxGrid, Button, Dropdown, Avatar } fro
 import { Icon } from '@rsuite/icons'
 import { BsX } from 'react-icons/bs'
 import { useEffect, useState } from 'react'
-import { invoke } from '@tauri-apps/api/tauri'
+import { invoke } from '@tauri-apps/api/core'
 import generator, { MegalodonInterface } from 'megalodon'
 
 import { USER_AGENT } from 'src/defaults'

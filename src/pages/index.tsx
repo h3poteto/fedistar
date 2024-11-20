@@ -1,8 +1,8 @@
 import { useState, useEffect, useReducer, CSSProperties, useRef, useCallback, useContext } from 'react'
-import { invoke } from '@tauri-apps/api/tauri'
+import { invoke } from '@tauri-apps/api/core'
 import { listen } from '@tauri-apps/api/event'
 import { Container, Content, useToaster, Animation, DOMHelper } from 'rsuite'
-import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/api/notification'
+import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/plugin-notification'
 import dayjs from 'dayjs'
 
 import { Server, ServerSet } from 'src/entities/server'

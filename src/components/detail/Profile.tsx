@@ -1,5 +1,5 @@
-import { open } from '@tauri-apps/api/shell'
-import { invoke } from '@tauri-apps/api/tauri'
+import { open } from '@tauri-apps/plugin-shell'
+import { invoke } from '@tauri-apps/api/core'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { BsThreeDotsVertical, BsChevronLeft, BsX } from 'react-icons/bs'
 import { Button, Content, Dropdown, FlexboxGrid, IconButton, Nav, Popover, useToaster, Whisper, Header } from 'rsuite'

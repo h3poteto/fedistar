@@ -1,5 +1,5 @@
 import { Icon } from '@rsuite/icons'
-import { invoke } from '@tauri-apps/api/tauri'
+import { invoke } from '@tauri-apps/api/core'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useRef, useState, forwardRef, useCallback } from 'react'
 import {

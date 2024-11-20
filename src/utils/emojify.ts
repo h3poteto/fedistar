@@ -1,4 +1,4 @@
-import { invoke } from '@tauri-apps/api/tauri'
+import { invoke } from '@tauri-apps/api/core'
 import { Entity } from 'megalodon'
 
 const emojify = (str: string | any, customEmoji: Array<Entity.Emoji> = []): string | null => {

@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import '../style.css'
 import '../App.scss'
 
-import { invoke } from '@tauri-apps/api/tauri'
+import { invoke } from '@tauri-apps/api/core'
 import { useEffect } from 'react'
 import { IntlProviderWrapper } from 'src/i18n'
 import { RsuiteProviderWrapper } from 'src/theme'

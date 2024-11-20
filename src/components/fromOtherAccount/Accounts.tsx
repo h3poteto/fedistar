@@ -1,4 +1,4 @@
-import { invoke } from '@tauri-apps/api/tauri'
+import { invoke } from '@tauri-apps/api/core'
 import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Button, Modal, Radio, RadioGroup } from 'rsuite'
