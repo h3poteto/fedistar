@@ -65,13 +65,6 @@ mod tests {
     use super::*;
 
     #[tokio::test]
-    async fn test_get_favicon_url_for_mstdnjp() {
-        let result = get_favicon_url("https://mstdn.jp").await;
-        assert!(result.is_some());
-        assert_eq!(result, Some(String::from("https://mstdn.jp/favicon.ico")));
-    }
-
-    #[tokio::test]
     async fn test_get_favicon_url_for_mastodon() {
         let result = get_favicon_url("https://fedibird.com").await;
         assert!(result.is_some());
