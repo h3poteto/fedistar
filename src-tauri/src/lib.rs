@@ -3,7 +3,7 @@ use font_kit::source::SystemSource;
 use megalodon::{self, oauth};
 use rust_i18n::t;
 use serde::Serialize;
-use std::{env, fs::OpenOptions, path::PathBuf, str::FromStr, sync::Arc, thread};
+use std::{env, fs::OpenOptions, path::PathBuf, str::FromStr, thread};
 use tauri::{async_runtime::Mutex, AppHandle, Manager, State};
 mod database;
 mod entities;
@@ -11,6 +11,7 @@ mod favicon;
 mod menu;
 mod settings;
 mod streaming;
+use tauri::Emitter;
 
 rust_i18n::i18n!("locales");
 
@@ -58,7 +59,7 @@ async fn add_server(
         .map_err(|e| e.to_string())?;
 
     app_handle
-        .emit_all("updated-servers", ())
+        .emit("updated-servers", ())
         .expect("Failed to send updated-servers event");
 
     Ok(created)
@@ -75,10 +76,10 @@ async fn remove_server(
         .map_err(|e| e.to_string())?;
 
     app_handle
-        .emit_all("updated-servers", ())
+        .emit("updated-servers", ())
         .expect("Failed to send updated-servers event");
     app_handle
-        .emit_all("updated-timelines", ())
+        .emit("updated-timelines", ())
         .expect("Failed to send updated-timeline event");
     Ok(())
 }
@@ -180,11 +181,10 @@ async fn authorize_code(
         .map_err(|e| e.to_string())?;
 
     app_handle
-        .emit_all("updated-servers", ())
+        .emit("updated-servers", ())
         .expect("Failed to send updated-servers event");
 
-    let cloned_handle = Arc::new(app_handle);
-    start_user_streaming(cloned_handle, server, account).await?;
+    start_user_streaming(&app_handle, server, account).await?;
 
     Ok(())
 }
@@ -223,11 +223,10 @@ async fn add_timeline(
         .map_err(|e| e.to_string())?;
 
     app_handle
-        .emit_all("updated-timelines", UpdatedTimelinePayload { timelines })
+        .emit("updated-timelines", UpdatedTimelinePayload { timelines })
         .expect("Failed to send updated-timelines event");
 
-    let cloned_handle = Arc::new(app_handle);
-    start_timeline_streaming(cloned_handle, &sqlite_pool, server, timeline).await?;
+    start_timeline_streaming(&app_handle, &sqlite_pool, server, timeline).await?;
 
     Ok(())
 }
@@ -265,7 +264,7 @@ async fn remove_timeline(
         .map_err(|e| e.to_string())?;
 
     app_handle
-        .emit_all("updated-timelines", ())
+        .emit("updated-timelines", ())
         .expect("Failed to updated-timelines event");
     Ok(())
 }
@@ -308,7 +307,7 @@ async fn switch_left_timeline(
         .map_err(|e| e.to_string())?;
 
     app_handle
-        .emit_all("updated-timelines", UpdatedTimelinePayload { timelines })
+        .emit("updated-timelines", UpdatedTimelinePayload { timelines })
         .expect("Failed to updated-timelines event");
 
     Ok(())
@@ -329,7 +328,7 @@ async fn switch_right_timeline(
         .map_err(|e| e.to_string())?;
 
     app_handle
-        .emit_all("updated-timelines", UpdatedTimelinePayload { timelines })
+        .emit("updated-timelines", UpdatedTimelinePayload { timelines })
         .expect("Failed to updated-timelines event");
 
     Ok(())
@@ -354,7 +353,7 @@ async fn update_column_width(
         .map_err(|e| e.to_string())?;
 
     app_handle
-        .emit_all("updated-timelines", UpdatedTimelinePayload { timelines })
+        .emit("updated-timelines", UpdatedTimelinePayload { timelines })
         .expect("Failed to updated-timelines event");
 
     Ok(())
@@ -374,25 +373,24 @@ fn save_settings(
     let _ = settings::save_settings(&settings_path, &obj)?;
     let res = settings::read_settings(&settings_path)?;
     app_handle
-        .emit_all("updated-settings", UpdatedSettingsPayload { settings: res })
+        .emit("updated-settings", UpdatedSettingsPayload { settings: res })
         .expect("Failed to update-settings event");
     Ok(())
 }
 
 #[tauri::command]
 fn toggle_menu(app_handle: AppHandle) -> Result<(), String> {
-    let menu_handle = app_handle
-        .get_window("main")
-        .expect("Failed to get main window")
-        .menu_handle();
+    let window_handle = app_handle
+        .get_webview_window("main")
+        .expect("Failed to get main window");
 
-    match menu_handle.is_visible() {
+    match window_handle.is_menu_visible() {
         Ok(true) => {
-            menu_handle.hide().expect("Failed to hide menu");
+            window_handle.hide_menu().expect("Failed to hide menu");
             Ok(())
         }
         Ok(false) => {
-            menu_handle.show().expect("Failed to show menu");
+            window_handle.show_menu().expect("Failed to show menu");
             Ok(())
         }
         Err(e) => Err(e.to_string()),
@@ -419,7 +417,7 @@ async fn init_instruction(
         .await
         .map_err(|e| e.to_string())?;
     app_handle
-        .emit_all("updated-instruction", instruction)
+        .emit("updated-instruction", instruction)
         .expect("Failed to send updated-instruction event");
 
     Ok(())
@@ -431,7 +429,7 @@ async fn switch_devtools(app_handle: AppHandle) -> () {
     #[cfg(any(feature = "devtools", debug_assertions))]
     {
         let window = app_handle
-            .get_window("main")
+            .get_webview_window("main")
             .expect("Failed to get main window");
         window.open_devtools();
         window.close_devtools();
@@ -449,7 +447,7 @@ async fn update_instruction(
         .await
         .map_err(|e| e.to_string())?;
     app_handle
-        .emit_all("updated-instruction", instruction)
+        .emit("updated-instruction", instruction)
         .expect("Failed to send updated-instruction event");
 
     Ok(())
@@ -470,12 +468,12 @@ async fn frontend_log(message: String, level: String) -> () {
 async fn open_media(app_handle: AppHandle, media_url: String) -> () {
     let encoded = general_purpose::STANDARD_NO_PAD.encode(media_url.clone());
 
-    let _ = tauri::WindowBuilder::new(
+    let _ = tauri::WebviewWindowBuilder::new(
         &app_handle,
         encoded,
-        tauri::WindowUrl::External(media_url.parse().unwrap()),
+        tauri::WebviewUrl::External(media_url.parse().unwrap()),
     )
-    .menu(menu::media_menu())
+    .menu(menu::media_menu(&app_handle).expect("failed to build media menu"))
     .title(t!("media.title"))
     .build()
     .expect("failed to build media window");
@@ -494,7 +492,7 @@ async fn list_fonts() -> Result<Vec<String>, String> {
 }
 
 async fn start_timeline_streaming(
-    app_handle: Arc<AppHandle>,
+    app_handle: &AppHandle,
     sqlite_pool: &sqlx::SqlitePool,
     server: entities::Server,
     timeline: entities::Timeline,
@@ -514,6 +512,7 @@ async fn start_timeline_streaming(
         account = Some(a);
     }
 
+    let app_handle = app_handle.clone();
     tauri::async_runtime::spawn(async move {
         match streaming::start(app_handle, &server, &timeline, account).await {
             Ok(()) => tracing::info!(
@@ -529,10 +528,11 @@ async fn start_timeline_streaming(
 }
 
 async fn start_user_streaming(
-    app_handle: Arc<AppHandle>,
+    app_handle: &AppHandle,
     server: entities::Server,
     account: entities::Account,
 ) -> Result<(), String> {
+    let app_handle = app_handle.clone();
     tauri::async_runtime::spawn(async move {
         match streaming::start_user(app_handle, &server, &account).await {
             Ok(()) => tracing::info!(
@@ -548,19 +548,15 @@ async fn start_user_streaming(
 }
 
 async fn start_streamings(
-    app_handle: AppHandle,
+    app_handle: &AppHandle,
     sqlite_pool: &sqlx::SqlitePool,
 ) -> Result<(), String> {
     let accounts = database::list_account(&sqlite_pool)
         .await
         .map_err(|e| e.to_string())?;
 
-    let user_handle = Arc::new(app_handle);
-    let timeline_handle = Arc::clone(&user_handle);
-
     for (account, server) in accounts.into_iter() {
-        let cloned_handle = Arc::clone(&user_handle);
-        start_user_streaming(cloned_handle, server, account).await?;
+        start_user_streaming(app_handle, server, account).await?;
     }
 
     let timelines = database::list_timelines(&sqlite_pool)
@@ -568,8 +564,7 @@ async fn start_streamings(
         .map_err(|e| e.to_string())?;
 
     for (timeline, server) in timelines.into_iter() {
-        let cloned_handle = Arc::clone(&timeline_handle);
-        start_timeline_streaming(cloned_handle, &sqlite_pool, server, timeline).await?;
+        start_timeline_streaming(app_handle, &sqlite_pool, server, timeline).await?;
     }
 
     Ok(())
@@ -631,33 +626,6 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
         base_dir = "fedistar.dev";
     }
 
-    let user_dir = tauri::api::path::data_dir()
-        .unwrap_or_else(|| std::env::current_dir().expect("Cannot access the current directory"));
-    let config_dir = user_dir.join(base_dir);
-    let config_dir_exists = std::fs::metadata(&config_dir).is_ok();
-    if !config_dir_exists {
-        std::fs::create_dir(&config_dir)?;
-    }
-    let log_path = config_dir.join(LOGFILE_PATH);
-
-    init_logger(log_path);
-
-    let settings_path = config_dir.join(SETTINGS_PATH);
-
-    let database_dir_str = std::fs::canonicalize(&config_dir)
-        .expect("Failed to canonicalize")
-        .to_string_lossy()
-        .replace('?', "")
-        .replace('\\', "/")
-        .replace("//", "");
-    let database_url = format!("sqlite://{}/{}", database_dir_str, DATABASE_FILE);
-
-    let sqlite_pool = block_on(database::create_sqlite_pool(&database_url))?;
-    block_on(database::migrate_database(&sqlite_pool))?;
-
-    let res = settings::read_settings(&settings_path)?;
-    rust_i18n::set_locale(res.appearance.language.to_string().as_str());
-
     tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
@@ -669,14 +637,6 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_window_state::Builder::default().build())
-        .menu(menu::menu())
-        .on_menu_event(|event| match event.menu_item_id() {
-            "crash_reporting" => {
-                open::that("https://fedistar.net/help#crash_reporting")
-                    .expect("Failed to open the URL");
-            }
-            _ => {}
-        })
         .invoke_handler(tauri::generate_handler![
             list_servers,
             get_server,
@@ -704,25 +664,65 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
             open_media,
             list_fonts,
         ])
-        .setup(|app| {
-            let app_handle = app.handle();
-            let cloned_pool = sqlite_pool.clone();
-            tauri::async_runtime::spawn(async move {
-                match start_streamings(app_handle, &cloned_pool).await {
-                    Ok(()) => tracing::info!("user streamings are kicked for all accounts"),
-                    Err(e) => tracing::error!("{}", e.to_string()),
+        .setup(move |app| {
+            let app_handle = app.handle().clone();
+            let _ = app.set_menu(menu::set_menu(&app_handle)?);
+
+            let user_dir = app.path().data_dir().unwrap_or_else(|_| {
+                std::env::current_dir().expect("Cannot access the current directory")
+            });
+            let config_dir = user_dir.join(base_dir);
+            let config_dir_exists = std::fs::metadata(&config_dir).is_ok();
+            if !config_dir_exists {
+                std::fs::create_dir(&config_dir)?;
+            }
+            let log_path = config_dir.join(LOGFILE_PATH);
+
+            init_logger(log_path);
+
+            let settings_path = config_dir.join(SETTINGS_PATH);
+            let res = settings::read_settings(&settings_path)?;
+            rust_i18n::set_locale(res.appearance.language.to_string().as_str());
+
+            let database_dir_str = std::fs::canonicalize(&config_dir)
+                .expect("Failed to canonicalize")
+                .to_string_lossy()
+                .replace('?', "")
+                .replace('\\', "/")
+                .replace("//", "");
+            let database_url = format!("sqlite://{}/{}", database_dir_str, DATABASE_FILE);
+
+            let sqlite_pool = block_on(database::create_sqlite_pool(&database_url))?;
+            block_on(database::migrate_database(&sqlite_pool))?;
+
+            {
+                let sqlite_pool = sqlite_pool.clone();
+                let app_handle = app_handle.clone();
+                tauri::async_runtime::spawn(async move {
+                    match start_streamings(&app_handle, &sqlite_pool).await {
+                        Ok(()) => tracing::info!("user streamings are kicked for all accounts"),
+                        Err(e) => tracing::error!("{}", e.to_string()),
+                    }
+                });
+            }
+
+            app.manage(sqlite_pool);
+            app.manage(Mutex::new(app_handle));
+            app.manage(settings_path);
+
+            app.on_menu_event(|_app, event| {
+                if event.id() == "crash_reporting" {
+                    open::that("https://fedistar.net/help#crash_reporting")
+                        .expect("Failed to open the URL");
                 }
             });
 
-            app.manage(sqlite_pool);
-            let handle = app.handle();
-            app.manage(Mutex::new(handle));
-            app.manage(settings_path);
-
-            let window = app.get_window("main").expect("Failed to get main window");
+            let window = app
+                .get_webview_window("main")
+                .expect("Failed to get main window");
             #[cfg(not(target_os = "macos"))]
             {
-                window.menu_handle().hide().expect("Failed to hide menu");
+                window.hide_menu().expect("Failed to hide menu");
             }
 
             #[cfg(debug_assertions)]

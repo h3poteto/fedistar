@@ -1,8 +1,6 @@
-use std::sync::Arc;
-
 use megalodon::{self, streaming::Message};
 use serde::Serialize;
-use tauri::{AppHandle, Manager};
+use tauri::{AppHandle, Emitter};
 
 use crate::entities;
 
@@ -62,7 +60,7 @@ pub struct ReceiveTimelineConversationPayload {
 }
 
 pub async fn start_user(
-    app_handle: Arc<AppHandle>,
+    app_handle: AppHandle,
     server: &entities::Server,
     account: &entities::Account,
 ) -> Result<(), String> {
@@ -92,7 +90,7 @@ pub async fn start_user(
         Message::Update(mes) => {
             tracing::debug!("receive update");
             app_handle
-                .emit_all(
+                .emit(
                     "receive-home-status",
                     ReceiveHomeStatusPayload {
                         server_id,
@@ -105,7 +103,7 @@ pub async fn start_user(
             tracing::debug!("receive notification");
             if mes.account.is_some() {
                 app_handle
-                    .emit_all(
+                    .emit(
                         "receive-notification",
                         ReceiveNotificationPayload {
                             server_id,
@@ -118,7 +116,7 @@ pub async fn start_user(
         Message::StatusUpdate(mes) => {
             tracing::debug!("receive status updated");
             app_handle
-                .emit_all(
+                .emit(
                     "receive-home-status-update",
                     ReceiveHomeStatusUpdatePayload {
                         server_id,
@@ -130,7 +128,7 @@ pub async fn start_user(
         Message::Delete(status_id) => {
             tracing::debug!("receive delete");
             app_handle
-                .emit_all(
+                .emit(
                     "delete-home-status",
                     DeleteHomeStatusPayload {
                         server_id,
@@ -147,7 +145,7 @@ pub async fn start_user(
 }
 
 pub async fn start(
-    app_handle: Arc<AppHandle>,
+    app_handle: AppHandle,
     server: &entities::Server,
     timeline: &entities::Timeline,
     account: Option<entities::Account>,
@@ -211,7 +209,7 @@ pub async fn start(
         Message::Update(mes) => {
             tracing::debug!("receive update");
             app_handle
-                .emit_all(
+                .emit(
                     "receive-timeline-status",
                     ReceiveTimelineStatusPayload {
                         server_id,
@@ -225,7 +223,7 @@ pub async fn start(
         Message::StatusUpdate(mes) => {
             tracing::debug!("receive status update");
             app_handle
-                .emit_all(
+                .emit(
                     "receive-timeline-status-update",
                     ReceiveTimelineStatusUpdatePayload {
                         server_id,
@@ -239,7 +237,7 @@ pub async fn start(
         Message::Delete(status_id) => {
             tracing::debug!("receive delete");
             app_handle
-                .emit_all(
+                .emit(
                     "delete-timeline-status",
                     DeleteTimelineStatusPayload {
                         server_id,
@@ -253,7 +251,7 @@ pub async fn start(
         Message::Conversation(conversation) => {
             tracing::debug!("receive conversation");
             app_handle
-                .emit_all(
+                .emit(
                     "receive-timeline-conversation",
                     ReceiveTimelineConversationPayload {
                         server_id,
