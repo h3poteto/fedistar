@@ -708,13 +708,19 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
 
             app.manage(sqlite_pool);
             app.manage(Mutex::new(app_handle));
+
             app.manage(settings_path);
 
-            app.on_menu_event(|_app, event| {
-                if event.id() == "crash_reporting" {
+            app.on_menu_event(|app, event| match event.id().0.as_str() {
+                "crash_reporting" => {
                     open::that("https://fedistar.net/help#crash_reporting")
                         .expect("Failed to open the URL");
                 }
+                "quit" => {
+                    let app_handle = app.app_handle();
+                    app_handle.exit(0);
+                }
+                _ => {}
             });
 
             let window = app
