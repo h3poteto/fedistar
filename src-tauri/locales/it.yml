@@ -4,5 +4,6 @@ app_menu:
   help: Aiuto
   window: Finestra
   crash_reporting: Segnalazione guasti
+  quit: Quit
 media:
   title: Media

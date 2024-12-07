@@ -4,5 +4,6 @@ app_menu:
   help: Hilfe
   window: Fenster
   crash_reporting: Absturzbericht
+  quit: Quit
 media:
   title: Media
