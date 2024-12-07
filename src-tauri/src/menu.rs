@@ -13,6 +13,7 @@ pub fn set_menu(app: &AppHandle) -> Result<Menu<Wry>, tauri::Error> {
         .copyright(Some("2022 Akira Fukushima, Haruka Kurosaki".to_string()))
         .license(Some("GPL".to_string()))
         .website(Some("https://fedistar.net"))
+        .version(app.config().version.clone())
         .build();
 
     let menu = menu.build()?;
