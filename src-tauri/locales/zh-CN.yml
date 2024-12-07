@@ -4,5 +4,6 @@ app_menu:
   help: 帮助
   window: 窗口
   crash_reporting: 崩溃报告
+  quit: Quit
 media:
   title: 媒体
