@@ -3,7 +3,7 @@ import { Entity, MegalodonInterface } from 'megalodon'
 import { Avatar, Button, FlexboxGrid, toaster, Notification } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsStar, BsArrowRepeat, BsMenuUp, BsHouseDoor, BsPaperclip, BsPencil } from 'react-icons/bs'
-import { open } from '@tauri-apps/api/shell'
+import { open } from '@tauri-apps/plugin-shell'
 
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'

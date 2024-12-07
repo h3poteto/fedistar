@@ -4,7 +4,7 @@ import { Entity } from 'megalodon'
 import { ReactElement, useCallback, useEffect, useState } from 'react'
 import { Icon } from '@rsuite/icons'
 import { BsChevronRight, BsChevronLeft } from 'react-icons/bs'
-import { invoke } from '@tauri-apps/api/tauri'
+import { invoke } from '@tauri-apps/api/core'
 
 type Props = {
   index: number

@@ -1,4 +1,4 @@
-import { invoke } from '@tauri-apps/api/tauri'
+import { invoke } from '@tauri-apps/api/core'
 import { Dispatch, ReactElement, SetStateAction, useEffect, useState } from 'react'
 import { Icon } from '@rsuite/icons'
 import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge, FlexboxGrid, useToaster } from 'rsuite'

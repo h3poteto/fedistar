@@ -1,5 +1,5 @@
 import { Icon } from '@rsuite/icons'
-import { invoke } from '@tauri-apps/api/tauri'
+import { invoke } from '@tauri-apps/api/core'
 import { useRef, forwardRef, useState, useEffect, useCallback } from 'react'
 import { BsEnvelope, BsSliders, BsX, BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import {

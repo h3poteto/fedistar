@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import emptyPreview from 'src/black.png'
 import { ColumnWidth } from 'src/entities/timeline'
-import { invoke } from '@tauri-apps/api/tauri'
+import { invoke } from '@tauri-apps/api/core'
 
 type Props = {
   attachments: Array<Entity.Attachment>

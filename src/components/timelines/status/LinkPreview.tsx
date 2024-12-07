@@ -1,4 +1,4 @@
-import { open } from '@tauri-apps/api/shell'
+import { open } from '@tauri-apps/plugin-shell'
 import { Entity } from 'megalodon'
 import Image from 'next/image'
 import { FlexboxGrid, Panel } from 'rsuite'

@@ -35,7 +35,16 @@
   "dependencies": {
     "@emoji-mart/react": "^1.1.1",
     "@rsuite/icons": "^1.2.0",
-    "@tauri-apps/api": "1.6.0",
+    "@tauri-apps/api": "2.1.1",
+    "@tauri-apps/plugin-clipboard-manager": "^2.0.0",
+    "@tauri-apps/plugin-dialog": "~2",
+    "@tauri-apps/plugin-fs": "~2",
+    "@tauri-apps/plugin-global-shortcut": "~2",
+    "@tauri-apps/plugin-http": "~2",
+    "@tauri-apps/plugin-notification": "~2",
+    "@tauri-apps/plugin-os": "~2",
+    "@tauri-apps/plugin-process": "~2",
+    "@tauri-apps/plugin-shell": "~2",
     "dayjs": "^1.11.12",
     "emoji-mart": "^5.6.0",
     "megalodon": "10.0.7",
@@ -51,7 +60,8 @@
     "tauri-plugin-window-state-api": "github:tauri-apps/tauri-plugin-window-state#v1"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.6.3",
+    "@h3poteto/tauri-snap-packager": "0.2.1",
+    "@tauri-apps/cli": "^2.1.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.9.1",
     "@types/parse-link-header": "^2.0.3",
@@ -65,7 +75,6 @@
     "jest": "^29.7.0",
     "jsdom": "^25.0.1",
     "sass": "^1.80.3",
-    "@h3poteto/tauri-snap-packager": "0.2.1",
     "ts-jest": "^29.2.5",
     "typescript": "^5.6.3"
   }

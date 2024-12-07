@@ -1,6 +1,6 @@
 import { Modal, Form, ButtonToolbar, Button, Input, Loader, useToaster } from 'rsuite'
 import { useEffect, useState } from 'react'
-import { invoke } from '@tauri-apps/api/tauri'
+import { invoke } from '@tauri-apps/api/core'
 import { Server } from 'src/entities/server'
 import { OAuth } from 'megalodon'
 import alert from '../utils/alert'
