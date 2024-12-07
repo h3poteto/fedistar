@@ -4,5 +4,6 @@ app_menu:
   help: Ajuda
   window: Janela
   crash_reporting: Relatório de erro
+  quit: Quit
 media:
   title: Mídia
