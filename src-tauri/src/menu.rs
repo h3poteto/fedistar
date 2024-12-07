@@ -89,7 +89,13 @@ pub fn set_menu(app: &AppHandle) -> Result<Menu<Wry>, tauri::Error> {
 pub fn media_menu(app: &AppHandle) -> Result<Menu<Wry>, tauri::Error> {
     let menu = MenuBuilder::new(app).build()?;
     let submenu = SubmenuBuilder::new(app, t!("app_menu.file"))
-        .close_window()
+        .item(&MenuItem::with_id(
+            app,
+            "close",
+            t!("app_menu.close"),
+            true,
+            None::<&str>,
+        )?)
         .build()?;
     let _ = menu.append(&submenu)?;
 

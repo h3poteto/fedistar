@@ -5,5 +5,6 @@ app_menu:
   window: Window
   crash_reporting: Crash Report
   quit: Quit
+  close: Close
 media:
   title: Media
