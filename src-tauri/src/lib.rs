@@ -475,6 +475,12 @@ async fn open_media(app_handle: AppHandle, media_url: String) -> () {
     )
     .menu(menu::media_menu(&app_handle).expect("failed to build media menu"))
     .title(t!("media.title"))
+    .on_menu_event(|app, event| match event.id().0.as_str() {
+        "close" => {
+            app.close().expect("failed to close window");
+        }
+        _ => {}
+    })
     .build()
     .expect("failed to build media window");
 }
