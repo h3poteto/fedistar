@@ -5,5 +5,6 @@ app_menu:
   window: 窗口
   crash_reporting: 崩溃报告
   quit: Quit
+  close: Close
 media:
   title: 媒体
