@@ -63,7 +63,7 @@ pub fn set_menu(app: &AppHandle) -> Result<Menu<Wry>, tauri::Error> {
     #[cfg(not(target_os = "linux"))]
     {
         let submenu = SubmenuBuilder::new(app, t!("app_menu.window"))
-            .minimize()
+            .minimize_with_text(t!("app_menu.minimize"))
             .build()?;
         let _ = menu.append(&submenu)?;
     }
@@ -71,7 +71,7 @@ pub fn set_menu(app: &AppHandle) -> Result<Menu<Wry>, tauri::Error> {
     #[cfg(not(target_os = "macos"))]
     {
         let submenu = SubmenuBuilder::new(app, t!("app_menu.help"))
-            .about(Some(about))
+            .about_with_text(t!("app_menu.about"), Some(about))
             .item(&MenuItem::with_id(
                 app,
                 "crash_reporting",

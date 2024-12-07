@@ -6,5 +6,7 @@ app_menu:
   crash_reporting: Crash Report
   quit: Quit
   close: Close
+  about: About
+  minimize: Minimize
 media:
   title: Media
