@@ -5,5 +5,6 @@ app_menu:
   window: Finestra
   crash_reporting: Segnalazione guasti
   quit: Quit
+  close: Close
 media:
   title: Media
