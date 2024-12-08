@@ -21,15 +21,15 @@ pub fn set_menu(app: &AppHandle) -> Result<Menu<Wry>, tauri::Error> {
     #[cfg(target_os = "macos")]
     {
         let submenu = SubmenuBuilder::new(app, APP_NAME.to_string())
-            .about(Some(about))
+            .about_with_text(t!("app_menu.about"), Some(about))
             .separator()
-            .services()
+            .services_with_text(t!("app_menu.services"))
             .separator()
-            .hide()
-            .hide_others()
-            .show_all()
+            .hide_with_text(t!("app_menu.hide"))
+            .hide_others_with_text(t!("app_menu.hide_others"))
+            .show_all_with_text(t!("app_menu.show_all"))
             .separator()
-            .quit()
+            .quit_with_text(t!("app_menu.quit"))
             .build()?;
         let _ = menu.append(&submenu)?;
     }
@@ -49,14 +49,20 @@ pub fn set_menu(app: &AppHandle) -> Result<Menu<Wry>, tauri::Error> {
     }
 
     #[cfg(not(target_os = "linux"))]
-    let edit_menu = SubmenuBuilder::new(app, t!("app_menu.edit"));
-    #[cfg(target_os = "macos")]
     {
-        edit_menu.undo().redo().separator();
-    }
-    #[cfg(not(target_os = "linux"))]
-    {
-        let submenu = edit_menu.cut().copy().paste().build()?;
+        let mut edit_menu = SubmenuBuilder::new(app, t!("app_menu.edit"));
+        #[cfg(target_os = "macos")]
+        {
+            edit_menu = edit_menu
+                .undo_with_text(t!("app_menu.undo"))
+                .redo_with_text(t!("app_menu.redo"))
+                .separator();
+        }
+        let submenu = edit_menu
+            .cut_with_text(t!("app_menu.cut"))
+            .copy_with_text(t!("app_menu.copy"))
+            .paste_with_text(t!("app_menu.paste"))
+            .build()?;
         let _ = menu.append(&submenu)?;
     }
 
