@@ -55,7 +55,7 @@ importers:
         version: 10.0.7
       next:
         specifier: ^14.2.17
-        version: 14.2.17(@babel/core@7.22.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.3)
+        version: 14.2.17(@babel/core@7.22.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.82.0)
       parse-link-header:
         specifier: ^2.0.0
         version: 2.0.0
@@ -127,8 +127,8 @@ importers:
         specifier: ^25.0.1
         version: 25.0.1
       sass:
-        specifier: ^1.80.3
-        version: 1.80.3
+        specifier: ^1.82.0
+        version: 1.82.0
       ts-jest:
         specifier: ^29.2.5
         version: 29.2.5(@babel/core@7.22.17)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.22.17))(jest@29.7.0(@types/node@22.9.1))(typescript@5.6.3)
@@ -1607,8 +1607,8 @@ packages:
     resolution: {integrity: sha512-5Fytz/IraMjqpwfd34ke28PTVMjZjJG2MPn5t7OE4eUCUNf8BAa7b5WUS9/Qvr6mwOQS7Mk6vdsMno5he+T8Xw==}
     engines: {node: '>= 4'}
 
-  immutable@4.3.4:
-    resolution: {integrity: sha512-fsXeu4J4i6WNWSikpI88v/PcVflZz+6kMhUfIwc5SY+poQRPnaf5V7qds6SUyUN3cVxEzuCab7QIoLOQ+DQ1wA==}
+  immutable@5.0.3:
+    resolution: {integrity: sha512-P8IdPQHq3lA1xVeBRi5VPqUm5HDgKnx0Ru51wZz5mjxHr5n3RWhjIpOFU7ybkUxfB+5IToy+OLaHYDBIWsv+uw==}
 
   import-fresh@3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
@@ -2400,8 +2400,8 @@ packages:
   sanitize-html@2.13.1:
     resolution: {integrity: sha512-ZXtKq89oue4RP7abL9wp/9URJcqQNABB5GGJ2acW1sdO8JTVl92f4ygD7Yc9Ze09VAZhnt2zegeU0tbNsdcLYg==}
 
-  sass@1.80.3:
-    resolution: {integrity: sha512-ptDWyVmDMVielpz/oWy3YP3nfs7LpJTHIJZboMVs8GEC9eUmtZTZhMHlTW98wY4aEorDfjN38+Wr/XjskFWcfA==}
+  sass@1.82.0:
+    resolution: {integrity: sha512-j4GMCTa8elGyN9A7x7bEglx0VgSpNUG4W4wNedQ33wSMdnkqQCT8HTwOaVSV4e6yQovcu/3Oc4coJP/l0xhL2Q==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -3386,6 +3386,7 @@ snapshots:
       '@parcel/watcher-win32-arm64': 2.4.1
       '@parcel/watcher-win32-ia32': 2.4.1
       '@parcel/watcher-win32-x64': 2.4.1
+    optional: true
 
   '@rsuite/icon-font@4.0.0': {}
 
@@ -4023,7 +4024,8 @@ snapshots:
 
   delayed-stream@1.0.0: {}
 
-  detect-libc@1.0.3: {}
+  detect-libc@1.0.3:
+    optional: true
 
   detect-newline@3.1.0: {}
 
@@ -4501,7 +4503,7 @@ snapshots:
 
   ignore@5.3.1: {}
 
-  immutable@4.3.4: {}
+  immutable@5.0.3: {}
 
   import-fresh@3.3.0:
     dependencies:
@@ -5176,7 +5178,7 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  next@14.2.17(@babel/core@7.22.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.80.3):
+  next@14.2.17(@babel/core@7.22.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.82.0):
     dependencies:
       '@next/env': 14.2.17
       '@swc/helpers': 0.5.5
@@ -5197,12 +5199,13 @@ snapshots:
       '@next/swc-win32-arm64-msvc': 14.2.17
       '@next/swc-win32-ia32-msvc': 14.2.17
       '@next/swc-win32-x64-msvc': 14.2.17
-      sass: 1.80.3
+      sass: 1.82.0
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
 
-  node-addon-api@7.1.1: {}
+  node-addon-api@7.1.1:
+    optional: true
 
   node-int64@0.4.0: {}
 
@@ -5521,12 +5524,13 @@ snapshots:
       parse-srcset: 1.0.2
       postcss: 8.4.31
 
-  sass@1.80.3:
+  sass@1.82.0:
     dependencies:
-      '@parcel/watcher': 2.4.1
       chokidar: 4.0.1
-      immutable: 4.3.4
+      immutable: 5.0.3
       source-map-js: 1.0.2
+    optionalDependencies:
+      '@parcel/watcher': 2.4.1
 
   saxes@6.0.0:
     dependencies:
