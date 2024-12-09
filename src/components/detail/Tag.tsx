@@ -13,6 +13,7 @@ import Status from '../timelines/status/Status'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { CustomEmojiCategory } from 'src/entities/emoji'
 import { mapCustomEmojiCategory } from 'src/utils/emojiData'
+import { Timeline } from 'src/entities/timeline'
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
@@ -31,6 +32,7 @@ export default function TagDetail(props: Props) {
   const [tag, setTag] = useState('')
   const [hashtag, setHashtag] = useState<Entity.Tag | null>(null)
   const [customEmojis, setCustomEmojis] = useState<Array<CustomEmojiCategory>>([])
+  const [pinned, setPinned] = useState(false)
 
   const router = useRouter()
 
@@ -57,6 +59,14 @@ export default function TagDetail(props: Props) {
       }
       if (router.query.tag) {
         setTag(router.query.tag.toString())
+        try {
+          const timeline = await invoke<Timeline>('get_timeline', { server: server, kind: 'tag', name: router.query.tag.toString() })
+          if (timeline) {
+            setPinned(true)
+          }
+        } catch (e) {
+          setPinned(false)
+        }
       }
 
       if (cli) {
@@ -96,6 +106,7 @@ export default function TagDetail(props: Props) {
       return
     }
     await invoke('add_timeline', { server: server, kind: 'tag', name: tag, listId: null, columnWidth: 'sm' })
+    setPinned(true)
   }
 
   const followHashtag = async () => {
@@ -180,7 +191,7 @@ export default function TagDetail(props: Props) {
               </Button>
             )}
 
-            <Button appearance="link" onClick={addTimeline} title={formatMessage({ id: 'detail.pin' })}>
+            <Button appearance="link" onClick={addTimeline} title={formatMessage({ id: 'detail.pin' })} disabled={pinned}>
               <Icon as={BsPin} style={{ fontSize: '1.2em' }} />
             </Button>
             <Button appearance="link" onClick={close} title={formatMessage({ id: 'detail.close' })}>

@@ -179,6 +179,34 @@ FROM timelines INNER JOIN servers ON servers.id = timelines.server_id ORDER BY t
     Ok(timelines)
 }
 
+pub(crate) async fn get_timeline(
+    pool: &SqlitePool,
+    server: &entities::Server,
+    kind: &entities::timeline::Kind,
+    name: &str,
+) -> DBResult<entities::Timeline> {
+    let timeline = sqlx::query(
+        r#"
+SELECT timelines.id, timelines.server_id, timelines.kind, timelines.name, timelines.sort, timelines.list_id, timelines.column_width
+FROM timelines INNER JOIN servers ON servers.id = timelines.server_id WHERE timelines.name = ? AND servers.id = ? AND timelines.kind = ?"#
+    ).bind(name).bind(server.id).bind(kind)
+    .map(|row: SqliteRow| {
+        entities::Timeline {
+                id: row.get(0),
+                server_id: row.get(1),
+                kind: row.get(2),
+                name: row.get(3),
+                sort: row.get(4),
+                list_id: row.get(5),
+                column_width: row.get(6),
+        }
+    })
+
+    .fetch_one(pool).await?;
+
+    Ok(timeline)
+}
+
 pub(crate) async fn add_timeline(
     pool: &SqlitePool,
     server: &entities::Server,
