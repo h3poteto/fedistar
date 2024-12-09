@@ -4,7 +4,18 @@ app_menu:
   help: ヘルプ
   window: ウィンドウ
   crash_reporting: クラッシュレポート
-  quit: Quit
-  close: Close
+  quit: Fedistarを終了
+  close: 閉じる
+  about: Fedistarについて
+  minimize: 最小化
+  services: サービス
+  hide: Fedistarを非表示
+  hide_others: ほかを非表示
+  show_all: すべてを表示
+  undo: 取り消す
+  redo: やり直す
+  cut: 切り取り
+  copy: コピー
+  paste: 貼り付け
 media:
   title: メディア
