@@ -213,7 +213,6 @@ async fn add_timeline(
 ) -> Result<(), String> {
     let k = entities::timeline::Kind::from_str(kind)?;
     let width = entities::timeline::ColumnWidth::from_str(column_width)?;
-    print!("{:#?}", &width);
     let timeline = database::add_timeline(&sqlite_pool, &server, &k, name, list_id, &width)
         .await
         .map_err(|e| e.to_string())?;
@@ -229,6 +228,21 @@ async fn add_timeline(
     start_timeline_streaming(&app_handle, &sqlite_pool, server, timeline).await?;
 
     Ok(())
+}
+
+#[tauri::command]
+async fn get_timeline(
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+    server: entities::Server,
+    kind: &str,
+    name: &str,
+) -> Result<entities::Timeline, String> {
+    let k = entities::timeline::Kind::from_str(kind)?;
+    let timeline = database::get_timeline(&sqlite_pool, &server, &k, name)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    Ok(timeline)
 }
 
 #[tauri::command]
@@ -342,7 +356,6 @@ async fn update_column_width(
     column_width: &str,
 ) -> Result<(), String> {
     let width = entities::timeline::ColumnWidth::from_str(column_width)?;
-    print!("{:#?}", width);
 
     database::update_column_width(&sqlite_pool, id, &width)
         .await
@@ -669,6 +682,7 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
             update_column_width,
             open_media,
             list_fonts,
+            get_timeline,
         ])
         .setup(move |app| {
             let app_handle = app.handle().clone();
