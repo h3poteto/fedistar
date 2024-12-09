@@ -4,11 +4,11 @@ app_menu:
   help: ヘルプ
   window: ウィンドウ
   crash_reporting: クラッシュレポート
-  quit: Quit Fedistar
+  quit: 終了
   close: 閉じる
-  about: About
-  minimize: Minimize
-  services: Services
+  about: Fedistarについて
+  minimize: 最小化
+  services: サービス
   hide: Hide Fedistar
   hide_others: Hide Others
   show_all: Show All
