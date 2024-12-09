@@ -36,7 +36,7 @@
     "@emoji-mart/react": "^1.1.1",
     "@rsuite/icons": "^1.2.0",
     "@tauri-apps/api": "2.1.1",
-    "@tauri-apps/plugin-clipboard-manager": "^2.0.0",
+    "@tauri-apps/plugin-clipboard-manager": "^2.2.0",
     "@tauri-apps/plugin-dialog": "~2",
     "@tauri-apps/plugin-fs": "~2",
     "@tauri-apps/plugin-global-shortcut": "~2",
