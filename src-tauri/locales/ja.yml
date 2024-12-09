@@ -14,8 +14,8 @@ app_menu:
   show_all: Show All
   undo: Undo
   redo: Redo
-  cut: Cut
-  copy: Copy
-  paste: Paste
+  cut: 切り取り
+  copy: コピー
+  paste: 貼り付け
 media:
   title: メディア
