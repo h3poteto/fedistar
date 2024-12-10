@@ -42,14 +42,12 @@ jobs:
           channel: latest/stable
       - name: Install snapcraft
         run: |
+          sudo apt install snapd
+          sudo snap install core22
           sudo snap install snapcraft --classic
-      - name: Install app dependencies and build
-        run: pnpm install --frozen-lockfile && pnpm tauri build
-
       - name: Build snap
         run: |
-          pnpm run snap
+          sudo snapcraft
       - name: Publish
-        working-directory: src-tauri/target
         run: |
           snapcraft upload ./*.snap --release beta
