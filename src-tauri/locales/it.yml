@@ -4,18 +4,18 @@ app_menu:
   help: Aiuto
   window: Finestra
   crash_reporting: Segnalazione guasti
-  quit: Quit Fedistar
-  close: Close
-  about: About
-  minimize: Minimize
-  services: Services
-  hide: Hide Fedistar
-  hide_others: Hide Others
-  show_all: Show All
-  undo: Undo
-  redo: Redo
-  cut: Cut
-  copy: Copy
-  paste: Paste
+  quit: Esci da Fedistar
+  close: Chiudi
+  about: Informazioni
+  minimize: Riduzione a icona
+  services: Servizi
+  hide: Nascondi Fedistar
+  hide_others: Nascondi altre applicazioni
+  show_all: Mostra tutto
+  undo: Annulla
+  redo: Ripeti
+  cut: Taglia
+  copy: Copia
+  paste: Incolla
 media:
   title: Media
