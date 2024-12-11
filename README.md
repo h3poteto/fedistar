@@ -8,12 +8,16 @@
 
 This is a Fediverse client application for desktop. It is supporting
 
-- Mastodon
-- Pleroma
-- Friendica
-- Firefish
-- Gotosocial
-- Akkoma (Unofficial)
+- [x] Mastodon <img src="https://cdn.simpleicons.org/mastodon" alt="Mastodon" width=16 height=16>
+- [x] Pleroma <img src="https://cdn.simpleicons.org/pleroma" alt="Pleroma" width=16 height=16>
+- [x] Friendica
+- [x] Firefish <img src="https://cdn.simpleicons.org/firefish" alt="Firefish" width=16 height=16>
+- [x] Gotosocial
+- [x] Akkoma (Unofficial)
+- [x] Sharkey (Unofficial)
+- [x] Hometown (Unofficial)
+- [x] Iceshrimp (Unofficial)
+
 
 ![screenshot](screenshot.png)
 
