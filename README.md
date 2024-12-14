@@ -45,19 +45,20 @@ If you can speak multiple languages, could you please help with translation in [
 Or if you want add new language, please create an issue. I will add it.
 
 ## Development
-### Prereqisites
+### Prerequisites
 At first, install system dependencies.
 
 ```
 $ sudo apt update
-$ sudo apt install libwebkit2gtk-4.0-dev \
-    build-essential \
-    curl \
-    wget \
-    libssl-dev \
-    libgtk-3-dev \
-    libayatana-appindicator3-dev \
-    librsvg2-dev
+$ sudo apt install libwebkit2gtk-4.1-dev \
+  build-essential \
+  curl \
+  wget \
+  file \
+  libxdo-dev \
+  libssl-dev \
+  libayatana-appindicator3-dev \
+  librsvg2-dev
 ```
 
 Next, install Rust.
