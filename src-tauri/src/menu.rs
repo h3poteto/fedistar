@@ -1,10 +1,15 @@
 use rust_i18n::t;
+use tauri::image::Image;
 use tauri::menu::{AboutMetadataBuilder, Menu, MenuBuilder, MenuItem, SubmenuBuilder};
 use tauri::{AppHandle, Wry};
 
 const APP_NAME: &str = "Fedistar";
 
 pub fn set_menu(app: &AppHandle) -> Result<Menu<Wry>, tauri::Error> {
+    const IMAGE_BYTES: &[u8] = include_bytes!("../icons/32x32.png");
+
+    let icon = Image::from_bytes(IMAGE_BYTES).ok();
+
     let menu = MenuBuilder::new(app);
 
     let about = AboutMetadataBuilder::new()
@@ -14,6 +19,7 @@ pub fn set_menu(app: &AppHandle) -> Result<Menu<Wry>, tauri::Error> {
         .license(Some("GPL".to_string()))
         .website(Some("https://fedistar.net"))
         .version(app.config().version.clone())
+        .icon(icon)
         .build();
 
     let menu = menu.build()?;
