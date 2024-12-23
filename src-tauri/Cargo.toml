@@ -39,7 +39,7 @@ tauri-plugin-fs = "2"
 tauri-plugin-os = "2.2.0"
 tauri-plugin-process = "2.2.0"
 tauri-plugin-http = "2.2.0"
-tauri-plugin-notification = "2"
+tauri-plugin-notification = "2.2.0"
 tauri-plugin-clipboard-manager = "2.2.0"
 tauri-plugin-shell = "2"
 
