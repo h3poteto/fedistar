@@ -100,11 +100,11 @@ importers:
         specifier: ^2.0.3
         version: 2.0.3
       '@types/react':
-        specifier: 18.3.12
-        version: 18.3.12
+        specifier: 18.3.18
+        version: 18.3.18
       '@types/react-dom':
-        specifier: 18.3.1
-        version: 18.3.1
+        specifier: 18.3.5
+        version: 18.3.5(@types/react@18.3.18)
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.17.0
         version: 8.17.0(@typescript-eslint/parser@8.17.0(eslint@9.17.0)(typescript@5.6.3))(eslint@9.17.0)(typescript@5.6.3)
@@ -819,14 +819,16 @@ packages:
   '@types/prop-types@15.7.6':
     resolution: {integrity: sha512-RK/kBbYOQQHLYj9Z95eh7S6t7gq4Ojt/NT8HTk8bWVhA5DaF+5SMnxHKkP4gPNN3wAZkKP+VjAf0ebtYzf+fxg==}
 
-  '@types/react-dom@18.3.1':
-    resolution: {integrity: sha512-qW1Mfv8taImTthu4KoXgDfLuk4bydU6Q/TkADnDWWHwi4NX4BR+LWfTp2sVmTqRrsHvyDDTelgelxJ+SsejKKQ==}
+  '@types/react-dom@18.3.5':
+    resolution: {integrity: sha512-P4t6saawp+b/dFrUr2cvkVsfvPguwsxtH6dNIYRllMsefqFzkZk5UIjzyDOv5g1dXIPdG4Sp1yCR4Z6RCUsG/Q==}
+    peerDependencies:
+      '@types/react': ^18.0.0
 
   '@types/react-window@1.8.5':
     resolution: {integrity: sha512-V9q3CvhC9Jk9bWBOysPGaWy/Z0lxYcTXLtLipkt2cnRj1JOSFNF7wqGpkScSXMgBwC+fnVRg/7shwgddBG5ICw==}
 
-  '@types/react@18.3.12':
-    resolution: {integrity: sha512-D2wOSq/d6Agt28q7rSI3jhU7G6aiuzljDGZ2hTZHIkrTLUI+AF3WMeKkEZ9nN2fkBAlcktT6vcZjDFiIhMYEQw==}
+  '@types/react@18.3.18':
+    resolution: {integrity: sha512-t4yC+vtgnkYjNSKlFx1jkAhH8LgTo2N/7Qvi83kdEaUtMDiwpbLAktKDaAMlRcJ5eSxZkH74eEGt1ky31d7kfQ==}
 
   '@types/stack-utils@2.0.1':
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==}
@@ -3510,7 +3512,7 @@ snapshots:
 
   '@types/hoist-non-react-statics@3.3.2':
     dependencies:
-      '@types/react': 18.3.12
+      '@types/react': 18.3.18
       hoist-non-react-statics: 3.3.2
 
   '@types/istanbul-lib-coverage@2.0.4': {}
@@ -3540,15 +3542,15 @@ snapshots:
 
   '@types/prop-types@15.7.6': {}
 
-  '@types/react-dom@18.3.1':
+  '@types/react-dom@18.3.5(@types/react@18.3.18)':
     dependencies:
-      '@types/react': 18.3.12
+      '@types/react': 18.3.18
 
   '@types/react-window@1.8.5':
     dependencies:
-      '@types/react': 18.3.12
+      '@types/react': 18.3.18
 
-  '@types/react@18.3.12':
+  '@types/react@18.3.18':
     dependencies:
       '@types/prop-types': 15.7.6
       csstype: 3.1.2
@@ -5367,7 +5369,7 @@ snapshots:
       '@formatjs/icu-messageformat-parser': 2.9.7
       '@formatjs/intl': 3.0.4(typescript@5.6.3)
       '@types/hoist-non-react-statics': 3.3.2
-      '@types/react': 18.3.12
+      '@types/react': 18.3.18
       hoist-non-react-statics: 3.3.2
       intl-messageformat: 10.7.10
       react: 18.3.1
