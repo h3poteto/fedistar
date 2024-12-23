@@ -510,6 +510,23 @@ async fn list_fonts() -> Result<Vec<String>, String> {
     Ok(fonts)
 }
 
+async fn update_favicon(sqlite_pool: &sqlx::SqlitePool) -> Result<(), String> {
+    let servers = database::list_servers(sqlite_pool)
+        .await
+        .map_err(|e| e.to_string())?;
+    for (mut server, _) in servers {
+        let url = server.base_url.clone();
+        let icon = favicon::get_favicon_url(&url).await;
+        tracing::info!("The favicon for {} is {:#?}", &url, icon);
+        server.favicon = icon;
+        let _ = database::update_server(sqlite_pool, server)
+            .await
+            .map_err(|e| e.to_string())?;
+    }
+
+    Ok(())
+}
+
 async fn start_timeline_streaming(
     app_handle: &AppHandle,
     sqlite_pool: &sqlx::SqlitePool,
@@ -723,6 +740,13 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
                         Ok(()) => tracing::info!("user streamings are kicked for all accounts"),
                         Err(e) => tracing::error!("{}", e.to_string()),
                     }
+                });
+            }
+
+            {
+                let sqlite_pool = sqlite_pool.clone();
+                tauri::async_runtime::spawn(async move {
+                    let _ = update_favicon(&sqlite_pool).await;
                 });
             }
 

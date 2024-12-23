@@ -111,6 +111,23 @@ pub(crate) async fn remove_server(pool: &SqlitePool, id: i64) -> DBResult<()> {
     Ok(())
 }
 
+pub(crate) async fn update_server(pool: &SqlitePool, server: entities::Server) -> DBResult<()> {
+    let mut tx = pool.begin().await?;
+
+    sqlx::query("UPDATE servers SET domain = ?, base_url = ?, sns = ?, favicon = ? WHERE id = ?")
+        .bind(server.domain)
+        .bind(server.base_url)
+        .bind(server.sns)
+        .bind(server.favicon)
+        .bind(server.id)
+        .execute(&mut *tx)
+        .await?;
+
+    tx.commit().await?;
+
+    Ok(())
+}
+
 pub(crate) async fn add_account(
     pool: &SqlitePool,
     server: &entities::Server,
