@@ -703,7 +703,6 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
         ])
         .setup(move |app| {
             let app_handle = app.handle().clone();
-            let _ = app.set_menu(menu::set_menu(&app_handle)?);
 
             let user_dir = app.path().data_dir().unwrap_or_else(|_| {
                 std::env::current_dir().expect("Cannot access the current directory")
@@ -767,20 +766,29 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
                 _ => {}
             });
 
-            let window = app
-                .get_webview_window("main")
-                .expect("Failed to get main window");
-            #[cfg(not(target_os = "macos"))]
-            {
-                window.hide_menu().expect("Failed to hide menu");
-            }
-
             #[cfg(debug_assertions)]
             {
+                let window = app
+                    .get_webview_window("main")
+                    .expect("Failed to get main window");
                 window.open_devtools();
                 window.close_devtools();
             }
             Ok(())
+        })
+        .menu(|app_handle| {
+            let m = menu::set_menu(app_handle).expect("Failed to generate menu");
+            Ok(m)
+        })
+        .on_page_load(|window, _payload| {
+            #[cfg(not(target_os = "macos"))]
+            {
+                // TODO: Read menu config from db
+                window
+                    .app_handle()
+                    .hide_menu()
+                    .expect("Failed to hide menu");
+            }
         })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
