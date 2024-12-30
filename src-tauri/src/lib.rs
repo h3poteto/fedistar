@@ -392,18 +392,23 @@ fn save_settings(
 }
 
 #[tauri::command]
-fn toggle_menu(app_handle: AppHandle) -> Result<(), String> {
+fn toggle_menu(app_handle: AppHandle, settings_path: State<'_, PathBuf>) -> Result<(), String> {
     let window_handle = app_handle
         .get_webview_window("main")
         .expect("Failed to get main window");
+    let mut s = settings::read_settings(&settings_path).map_err(|e| e.to_string())?;
 
     match window_handle.is_menu_visible() {
         Ok(true) => {
             window_handle.hide_menu().expect("Failed to hide menu");
+            s.app_menu = Some(settings::AppMenu { hidden: true });
+            let _ = settings::save_settings(&settings_path, &s);
             Ok(())
         }
         Ok(false) => {
             window_handle.show_menu().expect("Failed to show menu");
+            s.app_menu = Some(settings::AppMenu { hidden: false });
+            let _ = settings::save_settings(&settings_path, &s);
             Ok(())
         }
         Err(e) => Err(e.to_string()),
@@ -783,11 +788,18 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
         .on_page_load(|window, _payload| {
             #[cfg(not(target_os = "macos"))]
             {
-                // TODO: Read menu config from db
-                window
-                    .app_handle()
-                    .hide_menu()
-                    .expect("Failed to hide menu");
+                let app = window.app_handle();
+                let settings_path = app.state::<PathBuf>().inner();
+                if let Ok(s) = settings::read_settings(&settings_path) {
+                    if let Some(app_menu) = s.app_menu {
+                        if app_menu.hidden {
+                            window
+                                .app_handle()
+                                .hide_menu()
+                                .expect("Failed to hide menu");
+                        }
+                    }
+                }
             }
         })
         .run(tauri::generate_context!())
