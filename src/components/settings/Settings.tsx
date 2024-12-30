@@ -73,6 +73,7 @@ export default function Settings(props: Props) {
     color_theme: 'dark'
   })
   const [fontList, setFontList] = useState<Array<{ label: string; value: string }>>([])
+  const [settings, setSettings] = useState<SettingsType>()
 
   const model = Schema.Model<FormValue>({
     font_size: Schema.Types.NumberType(formatMessage({ id: 'settings.settings.validation.font_size.type' }))
@@ -87,22 +88,24 @@ export default function Settings(props: Props) {
     const f = async () => {
       const settings = await invoke<SettingsType>('read_settings')
       setFormValue(current => Object.assign({}, current, settings.appearance))
+      setSettings(settings)
       const f = await invoke<Array<string>>('list_fonts')
       setFontList(f.map(f => ({ label: f, value: f })))
     }
     f()
-  }, [])
+  }, [props.open])
 
   const handleSubmit = async () => {
-    const settings: SettingsType = {
+    const s: SettingsType = {
       appearance: {
         font_size: Number(formValue.font_size),
         font_family: formValue.font_family,
         language: formValue.language,
         color_theme: formValue.color_theme
-      }
+      },
+      app_menu: settings.app_menu
     }
-    await invoke('save_settings', { obj: settings })
+    await invoke('save_settings', { obj: s })
     props.reloadAppearance()
   }
 

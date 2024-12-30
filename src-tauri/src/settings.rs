@@ -5,6 +5,7 @@ use std::{fmt, fs, path::PathBuf};
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct Settings {
     pub appearance: Appearance,
+    pub app_menu: Option<AppMenu>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
@@ -13,6 +14,11 @@ pub struct Appearance {
     pub font_family: Option<String>,
     pub language: LocaleType,
     pub color_theme: ThemeType,
+}
+
+#[derive(Deserialize, Serialize, Debug, Clone)]
+pub struct AppMenu {
+    pub hidden: bool,
 }
 
 #[derive(Debug, Serialize, Deserialize, sqlx::Type, Clone, PartialEq, Eq)]
@@ -51,6 +57,7 @@ pub(crate) fn read_settings(filepath: &PathBuf) -> Result<Settings, String> {
                 language: LocaleType::En,
                 color_theme: ThemeType::Dark,
             },
+            app_menu: Some(AppMenu { hidden: false }),
         });
     };
     let updated = update_settings_with_default(filepath, text)?;

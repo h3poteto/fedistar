@@ -7,6 +7,9 @@ export type Settings = {
     language: localeType
     color_theme: ThemeType
   }
+  app_menu?: {
+    hidden: boolean
+  }
 }
 
 export type ThemeType = 'dark' | 'light' | 'high-contrast'
