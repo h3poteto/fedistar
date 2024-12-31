@@ -3,6 +3,8 @@ on:
   push:
     tags:
       - 'v*'
+    branches:
+      - iss-1690/build
   workflow_dispatch:
 
 jobs:
