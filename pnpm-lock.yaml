@@ -51,8 +51,8 @@ importers:
         specifier: ^5.6.0
         version: 5.6.0
       megalodon:
-        specifier: 10.0.7
-        version: 10.0.7
+        specifier: 10.1.1
+        version: 10.1.1
       next:
         specifier: ^14.2.21
         version: 14.2.21(@babel/core@7.22.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.82.0)
@@ -989,8 +989,8 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  axios@1.7.7:
-    resolution: {integrity: sha512-S4kL7XrjgBmvdGut0sN3yJxqYzrDOnivkBiN0OFs6hLiUam3UPvswUo0kqGyhqUZGEOytHyumEdXsAkgCOUf3Q==}
+  axios@1.7.9:
+    resolution: {integrity: sha512-LhLcE7Hbiryz8oMDdDptSrWowmB4Bl6RCt6sIJKpRB4XtVf0iEgewX3au/pJqm+Py1kCASkb/FFKjxQaLtxJvw==}
 
   babel-jest@29.7.0:
     resolution: {integrity: sha512-BrvGY3xZSwEcCzKvKsCi2GgHqDqsYkOP4/by5xCgIwGXQxIEh+8ew3gmrE1y7XRR6LHZIj6yLYnUi/mm2KXKBg==}
@@ -1455,6 +1455,10 @@ packages:
 
   form-data@4.0.0:
     resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
+    engines: {node: '>= 6'}
+
+  form-data@4.0.1:
+    resolution: {integrity: sha512-tzN8e4TX8+kkxGPK8D5u0FNmjPUjw3lwC9lSLxxoB/+GtsJG91CO8bSWy73APlgAZzZbXEYZJuxjkHH2w+Ezhw==}
     engines: {node: '>= 6'}
 
   fs.realpath@1.0.0:
@@ -2034,8 +2038,8 @@ packages:
   makeerror@1.0.12:
     resolution: {integrity: sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg==}
 
-  megalodon@10.0.7:
-    resolution: {integrity: sha512-gz8mwfN3sp269fqpkd9znopK8U6rhuJKtlyI7sQyzk4d6VxpVIX730FBjACNz3Io4bWo9DJdQBH5XOO/FCHDzg==}
+  megalodon@10.1.1:
+    resolution: {integrity: sha512-mjgXVZ39/Uaw7OY4n/YbwqWv7hfTfY2Lcjtr2yypBfvuBe0wstmQquQDT7xgeFOl7oC2THmR5mWj1cVH1Cjc5Q==}
     engines: {node: '>=22.11.0'}
 
   memoize-one@5.2.1:
@@ -3759,10 +3763,10 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.0.0
 
-  axios@1.7.7:
+  axios@1.7.9:
     dependencies:
       follow-redirects: 1.15.6
-      form-data: 4.0.0
+      form-data: 4.0.1
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
@@ -4344,6 +4348,12 @@ snapshots:
       is-callable: 1.2.7
 
   form-data@4.0.0:
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      mime-types: 2.1.35
+
+  form-data@4.0.1:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
@@ -5115,14 +5125,14 @@ snapshots:
     dependencies:
       tmpl: 1.0.5
 
-  megalodon@10.0.7:
+  megalodon@10.1.1:
     dependencies:
       '@badgateway/oauth2-client': 2.4.2
       '@types/ws': 8.5.13
-      axios: 1.7.7
+      axios: 1.7.9
       dayjs: 1.11.13
       events: 3.3.0
-      form-data: 4.0.0
+      form-data: 4.0.1
       isomorphic-ws: 5.0.0(ws@8.18.0)
       object-assign-deep: 0.4.0
       uuid: 11.0.3
