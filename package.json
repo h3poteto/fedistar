@@ -35,7 +35,7 @@
   "dependencies": {
     "@emoji-mart/react": "^1.1.1",
     "@rsuite/icons": "^1.2.0",
-    "@tauri-apps/api": "2.1.1",
+    "@tauri-apps/api": "2.2.0",
     "@tauri-apps/plugin-clipboard-manager": "^2.2.0",
     "@tauri-apps/plugin-dialog": "~2.2.0",
     "@tauri-apps/plugin-fs": "~2.2.0",
@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "@h3poteto/tauri-snap-packager": "0.2.1",
-    "@tauri-apps/cli": "^2.1.0",
+    "@tauri-apps/cli": "^2.2.2",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.2",
     "@types/parse-link-header": "^2.0.3",
