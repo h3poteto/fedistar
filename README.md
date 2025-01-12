@@ -13,6 +13,7 @@ This is a Fediverse client application for desktop. It is supporting
 - [x] Friendica
 - [x] Firefish <img src="https://cdn.simpleicons.org/firefish" alt="Firefish" width=16 height=16>
 - [x] Gotosocial
+- [x] Pixelfed
 - [x] Akkoma (Unofficial)
 - [x] Sharkey (Unofficial)
 - [x] Hometown (Unofficial)
