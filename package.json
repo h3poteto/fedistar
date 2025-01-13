@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "@h3poteto/tauri-snap-packager": "0.2.1",
-    "@tauri-apps/cli": "^2.2.2",
+    "@tauri-apps/cli": "^2.2.4",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.2",
     "@types/parse-link-header": "^2.0.3",
