@@ -21,7 +21,7 @@ tauri = { version = "2.2.0", features = ["image-png"] }
 sqlx  = { version = "0.8.2", features = ["runtime-tokio-rustls", "sqlite", "migrate"] }
 tokio = { version = "1.42.0", features = ["full"] }
 futures = "0.3.31"
-directories = "5.0.1"
+directories = "6.0.0"
 megalodon = "0.15.2"
 tracing = "0.1.41"
 reqwest = { version = ">=0.12.12", features = ["json", "multipart", "stream"] }
