@@ -86,58 +86,63 @@ pub async fn start_user(
 
     let server_id = server.id;
 
-    let s = streaming.listen(Box::new(move |message| match message {
-        Message::Update(mes) => {
-            tracing::debug!("receive update");
-            app_handle
-                .emit(
-                    "receive-home-status",
-                    ReceiveHomeStatusPayload {
-                        server_id,
-                        status: mes,
-                    },
-                )
-                .expect("Failed to send receive-home-status event");
-        }
-        Message::Notification(mes) => {
-            tracing::debug!("receive notification");
-            if mes.account.is_some() {
-                app_handle
-                    .emit(
-                        "receive-notification",
-                        ReceiveNotificationPayload {
-                            server_id,
-                            notification: mes,
-                        },
-                    )
-                    .expect("Failed to send receive-notification event");
+    let s = streaming.listen(Box::new(move |message| {
+        let app_handle = app_handle.clone();
+        Box::pin(async move {
+            match message {
+                Message::Update(mes) => {
+                    tracing::debug!("receive update");
+                    app_handle
+                        .emit(
+                            "receive-home-status",
+                            ReceiveHomeStatusPayload {
+                                server_id,
+                                status: mes,
+                            },
+                        )
+                        .expect("Failed to send receive-home-status event");
+                }
+                Message::Notification(mes) => {
+                    tracing::debug!("receive notification");
+                    if mes.account.is_some() {
+                        app_handle
+                            .emit(
+                                "receive-notification",
+                                ReceiveNotificationPayload {
+                                    server_id,
+                                    notification: mes,
+                                },
+                            )
+                            .expect("Failed to send receive-notification event");
+                    }
+                }
+                Message::StatusUpdate(mes) => {
+                    tracing::debug!("receive status updated");
+                    app_handle
+                        .emit(
+                            "receive-home-status-update",
+                            ReceiveHomeStatusUpdatePayload {
+                                server_id,
+                                status: mes,
+                            },
+                        )
+                        .expect("Failed to send receive-home-status-update event");
+                }
+                Message::Delete(status_id) => {
+                    tracing::debug!("receive delete");
+                    app_handle
+                        .emit(
+                            "delete-home-status",
+                            DeleteHomeStatusPayload {
+                                server_id,
+                                status_id,
+                            },
+                        )
+                        .expect("Failed to send delete-home-status event");
+                }
+                _ => {}
             }
-        }
-        Message::StatusUpdate(mes) => {
-            tracing::debug!("receive status updated");
-            app_handle
-                .emit(
-                    "receive-home-status-update",
-                    ReceiveHomeStatusUpdatePayload {
-                        server_id,
-                        status: mes,
-                    },
-                )
-                .expect("Failed to send receive-home-status-update event");
-        }
-        Message::Delete(status_id) => {
-            tracing::debug!("receive delete");
-            app_handle
-                .emit(
-                    "delete-home-status",
-                    DeleteHomeStatusPayload {
-                        server_id,
-                        status_id,
-                    },
-                )
-                .expect("Failed to send delete-home-status event");
-        }
-        _ => {}
+        })
     }));
     s.await;
 
@@ -205,63 +210,69 @@ pub async fn start(
     let server_id = server.id;
     let name = timeline.name.clone();
 
-    let s = streaming.listen(Box::new(move |message| match message {
-        Message::Update(mes) => {
-            tracing::debug!("receive update");
-            app_handle
-                .emit(
-                    "receive-timeline-status",
-                    ReceiveTimelineStatusPayload {
-                        server_id,
-                        timeline_id,
-                        name: name.clone(),
-                        status: mes,
-                    },
-                )
-                .expect("Failed to receive-timeline-status event");
-        }
-        Message::StatusUpdate(mes) => {
-            tracing::debug!("receive status update");
-            app_handle
-                .emit(
-                    "receive-timeline-status-update",
-                    ReceiveTimelineStatusUpdatePayload {
-                        server_id,
-                        timeline_id,
-                        name: name.clone(),
-                        status: mes,
-                    },
-                )
-                .expect("Failed to receive-timeline-status-update event");
-        }
-        Message::Delete(status_id) => {
-            tracing::debug!("receive delete");
-            app_handle
-                .emit(
-                    "delete-timeline-status",
-                    DeleteTimelineStatusPayload {
-                        server_id,
-                        timeline_id,
-                        name: name.clone(),
-                        status_id,
-                    },
-                )
-                .expect("Failed to delete-timeline-status event");
-        }
-        Message::Conversation(conversation) => {
-            tracing::debug!("receive conversation");
-            app_handle
-                .emit(
-                    "receive-timeline-conversation",
-                    ReceiveTimelineConversationPayload {
-                        server_id,
-                        timeline_id,
-                        conversation,
-                    },
-                )
-                .expect("Failed to receive-timeline-conversation event");
-        }
-        _ => {}
+    let s = streaming.listen(Box::new(move |message| {
+        let app_handle = app_handle.clone();
+        let name = name.clone();
+        Box::pin(async move {
+            match message {
+                Message::Update(mes) => {
+                    tracing::debug!("receive update");
+                    app_handle
+                        .emit(
+                            "receive-timeline-status",
+                            ReceiveTimelineStatusPayload {
+                                server_id,
+                                timeline_id,
+                                name: name.clone(),
+                                status: mes,
+                            },
+                        )
+                        .expect("Failed to receive-timeline-status event");
+                }
+                Message::StatusUpdate(mes) => {
+                    tracing::debug!("receive status update");
+                    app_handle
+                        .emit(
+                            "receive-timeline-status-update",
+                            ReceiveTimelineStatusUpdatePayload {
+                                server_id,
+                                timeline_id,
+                                name: name.clone(),
+                                status: mes,
+                            },
+                        )
+                        .expect("Failed to receive-timeline-status-update event");
+                }
+                Message::Delete(status_id) => {
+                    tracing::debug!("receive delete");
+                    app_handle
+                        .emit(
+                            "delete-timeline-status",
+                            DeleteTimelineStatusPayload {
+                                server_id,
+                                timeline_id,
+                                name: name.clone(),
+                                status_id,
+                            },
+                        )
+                        .expect("Failed to delete-timeline-status event");
+                }
+                Message::Conversation(conversation) => {
+                    tracing::debug!("receive conversation");
+                    app_handle
+                        .emit(
+                            "receive-timeline-conversation",
+                            ReceiveTimelineConversationPayload {
+                                server_id,
+                                timeline_id,
+                                conversation,
+                            },
+                        )
+                        .expect("Failed to receive-timeline-conversation event");
+                }
+                _ => {}
+            }
+        })
     }));
     s.await;
 
