@@ -3271,7 +3271,7 @@ version = "0.7.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "af1844ef2428cc3e1cb900be36181049ef3d3193c63e43026cfe202983b27a56"
 dependencies = [
- "proc-macro-crate 1.2.1",
+ "proc-macro-crate 2.0.0",
  "proc-macro2",
  "quote",
  "syn 2.0.87",
@@ -5925,9 +5925,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-window-state"
-version = "2.2.0"
+version = "2.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "234dd891cc7960fa28f93ea911f3e0d9ce8375ebf9ff303831bdd7a3443d5714"
+checksum = "35e344b512b0d99d9d06225f235d87d6c66d89496a3bf323d9b578d940596e6c"
 dependencies = [
  "bitflags 2.6.0",
  "log",
