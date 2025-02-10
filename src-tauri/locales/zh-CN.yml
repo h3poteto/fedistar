@@ -4,18 +4,18 @@ app_menu:
   help: 帮助
   window: 窗口
   crash_reporting: 崩溃报告
-  quit: Quit Fedistar
-  close: Close
-  about: About
-  minimize: Minimize
-  services: Services
-  hide: Hide Fedistar
-  hide_others: Hide Others
-  show_all: Show All
-  undo: Undo
-  redo: Redo
-  cut: Cut
-  copy: Copy
-  paste: Paste
+  quit: 退出 Fedistar
+  close: 关闭
+  about: 关于
+  minimize: 最小化
+  services: 服务
+  hide: 隐藏 Fedistar
+  hide_others: 隐藏其它
+  show_all: 显示全部
+  undo: 撤销
+  redo: 重做
+  cut: 剪切
+  copy: 复制
+  paste: 粘贴
 media:
   title: 媒体

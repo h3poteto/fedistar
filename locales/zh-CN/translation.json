@@ -93,13 +93,13 @@
       "appearance": {
         "title": "外观",
         "font_size": "字体大小",
-        "font_family": "Font family",
+        "font_family": "字体系列",
         "language": "语言",
         "color_theme": "颜色主题",
         "theme": {
-          "light": "Light",
-          "dark": "Dark",
-          "high_contrast": "High contrast"
+          "light": "浅色",
+          "dark": "深色",
+          "high_contrast": "高对比度"
         }
       },
       "save": "保存",
@@ -163,7 +163,7 @@
     "title": "搜索",
     "placeholder": "搜索或粘贴 URL",
     "search": "搜索",
-    "clear": "Clear",
+    "clear": "清空",
     "results": {
       "accounts": "用户",
       "hashtags": "话题标签",
