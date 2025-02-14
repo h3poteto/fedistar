@@ -55,7 +55,7 @@ importers:
         version: 10.1.1
       next:
         specifier: ^14.2.23
-        version: 14.2.23(@babel/core@7.22.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.1)
+        version: 14.2.23(@babel/core@7.22.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.85.0)
       parse-link-header:
         specifier: ^2.0.0
         version: 2.0.0
@@ -82,7 +82,7 @@ importers:
         version: 2.14.0
       tauri-plugin-window-state-api:
         specifier: github:tauri-apps/tauri-plugin-window-state#v1
-        version: https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/9c6594079a10b79cc3405cb57f1424a4b8f75ab2
+        version: https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/12ac7a31bf71ab5c3e87add90d44b47cbfe95652
     devDependencies:
       '@h3poteto/tauri-snap-packager':
         specifier: 0.2.1
@@ -127,8 +127,8 @@ importers:
         specifier: ^26.0.0
         version: 26.0.0
       sass:
-        specifier: ^1.83.1
-        version: 1.83.1
+        specifier: ^1.85.0
+        version: 1.85.0
       ts-jest:
         specifier: ^29.2.5
         version: 29.2.5(@babel/core@7.22.17)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.22.17))(jest@29.7.0(@types/node@22.10.2))(typescript@5.7.2)
@@ -2589,8 +2589,8 @@ packages:
   sanitize-html@2.14.0:
     resolution: {integrity: sha512-CafX+IUPxZshXqqRaG9ZClSlfPVjSxI0td7n07hk8QO2oO+9JDnlcL8iM8TWeOXOIBFgIOx6zioTzM53AOMn3g==}
 
-  sass@1.83.1:
-    resolution: {integrity: sha512-EVJbDaEs4Rr3F0glJzFSOvtg2/oy2V/YrGFPqPY24UqcLDWcI9ZY5sN+qyO3c/QCZwzgfirvhXvINiJCE/OLcA==}
+  sass@1.85.0:
+    resolution: {integrity: sha512-3ToiC1xZ1Y8aU7+CkgCI/tqyuPXEmYGJXO7H4uqp0xkLXUqp88rQQ4j1HmP37xSJLbCJPaIiv+cT1y+grssrww==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -2775,8 +2775,8 @@ packages:
   symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
 
-  tauri-plugin-window-state-api@https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/9c6594079a10b79cc3405cb57f1424a4b8f75ab2:
-    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/9c6594079a10b79cc3405cb57f1424a4b8f75ab2}
+  tauri-plugin-window-state-api@https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/12ac7a31bf71ab5c3e87add90d44b47cbfe95652:
+    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/12ac7a31bf71ab5c3e87add90d44b47cbfe95652}
     version: 0.0.0
 
   test-exclude@6.0.0:
@@ -5680,7 +5680,7 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  next@14.2.23(@babel/core@7.22.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.83.1):
+  next@14.2.23(@babel/core@7.22.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.85.0):
     dependencies:
       '@next/env': 14.2.23
       '@swc/helpers': 0.5.5
@@ -5701,7 +5701,7 @@ snapshots:
       '@next/swc-win32-arm64-msvc': 14.2.23
       '@next/swc-win32-ia32-msvc': 14.2.23
       '@next/swc-win32-x64-msvc': 14.2.23
-      sass: 1.83.1
+      sass: 1.85.0
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
@@ -6071,7 +6071,7 @@ snapshots:
       parse-srcset: 1.0.2
       postcss: 8.4.31
 
-  sass@1.83.1:
+  sass@1.85.0:
     dependencies:
       chokidar: 4.0.1
       immutable: 5.0.3
@@ -6297,7 +6297,7 @@ snapshots:
 
   symbol-tree@3.2.4: {}
 
-  tauri-plugin-window-state-api@https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/9c6594079a10b79cc3405cb57f1424a4b8f75ab2:
+  tauri-plugin-window-state-api@https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/12ac7a31bf71ab5c3e87add90d44b47cbfe95652:
     dependencies:
       '@tauri-apps/api': 1.6.0
 
