@@ -97,9 +97,9 @@
         "language": "Langue",
         "color_theme": "Color theme",
         "theme": {
-          "light": "Light",
-          "dark": "Dark",
-          "high_contrast": "High contrast"
+          "light": "Clair",
+          "dark": "Sombre",
+          "high_contrast": "Haut contraste"
         }
       },
       "save": "Sauvegarder",
@@ -160,15 +160,15 @@
     }
   },
   "search": {
-    "title": "Search",
+    "title": "Rechercher",
     "placeholder": "Search or paste URL",
-    "search": "Search",
-    "clear": "Clear",
+    "search": "Rechercher",
+    "clear": "Effacer",
     "results": {
       "accounts": "People",
       "hashtags": "Hashtags",
       "statuses": "Statuses",
-      "more": "Load more"
+      "more": "Charger plus"
     }
   },
   "timeline": {
@@ -246,7 +246,7 @@
       "show_less": "Voir moins",
       "media_hidden": "Média caché",
       "pinned_post": "Message épinglé",
-      "filtered": "Filtered",
+      "filtered": "Filtré",
       "show_anyway": "Show anyway"
     },
     "poll": {
