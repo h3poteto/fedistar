@@ -4,18 +4,18 @@ app_menu:
   help: Aide
   window: Fenêtre
   crash_reporting: Rapport de crash
-  quit: Quit Fedistar
-  close: Close
-  about: About
-  minimize: Minimize
+  quit: Quitter Fedistar
+  close: Fermer
+  about: À propos de
+  minimize: Minimiser
   services: Services
-  hide: Hide Fedistar
-  hide_others: Hide Others
-  show_all: Show All
-  undo: Undo
-  redo: Redo
-  cut: Cut
-  copy: Copy
-  paste: Paste
+  hide: Cacher Fedistar
+  hide_others: Cacher les autres
+  show_all: Tout montrer
+  undo: Défaire
+  redo: Refaire
+  cut: Couper
+  copy: Copier
+  paste: Coller
 media:
-  title: Media
+  title: Média
