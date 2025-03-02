@@ -341,7 +341,7 @@ async function searchAccount(account: ParsedAccount, status: Entity.Status, clie
   try {
     const res = await client.lookupAccount(account.acct)
     return res.data
-  } catch (e) {
+  } catch {
     const res = await client.searchAccount(account.url, { resolve: true })
     if (res.data.length === 0) return null
     const user = accountMatch(res.data, account, server.domain)

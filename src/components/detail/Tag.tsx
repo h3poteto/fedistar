@@ -65,6 +65,7 @@ export default function TagDetail(props: Props) {
             setPinned(true)
           }
         } catch (e) {
+          console.error(e)
           setPinned(false)
         }
       }
