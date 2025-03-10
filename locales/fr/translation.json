@@ -67,7 +67,7 @@
       "remove": "Supprimer",
       "announcements": "Annonces",
       "lists": "Listes",
-      "followed_hashtags": "Followed Hashtags"
+      "followed_hashtags": "Hashtags suivis"
     }
   },
   "servers": {
@@ -81,8 +81,8 @@
       "finish": "Terminer",
       "authorization_code": "Code d'autorisation",
       "authorization_help": "Veuillez coller le code d'autorisation de votre navigateur",
-      "without_code_authorize": "Please approve Fedistar in your browser, and after you approve it please authorize",
-      "authorization_url": "Normally, the browser will open automatically, but if it doesn't, please open the following URL in your browser and approve it.",
+      "without_code_authorize": "Veuillez approuver Fedistar dans votre navigateur, et après l'avoir approuvé, veuillez autoriser",
+      "authorization_url": "Normalement, le navigateur s'ouvrira automatiquement, mais si ce n'est pas le cas, veuillez ouvrir l'URL suivante dans votre navigateur et l'approuver.",
       "authorize": "Autoriser",
       "loading": "Chargement"
     }
@@ -93,9 +93,9 @@
       "appearance": {
         "title": "Apparence",
         "font_size": "Taille de la police",
-        "font_family": "Font family",
+        "font_family": "Famille de polices",
         "language": "Langue",
-        "color_theme": "Color theme",
+        "color_theme": "Thème de couleur",
         "theme": {
           "light": "Clair",
           "dark": "Sombre",
@@ -161,13 +161,13 @@
   },
   "search": {
     "title": "Rechercher",
-    "placeholder": "Search or paste URL",
+    "placeholder": "Rechercher ou coller un lien",
     "search": "Rechercher",
     "clear": "Effacer",
     "results": {
-      "accounts": "People",
+      "accounts": "Personnes",
       "hashtags": "Hashtags",
-      "statuses": "Statuses",
+      "statuses": "Status",
       "more": "Charger plus"
     }
   },
@@ -247,7 +247,7 @@
       "media_hidden": "Média caché",
       "pinned_post": "Message épinglé",
       "filtered": "Filtré",
-      "show_anyway": "Show anyway"
+      "show_anyway": "Afficher quand même"
     },
     "poll": {
       "vote": "Voter",
