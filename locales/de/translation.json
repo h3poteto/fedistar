@@ -93,12 +93,12 @@
       "appearance": {
         "title": "Darstellung",
         "font_size": "Schriftgröße",
-        "font_family": "Font family",
+        "font_family": "Schriftfamilie",
         "language": "Sprache",
         "color_theme": "Farb-Design",
         "theme": {
-          "light": "Light",
-          "dark": "Dark",
+          "light": "Hell",
+          "dark": "Dunkel",
           "high_contrast": "High contrast"
         }
       },
@@ -162,8 +162,8 @@
   "search": {
     "title": "Suchen",
     "placeholder": "Suchen oder URL einfügen",
-    "search": "Search",
-    "clear": "Clear",
+    "search": "Suchen",
+    "clear": "Löschen",
     "results": {
       "accounts": "Personen",
       "hashtags": "Hashtags",
@@ -246,8 +246,8 @@
       "show_less": "Weniger anzeigen",
       "media_hidden": "Inhalt verborgen",
       "pinned_post": "Angehefteter Beitrag",
-      "filtered": "Filtered",
-      "show_anyway": "Show anyway"
+      "filtered": "Gefiltert",
+      "show_anyway": "Dennoch anzeigen"
     },
     "poll": {
       "vote": "Abstimmung",
