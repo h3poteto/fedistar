@@ -278,6 +278,8 @@
       "not_following": "Non abonné",
       "follow_requested": "Demande d'abonnement en cours",
       "follows_you": "VOUS SUIT",
+      "muted": "MUTED",
+      "blocked": "BLOCKED",
       "posts": "Messages",
       "following": "Abonnements",
       "followers": "Abonnés",
