@@ -1,0 +1,21 @@
+app_menu:
+  file: File
+  edit: Edit
+  help: Help
+  window: Window
+  crash_reporting: Crash Report
+  quit: Quit Fedistar
+  close: Close
+  about: About
+  minimize: Minimize
+  services: Services
+  hide: Hide Fedistar
+  hide_others: Hide Others
+  show_all: Show All
+  undo: Undo
+  redo: Redo
+  cut: Cut
+  copy: Copy
+  paste: Paste
+media:
+  title: Media
