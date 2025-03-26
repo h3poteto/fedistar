@@ -227,6 +227,41 @@ const Profile: React.FC<Props> = props => {
               <FormattedMessage id="detail.profile.follows_you" />
             </div>
           )}
+          <div
+            className="styels"
+            style={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px'
+            }}
+          >
+            {relationship && relationship.muting && (
+              <div
+                className="muted-status"
+                style={{
+                  backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                  padding: '4px',
+                  borderRadius: '4px',
+                  marginBottom: '4px'
+                }}
+              >
+                <FormattedMessage id="detail.profile.muted" />
+              </div>
+            )}
+            {relationship && relationship.blocking && (
+              <div
+                className="muted-status"
+                style={{
+                  backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                  padding: '4px',
+                  borderRadius: '4px',
+                  marginBottom: '4px'
+                }}
+              >
+                <FormattedMessage id="detail.profile.blocked" />
+              </div>
+            )}
+          </div>
           <div className="profile-header-image" style={{ width: '100%', backgroundColor: 'var(--rs-body)' }}>
             <img src={user.header} alt="header image" style={{ objectFit: 'cover', width: '100%', height: '146px' }} />
           </div>
