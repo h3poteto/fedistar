@@ -13,6 +13,7 @@ files:
         es-ES: es-ES
         id: id
         pl: pl
+        ia: ia
   - source: /src-tauri/locales/en.yml
     translation: /src-tauri/locales/%locale%.yml
     languages_mapping:
@@ -27,3 +28,4 @@ files:
         es-ES: es-ES
         id: id
         pl: pl
+        ia: ia
