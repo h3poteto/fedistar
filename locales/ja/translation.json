@@ -278,6 +278,8 @@
       "not_following": "フォローしていません",
       "follow_requested": "フォローリクエスト",
       "follows_you": "フォローされています",
+      "muted": "MUTED",
+      "blocked": "BLOCKED",
       "posts": "投稿",
       "following": "フォロー中",
       "followers": "フォロワー",
