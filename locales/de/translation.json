@@ -278,6 +278,8 @@
       "not_following": "Nicht folgen",
       "follow_requested": "Folgen angefragt",
       "follows_you": "FOLGT DIR",
+      "muted": "MUTED",
+      "blocked": "BLOCKED",
       "posts": "Beiträge",
       "following": "Folgt",
       "followers": "Follower",
