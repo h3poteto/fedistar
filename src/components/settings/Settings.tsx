@@ -20,32 +20,53 @@ type FormValue = {
 
 const languages = [
   {
-    label: 'English',
-    value: 'en'
-  },
-  {
-    label: '日本語',
-    value: 'ja'
-  },
-  {
-    label: 'italiano',
-    value: 'it'
-  },
-  {
-    label: 'português brasileiro',
-    value: 'pt-BR'
-  },
-  {
-    label: 'français',
-    value: 'fr'
+    label: 'Bahasa Indonesia',
+    value: 'id'
   },
   {
     label: 'Deutsch',
     value: 'de'
   },
   {
+    label: 'English',
+    value: 'en'
+  },
+  {
+    label: 'Español',
+    value: 'es-ES'
+  },
+  {
+    label: 'français',
+    value: 'fr'
+  },
+  {
+    label: 'Interlingua',
+    value: 'ia'
+  },
+  {
+    label: 'italiano',
+    value: 'it'
+  },
+  {
+    label: 'Polski',
+    value: 'pl'
+  },
+  {
+    label: 'português brasileiro',
+    value: 'pt-BR'
+  },
+
+  {
+    label: '日本語',
+    value: 'ja'
+  },
+  {
     label: '简体字',
     value: 'zh-CN'
+  },
+  {
+    label: '한국어',
+    value: 'ko'
   }
 ]
 

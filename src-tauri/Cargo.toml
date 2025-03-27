@@ -59,7 +59,7 @@ tauri-plugin-global-shortcut = "2.2.0"
 
 [package.metadata.i18n]
 # The available locales for your application, default: ["en"].
-available-locales = ["en", "ja", "it", "pt-BR", "fr", "de"]
+available-locales = ["en", "ja", "it", "pt-BR", "fr", "zh-CN", "de", "ko", "es-ES", "id", "pl", "ia"]
 
 # The default locale, default: "en".
 default-locale = "en"
