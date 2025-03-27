@@ -46,6 +46,26 @@ const languages = [
   {
     label: '简体字',
     value: 'zh-CN'
+  },
+  {
+    label: 'Korean',
+    value: 'ko'
+  },
+  {
+    label: 'Spanish',
+    value: 'es-ES'
+  },
+  {
+    label: 'Indonesian',
+    value: 'id'
+  },
+  {
+    label: 'Polish',
+    value: 'pl'
+  },
+  {
+    label: 'Interlingua',
+    value: 'ia'
   }
 ]
 

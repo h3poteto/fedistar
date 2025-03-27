@@ -36,6 +36,13 @@ pub enum LocaleType {
     #[sqlx(rename = "zh-CN")]
     #[serde(rename = "zh-CN")]
     ZhCN,
+    Ko,
+    #[sqlx(rename = "es-ES")]
+    #[serde(rename = "es-ES")]
+    EsES,
+    Id,
+    Pl,
+    Ia,
 }
 
 #[derive(Debug, Serialize, Deserialize, sqlx::Type, Clone, PartialEq, Eq)]
@@ -99,6 +106,11 @@ impl fmt::Display for LocaleType {
             LocaleType::Fr => write!(f, "fr"),
             LocaleType::De => write!(f, "de"),
             LocaleType::ZhCN => write!(f, "zh-CN"),
+            LocaleType::Ko => write!(f, "ko"),
+            LocaleType::EsES => write!(f, "es-ES"),
+            LocaleType::Id => write!(f, "id"),
+            LocaleType::Pl => write!(f, "pl"),
+            LocaleType::Ia => write!(f, "ia"),
         }
     }
 }
