@@ -1,19 +1,19 @@
 app_menu:
   file: File
-  edit: Edit
-  help: Help
-  window: Window
-  crash_reporting: Crash Report
-  quit: Quit Fedistar
-  close: Close
-  about: About
+  edit: Modificar
+  help: Adjuta
+  window: Fenestra
+  crash_reporting: Reporto de fallimento
+  quit: Quitar Fedistar
+  close: Clauder
+  about: A proposito
   minimize: Minimize
   services: Services
   hide: Hide Fedistar
   hide_others: Hide Others
   show_all: Show All
-  undo: Undo
-  redo: Redo
+  undo: Disfacer
+  redo: Refacer
   cut: Cut
   copy: Copy
   paste: Paste
