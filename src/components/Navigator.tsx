@@ -1,7 +1,7 @@
 import { invoke } from '@tauri-apps/api/core'
 import { Dispatch, ReactElement, SetStateAction, useEffect, useState } from 'react'
 import { Icon } from '@rsuite/icons'
-import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge, FlexboxGrid, useToaster } from 'rsuite'
+import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge, FlexboxGrid, useToaster, Nav } from 'rsuite'
 import { BsPlus, BsGear, BsPencilSquare, BsSearch } from 'react-icons/bs'
 import { Server, ServerSet } from 'src/entities/server'
 import { Account } from 'src/entities/account'
@@ -23,7 +23,9 @@ type NavigatorProps = {
   openAuthorize: (server: Server) => void
   openAnnouncements: (server: Server, account: Account) => void
   toggleCompose: () => void
+  composeOpened: boolean
   toggleSearch: () => void
+  searchOpened: boolean
   openThirdparty: () => void
   openSettings: () => void
   setHighlighted: Dispatch<SetStateAction<Timeline>>
@@ -122,18 +124,33 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
     return
   }
 
+  const menuStyle = (opened: boolean) => {
+    if (opened) {
+      return {
+        backgroundColor: 'var(--rs-divider-border)',
+        borderRadius: 0,
+        height: '53px'
+      }
+    } else {
+      return {
+        borderRadius: 0,
+        height: '53px'
+      }
+    }
+  }
+
   return (
     <Sidebar
       style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', backgroundColor: 'var(--rs-sidenav-default-bg)' }}
-      width="56"
+      width="55"
       collapsible
     >
       <Sidenav expanded={false}>
         <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Button appearance="link" size="lg" onClick={props.toggleCompose}>
+          <Button appearance="link" size="lg" onClick={props.toggleCompose} style={menuStyle(props.composeOpened)}>
             <Icon as={BsPencilSquare} style={{ fontSize: '1.4em' }} />
           </Button>
-          <Button appearance="link" size="lg" onClick={props.toggleSearch}>
+          <Button appearance="link" size="lg" onClick={props.toggleSearch} style={menuStyle(props.searchOpened)}>
             <Icon as={BsSearch} style={{ fontSize: '1.4em' }} />
           </Button>
         </Sidenav.Body>
