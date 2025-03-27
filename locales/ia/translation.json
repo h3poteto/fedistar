@@ -56,17 +56,17 @@
       "title": "Add a new server"
     },
     "settings": {
-      "title": "Settings",
+      "title": "Parametros",
       "app_menu": "Toggle app menu",
-      "settings": "Settings",
+      "settings": "Parametros",
       "thirdparty": "Third-party licenses"
     },
     "servers": {
       "authorize": "Authorize",
-      "profile": "Open profile",
-      "remove": "Remove",
-      "announcements": "Announcements",
-      "lists": "Lists",
+      "profile": "Aperir profilo",
+      "remove": "Remover",
+      "announcements": "Annuncios",
+      "lists": "Listas",
       "followed_hashtags": "Followed Hashtags"
     }
   },
