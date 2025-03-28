@@ -19,14 +19,14 @@
     "validation_error": "Validation error.",
     "validation_attachments_length": "You can't attach over {limit} files.",
     "validation_attachments_type": "You can attach only images or videos",
-    "upload_error": "Failed to upload your file",
-    "failed_to_report": "Faild to send the report",
+    "upload_error": "Falleva le incargamento de tu file",
+    "failed_to_report": "Falleva le invio del reporto",
     "notifications_not_found": "Failed to find notifications"
   },
   "dialog": {
     "account_not_found": {
       "title": "Conto non trovate",
-      "message": "The account does not exist in the server, do you want to open the account in your browser?",
+      "message": "Le conto non existe in le servitor, vole tu aperir le conto in tu navigator?",
       "button": "Aperir"
     }
   },
@@ -84,7 +84,7 @@
       "without_code_authorize": "Please approve Fedistar in your browser, and after you approve it please authorize",
       "authorization_url": "Normally, the browser will open automatically, but if it doesn't, please open the following URL in your browser and approve it.",
       "authorize": "Authorize",
-      "loading": "Loading"
+      "loading": "Cargante"
     }
   },
   "settings": {
@@ -92,7 +92,7 @@
       "title": "Parametros",
       "appearance": {
         "title": "Apparentia",
-        "font_size": "Font size",
+        "font_size": "Dimension de typo de litteras",
         "font_family": "Font family",
         "language": "Lingua",
         "color_theme": "Thema de color",
@@ -102,13 +102,13 @@
           "high_contrast": "High contrast"
         }
       },
-      "save": "Save",
+      "save": "Salvar",
       "close": "Clauder",
       "validation": {
         "font_size": {
           "type": "Please enter a valid number",
           "range": "Please enter a number from {from} to {to}",
-          "required": "Font size is required"
+          "required": "Le dimension del typo de litteras es requirite"
         },
         "language": {
           "required": "Un lingua es requirite"
@@ -120,7 +120,7 @@
     }
   },
   "compose": {
-    "title": "New Post",
+    "title": "Nove message",
     "from": "From",
     "visibility": {
       "public": "Public",
@@ -221,7 +221,7 @@
         "body": "{user} reacted your post"
       },
       "move": {
-        "title": "Move",
+        "title": "Displaciar",
         "body": "{user} migrated to"
       }
     },
@@ -230,21 +230,21 @@
       "reblog": "Boost",
       "favourite": "Favourite",
       "emoji_reaction": "Emoji reaction",
-      "bookmark": "Bookmark",
+      "bookmark": "Adder marcapagina",
       "detail": {
-        "title": "Detail",
-        "browser": "Open original page",
+        "title": "Detalios",
+        "browser": "Aperir pagina original",
         "copy": "Copy link to post",
-        "edit": "Edit",
-        "delete": "Delete",
-        "report": "Report {user}",
+        "edit": "Modificar",
+        "delete": "Deler",
+        "report": "Signalar {user}",
         "from_other_account": "React from other accounts"
       }
     },
     "status": {
-      "show_more": "Show more",
-      "show_less": "Show less",
-      "media_hidden": "Media hidden",
+      "show_more": "Monstrar plus",
+      "show_less": "Monstrar minus",
+      "media_hidden": "Multimedia celate",
       "pinned_post": "Pnned post",
       "filtered": "Filtered",
       "show_anyway": "Show anyway"
@@ -253,14 +253,14 @@
       "vote": "Vote",
       "refresh": "Refresh",
       "people": "{count} people",
-      "closed": "Closed",
-      "left": "left"
+      "closed": "Claudite",
+      "left": "restante"
     },
     "new": "Add a new timeline",
     "home": "Initio",
     "notifications": "Notificationes",
     "favourites": "Favourites",
-    "bookmarks": "Bookmarks",
+    "bookmarks": "Marcapaginas",
     "direct": "Messages directe",
     "local": "Local",
     "public": "Federate",
@@ -268,7 +268,7 @@
   },
   "detail": {
     "back": "Retro",
-    "close": "Close",
+    "close": "Clauder",
     "pin": "Pin",
     "follow_tag": "Follow hashtag",
     "unfollow_tag": "Unfollow hashtag",
@@ -277,24 +277,24 @@
       "unfollow": "Unfollow",
       "not_following": "Not Following",
       "follow_requested": "Follow Requested",
-      "follows_you": "FOLLOWS YOU",
-      "muted": "MUTED",
-      "blocked": "BLOCKED",
+      "follows_you": "TE SEQUE",
+      "muted": "SILENTIATE",
+      "blocked": "BLOCATE",
       "posts": "Posts",
       "following": "Following",
-      "followers": "Followers",
-      "open_page": "Open original page",
-      "mute": "Mute {user}",
+      "followers": "Sequitores",
+      "open_page": "Aperir pagina original",
+      "mute": "Silentiar {user}",
       "unmute": "Unmute {user}",
-      "block": "Block {user}",
-      "unblock": "Unblock {user}",
+      "block": "Blocar {user}",
+      "unblock": "Disblocar {user}",
       "unblock_domain": "Unblock domain {server}",
       "list_management": "Add or Remove from lists",
       "block_domain": "Block domain {server}"
     }
   },
   "report": {
-    "title": "Report {user}",
+    "title": "Signalar {user}",
     "category": {
       "title": "Tell us what's going on with this post",
       "description": "Choose the best match",
@@ -317,7 +317,7 @@
     },
     "comment": {
       "title": "Is there anything else you think we should know?",
-      "placeholder": "Additional comments",
+      "placeholder": "Commentarios additional",
       "forward": "Forward to the original server",
       "next": "Inviar"
     }
