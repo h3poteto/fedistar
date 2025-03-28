@@ -1,10 +1,10 @@
 {
   "alert": {
     "no_server": "There is no server, so please add it at first.",
-    "need_auth": "You need to authorize a server.",
+    "need_auth": "Tu necessita autorisar un servitor.",
     "failed_add_server": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
     "failed_add_application": "Failed to add application.",
-    "failed_authorize": "Failed to authorize.",
+    "failed_authorize": "Falleva le autorisation.",
     "failed_post": "Failed to post status.",
     "failed_load": "Failed to load {timeline}.",
     "failed_mark": "Failed to mark as read",
@@ -16,7 +16,7 @@
     "failed_bookmark": "Failed to bookmark",
     "failed_follow": "Failed to follow",
     "failed_unfollow": "Failed to unfollow",
-    "validation_error": "Validation error.",
+    "validation_error": "Error de validation.",
     "validation_attachments_length": "You can't attach over {limit} files.",
     "validation_attachments_type": "You can attach only images or videos",
     "upload_error": "Falleva le incargamento de tu file",
@@ -83,7 +83,7 @@
       "authorization_help": "Please paste the authorization code from your browser",
       "without_code_authorize": "Please approve Fedistar in your browser, and after you approve it please authorize",
       "authorization_url": "Normally, the browser will open automatically, but if it doesn't, please open the following URL in your browser and approve it.",
-      "authorize": "Authorize",
+      "authorize": "Autorisar",
       "loading": "Cargante"
     }
   },
@@ -106,8 +106,8 @@
       "close": "Clauder",
       "validation": {
         "font_size": {
-          "type": "Please enter a valid number",
-          "range": "Please enter a number from {from} to {to}",
+          "type": "Insere un numero valide",
+          "range": "Insere un numero de {from} a {to}",
           "required": "Le dimension del typo de litteras es requirite"
         },
         "language": {
@@ -143,15 +143,15 @@
       "add_choice": "Add a choice",
       "multiple": "multiple",
       "simple": "simple",
-      "5min": "5 minutes",
-      "30min": "30 minutes",
-      "1h": "1 hour",
-      "6h": "6 hours",
-      "1d": "1 day",
-      "3d": "3 days",
-      "7d": "7 days"
+      "5min": "5 minutas",
+      "30min": "30 minutas",
+      "1h": "1 hora",
+      "6h": "6 horas",
+      "1d": "1 die",
+      "3d": "3 dies",
+      "7d": "7 dies"
     },
-    "cancel": "Cancel",
+    "cancel": "Cancellar",
     "post": "Post",
     "edit_attachment": {
       "title": "Edit media",
@@ -167,7 +167,7 @@
     "results": {
       "accounts": "People",
       "hashtags": "Hashtags",
-      "statuses": "Statuses",
+      "statuses": "Statos",
       "more": "Cargar plus"
     }
   },
