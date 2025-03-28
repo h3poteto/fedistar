@@ -72,7 +72,7 @@
   },
   "servers": {
     "new": {
-      "title": "Add Server",
+      "title": "Adder servitor",
       "domain": "Domain",
       "add": "Add",
       "cancel": "Cancel",
