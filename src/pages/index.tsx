@@ -265,7 +265,9 @@ function App() {
           openThirdparty={() => dispatch({ target: 'thirdparty', value: true })}
           openSettings={() => dispatch({ target: 'settings', value: true })}
           toggleCompose={toggleCompose}
+          composeOpened={composeOpened}
           toggleSearch={toggleSearch}
+          searchOpened={searchOpened}
           setHighlighted={setHighlighted}
           setUnreads={setUnreads}
         />
