@@ -60,6 +60,8 @@
     "tauri-plugin-window-state-api": "github:tauri-apps/tauri-plugin-window-state#v1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.23.0",
     "@h3poteto/tauri-snap-packager": "0.2.1",
     "@tauri-apps/cli": "^2.2.7",
     "@types/jest": "^29.5.14",
@@ -72,6 +74,7 @@
     "eslint": "^9.23.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-react": "^7.37.4",
+    "globals": "^16.0.0",
     "jest": "^29.7.0",
     "jsdom": "^26.0.0",
     "sass": "^1.83.1",
