@@ -1,21 +1,21 @@
 app_menu:
   file: File
-  edit: Edit
-  help: Help
-  window: Window
-  crash_reporting: Crash Report
-  quit: Quit Fedistar
-  close: Close
-  about: About
+  edit: Modificar
+  help: Adjuta
+  window: Fenestra
+  crash_reporting: Reporto de fallimento
+  quit: Quitar Fedistar
+  close: Clauder
+  about: A proposito
   minimize: Minimize
-  services: Services
-  hide: Hide Fedistar
-  hide_others: Hide Others
-  show_all: Show All
-  undo: Undo
-  redo: Redo
-  cut: Cut
-  copy: Copy
-  paste: Paste
+  services: Servicios
+  hide: Celar Fedistar
+  hide_others: Celar alteres
+  show_all: Monstrar toto
+  undo: Disfacer
+  redo: Refacer
+  cut: Taliar
+  copy: Copiar
+  paste: Collar
 media:
-  title: Media
+  title: Multimedia
