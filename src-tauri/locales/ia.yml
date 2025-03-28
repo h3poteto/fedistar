@@ -8,14 +8,14 @@ app_menu:
   close: Clauder
   about: A proposito
   minimize: Minimize
-  services: Services
-  hide: Hide Fedistar
-  hide_others: Hide Others
-  show_all: Show All
+  services: Servicios
+  hide: Celar Fedistar
+  hide_others: Celar alteres
+  show_all: Monstrar toto
   undo: Disfacer
   redo: Refacer
-  cut: Cut
-  copy: Copy
-  paste: Paste
+  cut: Taliar
+  copy: Copiar
+  paste: Collar
 media:
-  title: Media
+  title: Multimedia
