@@ -1,7 +1,7 @@
 import { invoke } from '@tauri-apps/api/core'
 import { Dispatch, ReactElement, SetStateAction, useEffect, useState } from 'react'
 import { Icon } from '@rsuite/icons'
-import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge, FlexboxGrid, useToaster, Nav } from 'rsuite'
+import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge, FlexboxGrid, useToaster } from 'rsuite'
 import { BsPlus, BsGear, BsPencilSquare, BsSearch } from 'react-icons/bs'
 import { Server, ServerSet } from 'src/entities/server'
 import { Account } from 'src/entities/account'
