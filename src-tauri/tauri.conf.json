@@ -42,7 +42,7 @@
   },
   "productName": "fedistar",
   "mainBinaryName": "fedistar",
-  "version": "1.11.1",
+  "version": "1.11.2",
   "identifier": "net.fedistar",
   "plugins": {},
   "app": {
