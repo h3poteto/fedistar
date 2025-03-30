@@ -1,10 +1,10 @@
 {
   "alert": {
     "no_server": "There is no server, so please add it at first.",
-    "need_auth": "You need to authorize a server.",
+    "need_auth": "Tu necessita autorisar un servitor.",
     "failed_add_server": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
     "failed_add_application": "Failed to add application.",
-    "failed_authorize": "Failed to authorize.",
+    "failed_authorize": "Falleva le autorisation.",
     "failed_post": "Failed to post status.",
     "failed_load": "Failed to load {timeline}.",
     "failed_mark": "Failed to mark as read",
@@ -16,24 +16,24 @@
     "failed_bookmark": "Failed to bookmark",
     "failed_follow": "Failed to follow",
     "failed_unfollow": "Failed to unfollow",
-    "validation_error": "Validation error.",
+    "validation_error": "Error de validation.",
     "validation_attachments_length": "You can't attach over {limit} files.",
     "validation_attachments_type": "You can attach only images or videos",
-    "upload_error": "Failed to upload your file",
-    "failed_to_report": "Faild to send the report",
+    "upload_error": "Falleva le incargamento de tu file",
+    "failed_to_report": "Falleva le invio del reporto",
     "notifications_not_found": "Failed to find notifications"
   },
   "dialog": {
     "account_not_found": {
-      "title": "Account not found",
-      "message": "The account does not exist in the server, do you want to open the account in your browser?",
-      "button": "Open"
+      "title": "Conto non trovate",
+      "message": "Le conto non existe in le servitor, vole tu aperir le conto in tu navigator?",
+      "button": "Aperir"
     }
   },
   "walkthrough": {
     "navigator": {
       "servers": {
-        "title": "Servers",
+        "title": "Servitores",
         "description": "You can remove or authorize servers, please right click.",
         "ok": "OK"
       }
@@ -53,11 +53,11 @@
   },
   "navigator": {
     "add_server": {
-      "title": "Add a new server"
+      "title": "Adder un nove servitor"
     },
     "settings": {
       "title": "Parametros",
-      "app_menu": "Toggle app menu",
+      "app_menu": "Commutar menu de application",
       "settings": "Parametros",
       "thirdparty": "Third-party licenses"
     },
@@ -67,51 +67,51 @@
       "remove": "Remover",
       "announcements": "Annuncios",
       "lists": "Listas",
-      "followed_hashtags": "Followed Hashtags"
+      "followed_hashtags": "Hashtags sequite"
     }
   },
   "servers": {
     "new": {
       "title": "Adder servitor",
-      "domain": "Domain",
-      "add": "Add",
-      "cancel": "Cancel",
+      "domain": "Dominio",
+      "add": "Adder",
+      "cancel": "Cancellar",
       "server_description": "You can also quit without signing in. If that case, you can see only Federated and Local timelines.",
-      "sign_in": "Sign In",
-      "finish": "Finish",
+      "sign_in": "Initiar session",
+      "finish": "Finir",
       "authorization_code": "Authorization Code",
       "authorization_help": "Please paste the authorization code from your browser",
       "without_code_authorize": "Please approve Fedistar in your browser, and after you approve it please authorize",
       "authorization_url": "Normally, the browser will open automatically, but if it doesn't, please open the following URL in your browser and approve it.",
-      "authorize": "Authorize",
-      "loading": "Loading"
+      "authorize": "Autorisar",
+      "loading": "Cargante"
     }
   },
   "settings": {
     "settings": {
-      "title": "Settings",
+      "title": "Parametros",
       "appearance": {
-        "title": "Appearance",
-        "font_size": "Font size",
+        "title": "Apparentia",
+        "font_size": "Dimension de typo de litteras",
         "font_family": "Font family",
-        "language": "Language",
-        "color_theme": "Color theme",
+        "language": "Lingua",
+        "color_theme": "Thema de color",
         "theme": {
-          "light": "Light",
-          "dark": "Dark",
+          "light": "Clar",
+          "dark": "Obscur",
           "high_contrast": "High contrast"
         }
       },
-      "save": "Save",
+      "save": "Salvar",
       "close": "Clauder",
       "validation": {
         "font_size": {
-          "type": "Please enter a valid number",
-          "range": "Please enter a number from {from} to {to}",
-          "required": "Font size is required"
+          "type": "Insere un numero valide",
+          "range": "Insere un numero de {from} a {to}",
+          "required": "Le dimension del typo de litteras es requirite"
         },
         "language": {
-          "required": "Language is required"
+          "required": "Un lingua es requirite"
         }
       }
     },
@@ -120,19 +120,19 @@
     }
   },
   "compose": {
-    "title": "New Post",
+    "title": "Nove message",
     "from": "From",
     "visibility": {
       "public": "Public",
-      "unlisted": "Unlisted",
+      "unlisted": "Non listate",
       "private": "Private",
-      "direct": "Direct"
+      "direct": "Directe"
     },
     "spoiler": {
-      "placeholder": "Write your warning here"
+      "placeholder": "Scribe tu advertimento hic"
     },
     "status": {
-      "title": "Status",
+      "title": "Stato",
       "placeholder": "What's on your mind?"
     },
     "nsfw": {
@@ -143,20 +143,20 @@
       "add_choice": "Add a choice",
       "multiple": "multiple",
       "simple": "simple",
-      "5min": "5 minutes",
-      "30min": "30 minutes",
-      "1h": "1 hour",
-      "6h": "6 hours",
-      "1d": "1 day",
-      "3d": "3 days",
-      "7d": "7 days"
+      "5min": "5 minutas",
+      "30min": "30 minutas",
+      "1h": "1 hora",
+      "6h": "6 horas",
+      "1d": "1 die",
+      "3d": "3 dies",
+      "7d": "7 dies"
     },
-    "cancel": "Cancel",
+    "cancel": "Cancellar",
     "post": "Post",
     "edit_attachment": {
       "title": "Edit media",
       "label": "Describe for people who are blind or have low vision",
-      "submit": "Apply"
+      "submit": "Inviar"
     }
   },
   "search": {
@@ -167,14 +167,14 @@
     "results": {
       "accounts": "People",
       "hashtags": "Hashtags",
-      "statuses": "Statuses",
-      "more": "Load more"
+      "statuses": "Statos",
+      "more": "Cargar plus"
     }
   },
   "timeline": {
     "reload": "Reload",
     "settings": {
-      "title": "Settings",
+      "title": "Parametros",
       "unpin": "Unpin",
       "column_width": "Column width"
     },
@@ -185,7 +185,7 @@
         "body": "{user} followed you"
       },
       "follow_request": {
-        "title": "Follow Request",
+        "title": "Sequer requesta",
         "body": "{user} requested to follow you"
       },
       "favourite": {
@@ -221,7 +221,7 @@
         "body": "{user} reacted your post"
       },
       "move": {
-        "title": "Move",
+        "title": "Displaciar",
         "body": "{user} migrated to"
       }
     },
@@ -230,21 +230,21 @@
       "reblog": "Boost",
       "favourite": "Favourite",
       "emoji_reaction": "Emoji reaction",
-      "bookmark": "Bookmark",
+      "bookmark": "Adder marcapagina",
       "detail": {
-        "title": "Detail",
-        "browser": "Open original page",
+        "title": "Detalios",
+        "browser": "Aperir pagina original",
         "copy": "Copy link to post",
-        "edit": "Edit",
-        "delete": "Delete",
-        "report": "Report {user}",
+        "edit": "Modificar",
+        "delete": "Deler",
+        "report": "Signalar {user}",
         "from_other_account": "React from other accounts"
       }
     },
     "status": {
-      "show_more": "Show more",
-      "show_less": "Show less",
-      "media_hidden": "Media hidden",
+      "show_more": "Monstrar plus",
+      "show_less": "Monstrar minus",
+      "media_hidden": "Multimedia celate",
       "pinned_post": "Pnned post",
       "filtered": "Filtered",
       "show_anyway": "Show anyway"
@@ -253,22 +253,22 @@
       "vote": "Vote",
       "refresh": "Refresh",
       "people": "{count} people",
-      "closed": "Closed",
-      "left": "left"
+      "closed": "Claudite",
+      "left": "restante"
     },
     "new": "Add a new timeline",
-    "home": "Home",
-    "notifications": "Notifications",
+    "home": "Initio",
+    "notifications": "Notificationes",
     "favourites": "Favourites",
-    "bookmarks": "Bookmarks",
-    "direct": "Direct messages",
+    "bookmarks": "Marcapaginas",
+    "direct": "Messages directe",
     "local": "Local",
-    "public": "Federated",
-    "back": "Back"
+    "public": "Federate",
+    "back": "Retro"
   },
   "detail": {
-    "back": "Back",
-    "close": "Close",
+    "back": "Retro",
+    "close": "Clauder",
     "pin": "Pin",
     "follow_tag": "Follow hashtag",
     "unfollow_tag": "Unfollow hashtag",
@@ -277,24 +277,24 @@
       "unfollow": "Unfollow",
       "not_following": "Not Following",
       "follow_requested": "Follow Requested",
-      "follows_you": "FOLLOWS YOU",
-      "muted": "MUTED",
-      "blocked": "BLOCKED",
+      "follows_you": "TE SEQUE",
+      "muted": "SILENTIATE",
+      "blocked": "BLOCATE",
       "posts": "Posts",
       "following": "Following",
-      "followers": "Followers",
-      "open_page": "Open original page",
-      "mute": "Mute {user}",
+      "followers": "Sequitores",
+      "open_page": "Aperir pagina original",
+      "mute": "Silentiar {user}",
       "unmute": "Unmute {user}",
-      "block": "Block {user}",
-      "unblock": "Unblock {user}",
+      "block": "Blocar {user}",
+      "unblock": "Disblocar {user}",
       "unblock_domain": "Unblock domain {server}",
       "list_management": "Add or Remove from lists",
       "block_domain": "Block domain {server}"
     }
   },
   "report": {
-    "title": "Report {user}",
+    "title": "Signalar {user}",
     "category": {
       "title": "Tell us what's going on with this post",
       "description": "Choose the best match",
@@ -317,9 +317,9 @@
     },
     "comment": {
       "title": "Is there anything else you think we should know?",
-      "placeholder": "Additional comments",
+      "placeholder": "Commentarios additional",
       "forward": "Forward to the original server",
-      "next": "Submit"
+      "next": "Inviar"
     }
   },
   "announcements": {
@@ -341,6 +341,6 @@
   },
   "list_memberships": {
     "title": "List memberships",
-    "search_placeholder": "Search among people you follow"
+    "search_placeholder": "Cercar inter le personas que tu seque"
   }
 }
