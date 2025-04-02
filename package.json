@@ -6,7 +6,6 @@
     "dev": "next dev -p 1420",
     "build": "next build",
     "tauri": "tauri",
-    "snap": "tauri-snap-packager",
     "lint": "eslint src --ext ts,tsx",
     "typecheck": "tsc -p . --noEmit",
     "test": "NODE_ENV=test jest -u --maxWorkers=3",
@@ -62,7 +61,6 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.23.0",
-    "@h3poteto/tauri-snap-packager": "0.2.1",
     "@tauri-apps/cli": "^2.2.7",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.13",

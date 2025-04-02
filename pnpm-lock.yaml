@@ -90,9 +90,6 @@ importers:
       '@eslint/js':
         specifier: ^9.23.0
         version: 9.23.0
-      '@h3poteto/tauri-snap-packager':
-        specifier: 0.2.1
-        version: 0.2.1
       '@tauri-apps/cli':
         specifier: ^2.2.7
         version: 2.2.7
@@ -430,10 +427,6 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
-
-  '@h3poteto/tauri-snap-packager@0.2.1':
-    resolution: {integrity: sha512-TZstV34o+754TuF9Zs63cQ+bznhzpd85kdfJGW9DxgBHk4QO9fJ26C5b/yih2mibf1R3xlrSUD7GHiXsQ0VCGQ==}
-    hasBin: true
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -3492,10 +3485,6 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       typescript: 5.8.2
-
-  '@h3poteto/tauri-snap-packager@0.2.1':
-    dependencies:
-      js-yaml: 4.1.0
 
   '@humanfs/core@0.19.1': {}
 
