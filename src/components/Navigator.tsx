@@ -127,7 +127,7 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
   const menuStyle = (opened: boolean) => {
     if (opened) {
       return {
-        backgroundColor: 'var(--rs-divider-border)',
+        backgroundColor: 'var(--rs-border-secondary)',
         borderRadius: 0,
         height: '53px'
       }
