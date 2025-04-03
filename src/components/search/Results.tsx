@@ -27,6 +27,7 @@ export default function Results(props: Props) {
   const router = useRouter()
 
   const [word, setWord] = useState<string>('')
+  const [searchedWord, setSearchedWord] = useState<string>('dummy')
   const [accounts, setAccounts] = useState<Array<Entity.Account>>([])
   const [hashtags, setHashtags] = useState<Array<Entity.Tag>>([])
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
@@ -38,6 +39,7 @@ export default function Results(props: Props) {
   const search = async (word: string) => {
     setLoading(true)
     const res = await props.client.search(word, { limit: 5, resolve: true })
+    setSearchedWord(word)
     setAccounts(res.data.accounts)
     setHashtags(res.data.hashtags)
     setStatuses(res.data.statuses)
@@ -124,13 +126,16 @@ export default function Results(props: Props) {
         <Form onCheck={() => search(word)}>
           <InputGroup inside>
             <Input placeholder={formatMessage({ id: 'search.placeholder' })} value={word} onChange={value => setWord(value)} />
-            <InputGroup.Button onClick={() => clear()}>
-              {word.length === 0 ? (
-                <Icon as={BsSearch} title={formatMessage({ id: 'search.search' })} />
-              ) : (
+
+            {word === searchedWord ? (
+              <InputGroup.Button onClick={() => clear()}>
                 <Icon as={BsBackspace} title={formatMessage({ id: 'search.clear' })} />
-              )}
-            </InputGroup.Button>
+              </InputGroup.Button>
+            ) : (
+              <InputGroup.Button onClick={() => search(word)}>
+                <Icon as={BsSearch} title={formatMessage({ id: 'search.search' })} />
+              </InputGroup.Button>
+            )}
           </InputGroup>
         </Form>
       </div>
