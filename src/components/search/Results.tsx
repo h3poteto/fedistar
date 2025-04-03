@@ -33,14 +33,17 @@ export default function Results(props: Props) {
   const [customEmojis, setCustomEmojis] = useState<Array<CustomEmojiCategory>>([])
   const [loadingAccount, setLoadingAccount] = useState<boolean>(false)
   const [loadingHashtag, setLoadingHashtag] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
 
   const search = async (word: string) => {
+    setLoading(true)
     const res = await props.client.search(word, { limit: 5, resolve: true })
     setAccounts(res.data.accounts)
     setHashtags(res.data.hashtags)
     setStatuses(res.data.statuses)
     const emojis = await props.client.getInstanceCustomEmojis()
     setCustomEmojis(mapCustomEmojiCategory(props.server.domain, emojis.data))
+    setLoading(false)
   }
 
   const loadMoreAccount = useCallback(async () => {
@@ -131,100 +134,106 @@ export default function Results(props: Props) {
           </InputGroup>
         </Form>
       </div>
-      <Accordion className="search-results">
-        {accounts.length > 0 && (
-          <Accordion.Panel
-            header={
-              <div>
-                <Icon as={BsPeople} style={{ fontSize: '1.2em', marginRight: '0.2em' }} />
-                <FormattedMessage id="search.results.accounts" />
-              </div>
-            }
-            defaultExpanded
-          >
-            <List>
-              {accounts.map((account, index) => (
-                <List.Item key={index} style={{ backgroundColor: 'var(--rs-border-primary)', padding: '4px 0' }}>
-                  <User user={account} open={openUser} />
+      {loading ? (
+        <div style={{ padding: '1em 0', textAlign: 'center' }}>
+          <Loader />
+        </div>
+      ) : (
+        <Accordion className="search-results">
+          {accounts.length > 0 && (
+            <Accordion.Panel
+              header={
+                <div>
+                  <Icon as={BsPeople} style={{ fontSize: '1.2em', marginRight: '0.2em' }} />
+                  <FormattedMessage id="search.results.accounts" />
+                </div>
+              }
+              defaultExpanded
+            >
+              <List>
+                {accounts.map((account, index) => (
+                  <List.Item key={index} style={{ backgroundColor: 'var(--rs-border-primary)', padding: '4px 0' }}>
+                    <User user={account} open={openUser} />
+                  </List.Item>
+                ))}
+                <List.Item
+                  key="more"
+                  style={{ backgroundColor: 'var(--rs-border-primary)', padding: '1em 0', textAlign: 'center', cursor: 'pointer' }}
+                  onClick={() => loadMoreAccount()}
+                  disabled={loadingAccount}
+                >
+                  {loadingAccount ? <Loader /> : <FormattedMessage id="search.results.more" />}
                 </List.Item>
-              ))}
-              <List.Item
-                key="more"
-                style={{ backgroundColor: 'var(--rs-border-primary)', padding: '1em 0', textAlign: 'center', cursor: 'pointer' }}
-                onClick={() => loadMoreAccount()}
-                disabled={loadingAccount}
-              >
-                {loadingAccount ? <Loader /> : <FormattedMessage id="search.results.more" />}
-              </List.Item>
-            </List>
-          </Accordion.Panel>
-        )}
-        {hashtags.length > 0 && (
-          <Accordion.Panel
-            header={
-              <div>
-                <Icon as={BsHash} style={{ fontSize: '1.2em', marginRight: '0.2em' }} />
-                <FormattedMessage id="search.results.hashtags" />
-              </div>
-            }
-            defaultExpanded
-          >
-            <List>
-              {hashtags.map((tag, index) => (
-                <List.Item key={index} style={{ backgroundColor: 'var(--rs-border-primary)', padding: '4px 0' }}>
-                  <div style={{ padding: '12px 8px', cursor: 'pointer' }} onClick={() => openTag(tag)}>
-                    #{tag.name}
-                  </div>
+              </List>
+            </Accordion.Panel>
+          )}
+          {hashtags.length > 0 && (
+            <Accordion.Panel
+              header={
+                <div>
+                  <Icon as={BsHash} style={{ fontSize: '1.2em', marginRight: '0.2em' }} />
+                  <FormattedMessage id="search.results.hashtags" />
+                </div>
+              }
+              defaultExpanded
+            >
+              <List>
+                {hashtags.map((tag, index) => (
+                  <List.Item key={index} style={{ backgroundColor: 'var(--rs-border-primary)', padding: '4px 0' }}>
+                    <div style={{ padding: '12px 8px', cursor: 'pointer' }} onClick={() => openTag(tag)}>
+                      #{tag.name}
+                    </div>
+                  </List.Item>
+                ))}
+                <List.Item
+                  key="more"
+                  style={{ backgroundColor: 'var(--rs-border-primary)', padding: '1em 0', textAlign: 'center', cursor: 'pointer' }}
+                  onClick={() => loadMoreHashtag()}
+                  disabled={loadingHashtag}
+                >
+                  {loadingHashtag ? <Loader /> : <FormattedMessage id="search.results.more" />}
                 </List.Item>
-              ))}
-              <List.Item
-                key="more"
-                style={{ backgroundColor: 'var(--rs-border-primary)', padding: '1em 0', textAlign: 'center', cursor: 'pointer' }}
-                onClick={() => loadMoreHashtag()}
-                disabled={loadingHashtag}
-              >
-                {loadingHashtag ? <Loader /> : <FormattedMessage id="search.results.more" />}
-              </List.Item>
-            </List>
-          </Accordion.Panel>
-        )}
-        {statuses.length > 0 && (
-          <Accordion.Panel
-            header={
-              <div>
-                <Icon as={BsChatQuote} style={{ fontSize: '1.2em', marginRight: '0.2em' }} />
-                <FormattedMessage id="search.results.statuses" />
-              </div>
-            }
-            defaultExpanded
-          >
-            <List>
-              {statuses.map((status, index) => (
-                <List.Item key={index} style={{ backgroundColor: 'var(--rs-border-primary)', padding: '4px 0' }}>
-                  <div style={{ padding: '12px 8px', cursor: 'pointer' }}>
-                    <Status
-                      status={status}
-                      client={props.client}
-                      server={props.server}
-                      account={props.account}
-                      columnWidth="xs"
-                      updateStatus={updateStatus}
-                      openMedia={props.openMedia}
-                      setStatusDetail={setStatusDetail}
-                      setAccountDetail={setAccountDetail}
-                      setTagDetail={setTagDetail}
-                      openReport={props.openReport}
-                      openFromOtherAccount={props.openFromOtherAccount}
-                      customEmojis={customEmojis}
-                      locale={props.locale}
-                    />
-                  </div>
-                </List.Item>
-              ))}
-            </List>
-          </Accordion.Panel>
-        )}
-      </Accordion>
+              </List>
+            </Accordion.Panel>
+          )}
+          {statuses.length > 0 && (
+            <Accordion.Panel
+              header={
+                <div>
+                  <Icon as={BsChatQuote} style={{ fontSize: '1.2em', marginRight: '0.2em' }} />
+                  <FormattedMessage id="search.results.statuses" />
+                </div>
+              }
+              defaultExpanded
+            >
+              <List>
+                {statuses.map((status, index) => (
+                  <List.Item key={index} style={{ backgroundColor: 'var(--rs-border-primary)', padding: '4px 0' }}>
+                    <div style={{ padding: '12px 8px', cursor: 'pointer' }}>
+                      <Status
+                        status={status}
+                        client={props.client}
+                        server={props.server}
+                        account={props.account}
+                        columnWidth="xs"
+                        updateStatus={updateStatus}
+                        openMedia={props.openMedia}
+                        setStatusDetail={setStatusDetail}
+                        setAccountDetail={setAccountDetail}
+                        setTagDetail={setTagDetail}
+                        openReport={props.openReport}
+                        openFromOtherAccount={props.openFromOtherAccount}
+                        customEmojis={customEmojis}
+                        locale={props.locale}
+                      />
+                    </div>
+                  </List.Item>
+                ))}
+              </List>
+            </Accordion.Panel>
+          )}
+        </Accordion>
+      )}
     </>
   )
 }
