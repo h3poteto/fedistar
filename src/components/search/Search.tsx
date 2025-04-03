@@ -55,8 +55,8 @@ export default function Search(props: Props) {
   }
 
   return (
-    <Container style={{ backgroundColor: 'var(--rs-divider-border)', height: '100%' }}>
-      <Header style={{ borderBottom: '1px solid var(--rs-divider-border)', backgroundColor: 'var(--rs-divider-border)' }}>
+    <Container style={{ backgroundColor: 'var(--rs-border-secondary)', height: '100%' }}>
+      <Header style={{ borderBottom: '1px solid var(--rs-divider-border)', backgroundColor: 'var(--rs-border-secondary)' }}>
         <FlexboxGrid justify="space-between" align="middle">
           <FlexboxGrid.Item style={{ lineHeight: '53px', paddingLeft: '12px', fontSize: '18px' }}>
             <FormattedMessage id="search.title" />
@@ -68,7 +68,7 @@ export default function Search(props: Props) {
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </Header>
-      <Content style={{ height: '100%', padding: '12px', backgroundColor: 'var(--rs-divider-border)' }} className="sidepanel-scrollable">
+      <Content style={{ height: '100%', padding: '12px', backgroundColor: 'var(--rs-border-secondary)' }} className="sidepanel-scrollable">
         <FlexboxGrid>
           <FlexboxGrid.Item>
             <Dropdown renderToggle={(props, ref) => renderAccountIcon(props, ref, fromAccount)} onSelect={selectAccount}>
