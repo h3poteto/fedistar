@@ -79,8 +79,8 @@ const model = Schema.Model({
   attachments: Schema.Types.ArrayType().maxLength(4, "Can't attach over 5 files"),
   poll: Schema.Types.ObjectType().shape({
     options: Schema.Types.ArrayType().of(Schema.Types.StringType().isRequired('Required')).minLength(2, 'Minimum 2 choices required'),
-    expires_in: Schema.Types.NumberType().isRequired('Required'),
-    multiple: Schema.Types.BooleanType().isRequired('Required')
+    expires_in: Schema.Types.NumberType().isInteger('Must be a number').min(0, 'Must be greater than 0'),
+    multiple: Schema.Types.BooleanType()
   }),
   scheduled_at: Schema.Types.DateType().addRule((value, _data) => {
     const limit = new Date()
