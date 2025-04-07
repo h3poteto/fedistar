@@ -27,7 +27,7 @@ export default function Results(props: Props) {
   const router = useRouter()
 
   const [word, setWord] = useState<string>('')
-  const [searchedWord, setSearchedWord] = useState<string>('dummy')
+  const [searchedWord, setSearchedWord] = useState<string>()
   const [accounts, setAccounts] = useState<Array<Entity.Account>>([])
   const [hashtags, setHashtags] = useState<Array<Entity.Tag>>([])
   const [statuses, setStatuses] = useState<Array<Entity.Status>>([])
@@ -115,6 +115,7 @@ export default function Results(props: Props) {
 
   const clear = () => {
     setWord('')
+    setSearchedWord(undefined)
     setAccounts([])
     setHashtags([])
     setStatuses([])
