@@ -1,7 +1,7 @@
 import { invoke } from '@tauri-apps/api/core'
 import { useEffect, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { InputNumber, Modal, Panel, Form, Schema, ButtonToolbar, Button, InputPicker } from 'rsuite'
+import { InputNumber, Modal, Panel, Form, Schema, ButtonToolbar, Button, InputPicker, Checkbox } from 'rsuite'
 import { Settings as SettingsType, ThemeType } from 'src/entities/settings'
 import { localeType } from 'src/i18n'
 
@@ -168,6 +168,14 @@ export default function Settings(props: Props) {
                 <FormattedMessage id="settings.settings.appearance.color_theme" />
               </Form.ControlLabel>
               <Form.Control name="color_theme" accepter={InputPicker} cleanable={false} data={colorTheme} />
+            </Form.Group>
+          </Panel>
+          <Panel header={<FormattedMessage id="settings.settings.behavior.title" />}>
+            <Form.Group controlId="behavior">
+              <Form.ControlLabel>
+                <FormattedMessage id="settings.settings.behavior.confirm_boost" />
+              </Form.ControlLabel>
+              <Form.Control name="confirm_boost" accepter={Checkbox} />
             </Form.Group>
           </Panel>
           <Form.Group>

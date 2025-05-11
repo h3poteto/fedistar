@@ -102,6 +102,10 @@
           "high_contrast": "High contrast"
         }
       },
+      "behavior": {
+        "title": "Behavior",
+        "confirm_boost": "Confirm before boosting"
+      },
       "save": "Save",
       "close": "Close",
       "validation": {
