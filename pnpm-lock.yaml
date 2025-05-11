@@ -69,8 +69,8 @@ importers:
         specifier: ^5.5.0
         version: 5.5.0(react@18.3.1)
       react-intl:
-        specifier: ^7.1.10
-        version: 7.1.10(react@18.3.1)(typescript@5.8.2)
+        specifier: ^7.1.11
+        version: 7.1.11(react@18.3.1)(typescript@5.8.2)
       react-virtuoso:
         specifier: 4.12.7
         version: 4.12.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2453,8 +2453,8 @@ packages:
     peerDependencies:
       react: '*'
 
-  react-intl@7.1.10:
-    resolution: {integrity: sha512-I5eB73BAqBbkd2M3wL8gTSE/xFvJRmxZcjS1HMnBT3KXya2PUSI7nDO/tlapX8khchoDoliliMsmyIURB/ww1g==}
+  react-intl@7.1.11:
+    resolution: {integrity: sha512-tnVoRCWvW5Ie2ikYSdPF7z3+880yCe/9xPmitFeRPw3RYDcCfR4m8ZYa4MBq19W4adt9Z+PQA4FaMBCJ7E+HCQ==}
     peerDependencies:
       react: 16 || 17 || 18 || 19
       typescript: ^5.6.0
@@ -5748,7 +5748,7 @@ snapshots:
     dependencies:
       react: 18.3.1
 
-  react-intl@7.1.10(react@18.3.1)(typescript@5.8.2):
+  react-intl@7.1.11(react@18.3.1)(typescript@5.8.2):
     dependencies:
       '@formatjs/ecma402-abstract': 2.3.4
       '@formatjs/icu-messageformat-parser': 2.11.2
