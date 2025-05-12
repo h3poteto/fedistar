@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/core'
-import { useEffect, useState } from 'react'
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { InputNumber, Modal, Panel, Form, Schema, ButtonToolbar, Button, InputPicker, Checkbox } from 'rsuite'
 import { Settings as SettingsType, ThemeType } from 'src/entities/settings'
@@ -16,6 +16,7 @@ type FormValue = {
   font_family: string | null
   language: localeType
   color_theme: ThemeType
+  confirm_boost: boolean
 }
 
 const languages = [
@@ -91,7 +92,8 @@ export default function Settings(props: Props) {
     font_size: 14,
     font_family: null,
     language: 'en',
-    color_theme: 'dark'
+    color_theme: 'dark',
+    confirm_boost: true
   })
   const [fontList, setFontList] = useState<Array<{ label: string; value: string }>>([])
   const [settings, setSettings] = useState<SettingsType>()
@@ -102,13 +104,14 @@ export default function Settings(props: Props) {
       .isRequired(formatMessage({ id: 'settings.settings.validation.font_size.required' })),
     font_family: Schema.Types.StringType(),
     language: Schema.Types.StringType().isRequired(formatMessage({ id: 'settings.settings.validation.language.required' })),
-    color_theme: Schema.Types.StringType()
+    color_theme: Schema.Types.StringType(),
+    confirm_boost: Schema.Types.BooleanType()
   })
 
   useEffect(() => {
     const f = async () => {
       const settings = await invoke<SettingsType>('read_settings')
-      setFormValue(current => Object.assign({}, current, settings.appearance))
+      setFormValue(current => Object.assign({}, current, settings.appearance, settings.behavior))
       setSettings(settings)
       const f = await invoke<Array<string>>('list_fonts')
       setFontList(f.map(f => ({ label: f, value: f })))
@@ -124,6 +127,9 @@ export default function Settings(props: Props) {
         language: formValue.language,
         color_theme: formValue.color_theme
       },
+      behavior: {
+        confirm_boost: formValue.confirm_boost
+      },
       app_menu: settings.app_menu
     }
     await invoke('save_settings', { obj: s })
@@ -134,6 +140,12 @@ export default function Settings(props: Props) {
     label: formatMessage({ id: theme.key }),
     value: theme.value
   }))
+
+  const updateConfirmBoost = (_value: any, checked: boolean | SyntheticEvent<Element, Event>, _event?: ChangeEvent<HTMLInputElement>) => {
+    if (typeof checked === 'boolean') {
+      setFormValue(current => Object.assign({}, current, { confirm_boost: checked }))
+    }
+  }
 
   return (
     <Modal backdrop="static" keyboard={true} open={props.open} onClose={props.onClose}>
@@ -171,11 +183,16 @@ export default function Settings(props: Props) {
             </Form.Group>
           </Panel>
           <Panel header={<FormattedMessage id="settings.settings.behavior.title" />}>
-            <Form.Group controlId="behavior">
+            <Form.Group controlId="confirm_boost">
               <Form.ControlLabel>
                 <FormattedMessage id="settings.settings.behavior.confirm_boost" />
               </Form.ControlLabel>
-              <Form.Control name="confirm_boost" accepter={Checkbox} />
+              <Form.Control
+                name="confirm_boost"
+                accepter={Checkbox}
+                defaultChecked={formValue.confirm_boost}
+                onChange={updateConfirmBoost}
+              />
             </Form.Group>
           </Panel>
           <Form.Group>
