@@ -19,7 +19,7 @@ pub struct Appearance {
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct Behavior {
-    pub confirm_boost: bool,
+    pub confirm_reblog: bool,
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
@@ -71,7 +71,7 @@ pub(crate) fn read_settings(filepath: &PathBuf) -> Result<Settings, String> {
                 color_theme: ThemeType::Dark,
             },
             behavior: Some(Behavior {
-                confirm_boost: false,
+                confirm_reblog: false,
             }),
             app_menu: Some(AppMenu { hidden: false }),
         });

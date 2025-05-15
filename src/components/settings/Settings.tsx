@@ -16,7 +16,7 @@ type FormValue = {
   font_family: string | null
   language: localeType
   color_theme: ThemeType
-  confirm_boost: boolean
+  confirm_reblog: boolean
 }
 
 const languages = [
@@ -93,7 +93,7 @@ export default function Settings(props: Props) {
     font_family: null,
     language: 'en',
     color_theme: 'dark',
-    confirm_boost: true
+    confirm_reblog: false
   })
   const [fontList, setFontList] = useState<Array<{ label: string; value: string }>>([])
   const [settings, setSettings] = useState<SettingsType>()
@@ -105,7 +105,7 @@ export default function Settings(props: Props) {
     font_family: Schema.Types.StringType(),
     language: Schema.Types.StringType().isRequired(formatMessage({ id: 'settings.settings.validation.language.required' })),
     color_theme: Schema.Types.StringType(),
-    confirm_boost: Schema.Types.BooleanType()
+    confirm_reblog: Schema.Types.BooleanType()
   })
 
   useEffect(() => {
@@ -128,7 +128,7 @@ export default function Settings(props: Props) {
         color_theme: formValue.color_theme
       },
       behavior: {
-        confirm_boost: formValue.confirm_boost
+        confirm_reblog: formValue.confirm_reblog
       },
       app_menu: settings.app_menu
     }
@@ -143,7 +143,7 @@ export default function Settings(props: Props) {
 
   const updateConfirmBoost = (_value: any, checked: boolean | SyntheticEvent<Element, Event>, _event?: ChangeEvent<HTMLInputElement>) => {
     if (typeof checked === 'boolean') {
-      setFormValue(current => Object.assign({}, current, { confirm_boost: checked }))
+      setFormValue(current => Object.assign({}, current, { confirm_reblog: checked }))
     }
   }
 
@@ -183,14 +183,14 @@ export default function Settings(props: Props) {
             </Form.Group>
           </Panel>
           <Panel header={<FormattedMessage id="settings.settings.behavior.title" />}>
-            <Form.Group controlId="confirm_boost">
+            <Form.Group controlId="confirm_reblog">
               <Form.ControlLabel>
-                <FormattedMessage id="settings.settings.behavior.confirm_boost" />
+                <FormattedMessage id="settings.settings.behavior.confirm_reblog" />
               </Form.ControlLabel>
               <Form.Control
-                name="confirm_boost"
+                name="confirm_reblog"
                 accepter={Checkbox}
-                defaultChecked={formValue.confirm_boost}
+                defaultChecked={formValue.confirm_reblog}
                 onChange={updateConfirmBoost}
               />
             </Form.Group>

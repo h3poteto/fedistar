@@ -8,7 +8,7 @@ export type Settings = {
     color_theme: ThemeType
   }
   behavior?: {
-    confirm_boost: boolean
+    confirm_reblog: boolean
   }
   app_menu?: {
     hidden: boolean

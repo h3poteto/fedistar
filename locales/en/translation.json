@@ -104,7 +104,7 @@
       },
       "behavior": {
         "title": "Behavior",
-        "confirm_boost": "Confirm before boosting"
+        "confirm_reblog": "Confirm before boosting"
       },
       "save": "Save",
       "close": "Close",
