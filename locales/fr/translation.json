@@ -102,6 +102,10 @@
           "high_contrast": "Haut contraste"
         }
       },
+      "behavior": {
+        "title": "Behavior",
+        "confirm_reblog": "Confirm before boosting"
+      },
       "save": "Sauvegarder",
       "close": "Fermer",
       "validation": {
@@ -239,6 +243,11 @@
         "delete": "Supprimer",
         "report": "Signaler {user}",
         "from_other_account": "Réagir avec d'autres comptes"
+      },
+      "confirm_reblog": {
+        "text": "Are you sure you want to boost this post?",
+        "reblog": "Boost",
+        "cancel": "Cancel"
       }
     },
     "status": {
