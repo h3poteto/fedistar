@@ -9,6 +9,7 @@ import TagDetail from './Tag'
 import ListsDetail from './Lists'
 import ListDetail from './List'
 import FollowedHashtags from './FollowedHashtags'
+import { Behavior } from 'src/entities/behavior'
 
 type Props = {
   dispatch: Dispatch<{ target: string; value: boolean; object?: any; index?: number }>
@@ -18,6 +19,7 @@ type Props = {
   openListMemberships: (list: Entity.List, client: MegalodonInterface) => void
   openAddListMember: (user: Entity.Account, client: MegalodonInterface) => void
   locale: string
+  behavior: Behavior
 }
 
 const Detail: React.FC<Props> = props => {
@@ -70,6 +72,7 @@ const Detail: React.FC<Props> = props => {
                 openFromOtherAccount={props.openFromOtherAccount}
                 setStatusDetail={setStatusDetail}
                 locale={props.locale}
+                behavior={props.behavior}
               />
             )}
             {target === 'profile' && (
@@ -80,6 +83,7 @@ const Detail: React.FC<Props> = props => {
                 openAddListMember={props.openAddListMember}
                 setStatusDetail={setStatusDetail}
                 locale={props.locale}
+                behavior={props.behavior}
               />
             )}
             {target === 'tag' && (
@@ -89,6 +93,7 @@ const Detail: React.FC<Props> = props => {
                 openFromOtherAccount={props.openFromOtherAccount}
                 setStatusDetail={setStatusDetail}
                 locale={props.locale}
+                behavior={props.behavior}
               />
             )}
             {target === 'lists' && <ListsDetail openListMemberships={props.openListMemberships} />}
@@ -99,6 +104,7 @@ const Detail: React.FC<Props> = props => {
                 openFromOtherAccount={props.openFromOtherAccount}
                 setStatusDetail={setStatusDetail}
                 locale={props.locale}
+                behavior={props.behavior}
               />
             )}
             {target === 'followed_hashtags' && <FollowedHashtags />}

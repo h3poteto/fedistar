@@ -12,6 +12,7 @@ import Status from '../timelines/status/Status'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { CustomEmojiCategory } from 'src/entities/emoji'
 import { mapCustomEmojiCategory } from 'src/utils/emojiData'
+import { Behavior } from 'src/entities/behavior'
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
@@ -19,6 +20,7 @@ type Props = {
   openFromOtherAccount: (status: Entity.Status) => void
   setStatusDetail: (statusId: string, serverId: number, accountId?: number) => void
   locale: string
+  behavior: Behavior
 }
 
 const StatusDetail: React.FC<Props> = props => {
@@ -183,6 +185,7 @@ const StatusDetail: React.FC<Props> = props => {
                   openFromOtherAccount={props.openFromOtherAccount}
                   customEmojis={customEmojis}
                   locale={props.locale}
+                  behavior={props.behavior}
                 />
               </List.Item>
             ))}

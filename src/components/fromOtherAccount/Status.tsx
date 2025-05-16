@@ -177,6 +177,7 @@ function Post(props: PostProps) {
               updateStatus={props.updateStatus}
               customEmojis={props.customEmojis}
               locale={props.locale}
+              confirmReblog={false}
             />
           </div>
         </FlexboxGrid.Item>

@@ -10,6 +10,7 @@ import { invoke } from '@tauri-apps/api/core'
 import generator, { MegalodonInterface, Entity } from 'megalodon'
 import { USER_AGENT } from 'src/defaults'
 import Results from './Results'
+import { Behavior } from 'src/entities/behavior'
 
 type Props = {
   setOpened: (value: boolean) => void
@@ -18,6 +19,7 @@ type Props = {
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
   locale: string
+  behavior: Behavior
 }
 
 export default function Search(props: Props) {
@@ -89,6 +91,7 @@ export default function Search(props: Props) {
             openReport={props.openReport}
             openFromOtherAccount={props.openFromOtherAccount}
             locale={props.locale}
+            behavior={props.behavior}
           />
         )}
       </Content>

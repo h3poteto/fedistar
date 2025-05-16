@@ -17,6 +17,7 @@ import Followers, { FuncProps as FollowersFunc } from './profile/Followers'
 import { findLink } from 'src/utils/statusParser'
 import { domainFromAcct } from 'src/utils/domain'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { Behavior } from 'src/entities/behavior'
 
 const PostsTab = forwardRef(Posts)
 const FollowingTab = forwardRef(Following)
@@ -29,6 +30,7 @@ type Props = {
   openAddListMember: (user: Entity.Account, client: MegalodonInterface) => void
   setStatusDetail: (statusId: string, serverId: number, accountId?: number) => void
   locale: string
+  behavior: Behavior
 }
 
 const Profile: React.FC<Props> = props => {
@@ -168,6 +170,7 @@ const Profile: React.FC<Props> = props => {
             setStatusDetail={props.setStatusDetail}
             locale={props.locale}
             ref={postsRef}
+            behavior={props.behavior}
           />
         )
       case 'following':

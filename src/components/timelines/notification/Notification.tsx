@@ -7,6 +7,7 @@ import { Account } from 'src/entities/account'
 import Move from './Move'
 import { ColumnWidth } from 'src/entities/timeline'
 import { CustomEmojiCategory } from 'src/entities/emoji'
+import { Behavior } from 'src/entities/behavior'
 
 type Props = {
   notification: Entity.Notification
@@ -25,6 +26,7 @@ type Props = {
   customEmojis: Array<CustomEmojiCategory>
   filters: Array<Entity.Filter>
   locale: string
+  behavior: Behavior
 }
 
 const notification = (props: Props) => {
@@ -69,6 +71,7 @@ const notification = (props: Props) => {
             openFromOtherAccount={props.openFromOtherAccount}
             customEmojis={props.customEmojis}
             locale={props.locale}
+            behavior={props.behavior}
           />
         )
       } else {
@@ -94,6 +97,7 @@ const notification = (props: Props) => {
             customEmojis={props.customEmojis}
             filters={props.filters}
             locale={props.locale}
+            behavior={props.behavior}
           />
         )
       } else {

@@ -17,6 +17,7 @@ import Poll from './Poll'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { ColumnWidth } from 'src/entities/timeline'
 import { CustomEmojiCategory } from 'src/entities/emoji'
+import { Behavior } from 'src/entities/behavior'
 
 type Props = {
   status: Entity.Status
@@ -36,6 +37,7 @@ type Props = {
   customEmojis: Array<CustomEmojiCategory>
   filters?: Array<Entity.Filter>
   locale: string
+  behavior: Behavior
 } & HTMLAttributes<HTMLElement>
 
 const Status: React.FC<Props> = props => {
@@ -231,6 +233,7 @@ const Status: React.FC<Props> = props => {
             openFromOtherAccount={() => props.openFromOtherAccount(status)}
             customEmojis={props.customEmojis}
             locale={props.locale}
+            confirmReblog={props.behavior.confirm_reblog}
           />
         </div>
       </div>

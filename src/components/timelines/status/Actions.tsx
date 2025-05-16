@@ -49,6 +49,7 @@ type Props = {
   openFromOtherAccount?: () => void
   customEmojis: Array<CustomEmojiCategory>
   locale: string
+  confirmReblog: boolean
 }
 
 const Actions: React.FC<Props> = props => {
@@ -177,6 +178,8 @@ const Actions: React.FC<Props> = props => {
             deactivating={reblogDeactivating}
             icon={reblogIcon(props.status)}
             onClick={reblog}
+            confirm={props.confirmReblog && !status.reblogged}
+            confirmText={formatMessage({ id: 'timeline.actions.confirm_reblog.text' })}
             title={formatMessage({ id: 'timeline.actions.reblog' })}
           />
         </FlexboxGrid.Item>

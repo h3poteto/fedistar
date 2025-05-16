@@ -9,6 +9,7 @@ type Props = {
   open: boolean
   onClose: () => void
   reloadAppearance: () => void
+  reloadBehavior: () => void
 }
 
 type FormValue = {
@@ -134,6 +135,7 @@ export default function Settings(props: Props) {
     }
     await invoke('save_settings', { obj: s })
     props.reloadAppearance()
+    props.reloadBehavior()
   }
 
   const colorTheme = themes.map(theme => ({
