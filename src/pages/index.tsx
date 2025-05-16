@@ -31,6 +31,7 @@ import AddListMember from 'src/components/addListMember/AddListMember'
 import { useIntl } from 'react-intl'
 import { Context } from 'src/i18n'
 import Search from 'src/components/search/Search'
+import { Behavior } from 'src/entities/behavior'
 
 const { scrollLeft } = DOMHelper
 
@@ -58,6 +59,7 @@ function App() {
   const [style, setStyle] = useState<CSSProperties>({})
   const [highlighted, setHighlighted] = useState<Timeline | null>(null)
   const [locale, setLocale] = useState<string>('en')
+  const [behavior, setBehavior] = useState<Behavior | null>(null)
 
   const [modalState, dispatch] = useReducer(modalReducer, initialModalState)
   const spaceRef = useRef<HTMLDivElement>()
@@ -72,6 +74,7 @@ function App() {
 
   useEffect(() => {
     loadAppearance()
+    loadBehavior()
     document.addEventListener('keydown', handleKeyPress)
 
     invoke<Array<[Server, Account | null]>>('list_servers').then(res => {
@@ -178,6 +181,12 @@ function App() {
     })
   }
 
+  const loadBehavior = () => {
+    invoke<Settings>('read_settings').then(res => {
+      setBehavior(res.behavior)
+    })
+  }
+
   const toggleCompose = () => {
     if (servers.find(s => s.account !== null)) {
       setSearchOpened(false)
@@ -218,6 +227,7 @@ function App() {
         open={modalState.settings.opened}
         onClose={() => dispatch({ target: 'settings', value: false })}
         reloadAppearance={loadAppearance}
+        reloadBehavior={loadBehavior}
       />
       <Report
         opened={modalState.report.opened}
@@ -304,6 +314,7 @@ function App() {
                   dispatch({ target: 'report', value: true, object: status, client: client })
                 }
                 openFromOtherAccount={(status: Entity.Status) => dispatch({ target: 'fromOtherAccount', value: true, object: status })}
+                behavior={behavior}
               />
             </div>
           )}
@@ -324,6 +335,7 @@ function App() {
                 dispatch({ target: 'report', value: true, object: status, client: client })
               }
               openFromOtherAccount={(status: Entity.Status) => dispatch({ target: 'fromOtherAccount', value: true, object: status })}
+              behavior={behavior}
             />
           ))}
           <NewTimeline servers={servers} />
@@ -344,6 +356,7 @@ function App() {
           openAddListMember={(user: Entity.Account, client: MegalodonInterface) => {
             dispatch({ target: 'addListMember', value: true, object: user, client: client })
           }}
+          behavior={behavior}
         />
       </Container>
     </div>

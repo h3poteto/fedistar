@@ -37,6 +37,7 @@ import { Marker } from 'src/entities/marker'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { CustomEmojiCategory } from 'src/entities/emoji'
 import { mapCustomEmojiCategory } from 'src/utils/emojiData'
+import { Behavior } from 'src/entities/behavior'
 
 type Props = {
   timeline: Timeline
@@ -47,6 +48,7 @@ type Props = {
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
   locale: string
+  behavior: Behavior
 }
 
 const Notifications: React.FC<Props> = props => {
@@ -407,6 +409,7 @@ const Notifications: React.FC<Props> = props => {
                         customEmojis={customEmojis}
                         filters={filters}
                         locale={props.locale}
+                        behavior={props.behavior}
                       />
                     </List.Item>
                   )

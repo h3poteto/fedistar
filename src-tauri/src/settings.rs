@@ -5,6 +5,7 @@ use std::{fmt, fs, path::PathBuf};
 #[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct Settings {
     pub appearance: Appearance,
+    pub behavior: Option<Behavior>,
     pub app_menu: Option<AppMenu>,
 }
 
@@ -14,6 +15,11 @@ pub struct Appearance {
     pub font_family: Option<String>,
     pub language: LocaleType,
     pub color_theme: ThemeType,
+}
+
+#[derive(Deserialize, Serialize, Debug, Clone)]
+pub struct Behavior {
+    pub confirm_reblog: bool,
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
@@ -64,6 +70,9 @@ pub(crate) fn read_settings(filepath: &PathBuf) -> Result<Settings, String> {
                 language: LocaleType::En,
                 color_theme: ThemeType::Dark,
             },
+            behavior: Some(Behavior {
+                confirm_reblog: false,
+            }),
             app_menu: Some(AppMenu { hidden: false }),
         });
     };

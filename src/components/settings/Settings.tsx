@@ -1,7 +1,7 @@
 import { invoke } from '@tauri-apps/api/core'
-import { useEffect, useState } from 'react'
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { InputNumber, Modal, Panel, Form, Schema, ButtonToolbar, Button, InputPicker } from 'rsuite'
+import { InputNumber, Modal, Panel, Form, Schema, ButtonToolbar, Button, InputPicker, Checkbox } from 'rsuite'
 import { Settings as SettingsType, ThemeType } from 'src/entities/settings'
 import { localeType } from 'src/i18n'
 
@@ -9,6 +9,7 @@ type Props = {
   open: boolean
   onClose: () => void
   reloadAppearance: () => void
+  reloadBehavior: () => void
 }
 
 type FormValue = {
@@ -16,6 +17,7 @@ type FormValue = {
   font_family: string | null
   language: localeType
   color_theme: ThemeType
+  confirm_reblog: boolean
 }
 
 const languages = [
@@ -91,7 +93,8 @@ export default function Settings(props: Props) {
     font_size: 14,
     font_family: null,
     language: 'en',
-    color_theme: 'dark'
+    color_theme: 'dark',
+    confirm_reblog: false
   })
   const [fontList, setFontList] = useState<Array<{ label: string; value: string }>>([])
   const [settings, setSettings] = useState<SettingsType>()
@@ -102,13 +105,14 @@ export default function Settings(props: Props) {
       .isRequired(formatMessage({ id: 'settings.settings.validation.font_size.required' })),
     font_family: Schema.Types.StringType(),
     language: Schema.Types.StringType().isRequired(formatMessage({ id: 'settings.settings.validation.language.required' })),
-    color_theme: Schema.Types.StringType()
+    color_theme: Schema.Types.StringType(),
+    confirm_reblog: Schema.Types.BooleanType()
   })
 
   useEffect(() => {
     const f = async () => {
       const settings = await invoke<SettingsType>('read_settings')
-      setFormValue(current => Object.assign({}, current, settings.appearance))
+      setFormValue(current => Object.assign({}, current, settings.appearance, settings.behavior))
       setSettings(settings)
       const f = await invoke<Array<string>>('list_fonts')
       setFontList(f.map(f => ({ label: f, value: f })))
@@ -124,16 +128,26 @@ export default function Settings(props: Props) {
         language: formValue.language,
         color_theme: formValue.color_theme
       },
+      behavior: {
+        confirm_reblog: formValue.confirm_reblog
+      },
       app_menu: settings.app_menu
     }
     await invoke('save_settings', { obj: s })
     props.reloadAppearance()
+    props.reloadBehavior()
   }
 
   const colorTheme = themes.map(theme => ({
     label: formatMessage({ id: theme.key }),
     value: theme.value
   }))
+
+  const updateConfirmBoost = (_value: any, checked: boolean | SyntheticEvent<Element, Event>, _event?: ChangeEvent<HTMLInputElement>) => {
+    if (typeof checked === 'boolean') {
+      setFormValue(current => Object.assign({}, current, { confirm_reblog: checked }))
+    }
+  }
 
   return (
     <Modal backdrop="static" keyboard={true} open={props.open} onClose={props.onClose}>
@@ -168,6 +182,19 @@ export default function Settings(props: Props) {
                 <FormattedMessage id="settings.settings.appearance.color_theme" />
               </Form.ControlLabel>
               <Form.Control name="color_theme" accepter={InputPicker} cleanable={false} data={colorTheme} />
+            </Form.Group>
+          </Panel>
+          <Panel header={<FormattedMessage id="settings.settings.behavior.title" />}>
+            <Form.Group controlId="confirm_reblog">
+              <Form.ControlLabel>
+                <FormattedMessage id="settings.settings.behavior.confirm_reblog" />
+              </Form.ControlLabel>
+              <Form.Control
+                name="confirm_reblog"
+                accepter={Checkbox}
+                defaultChecked={formValue.confirm_reblog}
+                onChange={updateConfirmBoost}
+              />
             </Form.Group>
           </Panel>
           <Form.Group>

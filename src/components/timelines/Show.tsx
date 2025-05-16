@@ -5,6 +5,7 @@ import ShowTimeline from 'src/components/timelines/Timeline'
 import ShowNotifications from 'src/components/timelines/Notifications'
 import ShowConversations from 'src/components/timelines/Conversations'
 import { Unread } from 'src/entities/unread'
+import { Behavior } from 'src/entities/behavior'
 
 type Props = {
   timeline: Timeline
@@ -15,6 +16,7 @@ type Props = {
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
   locale: string
+  behavior: Behavior
 }
 
 const Show: React.FC<Props> = props => {
@@ -29,6 +31,7 @@ const Show: React.FC<Props> = props => {
         openReport={props.openReport}
         openFromOtherAccount={props.openFromOtherAccount}
         locale={props.locale}
+        behavior={props.behavior}
       />
     )
   } else if (props.timeline.kind === 'direct') {
@@ -42,6 +45,7 @@ const Show: React.FC<Props> = props => {
         openReport={props.openReport}
         openFromOtherAccount={props.openFromOtherAccount}
         locale={props.locale}
+        behavior={props.behavior}
       />
     )
   }

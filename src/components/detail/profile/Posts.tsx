@@ -5,6 +5,7 @@ import { List, Loader } from 'rsuite'
 import Status from 'src/components/timelines/status/Status'
 import { TIMELINE_STATUSES_COUNT } from 'src/defaults'
 import { Account } from 'src/entities/account'
+import { Behavior } from 'src/entities/behavior'
 import { CustomEmojiCategory } from 'src/entities/emoji'
 import { Server } from 'src/entities/server'
 import { mapCustomEmojiCategory } from 'src/utils/emojiData'
@@ -23,6 +24,7 @@ type ArgProps = {
   openFromOtherAccount: (status: Entity.Status) => void
   setStatusDetail: (statusId: string, serverId: number, accountId?: number) => void
   locale: string
+  behavior: Behavior
 }
 
 const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) => {
@@ -126,6 +128,7 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
                 openFromOtherAccount={props.openFromOtherAccount}
                 customEmojis={customEmojis}
                 locale={props.locale}
+                behavior={props.behavior}
               />
             </List.Item>
           ))}
@@ -146,6 +149,7 @@ const Posts: React.ForwardRefRenderFunction<FuncProps, ArgProps> = (props, ref) 
                 openFromOtherAccount={props.openFromOtherAccount}
                 customEmojis={customEmojis}
                 locale={props.locale}
+                behavior={props.behavior}
               />
             </List.Item>
           ))}

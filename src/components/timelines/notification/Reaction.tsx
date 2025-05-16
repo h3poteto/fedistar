@@ -16,6 +16,7 @@ import { useIntl } from 'react-intl'
 import Actions from '../status/Actions'
 import { CustomEmojiCategory } from 'src/entities/emoji'
 import Reply from 'src/components/compose/Status'
+import { Behavior } from 'src/entities/behavior'
 
 type Props = {
   server: Server
@@ -31,6 +32,7 @@ type Props = {
   openFromOtherAccount: (status: Entity.Status) => void
   customEmojis: Array<CustomEmojiCategory>
   locale: string
+  behavior: Behavior
 }
 
 const actionIcon = (notification: Entity.Notification) => {
@@ -317,6 +319,7 @@ const Reaction: React.FC<Props> = props => {
             openFromOtherAccount={() => props.openFromOtherAccount(status)}
             customEmojis={props.customEmojis}
             locale={props.locale}
+            confirmReblog={props.behavior.confirm_reblog}
           />
         </div>
       </div>

@@ -11,6 +11,7 @@ import emojify from 'src/utils/emojify'
 import { Account } from 'src/entities/account'
 import { CustomEmojiCategory } from 'src/entities/emoji'
 import { mapCustomEmojiCategory } from 'src/utils/emojiData'
+import { Behavior } from 'src/entities/behavior'
 
 type Props = {
   account: Account
@@ -20,6 +21,7 @@ type Props = {
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
   locale: string
+  behavior: Behavior
 }
 
 export default function Results(props: Props) {
@@ -231,6 +233,7 @@ export default function Results(props: Props) {
                         openFromOtherAccount={props.openFromOtherAccount}
                         customEmojis={customEmojis}
                         locale={props.locale}
+                        behavior={props.behavior}
                       />
                     </div>
                   </List.Item>

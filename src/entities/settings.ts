@@ -7,6 +7,9 @@ export type Settings = {
     language: localeType
     color_theme: ThemeType
   }
+  behavior?: {
+    confirm_reblog: boolean
+  }
   app_menu?: {
     hidden: boolean
   }

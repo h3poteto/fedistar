@@ -57,6 +57,7 @@ import timelineName from 'src/utils/timelineName'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { CustomEmojiCategory } from 'src/entities/emoji'
 import { mapCustomEmojiCategory } from 'src/utils/emojiData'
+import { Behavior } from 'src/entities/behavior'
 
 type Props = {
   timeline: Timeline
@@ -65,6 +66,7 @@ type Props = {
   openReport: (status: Entity.Status, client: MegalodonInterface) => void
   openFromOtherAccount: (status: Entity.Status) => void
   locale: string
+  behavior: Behavior
 }
 
 export default function TimelineColumn(props: Props) {
@@ -537,6 +539,7 @@ export default function TimelineColumn(props: Props) {
                       customEmojis={customEmojis}
                       filters={filters}
                       locale={props.locale}
+                      behavior={props.behavior}
                     />
                   </List.Item>
                 )}
