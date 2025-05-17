@@ -103,8 +103,8 @@
         }
       },
       "behavior": {
-        "title": "Behavior",
-        "confirm_reblog": "Confirm before boosting"
+        "title": "動作",
+        "confirm_reblog": "ブーストする前に確認"
       },
       "save": "保存",
       "close": "閉じる",
@@ -245,9 +245,9 @@
         "from_other_account": "他のアカウントからリアクション"
       },
       "confirm_reblog": {
-        "text": "Are you sure you want to boost this post?",
-        "reblog": "Boost",
-        "cancel": "Cancel"
+        "text": "この投稿をブーストしてもよろしいですか？",
+        "reblog": "ブースト",
+        "cancel": "キャンセル"
       }
     },
     "status": {
