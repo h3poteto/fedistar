@@ -102,6 +102,10 @@
           "high_contrast": "高对比度"
         }
       },
+      "behavior": {
+        "title": "Behavior",
+        "confirm_reblog": "Confirm before boosting"
+      },
       "save": "保存",
       "close": "关闭",
       "validation": {
@@ -239,6 +243,11 @@
         "delete": "删除",
         "report": "举报 {user}",
         "from_other_account": "用其它账号回应"
+      },
+      "confirm_reblog": {
+        "text": "Are you sure you want to boost this post?",
+        "reblog": "Boost",
+        "cancel": "Cancel"
       }
     },
     "status": {
