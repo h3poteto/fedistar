@@ -102,6 +102,14 @@ pub(crate) fn update_settings_with_default(
         let _ = fs::write(filepath, str).map_err(|err| err.to_string());
         return Ok(update.to_string());
     }
+    if value["behavior"] == Value::Null || value["behavior"]["confirm_reblog"] == Value::Null {
+        let mut update = value.clone();
+        update["behavior"] = Value::Object(serde_json::Map::new());
+        update["behavior"]["confirm_reblog"] = Value::Bool(false);
+        let str = update.to_string();
+        let _ = fs::write(filepath, str).map_err(|err| err.to_string());
+        return Ok(update.to_string());
+    }
     Ok(original)
 }
 
