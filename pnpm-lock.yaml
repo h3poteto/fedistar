@@ -30,8 +30,8 @@ importers:
         specifier: ~2.2.1
         version: 2.2.1
       '@tauri-apps/plugin-http':
-        specifier: ~2.4.3
-        version: 2.4.3
+        specifier: ~2.4.4
+        version: 2.4.4
       '@tauri-apps/plugin-notification':
         specifier: ~2.2.2
         version: 2.2.2
@@ -906,8 +906,8 @@ packages:
   '@tauri-apps/plugin-global-shortcut@2.2.1':
     resolution: {integrity: sha512-b64/TI1t5LIi2JY4OWlYjZpPRq60T5GVVL/no27sUuxaNUZY8dVtwsMtDUgxUpln2yR+P2PJsYlqY5V8sLSxEw==}
 
-  '@tauri-apps/plugin-http@2.4.3':
-    resolution: {integrity: sha512-Us8X+FikzpaZRNr4kH4HLwyXascHbM42p6LxAqRTQnHPrrqp1usaH4vxWAZalPvTbHJ3gBEMJPHusFJgtjGJjA==}
+  '@tauri-apps/plugin-http@2.4.4':
+    resolution: {integrity: sha512-IjlaaS4z8ybB10qnh6djZ2FIaHdWVs/U1D1C56udKcjX1f+jAmR8/s7qBV5cv/OmcGkOIzet3LWuH70LKf4J2A==}
 
   '@tauri-apps/plugin-notification@2.2.2':
     resolution: {integrity: sha512-d71rJdtkFUTcG4dqydnv6d7ZwlNZVcdjrVOPwc9GsF6y9DgVN1WCZ9T/vbfD2qrJslf7ai+rnNJc62TLLC2IdA==}
@@ -3787,7 +3787,7 @@ snapshots:
     dependencies:
       '@tauri-apps/api': 2.5.0
 
-  '@tauri-apps/plugin-http@2.4.3':
+  '@tauri-apps/plugin-http@2.4.4':
     dependencies:
       '@tauri-apps/api': 2.5.0
 
