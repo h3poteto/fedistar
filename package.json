@@ -77,6 +77,6 @@
     "jsdom": "^26.0.0",
     "sass": "^1.86.3",
     "ts-jest": "^29.3.2",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   }
 }
