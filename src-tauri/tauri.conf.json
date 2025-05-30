@@ -31,7 +31,7 @@
       "minimumSystemVersion": "14.0",
       "providerShortName": null,
       "signingIdentity": null,
-      "buildeVersion": "20250531.004720"
+      "bundleVersion": "20250531.004720"
     },
     "resources": [],
     "shortDescription": "Multi-column Fediverse client for desktop",
