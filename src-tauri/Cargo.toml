@@ -54,7 +54,7 @@ custom-protocol = [ "tauri/custom-protocol" ]
 devtools = [ "tauri/devtools" ]
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
-tauri-plugin-global-shortcut = "2.2.0"
+tauri-plugin-global-shortcut = "2.2.1"
 
 
 [package.metadata.i18n]
