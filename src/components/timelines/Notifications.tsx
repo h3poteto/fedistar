@@ -374,8 +374,11 @@ const Notifications: React.FC<Props> = props => {
                 itemContent={(_, notification) => {
                   let shadow = {}
                   if (marker) {
-                    if (marker.unread_count && pleromaUnreads.includes(notification.id)) {
-                      shadow = { boxShadow: '2px 0 1px var(--rs-primary-700) inset' }
+                    /* Pleroma marker should have unread_count and last_read_id is incrrect, so should not use last_read_id. */
+                    if (marker.unread_count !== null && marker.unread_count !== undefined) {
+                      if (marker.unread_count && pleromaUnreads.includes(notification.id)) {
+                        shadow = { boxShadow: '2px 0 1px var(--rs-primary-700) inset' }
+                      }
                     } else if (parseInt(marker.last_read_id) < parseInt(notification.id)) {
                       shadow = { boxShadow: '2px 0 1px var(--rs-primary-700) inset' }
                     }
