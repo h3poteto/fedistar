@@ -131,12 +131,12 @@ export default function Results(props: Props) {
             <Input placeholder={formatMessage({ id: 'search.placeholder' })} value={word} onChange={value => setWord(value)} />
 
             {word === searchedWord ? (
-              <InputGroup.Button onClick={() => clear()}>
-                <Icon as={BsBackspace} title={formatMessage({ id: 'search.clear' })} />
+              <InputGroup.Button onClick={() => clear()} title={formatMessage({ id: 'search.clear' })}>
+                <Icon as={BsBackspace} />
               </InputGroup.Button>
             ) : (
-              <InputGroup.Button onClick={() => search(word)}>
-                <Icon as={BsSearch} title={formatMessage({ id: 'search.search' })} />
+              <InputGroup.Button onClick={() => search(word)} title={formatMessage({ id: 'search.search' })}>
+                <Icon as={BsSearch} />
               </InputGroup.Button>
             )}
           </InputGroup>
