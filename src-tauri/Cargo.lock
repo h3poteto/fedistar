@@ -5925,9 +5925,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-fs"
-version = "2.2.1"
+version = "2.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "88371e340ad2f07409a3b68294abe73f20bc9c1bc1b631a31dc37a3d0161f682"
+checksum = "33ead0daec5d305adcefe05af9d970fc437bcc7996052d564e7393eb291252da"
 dependencies = [
  "anyhow",
  "dunce",
@@ -5943,7 +5943,6 @@ dependencies = [
  "thiserror 2.0.3",
  "toml 0.8.19",
  "url",
- "uuid",
 ]
 
 [[package]]
@@ -5963,9 +5962,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-http"
-version = "2.4.3"
+version = "2.4.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "40dcd6c922a1885e1f0bcebc6768fec6e005bd4b9001c5d90a2f5d4cab297729"
+checksum = "a673d9df72d3f3c797b8edd5950a7ab014d2bdeb7079b6588395b25242d5dffd"
 dependencies = [
  "bytes",
  "cookie_store",
