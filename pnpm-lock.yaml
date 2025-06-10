@@ -51,8 +51,8 @@ importers:
         specifier: ^5.6.0
         version: 5.6.0
       megalodon:
-        specifier: 10.1.1
-        version: 10.1.1
+        specifier: 10.1.2
+        version: 10.1.2
       next:
         specifier: ^15.3.3
         version: 15.3.3(@babel/core@7.22.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.89.0)
@@ -2230,9 +2230,9 @@ packages:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
 
-  megalodon@10.1.1:
-    resolution: {integrity: sha512-mjgXVZ39/Uaw7OY4n/YbwqWv7hfTfY2Lcjtr2yypBfvuBe0wstmQquQDT7xgeFOl7oC2THmR5mWj1cVH1Cjc5Q==}
-    engines: {node: '>=22.11.0'}
+  megalodon@10.1.2:
+    resolution: {integrity: sha512-rovBqwkK0uXVNXoWDn5NjFtmlyxm/ZSrhSs8EUVWtK6xWmJHFJUMJYFhCcz3qUYJxiSGqXWUotKjoGb7bRrtuw==}
+    engines: {node: '>=22.16.0'}
 
   memoize-one@5.2.1:
     resolution: {integrity: sha512-zYiwtZUcYyXKo/np96AGZAckk+FWWsUdJ3cHGGmld7+AhvcWmQyGCYUh1hc4Q/pkOhb65dQR/pqCyK0cOaHz4Q==}
@@ -5549,7 +5549,7 @@ snapshots:
 
   math-intrinsics@1.1.0: {}
 
-  megalodon@10.1.1:
+  megalodon@10.1.2:
     dependencies:
       '@badgateway/oauth2-client': 2.4.2
       '@types/ws': 8.5.13
