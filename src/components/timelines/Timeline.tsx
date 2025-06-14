@@ -511,7 +511,15 @@ export default function TimelineColumn(props: Props) {
             >
               <Virtuoso
                 style={{ height: '100%' }}
-                data={statuses}
+                data={statuses.filter(status => {
+                  if (!props.timeline.show_boosts) {
+                    return !status.reblog
+                  }
+                  if (!props.timeline.show_replies) {
+                    return !status.in_reply_to_id
+                  }
+                  return true
+                })}
                 scrollerRef={ref => {
                   scrollerRef.current = ref as HTMLElement
                 }}
