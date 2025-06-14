@@ -165,7 +165,7 @@ pub(crate) async fn list_timelines(
 ) -> DBResult<Vec<(entities::Timeline, entities::Server)>> {
     let timelines = sqlx::query(
         r#"
-SELECT timelines.id, timelines.server_id, timelines.kind, timelines.name, timelines.sort, timelines.list_id, timelines.column_width,
+SELECT timelines.id, timelines.server_id, timelines.kind, timelines.name, timelines.sort, timelines.list_id, timelines.column_width, timelines.show_boosts, timelines.show_replies,
        servers.id, servers.domain, servers.base_url, servers.sns, servers.favicon, servers.account_id
 FROM timelines INNER JOIN servers ON servers.id = timelines.server_id ORDER BY timelines.sort"#,
     )
@@ -179,14 +179,16 @@ FROM timelines INNER JOIN servers ON servers.id = timelines.server_id ORDER BY t
                 sort: row.get(4),
                 list_id: row.get(5),
                 column_width: row.get(6),
+                show_boosts: row.get(7),
+                show_replies: row.get(8),
             },
             entities::Server {
-                id: row.get(7),
-                domain: row.get(8),
-                base_url: row.get(9),
-                sns: row.get(10),
-                favicon: row.get(11),
-                account_id: row.get(12),
+                id: row.get(9),
+                domain: row.get(10),
+                base_url: row.get(11),
+                sns: row.get(12),
+                favicon: row.get(13),
+                account_id: row.get(14),
             },
         )
     })
@@ -204,7 +206,7 @@ pub(crate) async fn get_timeline(
 ) -> DBResult<entities::Timeline> {
     let timeline = sqlx::query(
         r#"
-SELECT timelines.id, timelines.server_id, timelines.kind, timelines.name, timelines.sort, timelines.list_id, timelines.column_width
+SELECT timelines.id, timelines.server_id, timelines.kind, timelines.name, timelines.sort, timelines.list_id, timelines.column_width, timelines.show_boosts, timelines.show_replies
 FROM timelines INNER JOIN servers ON servers.id = timelines.server_id WHERE timelines.name = ? AND servers.id = ? AND timelines.kind = ?"#
     ).bind(name).bind(server.id).bind(kind)
     .map(|row: SqliteRow| {
@@ -216,6 +218,8 @@ FROM timelines INNER JOIN servers ON servers.id = timelines.server_id WHERE time
                 sort: row.get(4),
                 list_id: row.get(5),
                 column_width: row.get(6),
+                show_boosts: row.get(7),
+                show_replies: row.get(8),
         }
     })
 
@@ -360,6 +364,40 @@ pub(crate) async fn update_column_width(
 
     sqlx::query("UPDATE timelines SET column_width = ? WHERE id = ?")
         .bind(column_width.clone())
+        .bind(id)
+        .execute(&mut *tx)
+        .await?;
+    tx.commit().await?;
+
+    Ok(())
+}
+
+pub(crate) async fn update_show_boosts(
+    pool: &SqlitePool,
+    id: i64,
+    show_boosts: bool,
+) -> DBResult<()> {
+    let mut tx = pool.begin().await?;
+
+    sqlx::query("UPDATE timelines SET show_boosts = ? WHERE id = ?")
+        .bind(show_boosts)
+        .bind(id)
+        .execute(&mut *tx)
+        .await?;
+    tx.commit().await?;
+
+    Ok(())
+}
+
+pub(crate) async fn update_show_replies(
+    pool: &SqlitePool,
+    id: i64,
+    show_replies: bool,
+) -> DBResult<()> {
+    let mut tx = pool.begin().await?;
+
+    sqlx::query("UPDATE timelines SET show_replies = ? WHERE id = ?")
+        .bind(show_replies)
         .bind(id)
         .execute(&mut *tx)
         .await?;

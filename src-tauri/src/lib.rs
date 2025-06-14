@@ -373,6 +373,50 @@ async fn update_column_width(
 }
 
 #[tauri::command]
+async fn update_show_boosts(
+    app_handle: AppHandle,
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+    id: i64,
+    show_boosts: bool,
+) -> Result<(), String> {
+    database::update_show_boosts(&sqlite_pool, id, show_boosts)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    let timelines = database::list_timelines(&sqlite_pool)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    app_handle
+        .emit("updated-timelines", UpdatedTimelinePayload { timelines })
+        .expect("Failed to updated-timelines event");
+
+    Ok(())
+}
+
+#[tauri::command]
+async fn update_show_replies(
+    app_handle: AppHandle,
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+    id: i64,
+    show_replies: bool,
+) -> Result<(), String> {
+    database::update_show_replies(&sqlite_pool, id, show_replies)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    let timelines = database::list_timelines(&sqlite_pool)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    app_handle
+        .emit("updated-timelines", UpdatedTimelinePayload { timelines })
+        .expect("Failed to updated-timelines event");
+
+    Ok(())
+}
+
+#[tauri::command]
 fn read_settings(settings_path: State<'_, PathBuf>) -> Result<settings::Settings, String> {
     settings::read_settings(&settings_path)
 }
@@ -702,6 +746,8 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
             switch_devtools,
             frontend_log,
             update_column_width,
+            update_show_boosts,
+            update_show_replies,
             open_media,
             list_fonts,
             get_timeline,

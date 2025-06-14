@@ -16,7 +16,8 @@ import {
   useToaster,
   Radio,
   RadioGroup,
-  Divider
+  Divider,
+  Toggle
 } from 'rsuite'
 import {
   BsHouseDoor,
@@ -510,7 +511,15 @@ export default function TimelineColumn(props: Props) {
             >
               <Virtuoso
                 style={{ height: '100%' }}
-                data={statuses}
+                data={statuses.filter(status => {
+                  if (!props.timeline.show_boosts) {
+                    return !status.reblog
+                  }
+                  if (!props.timeline.show_replies) {
+                    return !status.in_reply_to_id
+                  }
+                  return true
+                })}
                 scrollerRef={ref => {
                   scrollerRef.current = ref as HTMLElement
                 }}
@@ -572,9 +581,28 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
     props.close()
   }
 
+  const updateShowBoosts = async (timeline: Timeline, showBoosts: boolean) => {
+    await invoke('update_show_boosts', { id: timeline.id, showBoosts: showBoosts })
+  }
+
+  const updateShowReplies = async (timeline: Timeline, showReplies: boolean) => {
+    await invoke('update_show_replies', { id: timeline.id, showReplies: showReplies })
+  }
+
   return (
     <Popover ref={ref} style={{ opacity: 1 }}>
       <div style={{ display: 'flex', flexDirection: 'column', width: '220px' }}>
+        {props.timeline.kind === 'home' && (
+          <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '16px' }}>
+            <Toggle size="sm" checked={props.timeline.show_boosts} onChange={value => updateShowBoosts(props.timeline, value)}>
+              <FormattedMessage id="timeline.settings.show_boosts" />
+            </Toggle>
+            <Toggle size="sm" checked={props.timeline.show_replies} onChange={value => updateShowReplies(props.timeline, value)}>
+              <FormattedMessage id="timeline.settings.show_replies" />
+            </Toggle>
+          </div>
+        )}
+
         <label>
           <FormattedMessage id="timeline.settings.column_width" />
         </label>

@@ -1,0 +1,5 @@
+ALTER TABLE timelines
+  ADD COLUMN show_boosts BOOL NOT NULL DEFAULT TRUE;
+
+ALTER TABLE timelines
+  ADD COLUMN show_replies BOOL NOT NULL DEFAULT TRUE;

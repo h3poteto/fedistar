@@ -6,6 +6,8 @@ export type Timeline = {
   server_id: number
   list_id: string | null
   column_width: ColumnWidth
+  show_boosts: boolean
+  show_replies: boolean
 }
 
 export type TimelineKind = 'home' | 'notifications' | 'local' | 'public' | 'favourites' | 'list' | 'bookmarks' | 'direct' | 'tag'
