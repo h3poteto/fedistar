@@ -180,7 +180,9 @@
     "settings": {
       "title": "Paramètres",
       "unpin": "Desépingler",
-      "column_width": "Largeur de la colonne"
+      "column_width": "Largeur de la colonne",
+      "show_boosts": "Show boosts",
+      "show_replies": "Show replies"
     },
     "mark_as_read": "Marquer comme lu",
     "notification": {

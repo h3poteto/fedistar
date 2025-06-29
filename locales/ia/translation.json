@@ -180,7 +180,9 @@
     "settings": {
       "title": "Parametros",
       "unpin": "Unpin",
-      "column_width": "Column width"
+      "column_width": "Column width",
+      "show_boosts": "Show boosts",
+      "show_replies": "Show replies"
     },
     "mark_as_read": "Mark as read",
     "notification": {

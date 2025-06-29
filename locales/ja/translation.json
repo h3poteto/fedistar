@@ -180,7 +180,9 @@
     "settings": {
       "title": "設定",
       "unpin": "ピン留め解除",
-      "column_width": "カラムの幅"
+      "column_width": "カラムの幅",
+      "show_boosts": "Show boosts",
+      "show_replies": "Show replies"
     },
     "mark_as_read": "全て既読にする",
     "notification": {

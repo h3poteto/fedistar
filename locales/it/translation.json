@@ -180,7 +180,9 @@
     "settings": {
       "title": "Impostazioni",
       "unpin": "Nascondi",
-      "column_width": "Larghezza colonna"
+      "column_width": "Larghezza colonna",
+      "show_boosts": "Show boosts",
+      "show_replies": "Show replies"
     },
     "mark_as_read": "Segna come già letto",
     "notification": {

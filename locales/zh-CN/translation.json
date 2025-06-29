@@ -180,7 +180,9 @@
     "settings": {
       "title": "设置",
       "unpin": "取消置顶",
-      "column_width": "列宽"
+      "column_width": "列宽",
+      "show_boosts": "Show boosts",
+      "show_replies": "Show replies"
     },
     "mark_as_read": "标为已读",
     "notification": {
