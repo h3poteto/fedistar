@@ -180,7 +180,9 @@
     "settings": {
       "title": "Einstellungen",
       "unpin": "Loslösen",
-      "column_width": "Spaltenbreite"
+      "column_width": "Spaltenbreite",
+      "show_boosts": "Show boosts",
+      "show_replies": "Show replies"
     },
     "mark_as_read": "Als gelesen markieren",
     "notification": {
