@@ -12,6 +12,8 @@ pub struct Timeline {
     pub sort: i64,
     pub list_id: Option<String>,
     pub column_width: ColumnWidth,
+    pub show_boosts: bool,
+    pub show_replies: bool,
 }
 
 impl Timeline {
@@ -32,6 +34,8 @@ impl Timeline {
             sort,
             list_id,
             column_width,
+            show_boosts: true,
+            show_replies: true,
         }
     }
 }
