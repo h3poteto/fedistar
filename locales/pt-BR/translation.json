@@ -180,7 +180,9 @@
     "settings": {
       "title": "Configurações",
       "unpin": "Desafixar",
-      "column_width": "Largura da coluna"
+      "column_width": "Largura da coluna",
+      "show_boosts": "Show boosts",
+      "show_replies": "Show replies"
     },
     "mark_as_read": "Marcar como lido",
     "notification": {
