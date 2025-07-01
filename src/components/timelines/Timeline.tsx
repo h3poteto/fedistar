@@ -530,7 +530,10 @@ export default function TimelineColumn(props: Props) {
                 overscan={TIMELINE_STATUSES_COUNT}
                 defaultItemHeight={44}
                 itemContent={(_, status) => (
-                  <List.Item key={status.id} style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-bg-card)' }}>
+                  <List.Item
+                    key={status.id}
+                    style={{ marginTop: '2px', paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-bg-card)' }}
+                  >
                     <Status
                       status={status}
                       client={client}

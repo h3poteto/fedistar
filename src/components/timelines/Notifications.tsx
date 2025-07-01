@@ -388,6 +388,7 @@ const Notifications: React.FC<Props> = props => {
                       key={notification.id}
                       style={Object.assign(
                         {
+                          marginTop: '2px',
                           paddingTop: '2px',
                           paddingBottom: '2px',
                           backgroundColor: 'var(--rs-bg-card)'
