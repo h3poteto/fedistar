@@ -72,6 +72,10 @@ jobs:
     runs-on: macos-latest
     timeout-minutes: 60
 
+    env:
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -90,18 +94,42 @@ jobs:
       - name: Install app dependencies and build web
         run: pnpm install --frozen-lockfile
 
+      - name: Import Apple Developer Certificate
+        env:
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+          echo $APPLE_CERTIFICATE | base64 --decode > certificate.p12
+          security create-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
+          security set-keychain-settings -t 3600 -u build.keychain
+          security import certificate.p12 -k build.keychain -P "$APPLE_CERTIFICATE_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PASSWORD" build.keychain
+          security find-identity -v -p codesigning build.keychain
+      - name: Verify Certificate
+        run: |
+          security find-identity -v -p codesigning build.keychain
+          CERT_INFO=$(security find-identity -v -p codesigning build.keychain | grep "Developer ID")
+          CERT_ID=$(echo "$CERT_INFO" | awk -F'"' '{print $2}')
+          echo $CERT_ID
+          echo "CERT_ID=$CERT_ID" >> $GITHUB_ENV
+          echo "Certificate imported."
+
       - name: Build the app
-        uses: tauri-apps/tauri-action@dev
+        uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ENABLE_CODE_SIGNING: ${{ secrets.APPLE_CERTIFICATE }}
           APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
           APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
-          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ env.CERT_ID }}
           APPLE_PROVIDER_SHORT_NAME: ${{ secrets.APPLE_PROVIDER_SHORT_NAME }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          # Refs: https://github.com/tauri-apps/tauri-action/issues/1003
+          TAURI_BUNDLER_DMG_IGNORE_CI: false
+
         with:
           tagName: v__VERSION__ # tauri-action replaces \_\_VERSION\_\_ with the app version
           releaseName: '__VERSION__'
@@ -109,7 +137,7 @@ jobs:
           releaseDraft: true
           prerelease: false
           tauriScript: pnpm tauri
-          args: --target universal-apple-darwin
+          args: --target universal-apple-darwin --verbose
 
   release-windows:
     runs-on: windows-latest
