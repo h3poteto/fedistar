@@ -229,7 +229,7 @@ const Conversations: React.FC<Props> = props => {
                 itemContent={(_, conversation) => (
                   <List.Item
                     key={conversation.id}
-                    style={{ paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-bg-card)' }}
+                    style={{ marginTop: '2px', paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-bg-card)' }}
                   >
                     <Conversation conversation={conversation} openMedia={props.openMedia} selectStatus={selectStatus} />
                   </List.Item>
