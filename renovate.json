@@ -4,6 +4,6 @@
     "config:base"
   ],
   "rangeStrategy": "bump",
-  "prConcurrentLimit": 20,
-  "prHourlyLimit": 20
+  "prConcurrentLimit": 0,
+  "prHourlyLimit": 0
 }
