@@ -103,8 +103,8 @@
         }
       },
       "behavior": {
-        "title": "Behavior",
-        "confirm_reblog": "Confirm before boosting"
+        "title": "Comportamiento",
+        "confirm_reblog": "Confirmar antes de impulsar"
       },
       "save": "Guardar",
       "close": "Cerrar",
@@ -181,8 +181,8 @@
       "title": "Ajustes",
       "unpin": "Dejar de fijar",
       "column_width": "Ancho de columna",
-      "show_boosts": "Show boosts",
-      "show_replies": "Show replies"
+      "show_boosts": "Mostrar impulsos",
+      "show_replies": "Mostrar respuestas"
     },
     "mark_as_read": "Marcar como leído",
     "notification": {
@@ -247,9 +247,9 @@
         "from_other_account": "Reacción de otras cuentas"
       },
       "confirm_reblog": {
-        "text": "Are you sure you want to boost this post?",
-        "reblog": "Boost",
-        "cancel": "Cancel"
+        "text": "¿Seguro que quieres impulsar esta publicación?",
+        "reblog": "Impulsar",
+        "cancel": "Cancelar"
       }
     },
     "status": {
@@ -289,8 +289,8 @@
       "not_following": "No siguiendo",
       "follow_requested": "Seguimiento Solicitado",
       "follows_you": "TE SIGUE",
-      "muted": "MUTED",
-      "blocked": "BLOCKED",
+      "muted": "SILENCIADO",
+      "blocked": "BLOQUEADO",
       "posts": "Publicaciones",
       "following": "Siguiendo",
       "followers": "Seguidores",
