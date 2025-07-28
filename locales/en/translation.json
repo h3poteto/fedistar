@@ -130,7 +130,8 @@
       "public": "Public",
       "unlisted": "Unlisted",
       "private": "Private",
-      "direct": "Direct"
+      "direct": "Direct",
+      "local": "Local"
     },
     "spoiler": {
       "placeholder": "Write your warning here"

@@ -45,7 +45,7 @@ type Props = {
 const Compose: React.FC<Props> = props => {
   const [accounts, setAccounts] = useState<Array<[Account, Server]>>([])
   const [fromAccount, setFromAccount] = useState<[Account, Server]>()
-  const [defaultVisibility, setDefaultVisibility] = useState<'public' | 'unlisted' | 'private' | 'direct'>('public')
+  const [defaultVisibility, setDefaultVisibility] = useState<'public' | 'unlisted' | 'private' | 'direct' | 'local'>('public')
   const [defaultNSFW, setDefaultNSFW] = useState(false)
   const [defaultLanguage, setDefaultLanguage] = useState<string | null>(null)
   const [client, setClient] = useState<MegalodonInterface>()
@@ -74,7 +74,7 @@ const Compose: React.FC<Props> = props => {
     const f = async () => {
       const res = await client.verifyAccountCredentials()
       if (res.data.source) {
-        setDefaultVisibility(res.data.source.privacy as 'public' | 'unlisted' | 'private' | 'direct')
+        setDefaultVisibility(res.data.source.privacy as 'public' | 'unlisted' | 'private' | 'direct' | 'local')
         setDefaultNSFW(res.data.source.sensitive)
         setDefaultLanguage(res.data.source.language)
       }

@@ -30,7 +30,8 @@ import {
   BsXCircle,
   BsX,
   BsPencil,
-  BsClock
+  BsClock,
+  BsPeople
 } from 'react-icons/bs'
 import { Entity, MegalodonInterface } from 'megalodon'
 import Picker from '@emoji-mart/react'
@@ -52,7 +53,7 @@ type Props = {
   client: MegalodonInterface
   in_reply_to?: Entity.Status
   edit_target?: Entity.Status
-  defaultVisibility?: 'public' | 'unlisted' | 'private' | 'direct'
+  defaultVisibility?: 'public' | 'unlisted' | 'private' | 'direct' | 'local'
   defaultNSFW?: boolean
   defaultLanguage?: string | null
   onClose?: () => void
@@ -103,7 +104,7 @@ const Status: React.FC<Props> = props => {
   const [formError, setFormError] = useState<any>({})
   const [customEmojis, setCustomEmojis] = useState<Array<CustomEmojiCategory>>([])
   const [loading, setLoading] = useState<boolean>(false)
-  const [visibility, setVisibility] = useState<'public' | 'unlisted' | 'private' | 'direct'>('public')
+  const [visibility, setVisibility] = useState<'public' | 'unlisted' | 'private' | 'direct' | 'local'>('public')
   const [cw, setCW] = useState<boolean>(false)
   const [language, setLanguage] = useState<string>('en')
   const [editMediaModal, setEditMediaModal] = useState(false)
@@ -446,7 +447,7 @@ const Status: React.FC<Props> = props => {
   const VisibilityDropdown = ({ onClose, left, top, className }, ref: any) => {
     const handleSelect = (key: string) => {
       onClose()
-      if (key === 'public' || key === 'unlisted' || key === 'private' || key === 'direct') {
+      if (key === 'public' || key === 'unlisted' || key === 'private' || key === 'direct' || key === 'local') {
         setVisibility(key)
       }
     }
@@ -455,6 +456,9 @@ const Status: React.FC<Props> = props => {
         <Dropdown.Menu onSelect={handleSelect}>
           <Dropdown.Item eventKey={'public'} icon={<Icon as={BsGlobe} />}>
             <FormattedMessage id="compose.visibility.public" />
+          </Dropdown.Item>
+          <Dropdown.Item eventKey={'local'} icon={<Icon as={BsPeople} />}>
+            <FormattedMessage id="compose.visibility.local" />
           </Dropdown.Item>
           <Dropdown.Item eventKey={'unlisted'} icon={<Icon as={BsUnlock} />}>
             <FormattedMessage id="compose.visibility.unlisted" />
@@ -646,7 +650,7 @@ const Status: React.FC<Props> = props => {
   )
 }
 
-const privacyIcon = (visibility: 'public' | 'unlisted' | 'private' | 'direct') => {
+const privacyIcon = (visibility: 'public' | 'unlisted' | 'private' | 'direct' | 'local') => {
   switch (visibility) {
     case 'public':
       return BsGlobe
@@ -656,6 +660,8 @@ const privacyIcon = (visibility: 'public' | 'unlisted' | 'private' | 'direct') =
       return BsLock
     case 'direct':
       return BsEnvelope
+    case 'local':
+      return BsPeople
     default:
       return BsGlobe
   }
