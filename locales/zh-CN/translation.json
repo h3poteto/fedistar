@@ -130,7 +130,8 @@
       "public": "公开",
       "unlisted": "不公开",
       "private": "仅关注者",
-      "direct": "私信"
+      "direct": "私信",
+      "local": "Local"
     },
     "spoiler": {
       "placeholder": "在此写下您的警告"

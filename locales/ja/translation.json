@@ -130,7 +130,8 @@
       "public": "公開",
       "unlisted": "未収載",
       "private": "フォロワーのみ",
-      "direct": "指定された相手のみ"
+      "direct": "指定された相手のみ",
+      "local": "Local"
     },
     "spoiler": {
       "placeholder": "ここに警告を書いてください"
