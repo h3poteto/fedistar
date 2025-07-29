@@ -130,7 +130,8 @@
       "public": "Público",
       "unlisted": "Sin listar",
       "private": "Privado",
-      "direct": "Directo"
+      "direct": "Directo",
+      "local": "Local"
     },
     "spoiler": {
       "placeholder": "Escribe tu advertencia aquí"
