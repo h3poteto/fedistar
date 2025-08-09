@@ -131,7 +131,7 @@
       "unlisted": "未収載",
       "private": "フォロワーのみ",
       "direct": "指定された相手のみ",
-      "local": "Local"
+      "local": "ローカル"
     },
     "spoiler": {
       "placeholder": "ここに警告を書いてください"
@@ -182,8 +182,8 @@
       "title": "設定",
       "unpin": "ピン留め解除",
       "column_width": "カラムの幅",
-      "show_boosts": "Show boosts",
-      "show_replies": "Show replies"
+      "show_boosts": "ブーストを表示",
+      "show_replies": "返信を表示"
     },
     "mark_as_read": "全て既読にする",
     "notification": {

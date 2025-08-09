@@ -103,8 +103,8 @@
         }
       },
       "behavior": {
-        "title": "Behavior",
-        "confirm_reblog": "Confirm before boosting"
+        "title": "Comportamento",
+        "confirm_reblog": "Richiedi conferma prima di condividere"
       },
       "save": "Salva",
       "close": "Chiudi",
@@ -131,7 +131,7 @@
       "unlisted": "Non in elenco",
       "private": "Privato",
       "direct": "Diretto",
-      "local": "Local"
+      "local": "Locale"
     },
     "spoiler": {
       "placeholder": "Scrivi l'avvertenza"
@@ -182,8 +182,8 @@
       "title": "Impostazioni",
       "unpin": "Nascondi",
       "column_width": "Larghezza colonna",
-      "show_boosts": "Show boosts",
-      "show_replies": "Show replies"
+      "show_boosts": "Mostrare le condivisioni",
+      "show_replies": "Mostrare le risposte"
     },
     "mark_as_read": "Segna come già letto",
     "notification": {
@@ -234,7 +234,7 @@
     },
     "actions": {
       "reply": "Risposta",
-      "reblog": "Condivisione",
+      "reblog": "Condividere",
       "favourite": "Preferito",
       "emoji_reaction": "Reazione emoji",
       "bookmark": "Segnalibro",
@@ -248,9 +248,9 @@
         "from_other_account": "Reagisci da altri profili"
       },
       "confirm_reblog": {
-        "text": "Are you sure you want to boost this post?",
-        "reblog": "Boost",
-        "cancel": "Cancel"
+        "text": "Vuoi davvero condividere questa pubblicazione?",
+        "reblog": "Condividi",
+        "cancel": "Annulla"
       }
     },
     "status": {
