@@ -45,8 +45,8 @@ importers:
         specifier: ~2.3.0
         version: 2.3.0
       dayjs:
-        specifier: ^1.11.13
-        version: 1.11.13
+        specifier: ^1.11.15
+        version: 1.11.15
       emoji-mart:
         specifier: ^5.6.0
         version: 5.6.0
@@ -1605,8 +1605,8 @@ packages:
     resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
     engines: {node: '>=0.11'}
 
-  dayjs@1.11.13:
-    resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
+  dayjs@1.11.15:
+    resolution: {integrity: sha512-MC+DfnSWiM9APs7fpiurHGCoeIx0Gdl6QZBy+5lu8MbYKN5FZEXqOgrundfibdfhGZ15o9hzmZ2xJjZnbvgKXQ==}
 
   debug@4.3.4:
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
@@ -4965,7 +4965,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.22.15
 
-  dayjs@1.11.13: {}
+  dayjs@1.11.15: {}
 
   debug@4.3.4:
     dependencies:
@@ -6192,7 +6192,7 @@ snapshots:
       '@badgateway/oauth2-client': 2.4.2
       '@types/ws': 8.18.1
       axios: 1.10.0
-      dayjs: 1.11.13
+      dayjs: 1.11.15
       events: 3.3.0
       form-data: 4.0.4
       isomorphic-ws: 5.0.0(ws@8.18.3)
