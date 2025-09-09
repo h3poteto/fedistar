@@ -12,12 +12,12 @@ rust-version = "1.57"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "2.2.0", features = [] }
+tauri-build = { version = "2.4.1", features = [] }
 
 [dependencies]
 serde_json = "1.0.141"
 serde = { version = "1.0.219", features = ["derive"] }
-tauri = { version = "2.5.1", features = ["image-png"] }
+tauri = { version = "2.8.5", features = ["image-png"] }
 sqlx  = { version = "0.8.6", features = ["runtime-tokio-rustls", "sqlite", "migrate"] }
 tokio = { version = "1.46.1", features = ["full"] }
 futures = "0.3.31"
@@ -31,17 +31,20 @@ simplelog = "0.12.2"
 once_cell = "1.21.3"
 rust-i18n = "3.1.5"
 base64 = "0.21"
-tauri-plugin-window-state = { version = "2.2.2" }
+tauri-plugin-window-state = { version = "2.4.0" }
 open = "5.3.2"
 font-kit = "0.14.3"
-tauri-plugin-dialog = "2.2.2"
-tauri-plugin-fs = "2.3.0"
-tauri-plugin-os = "2.2.1"
-tauri-plugin-process = "2.2.1"
-tauri-plugin-http = "2.4.4"
-tauri-plugin-notification = "2.2.2"
-tauri-plugin-clipboard-manager = "2.2.2"
-tauri-plugin-shell = "2.2.1"
+tauri-plugin-dialog = "2.4.0"
+tauri-plugin-fs = "2.4.2"
+tauri-plugin-os = "2.3.1"
+tauri-plugin-process = "2.3.0"
+tauri-plugin-http = "2.5.2"
+tauri-plugin-notification = "2.3.1"
+tauri-plugin-clipboard-manager = "2.3.0"
+tauri-plugin-shell = "2.3.1"
+# We can't compile with 0.14.0 with html5ever 0.29.1.
+# We don't refer to this library directly.
+markup5ever = "0.14.1"
 
 [features]
 # by default Tauri runs in production mode
