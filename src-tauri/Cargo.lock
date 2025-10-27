@@ -6070,9 +6070,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-shell"
-version = "2.3.1"
+version = "2.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "54777d0c0d8add34eea3ced84378619ef5b97996bd967d3038c668feefd21071"
+checksum = "c374b6db45f2a8a304f0273a15080d98c70cde86178855fc24653ba657a1144c"
 dependencies = [
  "encoding_rs",
  "log",
