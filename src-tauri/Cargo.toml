@@ -41,7 +41,7 @@ tauri-plugin-process = "2.3.0"
 tauri-plugin-http = "2.5.2"
 tauri-plugin-notification = "2.3.1"
 tauri-plugin-clipboard-manager = "2.3.0"
-tauri-plugin-shell = "2.3.1"
+tauri-plugin-shell = "2.3.3"
 # We can't compile with 0.14.0 with html5ever 0.29.1.
 # We don't refer to this library directly.
 markup5ever = "0.14.1"
