@@ -36,10 +36,9 @@
 
 .compose-exiting,
 .compose-entering {
-  animation: .3s linear;
+  animation: 0.3s linear;
   animation-fill-mode: forwards;
 }
-
 
 .compose-exiting {
   animation-name: slideOutCompose;
@@ -48,7 +47,6 @@
 .compose-entering {
   animation-name: slideInCompose;
 }
-
 
 .compose-entered {
   width: 320px;
@@ -94,10 +92,9 @@
   }
 }
 
-
 .detail-exiting,
 .detail-entering {
-  animation: .3s liner;
+  animation: 0.3s liner;
   animation-fill-mode: forwards;
 }
 
@@ -118,7 +115,6 @@
 .detail-exited {
   width: 0;
 }
-
 
 .emojione {
   width: 1rem;
@@ -192,6 +188,10 @@
 .status {
   .body {
     cursor: pointer;
+
+    .link-preview {
+      cursor: pointer;
+    }
   }
 
   time {
@@ -209,6 +209,14 @@
     border-left: 3px solid #9baec8;
     color: #9baec8;
     margin: 0;
+  }
+
+  a {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
   }
 }
 
@@ -255,7 +263,6 @@
     border-radius: 4px !important;
     background-color: transparent;
   }
-
 }
 
 .timeline-scrollable {

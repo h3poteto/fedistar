@@ -15,7 +15,7 @@ const LinkPreview: React.FC<Props> = props => {
   }
 
   return (
-    <Panel bordered bodyFill onClick={onClick}>
+    <Panel bordered bodyFill onClick={onClick} className="link-preview">
       <FlexboxGrid style={{ overflow: 'hidden' }}>
         <FlexboxGrid.Item style={{ width: '60px' }}>
           <Image width={60} height={60} src={FailoverImg(props.card.image)} alt={props.card.title} />
