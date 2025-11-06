@@ -12,8 +12,8 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1(emoji-mart@5.6.0)(react@18.3.1)
       '@rsuite/icons':
-        specifier: ^1.3.2
-        version: 1.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^1.4.0
+        version: 1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tauri-apps/api':
         specifier: 2.9.0
         version: 2.9.0
@@ -857,8 +857,8 @@ packages:
   '@rsuite/icon-font@4.1.0':
     resolution: {integrity: sha512-q0Y+uQCVvzhD6lFeAFrvCDd1lTjZfM6MIaBjre3lSW1w586VWbuFnhTiqos3v9HIMlUpm3aAsxd3SuM6gYaqqQ==}
 
-  '@rsuite/icons@1.3.2':
-    resolution: {integrity: sha512-3sOdZpPcVePwTCoWcHHIEg4rsjWp9ehwjC84SjvgyqNyEf/BJNVDm0+jDAGGbhOF0HiWYyfU10LwrwnDSAYltA==}
+  '@rsuite/icons@1.4.0':
+    resolution: {integrity: sha512-NUOKX/KNO8Qy0nCJ4XzHKRdp0ovUM7zZhvuelteNkdhwwtmc9R0Ap4TlW2q/74sYa1aVXjH1RF+d2EGRD8EOEA==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
@@ -4001,7 +4001,7 @@ snapshots:
 
   '@rsuite/icon-font@4.1.0': {}
 
-  '@rsuite/icons@1.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@rsuite/icons@1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@rsuite/icon-font': 4.1.0
       classnames: 2.3.2
@@ -6313,7 +6313,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.22.15
       '@juggle/resize-observer': 3.4.0
-      '@rsuite/icons': 1.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@rsuite/icons': 1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/lodash': 4.17.16
       '@types/prop-types': 15.7.6
       '@types/react-window': 1.8.5
