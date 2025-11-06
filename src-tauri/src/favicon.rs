@@ -23,6 +23,7 @@ pub async fn get_favicon_url(url: &str) -> Option<String> {
                         .flatten()
                         .map(|u| u.to_string())
                 } else {
+                    tracing::error!("Favicon not found");
                     None
                 }
             }
