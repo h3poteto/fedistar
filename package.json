@@ -63,7 +63,7 @@
     "@eslint/js": "^9.31.0",
     "@tauri-apps/cli": "^2.9.3",
     "@types/jest": "^30.0.0",
-    "@types/node": "^22.16.5",
+    "@types/node": "^24.10.1",
     "@types/parse-link-header": "^2.0.3",
     "@types/react": "18.3.23",
     "@types/react-dom": "18.3.7",
