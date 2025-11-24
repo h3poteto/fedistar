@@ -1,21 +1,21 @@
 app_menu:
-  file: File
-  edit: Edit
-  help: Help
-  window: Window
-  crash_reporting: Crash Report
-  quit: Quit Fedistar
-  close: Close
-  about: About
-  minimize: Minimize
-  services: Services
-  hide: Hide Fedistar
-  hide_others: Hide Others
-  show_all: Show All
-  undo: Undo
-  redo: Redo
-  cut: Cut
-  copy: Copy
-  paste: Paste
+  file: 파일
+  edit: 수정
+  help: 도움말
+  window: 창
+  crash_reporting: 오류 보고
+  quit: Fedistar 종료
+  close: 닫기
+  about: Fedistar 에 대하여
+  minimize: 최소화
+  services: 서비스
+  hide: Fedistar를 숨기기
+  hide_others: 다른 항목 숨기기
+  show_all: 모두 표시
+  undo: 실행 취소
+  redo: 다시 실행
+  cut: 잘라내기
+  copy: 복사
+  paste: 붙여넣기
 media:
-  title: Media
+  title: 미디어
