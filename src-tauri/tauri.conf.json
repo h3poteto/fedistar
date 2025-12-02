@@ -11,13 +11,7 @@
     "copyright": "",
     "targets": "all",
     "externalBin": [],
-    "icon": [
-      "icons/32x32.png",
-      "icons/128x128.png",
-      "icons/128x128@2x.png",
-      "icons/icon.icns",
-      "icons/icon.ico"
-    ],
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"],
     "windows": {
       "certificateThumbprint": null,
       "digestAlgorithm": "sha256",
@@ -43,7 +37,7 @@
   },
   "productName": "fedistar",
   "mainBinaryName": "fedistar",
-  "version": "1.11.8",
+  "version": "1.11.9",
   "identifier": "net.fedistar",
   "plugins": {},
   "app": {
