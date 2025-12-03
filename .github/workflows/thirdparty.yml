@@ -19,7 +19,7 @@ jobs:
         node-version: 22
     - uses: pnpm/action-setup@v4
       with:
-        version: 9
+        version: 9.15.9
     - uses: dtolnay/rust-toolchain@stable
     - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
     - name: Install packages
