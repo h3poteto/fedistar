@@ -211,7 +211,7 @@
     margin: 0;
   }
 
-  a:not(.mention) {
+  a:not(.mention):not(.h-card > a) {
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
