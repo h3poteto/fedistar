@@ -15,7 +15,7 @@ jobs:
           node-version: 22
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 9.15.9
       - name: Install
         run: |
           pnpm install --frozen-lockfile
@@ -37,7 +37,7 @@ jobs:
           node-version: 22
       - uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 9.15.9
       - name: Install
         run: |
           pnpm install --frozen-lockfile
