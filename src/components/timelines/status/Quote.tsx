@@ -5,6 +5,7 @@ import emojify from 'src/utils/emojify'
 import FailoverImg from 'src/utils/failoverImg'
 import Body from './Body'
 import { Server } from 'src/entities/server'
+import { FormattedMessage } from 'react-intl'
 
 type Props = {
   quote: Entity.QuotedStatus
@@ -60,13 +61,28 @@ const Quote: React.FC<Props> = props => {
             </FlexboxGrid>
           </div>
         </div>
-        <div style={{ padding: '0 4px 4px 4px', cursor: 'pointer' }}>
+        <div style={{ padding: '0 4px 4px 4px' }}>
           <Body
             status={quote.quoted_status}
             onClick={() => statusClicked(quote.quoted_status, props.server)}
             spoilered={false}
             setSpoilered={() => {}}
+            style={{ cursor: 'pointer' }}
           />
+          {quote.quoted_status.quote && (
+            <div
+              style={{
+                backgroundColor: 'var(--rs-bg-overlay)',
+                color: 'var(--rs-text-secondary)',
+                border: '1px solid var(--rs-border-primary)',
+                padding: '4px 8px',
+                marginTop: '4px',
+                borderRadius: '4px'
+              }}
+            >
+              <FormattedMessage id="timeline.quote.shallow_quote" />
+            </div>
+          )}
         </div>
       </Panel>
     )
