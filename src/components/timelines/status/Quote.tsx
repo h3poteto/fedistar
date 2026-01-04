@@ -1,17 +1,24 @@
 import { Entity } from 'megalodon'
-import { MouseEventHandler } from 'react'
 import { Avatar, FlexboxGrid, Panel } from 'rsuite'
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
 import FailoverImg from 'src/utils/failoverImg'
 import Body from './Body'
+import { Server } from 'src/entities/server'
 
 type Props = {
   quote: Entity.QuotedStatus
+  server: Server
+  setStatusDetail?: (statusId: string, serverId: number, accountId?: number) => void
+  setAccountDetail: (userId: string, serverId: number, accountId?: number) => void
 }
 
 const Quote: React.FC<Props> = props => {
-  const statusClicked: MouseEventHandler<HTMLDivElement> = async e => {}
+  const statusClicked = async (status: Entity.Status, server: Server) => {
+    if (props.setStatusDetail) {
+      props.setStatusDetail(status.id, server.id)
+    }
+  }
 
   if (isQuote(props.quote)) {
     const quote = props.quote as Entity.Quote
@@ -24,11 +31,17 @@ const Quote: React.FC<Props> = props => {
               src={FailoverImg(quote.quoted_status.account.avatar_static)}
               title={quote.quoted_status.account.acct}
               alt={quote.quoted_status.account.acct}
+              style={{ cursor: 'pointer' }}
+              onClick={() => props.setAccountDetail(quote.quoted_status.account.id, props.server.id)}
             />
           </div>
           <div style={{ width: `calc(100% - 38px)` }}>
             <FlexboxGrid justify="space-between">
-              <FlexboxGrid.Item colspan={18}>
+              <FlexboxGrid.Item
+                colspan={18}
+                onClick={() => props.setAccountDetail(quote.quoted_status.account.id, props.server.id)}
+                style={{ cursor: 'pointer' }}
+              >
                 <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   <span
                     dangerouslySetInnerHTML={{
@@ -42,13 +55,18 @@ const Quote: React.FC<Props> = props => {
               </FlexboxGrid.Item>
               {/** timestamp **/}
               <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', color: 'var(--rs-text-tertiary)', paddingRight: '4px' }}>
-                <Time time={quote.quoted_status.created_at} />
+                <Time time={quote.quoted_status.created_at} onClick={() => statusClicked(quote.quoted_status, props.server)} />
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </div>
         </div>
-        <div style={{ padding: '0 4px 4px 4px' }}>
-          <Body status={quote.quoted_status} onClick={statusClicked} spoilered={false} setSpoilered={() => {}} />
+        <div style={{ padding: '0 4px 4px 4px', cursor: 'pointer' }}>
+          <Body
+            status={quote.quoted_status}
+            onClick={() => statusClicked(quote.quoted_status, props.server)}
+            spoilered={false}
+            setSpoilered={() => {}}
+          />
         </div>
       </Panel>
     )

@@ -219,7 +219,14 @@ const Status: React.FC<Props> = props => {
                     )}
                   </Button>
                 ))}
-              {status.quote && <Quote quote={status.quote} />}
+              {status.quote && (
+                <Quote
+                  quote={status.quote}
+                  server={props.server}
+                  setStatusDetail={props.setStatusDetail}
+                  setAccountDetail={props.setAccountDetail}
+                />
+              )}
             </>
           )}
           <Actions
