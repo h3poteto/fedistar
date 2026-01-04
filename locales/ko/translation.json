@@ -1,358 +1,361 @@
 {
   "alert": {
-    "no_server": "There is no server, so please add it at first.",
-    "need_auth": "You need to authorize a server.",
-    "failed_add_server": "Failed to connect to {domain}, make sure the server URL is valid or correct.",
-    "failed_add_application": "Failed to add application.",
-    "failed_authorize": "Failed to authorize.",
-    "failed_post": "Failed to post status.",
-    "failed_load": "Failed to load {timeline}.",
-    "failed_mark": "Failed to mark as read",
-    "failed_unreblog": "Failed to unboost",
-    "failed_reblog": "Failed to boost",
-    "failed_unfavourite": "Failed to unfavourite",
-    "failed_favourite": "Failed to favourite",
-    "failed_unbookmark": "Failed to unbookmark",
-    "failed_bookmark": "Failed to bookmark",
-    "failed_follow": "Failed to follow",
-    "failed_unfollow": "Failed to unfollow",
-    "validation_error": "Validation error.",
-    "validation_attachments_length": "You can't attach over {limit} files.",
-    "validation_attachments_type": "You can attach only images or videos",
-    "upload_error": "Failed to upload your file",
-    "failed_to_report": "Faild to send the report",
-    "notifications_not_found": "Failed to find notifications"
+    "no_server": "지금은 아무것도 없습니다. 먼저 서버를 등록해 주세요.",
+    "need_auth": "서버에 먼저 로그인해야 합니다.",
+    "failed_add_server": "{domain}에 연결할 수 없습니다. 서버 URL 이 정확한지 확인해 주세요.",
+    "failed_add_application": "어플리케이션 등록에 실패했습니다.",
+    "failed_authorize": "인증에 실패했습니다.",
+    "failed_post": "글 등록에 실패했습니다.",
+    "failed_load": "{timeline}을 불러오는 것에 실패했습니다.",
+    "failed_mark": "알림 읽음 처리에 실패했습니다.",
+    "failed_unreblog": "부스트 취소에 실패했습니다.",
+    "failed_reblog": "부스트에 실패했습니다.",
+    "failed_unfavourite": "좋아요 취소에 실패했습니다.",
+    "failed_favourite": "좋아요를 남기는 것에 실패했습니다.",
+    "failed_unbookmark": "북마크를 취소하는 것에 실패했습니다.",
+    "failed_bookmark": "북마크를 등록하는 것에 실패했습니다.",
+    "failed_follow": "팔로우 하는 것에 실패했습니다.",
+    "failed_unfollow": "팔로우 취소에 실패했습니다.",
+    "validation_error": "인증 오류",
+    "validation_attachments_length": "{limit} 개 이상의 파일을 첨부할 수 없습니다.",
+    "validation_attachments_type": "이미지 또는 비디오만 첨부할 수 있습니다.",
+    "upload_error": "파일을 업로드 하는 것에 실패했습니다.",
+    "failed_to_report": "신고하는 것에 실패했습니다.",
+    "notifications_not_found": "알림을 찾는 것에 실패했습니다."
   },
   "dialog": {
     "account_not_found": {
-      "title": "Account not found",
-      "message": "The account does not exist in the server, do you want to open the account in your browser?",
-      "button": "Open"
+      "title": "계정을 찾을 수 없습니다.",
+      "message": "계정을 서버에서 찾을 수 없는 것 같습니다. 브라우저에서 해당 계정의 프로필을 여시겠습니까?",
+      "button": "열기"
     }
   },
   "walkthrough": {
     "navigator": {
       "servers": {
-        "title": "Servers",
-        "description": "You can remove or authorize servers, please right click.",
-        "ok": "OK"
+        "title": "서버 목록",
+        "description": "우클릭 하여 서버를 삭제하거나 인증할 수 있습니다.",
+        "ok": "확인"
       }
     },
     "timeline": {
       "settings": {
-        "title": "Timeline settings",
-        "description": "You can move and remove the timeline.",
-        "ok": "OK"
+        "title": "타임라인 설정",
+        "description": "타임라인을 옮기거나 삭제할 수 있습니다.",
+        "ok": "확인"
       },
       "new": {
-        "title": "Add a timeline",
-        "description": "Click this button to add a timeline.",
-        "ok": "OK"
+        "title": "타임라인 추가하기",
+        "description": "이 버튼을 눌러 타임라인을 추가합니다.",
+        "ok": "확인"
       }
     }
   },
   "navigator": {
     "add_server": {
-      "title": "Add a new server"
+      "title": "새 서버를 추가하기"
     },
     "settings": {
-      "title": "Settings",
-      "app_menu": "Toggle app menu",
-      "settings": "Settings",
-      "thirdparty": "Third-party licenses"
+      "title": "설정",
+      "app_menu": "앱 메뉴 표시 전환",
+      "settings": "설정",
+      "thirdparty": "제3자 라이선스"
     },
     "servers": {
-      "authorize": "Authorize",
-      "profile": "Open profile",
-      "remove": "Remove",
-      "announcements": "Announcements",
-      "lists": "Lists",
-      "followed_hashtags": "Followed Hashtags"
+      "authorize": "인증",
+      "profile": "프로필 열기",
+      "remove": "삭제",
+      "announcements": "공지사항",
+      "lists": "리스트",
+      "followed_hashtags": "팔로우 중인 해시태그"
     }
   },
   "servers": {
     "new": {
-      "title": "Add Server",
-      "domain": "Domain",
-      "add": "Add",
-      "cancel": "Cancel",
-      "server_description": "You can also quit without signing in. If that case, you can see only Federated and Local timelines.",
-      "sign_in": "Sign In",
-      "finish": "Finish",
-      "authorization_code": "Authorization Code",
-      "authorization_help": "Please paste the authorization code from your browser",
-      "without_code_authorize": "Please approve Fedistar in your browser, and after you approve it please authorize",
-      "authorization_url": "Normally, the browser will open automatically, but if it doesn't, please open the following URL in your browser and approve it.",
-      "authorize": "Authorize",
-      "loading": "Loading"
+      "title": "서버 추가하기",
+      "domain": "도메인",
+      "add": "추가",
+      "cancel": "취소",
+      "server_description": "비 로그인 상태로도 진행할 수 있습니다. 이 경우 연합 타임라인과 로컬 타임라인만 볼 수 있습니다.",
+      "sign_in": "로그인",
+      "finish": "완료",
+      "authorization_code": "인증 코드",
+      "authorization_help": "브라우저에 표시된 인증 코드를 붙여넣어 주세요.",
+      "without_code_authorize": "브라우저에서 Fedistar 를 허용한 뒤 확인을 눌러주세요.",
+      "authorization_url": "일반적으로는 브라우저가 자동적으로 열리지만 만약 열리지 않았을 경우 다음 URL을 직접 브라우저에서 열 수 있습니다.",
+      "authorize": "인증",
+      "loading": "불러오는 중"
     }
   },
   "settings": {
     "settings": {
-      "title": "Settings",
+      "title": "설정",
       "appearance": {
-        "title": "Appearance",
-        "font_size": "Font size",
-        "font_family": "Font family",
-        "language": "Language",
-        "color_theme": "Color theme",
+        "title": "모양",
+        "font_size": "글씨 크기",
+        "font_family": "글꼴",
+        "language": "언어",
+        "color_theme": "색상 테마",
         "theme": {
-          "light": "Light",
-          "dark": "Dark",
-          "high_contrast": "High contrast"
+          "light": "밝은 테마",
+          "dark": "어두운 테마",
+          "high_contrast": "고대비"
         }
       },
       "behavior": {
-        "title": "Behavior",
-        "confirm_reblog": "Confirm before boosting"
+        "title": "동작",
+        "confirm_reblog": "부스트 하기 전 확인 요청"
       },
-      "save": "Save",
-      "close": "Close",
+      "save": "저장",
+      "close": "닫기",
       "validation": {
         "font_size": {
-          "type": "Please enter a valid number",
-          "range": "Please enter a number from {from} to {to}",
-          "required": "Font size is required"
+          "type": "올바른 숫자를 입력해 주세요.",
+          "range": "{from} 부터 {to} 이내의 숫자를 입력해 주세요.",
+          "required": "글꼴 크기를 입력해 주세요."
         },
         "language": {
-          "required": "Language is required"
+          "required": "언어를 선택해 주세요."
         }
       }
     },
     "thirdparty": {
-      "title": "Third-party licenses"
+      "title": "제3자 라이선스"
     }
   },
   "compose": {
-    "title": "New Post",
-    "from": "From",
+    "title": "새 글 작성",
+    "from": "보낸 사람:",
     "visibility": {
-      "public": "Public",
-      "unlisted": "Unlisted",
-      "private": "Private",
-      "direct": "Direct",
-      "local": "Local"
+      "public": "공개",
+      "unlisted": "조용한 공개",
+      "private": "팔로워만",
+      "direct": "개인 멘션",
+      "local": "서버 내"
     },
     "spoiler": {
-      "placeholder": "Write your warning here"
+      "placeholder": "주의 문구를 적어주세요."
     },
     "status": {
-      "title": "Status",
-      "placeholder": "What's on your mind?"
+      "title": "게시물",
+      "placeholder": "지금 무슨 생각을 하고 있나요?"
     },
     "nsfw": {
-      "sensitive": "Sensitive",
-      "not_sensitive": "Not sensitive"
+      "sensitive": "열람주의",
+      "not_sensitive": "열람주의 미설정"
     },
     "poll": {
-      "add_choice": "Add a choice",
-      "multiple": "multiple",
-      "simple": "simple",
-      "5min": "5 minutes",
-      "30min": "30 minutes",
-      "1h": "1 hour",
-      "6h": "6 hours",
-      "1d": "1 day",
-      "3d": "3 days",
-      "7d": "7 days"
+      "add_choice": "선택지 추가하기",
+      "multiple": "다중 선택",
+      "simple": "단일 선택",
+      "5min": "5분",
+      "30min": "30분",
+      "1h": "1시간",
+      "6h": "6시간",
+      "1d": "1일",
+      "3d": "3일",
+      "7d": "7일"
     },
-    "cancel": "Cancel",
-    "post": "Post",
+    "cancel": "취소",
+    "post": "게시",
     "edit_attachment": {
-      "title": "Edit media",
-      "label": "Describe for people who are blind or have low vision",
-      "submit": "Apply"
+      "title": "첨부파일 수정",
+      "label": "대체 텍스트 추가",
+      "submit": "적용"
     }
   },
   "search": {
-    "title": "Search",
-    "placeholder": "Search or paste URL",
-    "search": "Search",
-    "clear": "Clear",
+    "title": "검색",
+    "placeholder": "검색어 또는 URL주소 입력",
+    "search": "검색",
+    "clear": "비우기",
     "results": {
-      "accounts": "People",
-      "hashtags": "Hashtags",
-      "statuses": "Statuses",
-      "more": "Load more"
+      "accounts": "사람들",
+      "hashtags": "해시태그",
+      "statuses": "게시물",
+      "more": "더 불러오기"
     }
   },
   "timeline": {
-    "reload": "Reload",
+    "reload": "다시 불러오기",
     "settings": {
-      "title": "Settings",
-      "unpin": "Unpin",
-      "column_width": "Column width",
-      "show_boosts": "Show boosts",
-      "show_replies": "Show replies"
+      "title": "설정",
+      "unpin": "고정 해제",
+      "column_width": "열 너비",
+      "show_boosts": "부스트 표시",
+      "show_replies": "답글 표시"
     },
-    "mark_as_read": "Mark as read",
+    "mark_as_read": "읽음으로 표시",
     "notification": {
       "follow": {
-        "title": "Follow",
-        "body": "{user} followed you"
+        "title": "팔로우",
+        "body": "{user} 님이 나를 팔로우했습니다."
       },
       "follow_request": {
-        "title": "Follow Request",
-        "body": "{user} requested to follow you"
+        "title": "팔로우 요청",
+        "body": "{user} 님이 팔로우 요청을 보냈습니다."
       },
       "favourite": {
-        "title": "Favourite",
-        "body": "{user} favourited your post"
+        "title": "좋아요",
+        "body": "{user} 님이 당신의 게시물을 좋아합니다."
       },
       "reblog": {
-        "title": "Boost",
-        "body": "{user} boosted your post"
+        "title": "부스트",
+        "body": "{user} 님이 부스트했습니다."
       },
       "poll_expired": {
-        "title": "Poll",
-        "body": "{user}'s poll is expired"
+        "title": "투표",
+        "body": "참여한 {user} 님의 투표가 끝났습니다."
       },
       "poll_vote": {
-        "title": "Poll",
-        "body": "{user} voted your poll"
+        "title": "투표",
+        "body": "{user} 님이 당신의 투표에 참여했습니다."
       },
       "quote": {
-        "title": "Quote",
-        "body": "{user} quoted your post"
+        "title": "인용",
+        "body": "{user} 님이 당신의 게시물을 인용했습니다."
       },
       "status": {
-        "title": "Status",
-        "body": "{user} just post"
+        "title": "게시물",
+        "body": "{user} 님이 게시물을 등록했습니다."
       },
       "update": {
-        "title": "Update",
-        "body": "{user} updated the post"
+        "title": "수정",
+        "body": "{user} 님이 게시물을 수정했습니다."
       },
       "emoji_reaction": {
-        "title": "Reaction",
-        "body": "{user} reacted your post"
+        "title": "리액션",
+        "body": "{user} 님이 게시물에 리액션을 남겼습니다."
       },
       "move": {
-        "title": "Move",
-        "body": "{user} migrated to"
+        "title": "계정 이동",
+        "body": "{user} 님이 계정을 이동했습니다"
       }
     },
     "actions": {
-      "reply": "Reply",
-      "reblog": "Boost",
-      "favourite": "Favourite",
-      "emoji_reaction": "Emoji reaction",
-      "bookmark": "Bookmark",
+      "reply": "답글",
+      "reblog": "부스트",
+      "favourite": "좋아요",
+      "emoji_reaction": "에모지 리액션",
+      "bookmark": "북마크",
       "detail": {
-        "title": "Detail",
-        "browser": "Open original page",
-        "copy": "Copy link to post",
-        "edit": "Edit",
-        "delete": "Delete",
-        "report": "Report {user}",
-        "from_other_account": "React from other accounts"
+        "title": "자세히",
+        "browser": "원본 페이지 열기",
+        "copy": "게시물 링크 복사",
+        "edit": "편집",
+        "delete": "삭제",
+        "report": "{user} 를 신고",
+        "from_other_account": "다른 계정으로 리액션 보내기"
       },
       "confirm_reblog": {
-        "text": "Are you sure you want to boost this post?",
-        "reblog": "Boost",
-        "cancel": "Cancel"
+        "text": "이 게시물을 부스트 하시겠습니까?",
+        "reblog": "부스트",
+        "cancel": "취소"
       }
     },
     "status": {
-      "show_more": "Show more",
-      "show_less": "Show less",
-      "media_hidden": "Media hidden",
-      "pinned_post": "Pnned post",
-      "filtered": "Filtered",
-      "show_anyway": "Show anyway"
+      "show_more": "더보기",
+      "show_less": "접기",
+      "media_hidden": "숨겨진 미디어",
+      "pinned_post": "고정된 게시물",
+      "filtered": "필터됨",
+      "show_anyway": "표시하기"
     },
     "poll": {
-      "vote": "Vote",
-      "refresh": "Refresh",
-      "people": "{count} people",
-      "closed": "Closed",
-      "left": "left"
+      "vote": "투표",
+      "refresh": "새로고침",
+      "people": "{count} 명",
+      "closed": "종료됨",
+      "left": "남음"
     },
-    "new": "Add a new timeline",
-    "home": "Home",
-    "notifications": "Notifications",
-    "favourites": "Favourites",
-    "bookmarks": "Bookmarks",
-    "direct": "Direct messages",
-    "local": "Local",
-    "public": "Federated",
-    "back": "Back"
+    "quote": {
+      "shallow_quote": "Quoted post"
+    },
+    "new": "새 타임라인 추가",
+    "home": "홈 타임라인",
+    "notifications": "알림",
+    "favourites": "좋아요",
+    "bookmarks": "북마크",
+    "direct": "개인 메시지",
+    "local": "서버 내",
+    "public": "연합",
+    "back": "뒤로"
   },
   "detail": {
-    "back": "Back",
-    "close": "Close",
-    "pin": "Pin",
-    "follow_tag": "Follow hashtag",
-    "unfollow_tag": "Unfollow hashtag",
+    "back": "뒤로",
+    "close": "닫기",
+    "pin": "고정하기",
+    "follow_tag": "해시태그 팔로우",
+    "unfollow_tag": "해시태그 팔로우 취소",
     "profile": {
-      "follow": "Follow",
-      "unfollow": "Unfollow",
-      "not_following": "Not Following",
-      "follow_requested": "Follow Requested",
-      "follows_you": "FOLLOWS YOU",
-      "muted": "MUTED",
-      "blocked": "BLOCKED",
-      "posts": "Posts",
-      "following": "Following",
-      "followers": "Followers",
-      "open_page": "Open original page",
-      "mute": "Mute {user}",
-      "unmute": "Unmute {user}",
-      "block": "Block {user}",
-      "unblock": "Unblock {user}",
-      "unblock_domain": "Unblock domain {server}",
-      "list_management": "Add or Remove from lists",
-      "block_domain": "Block domain {server}"
+      "follow": "팔로우",
+      "unfollow": "팔로우 취소",
+      "not_following": "팔로우 하지 않음",
+      "follow_requested": "팔로우 요청중",
+      "follows_you": "당신을 팔로우합니다",
+      "muted": "뮤트됨",
+      "blocked": "차단됨",
+      "posts": "게시물",
+      "following": "팔로잉",
+      "followers": "팔로워",
+      "open_page": "원본 페이지 열기",
+      "mute": "{user} 님을 뮤트",
+      "unmute": "{user} 의 뮤트를 해제",
+      "block": "{user} 님을 차단",
+      "unblock": "{user} 의 차단을 해제",
+      "unblock_domain": "{server} 의 도메인 차단을 해제",
+      "list_management": "리스트 추가/제거",
+      "block_domain": "{server} 도메인을 차단"
     }
   },
   "report": {
-    "title": "Report {user}",
+    "title": "{user} 님을 신고",
     "category": {
-      "title": "Tell us what's going on with this post",
-      "description": "Choose the best match",
-      "spam": "It's spam",
-      "violation": "It violates server rules",
-      "other": "It's something else",
-      "next": "Next"
+      "title": "저희에게 이 게시물에 대해 설명해주세요",
+      "description": "사유로 생각되는 가장 일치하는 항목",
+      "spam": "스팸입니다",
+      "violation": "서버 규칙을 위반합니다",
+      "other": "다른 문제가 있습니다",
+      "next": "다음"
     },
     "rules": {
-      "title": "Which rules are being violated?",
-      "description": "Select all that apply",
-      "no_rules": "There is not rule in this server.",
-      "next": "Next"
+      "title": "어떤 규칙을 위반했습니까?",
+      "description": "해당하는 항목을 모두 선택하세요",
+      "no_rules": "이 서버의 규칙에는 없습니다.",
+      "next": "다음"
     },
     "statuses": {
-      "title": "Are there any posts that back up this report?",
-      "description": "Select all that apply",
-      "no_status": "There is not status.",
-      "next": "Next"
+      "title": "이 신고에 대해 참고할 다른 게시물이 있습니까?",
+      "description": "해당하는 항목을 모두 선택하세요",
+      "no_status": "게시물이 존재하지 않습니다.",
+      "next": "다음"
     },
     "comment": {
-      "title": "Is there anything else you think we should know?",
-      "placeholder": "Additional comments",
-      "forward": "Forward to the original server",
-      "next": "Submit"
+      "title": "저희가 확인해야 할 다른 사항이 있습니까?",
+      "placeholder": "추가 정보 입력",
+      "forward": "이 신고를 원본 서버로 전달",
+      "next": "등록"
     }
   },
   "announcements": {
-    "title": "Announcement @{domain}",
-    "close": "Close"
+    "title": "@{domain} 의 공지사항",
+    "close": "닫기"
   },
   "from_other_account": {
-    "title": "React from other accounts",
+    "title": "다른 계정으로 리액션 보내기",
     "accounts": {
-      "title": "Which account do you want react from?",
-      "next": "Next"
+      "title": "어떤 계정으로 리액션을 보내시겠습니까?",
+      "next": "다음"
     },
     "status": {
-      "title": "React on the status from {account}",
-      "searching": "Searching",
-      "not_found": "Sorry, the status is not found in {server}",
-      "next": "Close"
+      "title": "{account} 계정으로 게시물에 리액션 보내기",
+      "searching": "검색 중...",
+      "not_found": "{server} 에서 게시물을 찾을 수 없었습니다",
+      "next": "닫기"
     }
   },
   "list_memberships": {
-    "title": "List memberships",
-    "search_placeholder": "Search among people you follow"
+    "title": "리스트 멤버 관리",
+    "search_placeholder": "팔로우 중인 사람들에서 검색"
   }
 }
