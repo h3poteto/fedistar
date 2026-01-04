@@ -248,7 +248,7 @@
         "from_other_account": "React from other accounts"
       },
       "confirm_reblog": {
-        "text":"Are you sure you want to boost this post?",
+        "text": "Are you sure you want to boost this post?",
         "reblog": "Boost",
         "cancel": "Cancel"
       }
@@ -267,6 +267,9 @@
       "people": "{count} people",
       "closed": "Closed",
       "left": "left"
+    },
+    "quote": {
+      "shallow_quote": "Quoted post"
     },
     "new": "Add a new timeline",
     "home": "Home",

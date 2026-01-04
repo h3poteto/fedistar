@@ -14,6 +14,7 @@ import { Server } from 'src/entities/server'
 import Body from './Body'
 import Actions from './Actions'
 import Poll from './Poll'
+import Quote from './Quote'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { ColumnWidth } from 'src/entities/timeline'
 import { CustomEmojiCategory } from 'src/entities/emoji'
@@ -218,6 +219,14 @@ const Status: React.FC<Props> = props => {
                     )}
                   </Button>
                 ))}
+              {status.quote && (
+                <Quote
+                  quote={status.quote}
+                  server={props.server}
+                  setStatusDetail={props.setStatusDetail}
+                  setAccountDetail={props.setAccountDetail}
+                />
+              )}
             </>
           )}
           <Actions
@@ -266,7 +275,7 @@ const Status: React.FC<Props> = props => {
 }
 
 const originalStatus = (status: Entity.Status) => {
-  if (status.reblog && !status.quote) {
+  if (status.reblog) {
     return status.reblog
   } else {
     return status
@@ -300,7 +309,7 @@ const pinnedHeader = (pinned?: boolean) => {
 }
 
 const rebloggedHeader = (status: Entity.Status) => {
-  if (status.reblog && !status.quote) {
+  if (status.reblog) {
     return (
       <div style={{ color: 'var(--rs-text-tertiary)' }}>
         <div style={{ alignItems: 'middle', display: 'flex' }}>
