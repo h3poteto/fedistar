@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version-file: '.tool-versions'
       - uses: pnpm/action-setup@v4
         with:
           version: 9
@@ -34,7 +34,7 @@ jobs:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version-file: '.tool-versions'
       - uses: pnpm/action-setup@v4
         with:
           version: 9
