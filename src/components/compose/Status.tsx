@@ -112,11 +112,11 @@ const Status: React.FC<Props> = props => {
   const [maxCharacters, setMaxCharacters] = useState<number | null>(null)
   const [remaining, setRemaining] = useState<number | null>(null)
 
-  const formRef = useRef<any>()
-  const cwRef = useRef<HTMLDivElement>()
-  const statusRef = useRef<HTMLDivElement>()
+  const formRef = useRef<any>(null)
+  const cwRef = useRef<HTMLDivElement>(null)
+  const statusRef = useRef<HTMLDivElement>(null)
   const emojiPickerRef = useRef(null)
-  const uploaderRef = useRef<HTMLInputElement>()
+  const uploaderRef = useRef<HTMLInputElement>(null)
   const toast = useToaster()
 
   // Update instance custom emoji

@@ -26,7 +26,7 @@ export default function EditMedia(props: Props) {
   const [loading, setLoading] = useState(false)
   const [attachment, setAttachment] = useState<Entity.Attachment | null>(null)
 
-  const formRef = useRef<any>()
+  const formRef = useRef<any>(null)
 
   useEffect(() => {
     if (!props.attachment) {

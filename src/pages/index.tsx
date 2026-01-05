@@ -62,7 +62,7 @@ function App() {
   const [behavior, setBehavior] = useState<Behavior | null>(null)
 
   const [modalState, dispatch] = useReducer(modalReducer, initialModalState)
-  const spaceRef = useRef<HTMLDivElement>()
+  const spaceRef = useRef<HTMLDivElement>(null)
 
   const toaster = useToaster()
   const { switchLang } = useContext(Context)
