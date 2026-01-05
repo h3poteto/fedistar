@@ -48,9 +48,9 @@ const Profile: React.FC<Props> = props => {
   const toaster = useToaster()
   const router = useRouter()
   const scrollerRef = useRef<HTMLElement | null>(null)
-  const postsRef = useRef<PostsFunc>()
-  const followingRef = useRef<FollowingFunc>()
-  const followersRef = useRef<FollowersFunc>()
+  const postsRef = useRef<PostsFunc | undefined>(undefined)
+  const followingRef = useRef<FollowingFunc | undefined>(undefined)
+  const followersRef = useRef<FollowersFunc | undefined>(undefined)
 
   useEffect(() => {
     setUser(null)
