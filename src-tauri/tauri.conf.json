@@ -25,7 +25,7 @@
       "minimumSystemVersion": "14.0",
       "providerShortName": null,
       "signingIdentity": null,
-      "bundleVersion": "20260101.225832"
+      "bundleVersion": "20260112.232755"
     },
     "resources": [],
     "shortDescription": "Multi-column Fediverse client for desktop",
@@ -37,7 +37,7 @@
   },
   "productName": "fedistar",
   "mainBinaryName": "fedistar",
-  "version": "1.11.11",
+  "version": "1.12.0",
   "identifier": "net.fedistar",
   "plugins": {},
   "app": {
