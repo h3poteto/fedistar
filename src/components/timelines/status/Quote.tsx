@@ -21,7 +21,7 @@ const Quote: React.FC<Props> = props => {
     }
   }
 
-  if (isQuote(props.quote)) {
+  if (isQuote(props.quote) && props.quote.quoted_status) {
     const quote = props.quote as Entity.Quote
     return (
       <Panel bordered bodyFill className="quote" style={{ position: 'relative', marginTop: '4px' }}>
