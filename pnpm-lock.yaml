@@ -42,8 +42,8 @@ importers:
         specifier: ~2.3.1
         version: 2.3.1
       '@tauri-apps/plugin-shell':
-        specifier: ~2.3.3
-        version: 2.3.3
+        specifier: ~2.3.4
+        version: 2.3.4
       dayjs:
         specifier: ^1.11.19
         version: 1.11.19
@@ -994,8 +994,8 @@ packages:
   '@tauri-apps/plugin-process@2.3.1':
     resolution: {integrity: sha512-nCa4fGVaDL/B9ai03VyPOjfAHRHSBz5v6F/ObsB73r/dA3MHHhZtldaDMIc0V/pnUw9ehzr2iEG+XkSEyC0JJA==}
 
-  '@tauri-apps/plugin-shell@2.3.3':
-    resolution: {integrity: sha512-Xod+pRcFxmOWFWEnqH5yZcA7qwAMuaaDkMR1Sply+F8VfBj++CGnj2xf5UoialmjZ2Cvd8qrvSCbU+7GgNVsKQ==}
+  '@tauri-apps/plugin-shell@2.3.4':
+    resolution: {integrity: sha512-ktsRWf8wHLD17aZEyqE8c5x98eNAuTizR1FSX475zQ4TxaiJnhwksLygQz+AGwckJL5bfEP13nWrlTNQJUpKpA==}
 
   '@tybys/wasm-util@0.10.0':
     resolution: {integrity: sha512-VyyPYFlOMNylG45GoAe0xDoLwWuowvf92F9kySqzYh8vmYm7D2u4iUJKa1tOUpS70Ku13ASrOkS4ScXFsTaCNQ==}
@@ -4098,7 +4098,7 @@ snapshots:
     dependencies:
       '@tauri-apps/api': 2.9.1
 
-  '@tauri-apps/plugin-shell@2.3.3':
+  '@tauri-apps/plugin-shell@2.3.4':
     dependencies:
       '@tauri-apps/api': 2.9.1
 
