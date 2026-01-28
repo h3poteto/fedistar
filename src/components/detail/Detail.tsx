@@ -10,11 +10,12 @@ import ListsDetail from './Lists'
 import ListDetail from './List'
 import FollowedHashtags from './FollowedHashtags'
 import { Behavior } from 'src/entities/behavior'
+import { Server } from 'src/entities/server'
 
 type Props = {
   dispatch: Dispatch<{ target: string; value: boolean; object?: any; index?: number }>
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  openReport: (status: Entity.Status, client: MegalodonInterface) => void
+  openReport: (status: Entity.Status, client: MegalodonInterface, server: Server) => void
   openFromOtherAccount: (status: Entity.Status) => void
   openListMemberships: (list: Entity.List, client: MegalodonInterface) => void
   openAddListMember: (user: Entity.Account, client: MegalodonInterface) => void

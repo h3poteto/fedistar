@@ -233,6 +233,7 @@ function App() {
         opened={modalState.report.opened}
         status={modalState.report.object}
         client={modalState.report.client}
+        server={modalState.report.server}
         close={() => dispatch({ target: 'report', value: false, object: null, client: null })}
       />
       <FromOtherAccount
@@ -310,8 +311,8 @@ function App() {
                 openMedia={(media: Array<Entity.Attachment>, index: number) =>
                   dispatch({ target: 'media', value: true, object: media, index: index })
                 }
-                openReport={(status: Entity.Status, client: MegalodonInterface) =>
-                  dispatch({ target: 'report', value: true, object: status, client: client })
+                openReport={(status: Entity.Status, client: MegalodonInterface, server: Server) =>
+                  dispatch({ target: 'report', value: true, object: status, client: client, server: server })
                 }
                 openFromOtherAccount={(status: Entity.Status) => dispatch({ target: 'fromOtherAccount', value: true, object: status })}
                 behavior={behavior}
@@ -331,8 +332,8 @@ function App() {
               openMedia={(media: Array<Entity.Attachment>, index: number) =>
                 dispatch({ target: 'media', value: true, object: media, index: index })
               }
-              openReport={(status: Entity.Status, client: MegalodonInterface) =>
-                dispatch({ target: 'report', value: true, object: status, client: client })
+              openReport={(status: Entity.Status, client: MegalodonInterface, server: Server) =>
+                dispatch({ target: 'report', value: true, object: status, client: client, server: server })
               }
               openFromOtherAccount={(status: Entity.Status) => dispatch({ target: 'fromOtherAccount', value: true, object: status })}
               behavior={behavior}
@@ -346,8 +347,8 @@ function App() {
           openMedia={(media: Array<Entity.Attachment>, index: number) =>
             dispatch({ target: 'media', value: true, object: media, index: index })
           }
-          openReport={(status: Entity.Status, client: MegalodonInterface) =>
-            dispatch({ target: 'report', value: true, object: status, client: client })
+          openReport={(status: Entity.Status, client: MegalodonInterface, server: Server) =>
+            dispatch({ target: 'report', value: true, object: status, client: client, server: server })
           }
           openFromOtherAccount={(status: Entity.Status) => dispatch({ target: 'fromOtherAccount', value: true, object: status })}
           openListMemberships={(list: Entity.List, client: MegalodonInterface) =>
@@ -383,6 +384,7 @@ type ModalState = {
     opened: boolean
     object: Entity.Status | null
     client: MegalodonInterface | null
+    server: Server | null
   }
   fromOtherAccount: {
     opened: boolean
@@ -426,7 +428,8 @@ const initialModalState: ModalState = {
   report: {
     opened: false,
     object: null,
-    client: null
+    client: null,
+    server: null
   },
   fromOtherAccount: {
     opened: false,
@@ -450,7 +453,7 @@ const initialModalState: ModalState = {
 
 const modalReducer = (
   current: ModalState,
-  action: { target: string; value: boolean; object?: any; index?: number; client?: MegalodonInterface | null }
+  action: { target: string; value: boolean; object?: any; index?: number; client?: MegalodonInterface | null; server?: Server }
 ) => {
   switch (action.target) {
     case 'newServer':
@@ -462,7 +465,7 @@ const modalReducer = (
     case 'settings':
       return { ...current, settings: { opened: action.value } }
     case 'report':
-      return { ...current, report: { opened: action.value, object: action.object, client: action.client } }
+      return { ...current, report: { opened: action.value, object: action.object, client: action.client, server: action.server } }
     case 'fromOtherAccount':
       return { ...current, fromOtherAccount: { opened: action.value, object: action.object } }
     case 'announcements':

@@ -1,10 +1,12 @@
-import { Entity, MegalodonInterface } from 'megalodon'
+import { invoke } from '@tauri-apps/api/core'
+import { Entity } from 'megalodon'
 import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Button, Checkbox, CheckboxGroup, Modal } from 'rsuite'
+import { Server } from 'src/entities/server'
 
 type Props = {
-  client: MegalodonInterface
+  server: Server
   next: (rules: Array<string>) => void
 }
 
@@ -14,13 +16,13 @@ export default function Rules(props: Props) {
 
   useEffect(() => {
     const f = async () => {
-      const res = await props.client.getInstance()
-      if (res.data.rules) {
-        setRules(res.data.rules)
+      const instance = await invoke<Entity.Instance>('get_instance', { serverId: props.server.id })
+      if (instance.rules) {
+        setRules(instance.rules)
       }
     }
     f()
-  }, [props.client])
+  }, [props.server])
 
   return (
     <>
