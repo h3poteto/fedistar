@@ -21,7 +21,7 @@ type Props = {
   setStatusDetail: (statusId: string, serverId: number, accountId?: number) => void
   setAccountDetail: (userId: string, serverId: number, accountId?: number) => void
   setTagDetail: (tag: string, serverId: number, accountId?: number) => void
-  openReport: (status: Entity.Status, client: MegalodonInterface) => void
+  openReport: (status: Entity.Status, client: MegalodonInterface, server: Server) => void
   openFromOtherAccount: (status: Entity.Status) => void
   customEmojis: Array<CustomEmojiCategory>
   filters: Array<Entity.Filter>

@@ -35,6 +35,7 @@ import {
 } from 'react-icons/bs'
 import { Entity, MegalodonInterface } from 'megalodon'
 import Picker from '@emoji-mart/react'
+import { invoke } from '@tauri-apps/api/core'
 
 import { data, mapCustomEmojiCategory } from 'src/utils/emojiData'
 import { Server } from 'src/entities/server'
@@ -126,9 +127,9 @@ const Status: React.FC<Props> = props => {
     }
 
     const f = async () => {
-      const instance = await props.client.getInstance()
-      if (instance.data.configuration.statuses.max_characters) {
-        setMaxCharacters(instance.data.configuration.statuses.max_characters)
+      const instance = await invoke<Entity.Instance>('get_instance', { serverId: props.server.id })
+      if (instance.configuration.statuses.max_characters) {
+        setMaxCharacters(instance.configuration.statuses.max_characters)
       }
       const emojis = await props.client.getInstanceCustomEmojis()
       setCustomEmojis(mapCustomEmojiCategory(props.server.domain, emojis.data))

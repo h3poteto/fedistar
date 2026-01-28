@@ -28,7 +28,7 @@ type Props = {
   setAccountDetail: (account: Entity.Account) => void
   setTagDetail: (tag: string, serverId: number) => void
   setStatusDetail: (statusId: string, serverId: number, accountId?: number) => void
-  openReport: (status: Entity.Status, client: MegalodonInterface) => void
+  openReport: (status: Entity.Status, client: MegalodonInterface, server: Server) => void
   openFromOtherAccount: (status: Entity.Status) => void
   customEmojis: Array<CustomEmojiCategory>
   locale: string
@@ -315,7 +315,7 @@ const Reaction: React.FC<Props> = props => {
             setShowReply={setShowReply}
             setShowEdit={setShowEdit}
             updateStatus={props.updateStatus}
-            openReport={() => props.openReport(status, props.client)}
+            openReport={() => props.openReport(status, props.client, props.server)}
             openFromOtherAccount={() => props.openFromOtherAccount(status)}
             customEmojis={props.customEmojis}
             locale={props.locale}
