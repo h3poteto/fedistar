@@ -16,7 +16,7 @@ type Props = {
   setOpened: (value: boolean) => void
   servers: Array<ServerSet>
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  openReport: (status: Entity.Status, client: MegalodonInterface) => void
+  openReport: (status: Entity.Status, client: MegalodonInterface, server: Server) => void
   openFromOtherAccount: (status: Entity.Status) => void
   locale: string
   behavior: Behavior

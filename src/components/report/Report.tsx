@@ -7,11 +7,13 @@ import Statuses from './Statuses'
 import Comment from './Comment'
 import alert from 'src/components/utils/alert'
 import { FormattedMessage, useIntl } from 'react-intl'
+import { Server } from 'src/entities/server'
 
 type Props = {
   opened: boolean
   status: Entity.Status
   client: MegalodonInterface
+  server: Server
   close: () => void
 }
 
@@ -70,7 +72,7 @@ export default function Report(props: Props) {
     if (category === null) {
       return <Category next={(category: Entity.Category) => setCategory(category)} />
     } else if (rules === null && category === 'violation') {
-      return <Rules client={props.client} next={(rules: Array<string>) => setRules(rules)} />
+      return <Rules server={props.server} next={(rules: Array<string>) => setRules(rules)} />
     } else if (statuses === null) {
       return <Statuses account={props.status.account} client={props.client} next={(statuses: Array<string>) => setStatuses(statuses)} />
     } else if (comment === null) {

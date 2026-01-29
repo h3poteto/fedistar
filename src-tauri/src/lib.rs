@@ -1,10 +1,10 @@
-use base64::{engine::general_purpose, Engine};
+use base64::{Engine, engine::general_purpose};
 use font_kit::source::SystemSource;
 use megalodon::{self, oauth};
 use rust_i18n::t;
 use serde::Serialize;
 use std::{env, fs::OpenOptions, path::PathBuf, str::FromStr, thread};
-use tauri::{async_runtime::Mutex, AppHandle, Manager, State};
+use tauri::{AppHandle, Manager, State, async_runtime::Mutex};
 mod database;
 mod entities;
 mod favicon;
@@ -559,6 +559,21 @@ async fn list_fonts() -> Result<Vec<String>, String> {
     Ok(fonts)
 }
 
+#[tauri::command]
+async fn get_instance(
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+    server_id: i64,
+) -> Result<megalodon::entities::Instance, String> {
+    let server = database::get_server(&sqlite_pool, server_id)
+        .await
+        .map_err(|e| e.to_string())?;
+    let sns = megalodon::SNS::from_str(server.sns.as_ref()).map_err(|e| e.to_string())?;
+    let client = megalodon::generator(sns, server.base_url, None, Some(String::from("fedistar")))
+        .map_err(|e| e.to_string())?;
+    let res = client.get_instance().await.map_err(|e| e.to_string())?;
+    Ok(res.json())
+}
+
 async fn update_favicon(sqlite_pool: &sqlx::SqlitePool) -> Result<(), String> {
     let servers = database::list_servers(sqlite_pool)
         .await
@@ -751,6 +766,7 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
             open_media,
             list_fonts,
             get_timeline,
+            get_instance,
         ])
         .setup(move |app| {
             let app_handle = app.handle().clone();
