@@ -1,6 +1,6 @@
 name: fedistar
 base: core22
-version: '1.12.1'
+version: '1.12.2'
 summary: Multi-column Fediverse client for desktop.
 description: |
   Multi-column Fediverse client for desktop. Supporting Mastodon, Pleroma, Friendica, Gotosocial, and Firefish
