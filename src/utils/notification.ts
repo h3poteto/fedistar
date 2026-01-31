@@ -20,7 +20,7 @@ const generateNotification = (
     case 'follow_request':
       return [
         formatMessage({ id: 'timeline.notification.follow_request.title' }),
-        formatMessage({ id: 'timeline.notification.follow_requested.body' }, { user: notification.account.acct })
+        formatMessage({ id: 'timeline.notification.follow_request.body' }, { user: notification.account.acct })
       ]
     case 'favourite':
       return [
