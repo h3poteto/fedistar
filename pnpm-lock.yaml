@@ -54,7 +54,7 @@ importers:
         specifier: 10.2.1
         version: 10.2.1
       next:
-        specifier: ^16.0.0
+        specifier: ^16.1.6
         version: 16.1.6(@babel/core@7.28.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.97.3)
       parse-link-header:
         specifier: ^2.0.0
