@@ -75,5 +75,13 @@
     "sass": "^1.97.3",
     "ts-jest": "^29.4.0",
     "typescript": "^5.9.3"
+  },
+  "browser": {
+    "net": false,
+    "dns": false,
+    "tls": false,
+    "zlib": false,
+    "bufferutil": false,
+    "utf-8-validate": false
   }
 }

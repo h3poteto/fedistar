@@ -1,4 +1,4 @@
-@import '~rsuite/dist/rsuite.min.css';
+@import 'rsuite/dist/rsuite.min.css';
 
 :root {
   font-size: 16px;
@@ -17,7 +17,17 @@
 }
 
 body {
-  font-family: Apple-System,"Hiragino Kaku Gothic ProN",Hiragino Sans GB,Arial,Helvetica,PingFang SC,Meiryo,Microsoft YaHei,STXihei,sans-serif;
+  font-family:
+    Apple-System,
+    'Hiragino Kaku Gothic ProN',
+    Hiragino Sans GB,
+    Arial,
+    Helvetica,
+    PingFang SC,
+    Meiryo,
+    Microsoft YaHei,
+    STXihei,
+    sans-serif;
   height: 100%;
 }
 
