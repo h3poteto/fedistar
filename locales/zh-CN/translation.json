@@ -158,6 +158,9 @@
     },
     "cancel": "取消",
     "post": "发布",
+    "edit": "Edit",
+    "reply": "Reply",
+    "quote": "Quote",
     "edit_attachment": {
       "title": "编辑媒体",
       "label": "为视障人士添加描述",
@@ -235,6 +238,7 @@
     "actions": {
       "reply": "回复",
       "reblog": "转发",
+      "quote": "Quote",
       "favourite": "收藏",
       "emoji_reaction": "表情回应",
       "bookmark": "书签",
