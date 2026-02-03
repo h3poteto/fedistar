@@ -54,6 +54,7 @@ type Props = {
   client: MegalodonInterface
   in_reply_to?: Entity.Status
   edit_target?: Entity.Status
+  quote_target?: Entity.Status
   defaultVisibility?: 'public' | 'unlisted' | 'private' | 'direct' | 'local'
   defaultNSFW?: boolean
   defaultLanguage?: string | null
@@ -177,10 +178,12 @@ const Status: React.FC<Props> = props => {
         }
       }
       f()
+    } else if (props.quote_target) {
+      // Nothing todo
     } else {
       clear()
     }
-  }, [props.in_reply_to, props.edit_target, props.account, props.client])
+  }, [props.in_reply_to, props.edit_target, props.quote_target, props.account, props.client])
 
   // Set visibility
   useEffect(() => {
@@ -235,6 +238,11 @@ const Status: React.FC<Props> = props => {
         if (props.in_reply_to) {
           options = Object.assign({}, options, {
             in_reply_to_id: props.in_reply_to.id
+          })
+        }
+        if (props.quote_target) {
+          options = Object.assign({}, options, {
+            quote_id: props.quote_target.id
           })
         }
         if (formValue.attachments) {
@@ -627,13 +635,13 @@ const Status: React.FC<Props> = props => {
         </Form.Group>
         <Form.Group>
           <ButtonToolbar style={{ justifyContent: 'flex-end' }}>
-            {(props.in_reply_to || props.edit_target) && (
+            {(props.in_reply_to || props.edit_target || props.quote_target) && (
               <Button onClick={clear}>
                 <FormattedMessage id="compose.cancel" />
               </Button>
             )}
             <Button appearance="primary" onClick={handleSubmit} loading={loading}>
-              <FormattedMessage id="compose.post" />
+              {postMessage(props.in_reply_to, props.edit_target, props.quote_target)}
             </Button>
           </ButtonToolbar>
         </Form.Group>
@@ -665,6 +673,18 @@ const privacyIcon = (visibility: 'public' | 'unlisted' | 'private' | 'direct' | 
       return BsPeople
     default:
       return BsGlobe
+  }
+}
+
+const postMessage = (in_reply_to: any, edit_target: any, quote_target: any) => {
+  if (in_reply_to) {
+    return <FormattedMessage id="compose.reply" />
+  } else if (edit_target) {
+    return <FormattedMessage id="compose.edit" />
+  } else if (quote_target) {
+    return <FormattedMessage id="compose.quote" />
+  } else {
+    return <FormattedMessage id="compose.post" />
   }
 }
 
