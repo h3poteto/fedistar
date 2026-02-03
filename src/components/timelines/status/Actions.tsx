@@ -11,7 +11,8 @@ import {
   BsFillBookmarkFill,
   BsArrowRepeat,
   BsEnvelope,
-  BsLock
+  BsLock,
+  BsQuote
 } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 import { Dispatch, SetStateAction, ReactElement, useState, forwardRef, useRef, useContext } from 'react'
@@ -42,8 +43,9 @@ type Props = {
   account: Account | null
   status: Entity.Status
   client: MegalodonInterface
-  setShowReply?: Dispatch<SetStateAction<boolean>>
+  setShowReply: Dispatch<SetStateAction<boolean>>
   setShowEdit?: Dispatch<SetStateAction<boolean>>
+  setShowQuote: Dispatch<SetStateAction<boolean>>
   updateStatus: (status: Entity.Status) => void
   openReport?: () => void
   openFromOtherAccount?: () => void
@@ -155,6 +157,25 @@ const Actions: React.FC<Props> = props => {
     </div>
   ))
 
+  const quoteApproved = (status: Entity.Status): boolean => {
+    // https://docs.joinmastodon.org/entities/QuoteApproval/
+    if (!status.quote_approval) {
+      return true
+    }
+    switch (status.quote_approval.current_user) {
+      case 'automatic':
+      case 'manual':
+        return true
+
+      case 'denied':
+      case 'unknown':
+        return false
+
+      default:
+        return false
+    }
+  }
+
   return (
     <div className="toolbox">
       <FlexboxGrid>
@@ -181,6 +202,20 @@ const Actions: React.FC<Props> = props => {
             confirm={props.confirmReblog && !status.reblogged}
             confirmText={formatMessage({ id: 'timeline.actions.confirm_reblog.text' })}
             title={formatMessage({ id: 'timeline.actions.reblog' })}
+          />
+        </FlexboxGrid.Item>
+        <FlexboxGrid.Item>
+          <ActionButton
+            disabled={
+              (typeof props.disabled === 'boolean' ? props.disabled : props.disabled.reblog) ||
+              status.visibility === 'direct' ||
+              status.visibility === 'private' ||
+              !quoteApproved(status)
+            }
+            className="quote-action"
+            icon={<Icon as={BsQuote} />}
+            onClick={() => props.setShowQuote(current => !current)}
+            title={formatMessage({ id: 'timeline.actions.quote' })}
           />
         </FlexboxGrid.Item>
         <FlexboxGrid.Item>

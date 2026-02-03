@@ -123,6 +123,7 @@ type PostProps = {
 function Post(props: PostProps) {
   const { status, client } = props
   const [showReply, setShowReply] = useState(false)
+  const [showQuote, setShowQuote] = useState(false)
   const [spoilered, setSpoilered] = useState(status.spoiler_text.length > 0)
 
   return (
@@ -174,6 +175,7 @@ function Post(props: PostProps) {
               status={status}
               client={client}
               setShowReply={setShowReply}
+              setShowQuote={setShowQuote}
               updateStatus={props.updateStatus}
               customEmojis={props.customEmojis}
               locale={props.locale}
@@ -190,6 +192,18 @@ function Post(props: PostProps) {
             account={props.account}
             in_reply_to={status}
             onClose={() => setShowReply(false)}
+            locale={props.locale}
+          />
+        </div>
+      )}
+      {showQuote && (
+        <div style={{ padding: '8px 12px' }}>
+          <Reply
+            client={client}
+            server={props.server}
+            account={props.account}
+            quote_target={status}
+            onClose={() => setShowQuote(false)}
             locale={props.locale}
           />
         </div>

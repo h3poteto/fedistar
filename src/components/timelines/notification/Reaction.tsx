@@ -186,6 +186,7 @@ const Reaction: React.FC<Props> = props => {
   const [spoilered, setSpoilered] = useState<boolean>(status.spoiler_text.length > 0)
   const [showReply, setShowReply] = useState<boolean>(false)
   const [showEdit, setShowEdit] = useState<boolean>(false)
+  const [showQuote, setShowQuote] = useState<boolean>(false)
 
   const refresh = async () => {
     const res = await props.client.getStatus(status.id)
@@ -314,6 +315,7 @@ const Reaction: React.FC<Props> = props => {
             client={props.client}
             setShowReply={setShowReply}
             setShowEdit={setShowEdit}
+            setShowQuote={setShowQuote}
             updateStatus={props.updateStatus}
             openReport={() => props.openReport(status, props.client, props.server)}
             openFromOtherAccount={() => props.openFromOtherAccount(status)}
@@ -343,6 +345,18 @@ const Reaction: React.FC<Props> = props => {
             account={props.account}
             edit_target={status}
             onClose={() => setShowEdit(false)}
+            locale={props.locale}
+          />
+        </div>
+      )}
+      {showQuote && (
+        <div style={{ padding: '8px 12px' }}>
+          <Reply
+            client={props.client}
+            server={props.server}
+            account={props.account}
+            quote_target={status}
+            onClose={() => setShowQuote(false)}
             locale={props.locale}
           />
         </div>

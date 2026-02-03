@@ -43,7 +43,7 @@
     "@tauri-apps/plugin-shell": "~2.3.4",
     "dayjs": "^1.11.19",
     "emoji-mart": "^5.6.0",
-    "megalodon": "10.2.1",
+    "megalodon": "10.2.3",
     "next": "^16.1.6",
     "parse-link-header": "^2.0.0",
     "react": "19.2.4",
