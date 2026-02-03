@@ -158,6 +158,9 @@
     },
     "cancel": "Cancelar",
     "post": "Postar",
+    "edit": "Edit",
+    "reply": "Reply",
+    "quote": "Quote",
     "edit_attachment": {
       "title": "Editar mídia",
       "label": "Descreva para pessoas que são cegas ou têm baixa visão",
@@ -235,6 +238,7 @@
     "actions": {
       "reply": "Responder",
       "reblog": "Impulsionar",
+      "quote": "Quote",
       "favourite": "Favorito",
       "emoji_reaction": "Reação de emoji",
       "bookmark": "Adicionar marcador",
