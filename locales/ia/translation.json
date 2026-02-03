@@ -158,6 +158,9 @@
     },
     "cancel": "Cancellar",
     "post": "Post",
+    "edit": "Edit",
+    "reply": "Reply",
+    "quote": "Quote",
     "edit_attachment": {
       "title": "Edit media",
       "label": "Describe for people who are blind or have low vision",
@@ -235,6 +238,7 @@
     "actions": {
       "reply": "Reply",
       "reblog": "Boost",
+      "quote": "Quote",
       "favourite": "Favourite",
       "emoji_reaction": "Emoji reaction",
       "bookmark": "Adder marcapagina",

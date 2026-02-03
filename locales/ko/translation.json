@@ -158,6 +158,9 @@
     },
     "cancel": "취소",
     "post": "게시",
+    "edit": "Edit",
+    "reply": "Reply",
+    "quote": "Quote",
     "edit_attachment": {
       "title": "첨부파일 수정",
       "label": "대체 텍스트 추가",
@@ -235,6 +238,7 @@
     "actions": {
       "reply": "답글",
       "reblog": "부스트",
+      "quote": "Quote",
       "favourite": "좋아요",
       "emoji_reaction": "에모지 리액션",
       "bookmark": "북마크",

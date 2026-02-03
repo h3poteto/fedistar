@@ -158,6 +158,9 @@
     },
     "cancel": "Abbrechen",
     "post": "Beitrag",
+    "edit": "Edit",
+    "reply": "Reply",
+    "quote": "Quote",
     "edit_attachment": {
       "title": "Medien bearbeiten",
       "label": "Für Gehörlose und hörbehinderte Menschen beschreiben",
@@ -235,6 +238,7 @@
     "actions": {
       "reply": "Antworten",
       "reblog": "Boost",
+      "quote": "Quote",
       "favourite": "Favorisieren",
       "emoji_reaction": "Emoji-Reaktion",
       "bookmark": "Lesezeichen",

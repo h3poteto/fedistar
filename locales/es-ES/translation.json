@@ -158,6 +158,9 @@
     },
     "cancel": "Cancelar",
     "post": "Publicar",
+    "edit": "Edit",
+    "reply": "Reply",
+    "quote": "Quote",
     "edit_attachment": {
       "title": "Editar contenido multimedia",
       "label": "Describir para personas con discapacidad visual",
@@ -235,6 +238,7 @@
     "actions": {
       "reply": "Responder",
       "reblog": "Impulsar",
+      "quote": "Quote",
       "favourite": "Favorito",
       "emoji_reaction": "Reacción emoji",
       "bookmark": "Guardar marcador",

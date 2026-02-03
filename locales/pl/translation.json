@@ -158,6 +158,9 @@
     },
     "cancel": "Anuluj",
     "post": "Opublikuj",
+    "edit": "Edit",
+    "reply": "Reply",
+    "quote": "Quote",
     "edit_attachment": {
       "title": "Edytuj multimedia",
       "label": "Wprowadź opis dla niewidomych i niedowidzących",
@@ -235,6 +238,7 @@
     "actions": {
       "reply": "Odpowiedz",
       "reblog": "Podbij",
+      "quote": "Quote",
       "favourite": "Ulubione",
       "emoji_reaction": "Reakcja emoji",
       "bookmark": "Zakładka",
