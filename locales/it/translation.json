@@ -158,6 +158,9 @@
     },
     "cancel": "Annulla",
     "post": "Pubblica",
+    "edit": "Edit",
+    "reply": "Reply",
+    "quote": "Quote",
     "edit_attachment": {
       "title": "Modifica allegati",
       "label": "Descrizione accessibile per ipovedenti",
@@ -235,6 +238,7 @@
     "actions": {
       "reply": "Risposta",
       "reblog": "Condividere",
+      "quote": "Quote",
       "favourite": "Preferito",
       "emoji_reaction": "Reazione emoji",
       "bookmark": "Segnalibro",
