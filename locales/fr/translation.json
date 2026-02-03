@@ -158,6 +158,9 @@
     },
     "cancel": "Annuler",
     "post": "Envoyer",
+    "edit": "Edit",
+    "reply": "Reply",
+    "quote": "Quote",
     "edit_attachment": {
       "title": "Éditer le média",
       "label": "Ajoutez une description pour les personnes déficientes visuellement",
@@ -235,6 +238,7 @@
     "actions": {
       "reply": "Répondre",
       "reblog": "Boost",
+      "quote": "Quote",
       "favourite": "Ajouter aux favoris",
       "emoji_reaction": "Réaction émoji",
       "bookmark": "Ajouter aux marques-pages",
