@@ -44,7 +44,7 @@ tauri-plugin-clipboard-manager = "2.3.2"
 tauri-plugin-shell = "2.3.5"
 # We can't compile with 0.14.0 with html5ever 0.29.1.
 # We don't refer to this library directly.
-markup5ever = "0.14.1"
+markup5ever = "0.38.0"
 
 [features]
 # by default Tauri runs in production mode
