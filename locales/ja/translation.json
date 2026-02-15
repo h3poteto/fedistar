@@ -158,9 +158,9 @@
     },
     "cancel": "キャンセル",
     "post": "投稿",
-    "edit": "Edit",
-    "reply": "Reply",
-    "quote": "Quote",
+    "edit": "編集",
+    "reply": "返信",
+    "quote": "引用",
     "edit_attachment": {
       "title": "メディアを編集",
       "label": "視覚的に閲覧が難しいユーザーへの説明",
@@ -238,7 +238,7 @@
     "actions": {
       "reply": "返信",
       "reblog": "ブースト",
-      "quote": "Quote",
+      "quote": "引用",
       "favourite": "お気に入り",
       "emoji_reaction": "絵文字リアクション",
       "bookmark": "ブックマーク",
@@ -273,7 +273,7 @@
       "left": "残り"
     },
     "quote": {
-      "shallow_quote": "Quoted post"
+      "shallow_quote": "引用された投稿"
     },
     "new": "タイムラインを追加",
     "home": "ホーム",
