@@ -6,6 +6,7 @@ import FailoverImg from 'src/utils/failoverImg'
 import Body from './Body'
 import { Server } from 'src/entities/server'
 import { FormattedMessage } from 'react-intl'
+import { MouseEventHandler } from 'react'
 
 type Props = {
   quote: Entity.QuotedStatus
@@ -15,10 +16,14 @@ type Props = {
 }
 
 const Quote: React.FC<Props> = props => {
-  const statusClicked = async (status: Entity.Status, server: Server) => {
+  const statusClicked: MouseEventHandler<HTMLDivElement> = async e => {
+    const quote = props.quote as Entity.Quote
+    const status = quote.quoted_status
     if (props.setStatusDetail) {
-      props.setStatusDetail(status.id, server.id)
+      props.setStatusDetail(status.id, props.server.id)
     }
+    e.preventDefault()
+    e.stopPropagation()
   }
 
   if (isQuote(props.quote) && props.quote.quoted_status) {
@@ -56,7 +61,7 @@ const Quote: React.FC<Props> = props => {
               </FlexboxGrid.Item>
               {/** timestamp **/}
               <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', color: 'var(--rs-text-tertiary)', paddingRight: '4px' }}>
-                <Time time={quote.quoted_status.created_at} onClick={() => statusClicked(quote.quoted_status, props.server)} />
+                <Time time={quote.quoted_status.created_at} onClick={statusClicked} />
               </FlexboxGrid.Item>
             </FlexboxGrid>
           </div>
@@ -64,7 +69,7 @@ const Quote: React.FC<Props> = props => {
         <div style={{ padding: '0 4px 4px 4px' }}>
           <Body
             status={quote.quoted_status}
-            onClick={() => statusClicked(quote.quoted_status, props.server)}
+            onClick={statusClicked}
             spoilered={false}
             setSpoilered={() => {}}
             style={{ cursor: 'pointer' }}
