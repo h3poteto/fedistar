@@ -64,6 +64,8 @@ pub async fn start_user(
     server: &entities::Server,
     account: &entities::Account,
 ) -> Result<(), String> {
+    let mut retry_count = 0;
+
     let url = format!("https://{}", server.domain);
     let sns = megalodon::detector(url.as_str())
         .await
@@ -77,76 +79,95 @@ pub async fn start_user(
     .map_err(|err| err.to_string())?;
 
     let streaming = client.user_streaming().await;
+    if !streaming.is_supported() {
+        tracing::info!(
+            "Streaming is not supported for {}@{}",
+            account.username,
+            server.domain
+        );
+        return Ok(());
+    }
 
-    tracing::info!(
-        "user streaming is started for {}@{}",
-        account.username,
-        server.domain
-    );
+    loop {
+        tracing::info!(
+            "user streaming is started for {}@{}",
+            account.username,
+            server.domain
+        );
 
-    let server_id = server.id;
-
-    let s = streaming.listen(Box::new(move |message| {
+        let server_id = server.id;
         let app_handle = app_handle.clone();
-        Box::pin(async move {
-            match message {
-                Message::Update(mes) => {
-                    tracing::debug!("receive update");
-                    app_handle
-                        .emit(
-                            "receive-home-status",
-                            ReceiveHomeStatusPayload {
-                                server_id,
-                                status: mes,
-                            },
-                        )
-                        .expect("Failed to send receive-home-status event");
-                }
-                Message::Notification(mes) => {
-                    tracing::debug!("receive notification");
-                    if mes.account.is_some() {
+
+        let s = streaming.listen(Box::new(move |message| {
+            let app_handle = app_handle.clone();
+            Box::pin(async move {
+                match message {
+                    Message::Update(mes) => {
+                        tracing::debug!("receive update");
                         app_handle
                             .emit(
-                                "receive-notification",
-                                ReceiveNotificationPayload {
+                                "receive-home-status",
+                                ReceiveHomeStatusPayload {
                                     server_id,
-                                    notification: mes,
+                                    status: mes,
                                 },
                             )
-                            .expect("Failed to send receive-notification event");
+                            .expect("Failed to send receive-home-status event");
                     }
+                    Message::Notification(mes) => {
+                        tracing::debug!("receive notification");
+                        if mes.account.is_some() {
+                            app_handle
+                                .emit(
+                                    "receive-notification",
+                                    ReceiveNotificationPayload {
+                                        server_id,
+                                        notification: mes,
+                                    },
+                                )
+                                .expect("Failed to send receive-notification event");
+                        }
+                    }
+                    Message::StatusUpdate(mes) => {
+                        tracing::debug!("receive status updated");
+                        app_handle
+                            .emit(
+                                "receive-home-status-update",
+                                ReceiveHomeStatusUpdatePayload {
+                                    server_id,
+                                    status: mes,
+                                },
+                            )
+                            .expect("Failed to send receive-home-status-update event");
+                    }
+                    Message::Delete(status_id) => {
+                        tracing::debug!("receive delete");
+                        app_handle
+                            .emit(
+                                "delete-home-status",
+                                DeleteHomeStatusPayload {
+                                    server_id,
+                                    status_id,
+                                },
+                            )
+                            .expect("Failed to send delete-home-status event");
+                    }
+                    _ => {}
                 }
-                Message::StatusUpdate(mes) => {
-                    tracing::debug!("receive status updated");
-                    app_handle
-                        .emit(
-                            "receive-home-status-update",
-                            ReceiveHomeStatusUpdatePayload {
-                                server_id,
-                                status: mes,
-                            },
-                        )
-                        .expect("Failed to send receive-home-status-update event");
-                }
-                Message::Delete(status_id) => {
-                    tracing::debug!("receive delete");
-                    app_handle
-                        .emit(
-                            "delete-home-status",
-                            DeleteHomeStatusPayload {
-                                server_id,
-                                status_id,
-                            },
-                        )
-                        .expect("Failed to send delete-home-status event");
-                }
-                _ => {}
-            }
-        })
-    }));
-    s.await;
+            })
+        }));
+        s.await;
 
-    Ok(())
+        tracing::info!(
+            "User streaming {}@{} is finished, retrying...",
+            account.username,
+            server.domain
+        );
+
+        retry_count += 1;
+        let delay = std::cmp::min(retry_count * retry_count, 60);
+        tokio::time::sleep(std::time::Duration::from_secs(delay)).await;
+    }
 }
 
 pub async fn start(
@@ -155,6 +176,23 @@ pub async fn start(
     timeline: &entities::Timeline,
     account: Option<entities::Account>,
 ) -> Result<(), String> {
+    let mut retry_count = 0;
+    let streaming_message;
+    if let Some(ref account) = account {
+        streaming_message = format!(
+            "{} streaming of {}@{}",
+            timeline.name.as_str(),
+            account.username.as_str(),
+            server.domain.as_str()
+        );
+    } else {
+        streaming_message = format!(
+            "{} streaming of @{}",
+            timeline.name.as_str(),
+            server.domain.as_str()
+        );
+    }
+
     let url = format!("https://{}", server.domain);
     let sns = megalodon::detector(url.as_str())
         .await
@@ -191,90 +229,89 @@ pub async fn start(
         _ => return Err(format!("{} is not supported", timeline.name)),
     }
 
-    if let Some(account) = account {
-        tracing::info!(
-            "{} streaming is started for {}@{}",
-            timeline.name,
-            account.username,
-            server.domain
-        );
-    } else {
-        tracing::info!(
-            "{} streaming is started for @{}",
-            timeline.name,
-            server.domain
-        );
+    if !streaming.is_supported() {
+        tracing::info!("Streaming is not supported for {}", timeline.name);
+        return Ok(());
     }
 
-    let timeline_id = timeline.id;
-    let server_id = server.id;
-    let name = timeline.name.clone();
+    loop {
+        tracing::info!("{} is started", streaming_message);
 
-    let s = streaming.listen(Box::new(move |message| {
+        let timeline_id = timeline.id;
+        let server_id = server.id;
+        let name = timeline.name.clone();
         let app_handle = app_handle.clone();
-        let name = name.clone();
-        Box::pin(async move {
-            match message {
-                Message::Update(mes) => {
-                    tracing::debug!("receive update");
-                    app_handle
-                        .emit(
-                            "receive-timeline-status",
-                            ReceiveTimelineStatusPayload {
-                                server_id,
-                                timeline_id,
-                                name: name.clone(),
-                                status: mes,
-                            },
-                        )
-                        .expect("Failed to receive-timeline-status event");
-                }
-                Message::StatusUpdate(mes) => {
-                    tracing::debug!("receive status update");
-                    app_handle
-                        .emit(
-                            "receive-timeline-status-update",
-                            ReceiveTimelineStatusUpdatePayload {
-                                server_id,
-                                timeline_id,
-                                name: name.clone(),
-                                status: mes,
-                            },
-                        )
-                        .expect("Failed to receive-timeline-status-update event");
-                }
-                Message::Delete(status_id) => {
-                    tracing::debug!("receive delete");
-                    app_handle
-                        .emit(
-                            "delete-timeline-status",
-                            DeleteTimelineStatusPayload {
-                                server_id,
-                                timeline_id,
-                                name: name.clone(),
-                                status_id,
-                            },
-                        )
-                        .expect("Failed to delete-timeline-status event");
-                }
-                Message::Conversation(conversation) => {
-                    tracing::debug!("receive conversation");
-                    app_handle
-                        .emit(
-                            "receive-timeline-conversation",
-                            ReceiveTimelineConversationPayload {
-                                server_id,
-                                timeline_id,
-                                conversation,
-                            },
-                        )
-                        .expect("Failed to receive-timeline-conversation event");
-                }
-                _ => {}
-            }
-        })
-    }));
-    s.await;
 
-    Ok(())
+        let s = streaming.listen(Box::new(move |message| {
+            let app_handle = app_handle.clone();
+            let name = name.clone();
+            Box::pin(async move {
+                match message {
+                    Message::Update(mes) => {
+                        tracing::debug!("receive update");
+                        app_handle
+                            .emit(
+                                "receive-timeline-status",
+                                ReceiveTimelineStatusPayload {
+                                    server_id,
+                                    timeline_id,
+                                    name: name.clone(),
+                                    status: mes,
+                                },
+                            )
+                            .expect("Failed to receive-timeline-status event");
+                    }
+                    Message::StatusUpdate(mes) => {
+                        tracing::debug!("receive status update");
+                        app_handle
+                            .emit(
+                                "receive-timeline-status-update",
+                                ReceiveTimelineStatusUpdatePayload {
+                                    server_id,
+                                    timeline_id,
+                                    name: name.clone(),
+                                    status: mes,
+                                },
+                            )
+                            .expect("Failed to receive-timeline-status-update event");
+                    }
+                    Message::Delete(status_id) => {
+                        tracing::debug!("receive delete");
+                        app_handle
+                            .emit(
+                                "delete-timeline-status",
+                                DeleteTimelineStatusPayload {
+                                    server_id,
+                                    timeline_id,
+                                    name: name.clone(),
+                                    status_id,
+                                },
+                            )
+                            .expect("Failed to delete-timeline-status event");
+                    }
+                    Message::Conversation(conversation) => {
+                        tracing::debug!("receive conversation");
+                        app_handle
+                            .emit(
+                                "receive-timeline-conversation",
+                                ReceiveTimelineConversationPayload {
+                                    server_id,
+                                    timeline_id,
+                                    conversation,
+                                },
+                            )
+                            .expect("Failed to receive-timeline-conversation event");
+                    }
+                    _ => {}
+                }
+            })
+        }));
+        s.await;
+
+        tracing::info!("{} is finished, so retrying...", streaming_message);
+
+        retry_count += 1;
+        let delay = std::cmp::min(retry_count * retry_count, 60);
+        tokio::time::sleep(std::time::Duration::from_secs(delay)).await;
+    }
 }
