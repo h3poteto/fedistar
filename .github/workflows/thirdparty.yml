@@ -20,7 +20,7 @@ jobs:
         node-version-file: '.tool-versions'
     - uses: pnpm/action-setup@v4
       with:
-        version: 10.30.2
+        version: 10.30.3
     - uses: dtolnay/rust-toolchain@stable
     - name: Install packages
       run: |
