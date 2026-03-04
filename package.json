@@ -58,7 +58,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",
     "@eslint/js": "^9.39.2",
-    "@tauri-apps/cli": "^2.10.0",
+    "@tauri-apps/cli": "^2.10.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.10.4",
     "@types/parse-link-header": "^2.0.3",
