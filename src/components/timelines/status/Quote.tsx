@@ -7,10 +7,12 @@ import Body from './Body'
 import { Server } from 'src/entities/server'
 import { FormattedMessage } from 'react-intl'
 import { MouseEventHandler } from 'react'
+import { Account } from 'src/entities/account'
 
 type Props = {
   quote: Entity.QuotedStatus
   server: Server
+  account: Account
   setStatusDetail?: (statusId: string, serverId: number, accountId?: number) => void
   setAccountDetail: (userId: string, serverId: number, accountId?: number) => void
 }
@@ -20,7 +22,7 @@ const Quote: React.FC<Props> = props => {
     const quote = props.quote as Entity.Quote
     const status = quote.quoted_status
     if (props.setStatusDetail) {
-      props.setStatusDetail(status.id, props.server.id)
+      props.setStatusDetail(status.id, props.server.id, props.account?.id)
     }
     e.preventDefault()
     e.stopPropagation()

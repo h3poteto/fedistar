@@ -224,6 +224,7 @@ const Status: React.FC<Props> = props => {
                 <Quote
                   quote={status.quote}
                   server={props.server}
+                  account={props.account}
                   setStatusDetail={props.setStatusDetail}
                   setAccountDetail={props.setAccountDetail}
                 />
