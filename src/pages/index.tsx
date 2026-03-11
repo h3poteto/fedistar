@@ -1,7 +1,7 @@
 import { useState, useEffect, useReducer, CSSProperties, useRef, useCallback, useContext } from 'react'
 import { invoke } from '@tauri-apps/api/core'
 import { listen } from '@tauri-apps/api/event'
-import { Container, Content, useToaster, Animation, DOMHelper } from 'rsuite'
+import { Container, Content, useToaster, DOMHelper } from 'rsuite'
 import { isPermissionGranted, requestPermission, sendNotification } from '@tauri-apps/plugin-notification'
 import dayjs from 'dayjs'
 
@@ -205,6 +205,18 @@ function App() {
     }
   }
 
+  const openMedia = useCallback((media: Array<Entity.Attachment>, index: number) => {
+    dispatch({ target: 'media', value: true, object: media, index: index })
+  }, [])
+
+  const openReport = useCallback((status: Entity.Status, client: MegalodonInterface, server: Server) => {
+    dispatch({ target: 'report', value: true, object: status, client: client, server: server })
+  }, [])
+
+  const openFromOtherAccount = useCallback((status: Entity.Status) => {
+    dispatch({ target: 'fromOtherAccount', value: true, object: status })
+  }, [])
+
   return (
     <div
       className="container index"
@@ -282,44 +294,21 @@ function App() {
           setHighlighted={setHighlighted}
           setUnreads={setUnreads}
         />
-        <Animation.Transition
-          in={composeOpened}
-          exitedClassName="compose-exited"
-          exitingClassName="compose-exiting"
-          enteredClassName="compose-entered"
-          enteringClassName="compose-entering"
-        >
-          {(props, ref) => (
-            <div {...props} ref={ref} style={{ overflow: 'hidden' }}>
-              <Compose setOpened={setComposeOpened} servers={servers} locale={locale} />
-            </div>
-          )}
-        </Animation.Transition>
-        <Animation.Transition
-          in={searchOpened}
-          exitedClassName="compose-exited"
-          exitingClassName="compose-exiting"
-          enteredClassName="compose-entered"
-          enteringClassName="compose-entering"
-        >
-          {(props, ref) => (
-            <div {...props} ref={ref} style={{ overflow: 'hidden' }}>
-              <Search
-                setOpened={setSearchOpened}
-                servers={servers}
-                locale={locale}
-                openMedia={(media: Array<Entity.Attachment>, index: number) =>
-                  dispatch({ target: 'media', value: true, object: media, index: index })
-                }
-                openReport={(status: Entity.Status, client: MegalodonInterface, server: Server) =>
-                  dispatch({ target: 'report', value: true, object: status, client: client, server: server })
-                }
-                openFromOtherAccount={(status: Entity.Status) => dispatch({ target: 'fromOtherAccount', value: true, object: status })}
-                behavior={behavior}
-              />
-            </div>
-          )}
-        </Animation.Transition>
+
+        <div className={composeOpened ? 'compose-entered' : 'compose-exited'} style={{ overflow: 'hidden' }}>
+          <Compose setOpened={setComposeOpened} servers={servers} locale={locale} />
+        </div>
+        <div className={searchOpened ? 'compose-entered' : 'compose-exited'} style={{ overflow: 'hidden' }}>
+          <Search
+            setOpened={setSearchOpened}
+            servers={servers}
+            locale={locale}
+            openMedia={openMedia}
+            openReport={openReport}
+            openFromOtherAccount={openFromOtherAccount}
+            behavior={behavior}
+          />
+        </div>
         <Content className="timeline-space" style={{ display: 'flex', position: 'relative' }} ref={spaceRef}>
           {timelines.map(timeline => (
             <ShowTimeline
@@ -329,13 +318,9 @@ function App() {
               setUnreads={setUnreads}
               key={timeline[0].id}
               locale={locale}
-              openMedia={(media: Array<Entity.Attachment>, index: number) =>
-                dispatch({ target: 'media', value: true, object: media, index: index })
-              }
-              openReport={(status: Entity.Status, client: MegalodonInterface, server: Server) =>
-                dispatch({ target: 'report', value: true, object: status, client: client, server: server })
-              }
-              openFromOtherAccount={(status: Entity.Status) => dispatch({ target: 'fromOtherAccount', value: true, object: status })}
+              openMedia={openMedia}
+              openReport={openReport}
+              openFromOtherAccount={openFromOtherAccount}
               behavior={behavior}
             />
           ))}
@@ -344,13 +329,9 @@ function App() {
         <Detail
           dispatch={dispatch}
           locale={locale}
-          openMedia={(media: Array<Entity.Attachment>, index: number) =>
-            dispatch({ target: 'media', value: true, object: media, index: index })
-          }
-          openReport={(status: Entity.Status, client: MegalodonInterface, server: Server) =>
-            dispatch({ target: 'report', value: true, object: status, client: client, server: server })
-          }
-          openFromOtherAccount={(status: Entity.Status) => dispatch({ target: 'fromOtherAccount', value: true, object: status })}
+          openMedia={openMedia}
+          openReport={openReport}
+          openFromOtherAccount={openFromOtherAccount}
           openListMemberships={(list: Entity.List, client: MegalodonInterface) =>
             dispatch({ target: 'listMemberships', value: true, object: list, client: client })
           }
