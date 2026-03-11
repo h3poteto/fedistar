@@ -6,6 +6,7 @@ import ShowNotifications from 'src/components/timelines/Notifications'
 import ShowConversations from 'src/components/timelines/Conversations'
 import { Unread } from 'src/entities/unread'
 import { Behavior } from 'src/entities/behavior'
+import React from 'react'
 
 type Props = {
   timeline: Timeline
@@ -19,7 +20,8 @@ type Props = {
   behavior: Behavior
 }
 
-const Show: React.FC<Props> = props => {
+const Show = React.memo((props: Props) => {
+  console.log('Show re-render:', props.timeline.id)
   if (props.timeline.kind === 'notifications') {
     return (
       <ShowNotifications
@@ -49,6 +51,6 @@ const Show: React.FC<Props> = props => {
       />
     )
   }
-}
+})
 
 export default Show

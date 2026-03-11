@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { Dispatch, useEffect, useState } from 'react'
-import { Animation, Container } from 'rsuite'
+import { Container } from 'rsuite'
 
 import Status from './Status'
 import Profile from './Profile'
@@ -54,65 +54,55 @@ const Detail: React.FC<Props> = props => {
   }
 
   return (
-    <Animation.Transition
-      in={target !== null}
-      exitedClassName="detail-exited"
-      exitingClassName="detail-exiting"
-      enteredClassName="detail-entered"
-      enteringClassName="detail-entering"
-    >
-      {(p, ref) => (
-        <div {...p} ref={ref}>
-          <Container className="profile" style={{ height: '100%', borderLeft: '1px solid var(--rs-border-primary)', overflow: 'hidden' }}>
-            {target === 'status' && (
-              <Status
-                openMedia={(media: Array<Entity.Attachment>, index: number) =>
-                  props.dispatch({ target: 'media', value: true, object: media, index: index })
-                }
-                openReport={props.openReport}
-                openFromOtherAccount={props.openFromOtherAccount}
-                setStatusDetail={setStatusDetail}
-                locale={props.locale}
-                behavior={props.behavior}
-              />
-            )}
-            {target === 'profile' && (
-              <Profile
-                openMedia={props.openMedia}
-                openReport={props.openReport}
-                openFromOtherAccount={props.openFromOtherAccount}
-                openAddListMember={props.openAddListMember}
-                setStatusDetail={setStatusDetail}
-                locale={props.locale}
-                behavior={props.behavior}
-              />
-            )}
-            {target === 'tag' && (
-              <TagDetail
-                openMedia={props.openMedia}
-                openReport={props.openReport}
-                openFromOtherAccount={props.openFromOtherAccount}
-                setStatusDetail={setStatusDetail}
-                locale={props.locale}
-                behavior={props.behavior}
-              />
-            )}
-            {target === 'lists' && <ListsDetail openListMemberships={props.openListMemberships} />}
-            {target === 'list' && (
-              <ListDetail
-                openMedia={props.openMedia}
-                openReport={props.openReport}
-                openFromOtherAccount={props.openFromOtherAccount}
-                setStatusDetail={setStatusDetail}
-                locale={props.locale}
-                behavior={props.behavior}
-              />
-            )}
-            {target === 'followed_hashtags' && <FollowedHashtags />}
-          </Container>
-        </div>
-      )}
-    </Animation.Transition>
+    <div className={target !== null ? 'detail-entered' : 'detail-exited'}>
+      <Container className="profile" style={{ height: '100%', borderLeft: '1px solid var(--rs-border-primary)', overflow: 'hidden' }}>
+        {target === 'status' && (
+          <Status
+            openMedia={(media: Array<Entity.Attachment>, index: number) =>
+              props.dispatch({ target: 'media', value: true, object: media, index: index })
+            }
+            openReport={props.openReport}
+            openFromOtherAccount={props.openFromOtherAccount}
+            setStatusDetail={setStatusDetail}
+            locale={props.locale}
+            behavior={props.behavior}
+          />
+        )}
+        {target === 'profile' && (
+          <Profile
+            openMedia={props.openMedia}
+            openReport={props.openReport}
+            openFromOtherAccount={props.openFromOtherAccount}
+            openAddListMember={props.openAddListMember}
+            setStatusDetail={setStatusDetail}
+            locale={props.locale}
+            behavior={props.behavior}
+          />
+        )}
+        {target === 'tag' && (
+          <TagDetail
+            openMedia={props.openMedia}
+            openReport={props.openReport}
+            openFromOtherAccount={props.openFromOtherAccount}
+            setStatusDetail={setStatusDetail}
+            locale={props.locale}
+            behavior={props.behavior}
+          />
+        )}
+        {target === 'lists' && <ListsDetail openListMemberships={props.openListMemberships} />}
+        {target === 'list' && (
+          <ListDetail
+            openMedia={props.openMedia}
+            openReport={props.openReport}
+            openFromOtherAccount={props.openFromOtherAccount}
+            setStatusDetail={setStatusDetail}
+            locale={props.locale}
+            behavior={props.behavior}
+          />
+        )}
+        {target === 'followed_hashtags' && <FollowedHashtags />}
+      </Container>
+    </div>
   )
 }
 

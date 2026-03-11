@@ -2,52 +2,6 @@
   background-color: transparent;
 }
 
-@keyframes slideInCompose {
-  from {
-    width: 0;
-  }
-
-  50% {
-    width: 200px;
-    min-width: 200px;
-  }
-
-  to {
-    width: 320px;
-    min-width: 320px;
-  }
-}
-
-@keyframes slideOutCompose {
-  from {
-    width: 320px;
-    min-width: 320px;
-  }
-
-  50% {
-    width: 100px;
-    min-width: 100px;
-  }
-
-  to {
-    width: 0;
-  }
-}
-
-.compose-exiting,
-.compose-entering {
-  animation: 0.3s linear;
-  animation-fill-mode: forwards;
-}
-
-.compose-exiting {
-  animation-name: slideOutCompose;
-}
-
-.compose-entering {
-  animation-name: slideInCompose;
-}
-
 .compose-entered {
   width: 320px;
   flex-basis: 320px;
@@ -58,56 +12,8 @@
   width: 0;
 }
 
-@keyframes slideInDetail {
-  from {
-    width: 0;
-  }
-
-  50% {
-    width: 200px;
-    min-width: 200px;
-  }
-
-  to {
-    width: 340px;
-    min-width: 340px;
-    max-width: 340px;
-  }
-}
-
-@keyframes slideOutDetail {
-  from {
-    width: 340px;
-    min-width: 340px;
-    max-width: 340px;
-  }
-
-  50% {
-    width: 100px;
-    min-width: 100px;
-  }
-
-  to {
-    width: 0;
-  }
-}
-
-.detail-exiting,
-.detail-entering {
-  animation: 0.3s liner;
-  animation-fill-mode: forwards;
-}
-
-.detail-exiting {
-  animation-name: slideOutDetail;
-}
-
-.detail-entering {
-  animation-name: slideInDetail;
-}
-
 .detail-entered {
-  width: 341x;
+  width: 341px;
   min-width: 341px;
   max-width: 341px;
 }
