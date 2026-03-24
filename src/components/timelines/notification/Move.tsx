@@ -43,7 +43,15 @@ export default function Move(props: Props) {
         </div>
         <div style={{ paddingRight: '8px', overflowWrap: 'break-word' }}>
           <div>
-            <span dangerouslySetInnerHTML={{ __html: emojify(props.notification.target.display_name, props.notification.target.emojis) }} />
+            <span
+              dangerouslySetInnerHTML={{
+                __html: emojify(
+                  props.notification.target.display_name,
+                  props.notification.target.emojis,
+                  props.notification.target.acct
+                )
+              }}
+            />
           </div>
           <div style={{ color: 'var(--rs-text-secondary)' }}>{props.notification.target.acct}</div>
         </div>
@@ -63,7 +71,8 @@ const actionText = (notification: Entity.Notification) => {
           dangerouslySetInnerHTML={{
             __html: emojify(
               formatMessage({ id: 'timeline.notification.move.body' }, { user: notification.account.display_name }),
-              notification.account.emojis
+              notification.account.emojis,
+              notification.account.acct
             )
           }}
         />

@@ -16,6 +16,9 @@
     "failed_bookmark": "Failed to bookmark",
     "failed_follow": "Failed to follow",
     "failed_unfollow": "Failed to unfollow",
+    "failed_delete_conversation": "Failed to delete conversation.",
+    "failed_download_image": "Failed to download image.",
+    "failed_copy_image": "Failed to copy image.",
     "validation_error": "Validation error.",
     "validation_attachments_length": "You can't attach over {limit} files.",
     "validation_attachments_type": "You can attach only images or videos",
@@ -96,6 +99,8 @@
         "font_family": "Font family",
         "language": "Language",
         "color_theme": "Color theme",
+        "highlight_color": "Highlight color",
+        "highlight_color_help": "Leave empty to use the theme default. Supports #RGB or #RRGGBB.",
         "theme": {
           "light": "Light",
           "dark": "Dark",
@@ -113,6 +118,9 @@
           "type": "Please enter a valid number",
           "range": "Please enter a number from {from} to {to}",
           "required": "Font size is required"
+        },
+        "highlight_color": {
+          "format": "Please enter a valid hex color such as #3498FF"
         },
         "language": {
           "required": "Language is required"
@@ -165,6 +173,12 @@
       "title": "Edit media",
       "label": "Describe for people who are blind or have low vision",
       "submit": "Apply"
+    }
+  },
+  "media": {
+    "menu": {
+      "download_image": "Download Image",
+      "copy_image": "Copy Image"
     }
   },
   "search": {

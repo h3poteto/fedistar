@@ -118,6 +118,21 @@ const Conversations: React.FC<Props> = props => {
     }
   }
 
+  const deleteConversation = async (conversationId: string) => {
+    if (!client) {
+      return
+    }
+
+    try {
+      await client.deleteConversation(conversationId)
+      setUnreadConversations(current => current.filter(conversation => conversation.id !== conversationId))
+      setConversations(current => current.filter(conversation => conversation.id !== conversationId))
+    } catch (err) {
+      console.error(err)
+      toast.push(alert('error', formatMessage({ id: 'alert.failed_delete_conversation' })), { placement: 'topStart' })
+    }
+  }
+
   const closeOptionPopover = () => triggerRef?.current.close()
 
   const loadMore = useCallback(async () => {
@@ -231,7 +246,12 @@ const Conversations: React.FC<Props> = props => {
                     key={conversation.id}
                     style={{ marginTop: '2px', paddingTop: '2px', paddingBottom: '2px', backgroundColor: 'var(--rs-bg-card)' }}
                   >
-                    <Conversation conversation={conversation} openMedia={props.openMedia} selectStatus={selectStatus} />
+                    <Conversation
+                      conversation={conversation}
+                      openMedia={props.openMedia}
+                      selectStatus={selectStatus}
+                      deleteConversation={deleteConversation}
+                    />
                   </List.Item>
                 )}
               />

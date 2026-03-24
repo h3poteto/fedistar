@@ -1,7 +1,5 @@
-import { Container, Header, Content, FlexboxGrid, Button, Dropdown, Avatar } from 'rsuite'
-import { Icon } from '@rsuite/icons'
-import { BsX } from 'react-icons/bs'
-import { useEffect, useState } from 'react'
+import { Container, Header, Content, FlexboxGrid, Dropdown, Avatar } from 'rsuite'
+import { DragEventHandler, useEffect, useState } from 'react'
 import { invoke } from '@tauri-apps/api/core'
 import generator, { MegalodonInterface } from 'megalodon'
 
@@ -37,7 +35,6 @@ export const renderAccountIcon = (props: any, ref: any, account: [Account, Serve
 }
 
 type Props = {
-  setOpened: (value: boolean) => void
   servers: Array<ServerSet>
   locale: string
 }
@@ -49,6 +46,9 @@ const Compose: React.FC<Props> = props => {
   const [defaultNSFW, setDefaultNSFW] = useState(false)
   const [defaultLanguage, setDefaultLanguage] = useState<string | null>(null)
   const [client, setClient] = useState<MegalodonInterface>()
+  const [draggingAttachment, setDraggingAttachment] = useState(false)
+  const [attachmentDropHandler, setAttachmentDropHandler] = useState<((files: Array<File>) => Promise<void>) | null>(null)
+  const [dragDepth, setDragDepth] = useState(0)
 
   useEffect(() => {
     const f = async () => {
@@ -88,21 +88,92 @@ const Compose: React.FC<Props> = props => {
     await invoke('set_usual_account', { id: account[0].id })
   }
 
+  const hasDraggedFiles = (dataTransfer: DataTransfer) => {
+    if (dataTransfer.files.length > 0) {
+      return true
+    }
+
+    if (Array.from(dataTransfer.items ?? []).some(item => item.kind === 'file')) {
+      return true
+    }
+
+    return Array.from(dataTransfer.types).some(type => type === 'Files' || type === 'public.file-url')
+  }
+
+  const attachmentDragEnter: DragEventHandler<HTMLDivElement> = event => {
+    if (!hasDraggedFiles(event.dataTransfer)) {
+      return
+    }
+
+    event.preventDefault()
+    setDragDepth(current => current + 1)
+    setDraggingAttachment(true)
+  }
+
+  const attachmentDragOver: DragEventHandler<HTMLDivElement> = event => {
+    if (!hasDraggedFiles(event.dataTransfer)) {
+      return
+    }
+
+    event.preventDefault()
+    event.dataTransfer.dropEffect = 'copy'
+  }
+
+  const attachmentDragLeave: DragEventHandler<HTMLDivElement> = event => {
+    if (!hasDraggedFiles(event.dataTransfer)) {
+      return
+    }
+
+    event.preventDefault()
+    setDragDepth(current => {
+      const nextDepth = Math.max(0, current - 1)
+      if (nextDepth === 0) {
+        setDraggingAttachment(false)
+      }
+      return nextDepth
+    })
+  }
+
+  const attachmentDropped: DragEventHandler<HTMLDivElement> = async event => {
+    if (!hasDraggedFiles(event.dataTransfer)) {
+      return
+    }
+
+    event.preventDefault()
+    setDragDepth(0)
+    setDraggingAttachment(false)
+    const files =
+      event.dataTransfer.files.length > 0
+        ? Array.from(event.dataTransfer.files)
+        : Array.from(event.dataTransfer.items)
+            .filter(item => item.kind === 'file')
+            .map(item => item.getAsFile())
+            .filter((file): file is File => file !== null)
+
+    if (files.length === 0 || !attachmentDropHandler) {
+      return
+    }
+
+    await attachmentDropHandler(files)
+  }
+
   return (
     <Container style={{ backgroundColor: 'var(--rs-border-secondary)', height: '100%', overflowY: 'auto' }}>
       <Header style={{ borderBottom: '1px solid var(--rs-divider-border)', backgroundColor: 'var(--rs-border-secondary)' }}>
-        <FlexboxGrid justify="space-between" align="middle">
+        <FlexboxGrid align="middle">
           <FlexboxGrid.Item style={{ lineHeight: '53px', paddingLeft: '12px', fontSize: '18px' }}>
             <FormattedMessage id="compose.title" />
           </FlexboxGrid.Item>
-          <FlexboxGrid.Item>
-            <Button appearance="link" onClick={() => props.setOpened(false)}>
-              <Icon as={BsX} style={{ fontSize: '1.4em' }} />
-            </Button>
-          </FlexboxGrid.Item>
         </FlexboxGrid>
       </Header>
-      <Content style={{ height: '100%', margin: '12px', backgroundColor: 'var(--rs-border-secondary)' }}>
+      <Content
+        className={draggingAttachment ? 'compose-dropzone dragging' : 'compose-dropzone'}
+        style={{ height: '100%', margin: '12px', backgroundColor: 'var(--rs-border-secondary)' }}
+        onDragEnter={attachmentDragEnter}
+        onDragOver={attachmentDragOver}
+        onDragLeave={attachmentDragLeave}
+        onDrop={attachmentDropped}
+      >
         <div style={{ fontSize: '1.2em', padding: '12px 0' }}>
           <FormattedMessage id="compose.from" />
         </div>
@@ -129,6 +200,8 @@ const Compose: React.FC<Props> = props => {
             defaultNSFW={defaultNSFW}
             defaultLanguage={defaultLanguage}
             locale={props.locale}
+            draggingAttachment={draggingAttachment}
+            setAttachmentDropHandler={setAttachmentDropHandler}
           />
         )}
       </Content>

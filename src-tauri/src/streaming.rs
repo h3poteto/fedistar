@@ -1,5 +1,6 @@
 use megalodon::{self, streaming::Message};
 use serde::Serialize;
+use std::str::FromStr;
 use tauri::{AppHandle, Emitter};
 
 use crate::entities;
@@ -66,10 +67,11 @@ pub async fn start_user(
 ) -> Result<(), String> {
     let mut retry_count = 0;
 
-    let url = format!("https://{}", server.domain);
-    let sns = megalodon::detector(url.as_str())
-        .await
-        .map_err(|e| e.to_string())?;
+    let url = server.base_url.clone();
+    let sns = match megalodon::SNS::from_str(server.sns.as_ref()) {
+        Ok(sns) => sns,
+        Err(_) => crate::detect_sns_from_url(url.as_str()).await?,
+    };
     let client = megalodon::generator(
         sns,
         url,
@@ -193,10 +195,11 @@ pub async fn start(
         );
     }
 
-    let url = format!("https://{}", server.domain);
-    let sns = megalodon::detector(url.as_str())
-        .await
-        .map_err(|e| e.to_string())?;
+    let url = server.base_url.clone();
+    let sns = match megalodon::SNS::from_str(server.sns.as_ref()) {
+        Ok(sns) => sns,
+        Err(_) => crate::detect_sns_from_url(url.as_str()).await?,
+    };
 
     let client = megalodon::generator(
         sns,

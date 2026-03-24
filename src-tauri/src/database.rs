@@ -77,6 +77,15 @@ pub(crate) async fn get_server(pool: &SqlitePool, id: i64) -> DBResult<entities:
     Ok(server)
 }
 
+pub(crate) async fn count_servers_by_domain(pool: &SqlitePool, domain: &str) -> DBResult<i64> {
+    let count: i64 = sqlx::query_scalar("SELECT COUNT(*) FROM servers WHERE domain = ?")
+        .bind(domain)
+        .fetch_one(pool)
+        .await?;
+
+    Ok(count)
+}
+
 pub(crate) async fn add_server(
     pool: &SqlitePool,
     server: entities::Server,
@@ -126,6 +135,60 @@ pub(crate) async fn update_server(pool: &SqlitePool, server: entities::Server) -
     tx.commit().await?;
 
     Ok(())
+}
+
+pub(crate) async fn replace_emoji_catalog_entries(
+    pool: &SqlitePool,
+    domain: &str,
+    entries: &[entities::EmojiCatalogEntry],
+) -> DBResult<()> {
+    let mut tx = pool.begin().await?;
+
+    sqlx::query("DELETE FROM emoji_catalog_entries WHERE source_domain = ?")
+        .bind(domain)
+        .execute(&mut *tx)
+        .await?;
+
+    for entry in entries {
+        sqlx::query(
+            "INSERT INTO emoji_catalog_entries (source_domain, shortcode, image_url, static_url) VALUES (?, ?, ?, ?)",
+        )
+        .bind(&entry.source_domain)
+        .bind(&entry.shortcode)
+        .bind(&entry.image_url)
+        .bind(&entry.static_url)
+        .execute(&mut *tx)
+        .await?;
+    }
+
+    tx.commit().await?;
+
+    Ok(())
+}
+
+pub(crate) async fn remove_emoji_catalog_entries(pool: &SqlitePool, domain: &str) -> DBResult<()> {
+    let mut tx = pool.begin().await?;
+
+    sqlx::query("DELETE FROM emoji_catalog_entries WHERE source_domain = ?")
+        .bind(domain)
+        .execute(&mut *tx)
+        .await?;
+
+    tx.commit().await?;
+
+    Ok(())
+}
+
+pub(crate) async fn list_emoji_catalog_entries(
+    pool: &SqlitePool,
+) -> DBResult<Vec<entities::EmojiCatalogEntry>> {
+    let entries = query_as::<_, entities::EmojiCatalogEntry>(
+        "SELECT source_domain, shortcode, image_url, static_url FROM emoji_catalog_entries ORDER BY source_domain, shortcode",
+    )
+    .fetch_all(pool)
+    .await?;
+
+    Ok(entries)
 }
 
 pub(crate) async fn add_account(

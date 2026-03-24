@@ -65,8 +65,11 @@ const Notifications: React.FC<Props> = props => {
   const [filters, setFilters] = useState<Array<Entity.Filter>>([])
 
   const scrollerRef = useRef<HTMLElement | null>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
   const triggerRef = useRef(null)
   const replyOpened = useRef<boolean>(false)
+  const timelineVisible = useRef(false)
+  const reading = useRef(false)
   const toast = useToaster()
   const router = useRouter()
 
@@ -205,7 +208,12 @@ const Notifications: React.FC<Props> = props => {
     }
   }
 
-  const read = async () => {
+  const read = useCallback(async () => {
+    if (!client || notifications.length === 0 || reading.current) {
+      return
+    }
+
+    reading.current = true
     props.setUnreads(current => {
       const updated = current.map(u => {
         if (u.server_id === props.server.id) {
@@ -224,11 +232,57 @@ const Notifications: React.FC<Props> = props => {
         await client.readNotifications({ max_id: notifications[0].id })
       }
       await updateMarker(client)
+      setUnreadNotifications([])
+      setPleromaUnreads([])
     } catch (err) {
       console.error(err)
       toast.push(alert('error', formatMessage({ id: 'alert.failed_mark' })), { placement: 'topStart' })
+    } finally {
+      reading.current = false
     }
-  }
+  }, [client, formatMessage, notifications, props.server.id, props.server.sns, props.setUnreads, toast])
+
+  const autoRead = useCallback(() => {
+    if (!timelineVisible.current || replyOpened.current) {
+      return
+    }
+
+    const hasUnreadBadge = props.unreads.some(u => u.server_id === props.server.id && u.count > 0)
+    const hasUnreadMarker =
+      !!marker &&
+      ((marker.unread_count !== null && marker.unread_count !== undefined && marker.unread_count > 0) ||
+        (notifications[0] !== undefined && parseInt(marker.last_read_id) < parseInt(notifications[0].id)))
+
+    if (hasUnreadBadge || hasUnreadMarker) {
+      read()
+    }
+  }, [marker, notifications, props.server.id, props.unreads, read])
+
+  useEffect(() => {
+    if (!containerRef.current) {
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        timelineVisible.current = entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= 0.6)
+        if (timelineVisible.current) {
+          autoRead()
+        }
+      },
+      { threshold: [0.6] }
+    )
+
+    observer.observe(containerRef.current)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [autoRead])
+
+  useEffect(() => {
+    autoRead()
+  }, [autoRead, notifications, marker, props.unreads])
 
   const reload = useCallback(async () => {
     try {
@@ -272,6 +326,7 @@ const Notifications: React.FC<Props> = props => {
 
   return (
     <div
+      ref={containerRef}
       style={{ width: columnWidth(props.timeline.column_width), minWidth: columnWidth(props.timeline.column_width), margin: '0 4px' }}
       className="timeline notifications"
       id={props.timeline.id.toString()}

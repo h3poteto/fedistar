@@ -17,7 +17,7 @@ import {
   FormControlProps,
   DatePicker
 } from 'rsuite'
-import { useState, useEffect, useRef, forwardRef, ChangeEvent, useCallback, useContext } from 'react'
+import { useState, useEffect, useRef, forwardRef, ChangeEvent, useCallback, useContext, ClipboardEventHandler, DragEventHandler } from 'react'
 import { Icon } from '@rsuite/icons'
 import {
   BsEmojiLaughing,
@@ -36,6 +36,7 @@ import {
 import { Entity, MegalodonInterface } from 'megalodon'
 import Picker from '@emoji-mart/react'
 import { invoke } from '@tauri-apps/api/core'
+import { readImage } from '@tauri-apps/plugin-clipboard-manager'
 
 import { data, mapCustomEmojiCategory } from 'src/utils/emojiData'
 import { Server } from 'src/entities/server'
@@ -60,6 +61,8 @@ type Props = {
   defaultLanguage?: string | null
   onClose?: () => void
   locale: string
+  draggingAttachment?: boolean
+  setAttachmentDropHandler?: (handler: ((files: Array<File>) => Promise<void>) | null) => void
 }
 
 type FormValue = {
@@ -95,6 +98,8 @@ const model = Schema.Model({
   }, 'Must be at least 5 minutes in the future')
 })
 
+const MAX_ATTACHMENTS = 5
+
 const Status: React.FC<Props> = props => {
   const { formatMessage } = useIntl()
   const { theme } = useContext(Context)
@@ -113,12 +118,14 @@ const Status: React.FC<Props> = props => {
   const [editMedia, setEditMedia] = useState<Entity.Attachment | null>(null)
   const [maxCharacters, setMaxCharacters] = useState<number | null>(null)
   const [remaining, setRemaining] = useState<number | null>(null)
+  const [draggingAttachment, setDraggingAttachment] = useState(false)
 
   const formRef = useRef<any>(null)
   const cwRef = useRef<HTMLDivElement>(null)
   const statusRef = useRef<HTMLDivElement>(null)
   const emojiPickerRef = useRef(null)
   const uploaderRef = useRef<HTMLInputElement>(null)
+  const dragDepthRef = useRef(0)
   const toast = useToaster()
 
   // Update instance custom emoji
@@ -143,8 +150,12 @@ const Status: React.FC<Props> = props => {
     if (props.in_reply_to) {
       const mentionAccounts = [props.in_reply_to.account.acct, ...props.in_reply_to.mentions.map(a => a.acct)]
         .filter((a, i, self) => self.indexOf(a) === i)
-        .filter(a => a !== props.account.username)
-      setFormValue({ spoiler: '', status: `${mentionAccounts.map(m => `@${m}`).join(' ')} ` })
+        .filter(a => !isOwnAccountMention(a, props.account.username, props.server.domain))
+      setFormValue({
+        spoiler: props.in_reply_to.spoiler_text,
+        status: `${mentionAccounts.map(m => `@${m}`).join(' ')} `
+      })
+      setCW(props.in_reply_to.spoiler_text.length > 0)
       setVisibility(props.in_reply_to.visibility)
       if (props.in_reply_to.language) {
         setLanguage(props.in_reply_to.language)
@@ -172,6 +183,7 @@ const Status: React.FC<Props> = props => {
           })
         }
         setFormValue(value)
+        setCW(res.data.spoiler_text.length > 0)
         setVisibility(target.visibility)
         if (target.language) {
           setLanguage(target.language)
@@ -354,37 +366,186 @@ const Status: React.FC<Props> = props => {
     }
   }
 
-  const fileChanged = async (_filepath: string, event: ChangeEvent<HTMLInputElement>) => {
-    if (formValue.attachments && formValue.attachments.length > 4) {
-      toast.push(alert('error', formatMessage({ id: 'alert.validation_attachments_length' }, { limit: 5 })), { placement: 'topStart' })
+  const appendAttachments = useCallback(async (files: Array<File>) => {
+    let attachableCount = formValue.attachments?.length ?? 0
+    const uploadTargets: Array<File> = []
+
+    for (const file of files) {
+      if (attachableCount >= MAX_ATTACHMENTS) {
+        toast.push(alert('error', formatMessage({ id: 'alert.validation_attachments_length' }, { limit: MAX_ATTACHMENTS })), {
+          placement: 'topStart'
+        })
+        break
+      }
+
+      if (!file.type.includes('image') && !file.type.includes('video')) {
+        toast.push(alert('error', formatMessage({ id: 'alert.validation_attachments_type' })), { placement: 'topStart' })
+        continue
+      }
+
+      uploadTargets.push(file)
+      attachableCount += 1
+    }
+
+    if (uploadTargets.length === 0) {
       return
     }
 
-    const file = event.target.files?.item(0)
-    if (file === null || file === undefined) {
-      return
-    }
-    if (!file.type.includes('image') && !file.type.includes('video')) {
-      toast.push(alert('error', formatMessage({ id: 'alert.validation_attachments_type' })), { placement: 'topStart' })
-      return
-    }
-
-    // upload
     try {
       setLoading(true)
+      for (const file of uploadTargets) {
       const res = await props.client.uploadMedia(file)
-      setFormValue(current => {
-        if (current.attachments) {
-          return Object.assign({}, current, { attachments: [...current.attachments, res.data] })
-        }
-        return Object.assign({}, current, { attachments: [res.data] })
-      })
+        setFormValue(current => {
+          if (current.attachments) {
+            return Object.assign({}, current, { attachments: [...current.attachments, res.data] })
+          }
+          return Object.assign({}, current, { attachments: [res.data] })
+        })
+      }
     } catch {
       toast.push(alert('error', formatMessage({ id: 'alert.upload_error' })), { placement: 'topStart' })
     } finally {
       setLoading(false)
     }
+  }, [formValue.attachments, formatMessage, props.client, toast])
+
+  useEffect(() => {
+    props.setAttachmentDropHandler?.(appendAttachments)
+
+    return () => {
+      props.setAttachmentDropHandler?.(null)
+    }
+  }, [appendAttachments, props.setAttachmentDropHandler])
+
+  const fileChanged = async (_filepath: string, event: ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files ?? [])
+    if (files.length === 0) {
+      return
+    }
+
+    await appendAttachments(files)
+    event.target.value = ''
   }
+
+  const clipboardImageToFile = async () => {
+    const clipboardImage = await readImage()
+    try {
+      const size = await clipboardImage.size()
+      const rgba = await clipboardImage.rgba()
+      const canvas = document.createElement('canvas')
+      canvas.width = size.width
+      canvas.height = size.height
+      const context = canvas.getContext('2d')
+      if (!context) {
+        return null
+      }
+
+      context.putImageData(new ImageData(new Uint8ClampedArray(rgba), size.width, size.height), 0, 0)
+      const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/png'))
+      if (!blob) {
+        return null
+      }
+
+      return new File([blob], `clipboard-${Date.now()}.png`, { type: 'image/png' })
+    } finally {
+      await clipboardImage.close()
+    }
+  }
+
+  const statusPasted: ClipboardEventHandler<any> = async event => {
+    const imageItem = Array.from(event.clipboardData.items).find(item => item.type.startsWith('image/'))
+    const pastedFile = imageItem?.getAsFile()
+
+    if (pastedFile) {
+      event.preventDefault()
+      await appendAttachments([pastedFile])
+      return
+    }
+
+    if (event.clipboardData.files.length > 0 || event.clipboardData.getData('text').length > 0) {
+      return
+    }
+
+    try {
+      const clipboardFile = await clipboardImageToFile()
+      if (!clipboardFile) {
+        return
+      }
+
+      event.preventDefault()
+      await appendAttachments([clipboardFile])
+    } catch {
+      // Keep the default paste behavior when clipboard image access fails.
+    }
+  }
+
+  const hasDraggedFiles = (dataTransfer: DataTransfer) => {
+    if (dataTransfer.files.length > 0) {
+      return true
+    }
+
+    if (Array.from(dataTransfer.items ?? []).some(item => item.kind === 'file')) {
+      return true
+    }
+
+    return Array.from(dataTransfer.types).some(type => type === 'Files' || type === 'public.file-url')
+  }
+
+  const attachmentDragEnter: DragEventHandler<HTMLDivElement> = event => {
+    if (!hasDraggedFiles(event.dataTransfer)) {
+      return
+    }
+
+    event.preventDefault()
+    dragDepthRef.current += 1
+    setDraggingAttachment(true)
+  }
+
+  const attachmentDragOver: DragEventHandler<HTMLDivElement> = event => {
+    if (!hasDraggedFiles(event.dataTransfer)) {
+      return
+    }
+
+    event.preventDefault()
+    event.dataTransfer.dropEffect = 'copy'
+  }
+
+  const attachmentDragLeave: DragEventHandler<HTMLDivElement> = event => {
+    if (!hasDraggedFiles(event.dataTransfer)) {
+      return
+    }
+
+    event.preventDefault()
+    dragDepthRef.current = Math.max(0, dragDepthRef.current - 1)
+    if (dragDepthRef.current === 0) {
+      setDraggingAttachment(false)
+    }
+  }
+
+  const attachmentDropped: DragEventHandler<HTMLDivElement> = async event => {
+    if (!hasDraggedFiles(event.dataTransfer)) {
+      return
+    }
+
+    event.preventDefault()
+    dragDepthRef.current = 0
+    setDraggingAttachment(false)
+    const files =
+      event.dataTransfer.files.length > 0
+        ? Array.from(event.dataTransfer.files)
+        : Array.from(event.dataTransfer.items)
+            .filter(item => item.kind === 'file')
+            .map(item => item.getAsFile())
+            .filter((file): file is File => file !== null)
+    if (files.length === 0) {
+      return
+    }
+
+    await appendAttachments(files)
+  }
+
+  const usingExternalDropzone = typeof props.setAttachmentDropHandler === 'function'
+  const dropzoneActive = props.draggingAttachment ?? draggingAttachment
 
   const removeAttachment = (index: number) => {
     setFormValue(current =>
@@ -515,7 +676,14 @@ const Status: React.FC<Props> = props => {
 
   return (
     <>
-      <Form fluid model={model} ref={formRef} onChange={setFormValue} onCheck={setFormError} formValue={formValue}>
+      <div
+        className={dropzoneActive ? 'compose-dropzone dragging' : 'compose-dropzone'}
+        onDragEnter={usingExternalDropzone ? undefined : attachmentDragEnter}
+        onDragOver={usingExternalDropzone ? undefined : attachmentDragOver}
+        onDragLeave={usingExternalDropzone ? undefined : attachmentDragLeave}
+        onDrop={usingExternalDropzone ? undefined : attachmentDropped}
+      >
+        <Form fluid model={model} ref={formRef} onChange={setFormValue} onCheck={setFormError} formValue={formValue}>
         {cw && (
           <Form.Group controlId="spoiler">
             <Form.Control name="spoiler" ref={cwRef} placeholder={formatMessage({ id: 'compose.spoiler.placeholder' })} />
@@ -529,6 +697,7 @@ const Status: React.FC<Props> = props => {
             name="status"
             accepter={Textarea}
             ref={statusRef}
+            onPaste={statusPasted}
             placeholder={formatMessage({ id: 'compose.status.placeholder' })}
             emojis={customEmojis}
             client={props.client}
@@ -563,7 +732,7 @@ const Status: React.FC<Props> = props => {
 
         <Form.Group controlId="actions" style={{ marginBottom: '4px' }}>
           <ButtonToolbar>
-            <Input name="attachments" type="file" style={{ display: 'none' }} ref={uploaderRef} onChange={fileChanged} />
+            <Input name="attachments" type="file" style={{ display: 'none' }} ref={uploaderRef} onChange={fileChanged} multiple />
             <Button appearance="subtle" onClick={selectFile}>
               <Icon as={BsPaperclip} style={{ fontSize: '1.1em' }} />
             </Button>
@@ -645,7 +814,8 @@ const Status: React.FC<Props> = props => {
             </Button>
           </ButtonToolbar>
         </Form.Group>
-      </Form>
+        </Form>
+      </div>
       <EditMedia
         opened={editMediaModal}
         attachment={editMedia}
@@ -695,6 +865,12 @@ const defaultPoll = () => ({
   expires_in: 86400,
   multiple: false
 })
+
+const isOwnAccountMention = (acct: string, username: string, domain: string) => {
+  const normalized = acct.toLowerCase()
+  const ownMentions = [username, `${username}@${domain}`].map(value => value.toLowerCase())
+  return ownMentions.includes(normalized)
+}
 
 const PollInputControl: FormControlProps<Poll, any> = ({ value, onChange, fieldError }) => {
   const { formatMessage } = useIntl()

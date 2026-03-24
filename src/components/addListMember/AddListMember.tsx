@@ -71,7 +71,7 @@ export default function AddListMember(props: Props) {
               {/** name **/}
               <FlexboxGrid.Item colspan={20}>
                 <div>
-                  <span dangerouslySetInnerHTML={{ __html: emojify(user.display_name, user.emojis) }} />
+                  <span dangerouslySetInnerHTML={{ __html: emojify(user.display_name, user.emojis, user.acct) }} />
                 </div>
                 <div>
                   <span style={{ color: 'var(--rs-text-tertiary)' }}>@{user.acct}</span>

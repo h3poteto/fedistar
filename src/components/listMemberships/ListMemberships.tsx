@@ -93,7 +93,7 @@ export default function ListMemberships(props: Props) {
                   {/** name **/}
                   <FlexboxGrid.Item colspan={17}>
                     <div>
-                      <span dangerouslySetInnerHTML={{ __html: emojify(account.display_name, account.emojis) }} />
+                      <span dangerouslySetInnerHTML={{ __html: emojify(account.display_name, account.emojis, account.acct) }} />
                     </div>
                     <div>
                       <span style={{ color: 'var(--rs-text-tertiary)' }}>@{account.acct}</span>

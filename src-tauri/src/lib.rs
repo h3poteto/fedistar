@@ -1,10 +1,19 @@
-use base64::{Engine, engine::general_purpose};
+use base64::{engine::general_purpose, Engine};
+use directories::UserDirs;
 use font_kit::source::SystemSource;
 use megalodon::{self, oauth};
+use reqwest::{header::CONTENT_TYPE, Client};
 use rust_i18n::t;
-use serde::Serialize;
-use std::{env, fs::OpenOptions, path::PathBuf, str::FromStr, thread};
-use tauri::{AppHandle, Manager, State, async_runtime::Mutex};
+use serde::{Deserialize, Serialize};
+use std::{
+    env,
+    fs::OpenOptions,
+    path::{Path, PathBuf},
+    str::FromStr,
+    thread,
+};
+use tauri::{async_runtime::Mutex, AppHandle, Manager, State};
+use url::Url;
 mod database;
 mod entities;
 mod favicon;
@@ -48,15 +57,21 @@ async fn add_server(
 
     let icon = favicon::get_favicon_url(&url).await;
     tracing::info!("The favicon for {} is {:#?}", &url, icon);
-    let sns = megalodon::detector(url.as_str())
-        .await
-        .map_err(|e| e.to_string())?;
+    let sns = detect_sns_from_url(url.as_str()).await?;
     tracing::info!("The SNS for {} is {}", &url, sns);
 
     let server = entities::Server::new(0, domain.to_string(), url, sns.to_string(), icon);
     let created = database::add_server(&sqlite_pool, server)
         .await
         .map_err(|e| e.to_string())?;
+
+    if let Err(err) = sync_emoji_catalog_for_server(&sqlite_pool, &created).await {
+        tracing::warn!(
+            "Failed to sync emoji catalog for {}: {}",
+            created.domain,
+            err
+        );
+    }
 
     app_handle
         .emit("updated-servers", ())
@@ -71,9 +86,22 @@ async fn remove_server(
     sqlite_pool: State<'_, sqlx::SqlitePool>,
     id: i64,
 ) -> Result<(), String> {
+    let server = database::get_server(&sqlite_pool, id)
+        .await
+        .map_err(|e| e.to_string())?;
+
     database::remove_server(&sqlite_pool, id)
         .await
         .map_err(|e| e.to_string())?;
+
+    let remains = database::count_servers_by_domain(&sqlite_pool, &server.domain)
+        .await
+        .map_err(|e| e.to_string())?;
+    if remains == 0 {
+        database::remove_emoji_catalog_entries(&sqlite_pool, &server.domain)
+            .await
+            .map_err(|e| e.to_string())?;
+    }
 
     app_handle
         .emit("updated-servers", ())
@@ -89,7 +117,7 @@ async fn add_application(
     _sqlite_pool: State<'_, sqlx::SqlitePool>,
     url: &str,
 ) -> Result<oauth::AppData, String> {
-    let sns = megalodon::detector(url).await.map_err(|e| e.to_string())?;
+    let sns = detect_sns_from_url(url).await?;
     let client = megalodon::generator(sns, url.to_string(), None, Some(String::from("fedistar")))
         .map_err(|err| err.to_string())?;
 
@@ -121,9 +149,10 @@ async fn authorize_code(
     app: oauth::AppData,
     code: &str,
 ) -> Result<(), String> {
-    let sns = megalodon::detector(&server.base_url)
-        .await
-        .map_err(|e| e.to_string())?;
+    let sns = match megalodon::SNS::from_str(server.sns.as_ref()) {
+        Ok(sns) => sns,
+        Err(_) => detect_sns_from_url(&server.base_url).await?,
+    };
     let client = megalodon::generator(
         sns.clone(),
         server.base_url.clone().to_string(),
@@ -201,6 +230,157 @@ struct UpdatedSettingsPayload {
     settings: settings::Settings,
 }
 
+#[derive(Debug, Deserialize)]
+struct NodeInfoIndex {
+    links: Vec<NodeInfoLink>,
+}
+
+#[derive(Debug, Deserialize)]
+struct NodeInfoLink {
+    href: String,
+}
+
+#[derive(Debug, Deserialize)]
+struct NodeInfoDocument {
+    software: NodeInfoSoftware,
+}
+
+#[derive(Debug, Deserialize)]
+struct NodeInfoSoftware {
+    name: String,
+}
+
+#[derive(Debug, Deserialize)]
+struct MisskeyEmojiIndex {
+    emojis: Vec<MisskeyEmoji>,
+}
+
+#[derive(Debug, Deserialize)]
+struct MisskeyEmoji {
+    name: String,
+    url: String,
+}
+
+pub(crate) async fn detect_sns_from_url(url: &str) -> Result<megalodon::SNS, String> {
+    if let Ok(sns) = megalodon::detector(url).await {
+        return Ok(sns);
+    }
+
+    let client = Client::new();
+    let index_url = format!("{}/.well-known/nodeinfo", url.trim_end_matches('/'));
+    let index = client
+        .get(index_url)
+        .send()
+        .await
+        .map_err(|e| e.to_string())?
+        .error_for_status()
+        .map_err(|e| e.to_string())?
+        .json::<NodeInfoIndex>()
+        .await
+        .map_err(|e| e.to_string())?;
+
+    let document_url = index
+        .links
+        .iter()
+        .find(|link| link.href.contains("/2.1"))
+        .or_else(|| index.links.first())
+        .map(|link| link.href.clone())
+        .ok_or_else(|| "Could not find nodeinfo endpoint".to_string())?;
+
+    let document = client
+        .get(document_url)
+        .send()
+        .await
+        .map_err(|e| e.to_string())?
+        .error_for_status()
+        .map_err(|e| e.to_string())?
+        .json::<NodeInfoDocument>()
+        .await
+        .map_err(|e| e.to_string())?;
+
+    match document.software.name.to_lowercase().as_str() {
+        "mastodon" => Ok(megalodon::SNS::Mastodon),
+        "pleroma" => Ok(megalodon::SNS::Pleroma),
+        "friendica" => Ok(megalodon::SNS::Friendica),
+        "gotosocial" => Ok(megalodon::SNS::Gotosocial),
+        // Misskey-compatible custom emoji and auth flows are closest to Firefish in megalodon.
+        "firefish" | "iceshrimp" | "misskey" => Ok(megalodon::SNS::Firefish),
+        other => Err(format!("Unsupported server software: {}", other)),
+    }
+}
+
+async fn fetch_misskey_custom_emojis(
+    server: &entities::Server,
+) -> Result<Vec<entities::EmojiCatalogEntry>, String> {
+    let client = Client::new();
+    let url = format!("{}/api/emojis", server.base_url.trim_end_matches('/'));
+    let response = client
+        .post(url)
+        .json(&serde_json::json!({}))
+        .send()
+        .await
+        .map_err(|e| e.to_string())?
+        .error_for_status()
+        .map_err(|e| e.to_string())?;
+
+    let emojis = response
+        .json::<MisskeyEmojiIndex>()
+        .await
+        .map_err(|e| e.to_string())?;
+
+    Ok(emojis
+        .emojis
+        .into_iter()
+        .map(|emoji| entities::EmojiCatalogEntry {
+            source_domain: server.domain.clone(),
+            shortcode: emoji.name,
+            image_url: emoji.url.clone(),
+            static_url: Some(emoji.url),
+        })
+        .collect())
+}
+
+async fn sync_emoji_catalog_for_server(
+    sqlite_pool: &sqlx::SqlitePool,
+    server: &entities::Server,
+) -> Result<(), String> {
+    let sns = megalodon::SNS::from_str(server.sns.as_ref()).map_err(|e| e.to_string())?;
+    let client = megalodon::generator(
+        sns,
+        server.base_url.clone(),
+        None,
+        Some(String::from("fedistar")),
+    )
+    .map_err(|e| e.to_string())?;
+    let entries = match client.get_instance_custom_emojis().await {
+        Ok(response) => response
+            .json
+            .into_iter()
+            .map(|emoji| entities::EmojiCatalogEntry {
+                source_domain: server.domain.clone(),
+                shortcode: emoji.shortcode,
+                image_url: emoji.url,
+                static_url: Some(emoji.static_url),
+            })
+            .collect::<Vec<_>>(),
+        Err(err) if server.sns == "firefish" => {
+            tracing::warn!(
+                "Falling back to raw Misskey emoji API for {} after megalodon decode failure: {}",
+                server.domain,
+                err
+            );
+            fetch_misskey_custom_emojis(server).await?
+        }
+        Err(err) => return Err(err.to_string()),
+    };
+
+    database::replace_emoji_catalog_entries(sqlite_pool, &server.domain, &entries)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    Ok(())
+}
+
 #[tauri::command]
 async fn add_timeline(
     app_handle: AppHandle,
@@ -243,6 +423,36 @@ async fn get_timeline(
         .map_err(|e| e.to_string())?;
 
     Ok(timeline)
+}
+
+#[tauri::command]
+async fn refresh_emoji_catalogs(sqlite_pool: State<'_, sqlx::SqlitePool>) -> Result<(), String> {
+    let servers = database::list_servers(&sqlite_pool)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    for (server, _) in servers {
+        if let Err(err) = sync_emoji_catalog_for_server(&sqlite_pool, &server).await {
+            tracing::warn!(
+                "Failed to refresh emoji catalog for {}: {}",
+                server.domain,
+                err
+            );
+        }
+    }
+
+    Ok(())
+}
+
+#[tauri::command]
+async fn list_emoji_catalog_entries(
+    sqlite_pool: State<'_, sqlx::SqlitePool>,
+) -> Result<Vec<entities::EmojiCatalogEntry>, String> {
+    let entries = database::list_emoji_catalog_entries(&sqlite_pool)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    Ok(entries)
 }
 
 #[tauri::command]
@@ -547,6 +757,135 @@ async fn open_media(app_handle: AppHandle, media_url: String) -> () {
     .expect("failed to build media window");
 }
 
+fn media_extension(content_type: Option<&str>, path_extension: Option<&str>) -> &'static str {
+    if let Some(extension) = path_extension {
+        match extension.to_ascii_lowercase().as_str() {
+            "jpg" | "jpeg" => return "jpg",
+            "png" => return "png",
+            "gif" => return "gif",
+            "webp" => return "webp",
+            "bmp" => return "bmp",
+            "avif" => return "avif",
+            "heic" => return "heic",
+            "heif" => return "heif",
+            "svg" => return "svg",
+            _ => {}
+        }
+    }
+
+    match content_type.unwrap_or_default() {
+        value if value.starts_with("image/jpeg") => "jpg",
+        value if value.starts_with("image/gif") => "gif",
+        value if value.starts_with("image/webp") => "webp",
+        value if value.starts_with("image/bmp") => "bmp",
+        value if value.starts_with("image/avif") => "avif",
+        value if value.starts_with("image/heic") => "heic",
+        value if value.starts_with("image/heif") => "heif",
+        value if value.starts_with("image/svg") => "svg",
+        _ => "png",
+    }
+}
+
+fn sanitize_filename_component(value: &str) -> String {
+    let sanitized = value
+        .chars()
+        .map(|char| match char {
+            'a'..='z' | 'A'..='Z' | '0'..='9' | '.' | '-' | '_' => char,
+            _ => '_',
+        })
+        .collect::<String>()
+        .trim_matches('_')
+        .to_string();
+
+    if sanitized.is_empty() {
+        "image".to_string()
+    } else {
+        sanitized
+    }
+}
+
+fn media_filename(media_url: &str, content_type: Option<&str>) -> String {
+    let remote_name = Url::parse(media_url)
+        .ok()
+        .and_then(|url| {
+            url.path_segments()
+                .and_then(|segments| segments.last().map(|segment| segment.to_string()))
+        })
+        .filter(|segment| !segment.is_empty())
+        .unwrap_or_else(|| "image".to_string());
+
+    let remote_path = Path::new(remote_name.as_str());
+    let stem = remote_path
+        .file_stem()
+        .and_then(|value| value.to_str())
+        .map(sanitize_filename_component)
+        .unwrap_or_else(|| "image".to_string());
+    let extension = media_extension(
+        content_type,
+        remote_path.extension().and_then(|value| value.to_str()),
+    );
+
+    format!("{}.{}", stem, extension)
+}
+
+fn unique_download_path(download_dir: &Path, filename: &str) -> PathBuf {
+    let candidate = download_dir.join(filename);
+    if !candidate.exists() {
+        return candidate;
+    }
+
+    let path = Path::new(filename);
+    let stem = path
+        .file_stem()
+        .and_then(|value| value.to_str())
+        .unwrap_or("image");
+    let extension = path
+        .extension()
+        .and_then(|value| value.to_str())
+        .unwrap_or("png");
+
+    for index in 1.. {
+        let candidate = download_dir.join(format!("{}-{}.{}", stem, index, extension));
+        if !candidate.exists() {
+            return candidate;
+        }
+    }
+
+    unreachable!()
+}
+
+#[tauri::command]
+async fn download_media(media_url: String) -> Result<String, String> {
+    let downloads_dir = UserDirs::new()
+        .and_then(|dirs| dirs.download_dir().map(|path| path.to_path_buf()))
+        .ok_or_else(|| "Failed to resolve downloads directory".to_string())?;
+
+    let response = Client::new()
+        .get(media_url.as_str())
+        .send()
+        .await
+        .map_err(|err| err.to_string())?;
+
+    if !response.status().is_success() {
+        return Err(format!("Failed to download image: {}", response.status()));
+    }
+
+    let content_type = response
+        .headers()
+        .get(CONTENT_TYPE)
+        .and_then(|value| value.to_str().ok())
+        .map(|value| value.to_string());
+    let filename = media_filename(media_url.as_str(), content_type.as_deref());
+    let output_path = unique_download_path(downloads_dir.as_path(), filename.as_str());
+    let bytes = response.bytes().await.map_err(|err| err.to_string())?;
+
+    tokio::fs::write(output_path.as_path(), bytes)
+        .await
+        .map_err(|err| err.to_string())?;
+
+    Ok(output_path.to_string_lossy().to_string())
+}
+
 #[tauri::command]
 async fn list_fonts() -> Result<Vec<String>, String> {
     let font_source = SystemSource::new();
@@ -764,9 +1103,12 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
             update_show_boosts,
             update_show_replies,
             open_media,
+            download_media,
             list_fonts,
             get_timeline,
             get_instance,
+            refresh_emoji_catalogs,
+            list_emoji_catalog_entries,
         ])
         .setup(move |app| {
             let app_handle = app.handle().clone();

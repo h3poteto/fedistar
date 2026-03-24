@@ -141,7 +141,7 @@ function Post(props: PostProps) {
             <FlexboxGrid>
               {/** account name **/}
               <FlexboxGrid.Item colspan={18} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
+                <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis, status.account.acct) }} />
                 <span>@{status.account.acct}</span>
               </FlexboxGrid.Item>
               {/** timestamp **/}

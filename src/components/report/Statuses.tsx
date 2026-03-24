@@ -90,7 +90,7 @@ const Status: React.FC<StatusProps> = props => {
         <FlexboxGrid.Item colspan={19}>
           <div>
             <strong>
-              <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
+              <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis, status.account.acct) }} />
             </strong>
           </div>
           <div>
@@ -107,13 +107,13 @@ const Status: React.FC<StatusProps> = props => {
           <div
             className="spoiler-text"
             style={{ wordWrap: 'break-word' }}
-            dangerouslySetInnerHTML={{ __html: emojify(status.spoiler_text, status.emojis) }}
+            dangerouslySetInnerHTML={{ __html: emojify(status.spoiler_text, status.emojis, status.account.acct) }}
           />
         )}
         <div
           className="status-body"
           style={{ wordWrap: 'break-word' }}
-          dangerouslySetInnerHTML={{ __html: emojify(status.content, status.emojis) }}
+          dangerouslySetInnerHTML={{ __html: emojify(status.content, status.emojis, status.account.acct) }}
         />
       </div>
     </>

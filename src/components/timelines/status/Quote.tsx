@@ -53,7 +53,11 @@ const Quote: React.FC<Props> = props => {
                 <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   <span
                     dangerouslySetInnerHTML={{
-                      __html: emojify(quote.quoted_status.account.display_name, quote.quoted_status.account.emojis)
+                      __html: emojify(
+                        quote.quoted_status.account.display_name,
+                        quote.quoted_status.account.emojis,
+                        quote.quoted_status.account.acct
+                      )
                     }}
                   />
                 </div>

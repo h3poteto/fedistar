@@ -266,7 +266,7 @@ const User: React.FC<UserProps> = props => {
       {/** name **/}
       <div style={{ paddingRight: '8px', width: 'cac(100% - 56px)', overflow: 'hidden' }}>
         <div style={{ width: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-          <span dangerouslySetInnerHTML={{ __html: emojify(user.display_name, user.emojis) }} />
+          <span dangerouslySetInnerHTML={{ __html: emojify(user.display_name, user.emojis, user.acct) }} />
         </div>
         <div style={{ width: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
           <span style={{ color: 'var(--rs-text-tertiary)' }}>@{user.acct}</span>

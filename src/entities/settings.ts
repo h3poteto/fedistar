@@ -6,6 +6,7 @@ export type Settings = {
     font_family: string | null
     language: localeType
     color_theme: ThemeType
+    highlight_color: string | null
   }
   behavior?: {
     confirm_reblog: boolean

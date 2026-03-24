@@ -10,6 +10,7 @@ type Props = {
   emojis: Array<Entity.Emoji>
   client: MegalodonInterface
   pollUpdated: () => void
+  originHint?: string | null
 }
 
 const Poll: React.FC<Props> = props => {
@@ -40,7 +41,7 @@ const SimplePoll: React.FC<Props> = props => {
         {props.poll.options.map((option, index) => (
           <div key={index}>
             <Radio value={index}>
-              <span dangerouslySetInnerHTML={{ __html: emojify(option.title, props.emojis) }} />
+              <span dangerouslySetInnerHTML={{ __html: emojify(option.title, props.emojis, props.originHint) }} />
             </Radio>
           </div>
         ))}
@@ -72,7 +73,7 @@ const MultiplePoll: React.FC<Props> = props => {
         {props.poll.options.map((option, index) => (
           <div key={index}>
             <Checkbox value={index}>
-              <span dangerouslySetInnerHTML={{ __html: emojify(option.title, props.emojis) }} />
+              <span dangerouslySetInnerHTML={{ __html: emojify(option.title, props.emojis, props.originHint) }} />
             </Checkbox>
           </div>
         ))}
@@ -94,7 +95,7 @@ const PollResult: React.FC<Props> = props => {
       {props.poll.options.map((option, index) => (
         <div key={index}>
           <span style={{ paddingLeft: '12px' }}>
-            <span dangerouslySetInnerHTML={{ __html: emojify(option.title, props.emojis) }} />
+            <span dangerouslySetInnerHTML={{ __html: emojify(option.title, props.emojis, props.originHint) }} />
           </span>
           <Progress.Line percent={percent(option.votes_count, props.poll.votes_count)} strokeWidth={5} />
         </div>

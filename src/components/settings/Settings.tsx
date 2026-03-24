@@ -1,9 +1,10 @@
 import { invoke } from '@tauri-apps/api/core'
-import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react'
+import { ChangeEvent, SyntheticEvent, useEffect, useRef, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { InputNumber, Modal, Panel, Form, Schema, ButtonToolbar, Button, InputPicker, Checkbox } from 'rsuite'
+import { Input, InputNumber, Modal, Panel, Form, Schema, ButtonToolbar, Button, InputPicker, Checkbox } from 'rsuite'
 import { Settings as SettingsType, ThemeType } from 'src/entities/settings'
 import { localeType } from 'src/i18n'
+import { normalizeHexColor } from 'src/utils/highlightColor'
 
 type Props = {
   open: boolean
@@ -17,6 +18,7 @@ type FormValue = {
   font_family: string | null
   language: localeType
   color_theme: ThemeType
+  highlight_color: string
   confirm_reblog: boolean
 }
 
@@ -94,10 +96,13 @@ export default function Settings(props: Props) {
     font_family: null,
     language: 'en',
     color_theme: 'dark',
+    highlight_color: '',
     confirm_reblog: false
   })
+  const [formError, setFormError] = useState<any>({})
   const [fontList, setFontList] = useState<Array<{ label: string; value: string }>>([])
   const [settings, setSettings] = useState<SettingsType>()
+  const formRef = useRef<any>(null)
 
   const model = Schema.Model<FormValue>({
     font_size: Schema.Types.NumberType(formatMessage({ id: 'settings.settings.validation.font_size.type' }))
@@ -106,13 +111,21 @@ export default function Settings(props: Props) {
     font_family: Schema.Types.StringType(),
     language: Schema.Types.StringType().isRequired(formatMessage({ id: 'settings.settings.validation.language.required' })),
     color_theme: Schema.Types.StringType(),
+    highlight_color: Schema.Types.StringType().addRule(
+      value => value === undefined || value === null || value.trim().length === 0 || normalizeHexColor(value) !== null,
+      formatMessage({ id: 'settings.settings.validation.highlight_color.format' })
+    ),
     confirm_reblog: Schema.Types.BooleanType()
   })
 
   useEffect(() => {
     const f = async () => {
       const settings = await invoke<SettingsType>('read_settings')
-      setFormValue(current => Object.assign({}, current, settings.appearance, settings.behavior))
+      setFormValue(current =>
+        Object.assign({}, current, settings.appearance, settings.behavior, {
+          highlight_color: settings.appearance.highlight_color ?? ''
+        })
+      )
       setSettings(settings)
       const f = await invoke<Array<string>>('list_fonts')
       setFontList(f.map(f => ({ label: f, value: f })))
@@ -121,17 +134,23 @@ export default function Settings(props: Props) {
   }, [props.open])
 
   const handleSubmit = async () => {
+    if (formRef.current && !formRef.current.check()) {
+      return
+    }
+
+    const highlightColor = normalizeHexColor(formValue.highlight_color)
     const s: SettingsType = {
       appearance: {
         font_size: Number(formValue.font_size),
         font_family: formValue.font_family,
         language: formValue.language,
-        color_theme: formValue.color_theme
+        color_theme: formValue.color_theme,
+        highlight_color: highlightColor
       },
       behavior: {
         confirm_reblog: formValue.confirm_reblog
       },
-      app_menu: settings.app_menu
+      app_menu: settings?.app_menu
     }
     await invoke('save_settings', { obj: s })
     props.reloadAppearance()
@@ -157,7 +176,7 @@ export default function Settings(props: Props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form layout="horizontal" formValue={formValue} onChange={setFormValue} model={model}>
+        <Form layout="horizontal" formValue={formValue} formError={formError} onChange={setFormValue} onCheck={setFormError} model={model} ref={formRef}>
           <Panel header={<FormattedMessage id="settings.settings.appearance.title" />}>
             <Form.Group controlId="language">
               <Form.ControlLabel>
@@ -182,6 +201,15 @@ export default function Settings(props: Props) {
                 <FormattedMessage id="settings.settings.appearance.color_theme" />
               </Form.ControlLabel>
               <Form.Control name="color_theme" accepter={InputPicker} cleanable={false} data={colorTheme} />
+            </Form.Group>
+            <Form.Group controlId="highlight_color">
+              <Form.ControlLabel>
+                <FormattedMessage id="settings.settings.appearance.highlight_color" />
+              </Form.ControlLabel>
+              <Form.Control name="highlight_color" accepter={Input} placeholder="#3498FF" />
+              <Form.HelpText>
+                <FormattedMessage id="settings.settings.appearance.highlight_color_help" />
+              </Form.HelpText>
             </Form.Group>
           </Panel>
           <Panel header={<FormattedMessage id="settings.settings.behavior.title" />}>

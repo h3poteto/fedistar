@@ -14,7 +14,7 @@ export const mapCustomEmojiCategory = (domain: string, emojis: Array<Entity.Emoj
     emojis: emojis
       .map(emoji => ({
         name: emoji.shortcode,
-        image: emoji.url
+        image: (emoji as Entity.Emoji & { static_url?: string }).static_url || emoji.url
       }))
       .filter((e, i, array) => array.findIndex(ar => e.name === ar.name) === i)
       .map(e => ({

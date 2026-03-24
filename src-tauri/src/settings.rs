@@ -15,6 +15,7 @@ pub struct Appearance {
     pub font_family: Option<String>,
     pub language: LocaleType,
     pub color_theme: ThemeType,
+    pub highlight_color: Option<String>,
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
@@ -69,6 +70,7 @@ pub(crate) fn read_settings(filepath: &PathBuf) -> Result<Settings, String> {
                 font_family: None,
                 language: LocaleType::En,
                 color_theme: ThemeType::Dark,
+                highlight_color: None,
             },
             behavior: Some(Behavior {
                 confirm_reblog: false,

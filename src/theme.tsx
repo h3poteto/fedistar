@@ -4,6 +4,7 @@ import { invoke } from '@tauri-apps/api/core'
 import { listen } from '@tauri-apps/api/event'
 import { Settings } from 'src/entities/settings'
 import { UpdatedSettingsPayload } from 'src/payload'
+import { applyHighlightColor } from 'src/utils/highlightColor'
 
 type Props = {
   children: React.ReactNode
@@ -28,6 +29,7 @@ export const RsuiteProviderWrapper: React.FC<Props> = props => {
   const loadTheme = () => {
     invoke<Settings>('read_settings').then(res => {
       setTheme(res.appearance.color_theme)
+      applyHighlightColor(res.appearance.highlight_color)
     })
   }
 

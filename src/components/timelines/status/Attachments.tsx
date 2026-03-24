@@ -2,12 +2,12 @@ import Image from 'next/image'
 import { Entity } from 'megalodon'
 import { Button, IconButton } from 'rsuite'
 import { Icon } from '@rsuite/icons'
-import { BsEyeSlash, BsCaretRightFill, BsVolumeUp, BsBoxArrowUpRight } from 'react-icons/bs'
-import { useEffect, useState } from 'react'
+import { BsCaretRightFill, BsVolumeUp } from 'react-icons/bs'
+import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import emptyPreview from 'src/black.png'
 import { ColumnWidth } from 'src/entities/timeline'
-import { invoke } from '@tauri-apps/api/core'
+import ImageContextMenu from 'src/components/media/ImageContextMenu'
 
 type Props = {
   attachments: Array<Entity.Attachment>
@@ -35,7 +35,6 @@ const Attachments: React.FC<Props> = props => {
         <AttachmentBox
           attachments={props.attachments}
           openMedia={props.openMedia}
-          changeSensitive={changeSensitive}
           columnWidth={props.columnWidth}
         />
       )}
@@ -46,104 +45,69 @@ const Attachments: React.FC<Props> = props => {
 type AttachmentBoxProps = {
   attachments: Array<Entity.Attachment>
   openMedia: (media: Array<Entity.Attachment>, index: number) => void
-  changeSensitive: () => void
   columnWidth: ColumnWidth
 }
 
 function AttachmentBox(props: AttachmentBoxProps) {
-  const [max, setMax] = useState(1)
-  const [remains, setRemains] = useState(0)
+  const thumbnailSize = props.columnWidth === 'lg' ? 144 : 128
+  const gap = 8
+  const visibleAttachments = props.attachments.slice(0, Math.min(props.attachments.length, 4))
+  const remains = Math.max(0, props.attachments.length - 4)
 
-  useEffect(() => {
-    let m = 1
-    switch (props.columnWidth) {
-      case 'xs':
-      case 'sm':
-        m = 1
-        break
-      case 'md':
-      case 'lg':
-        m = 2
-        break
+  const layout = (() => {
+    switch (visibleAttachments.length) {
+      case 2:
+        return [
+          { index: 0, columnSpan: 1 },
+          { index: 1, columnSpan: 1 }
+        ]
+      case 3:
+        return [
+          { index: 0, columnSpan: 1 },
+          { index: 1, columnSpan: 1 },
+          { index: 2, columnSpan: 2 }
+        ]
+      default:
+        return visibleAttachments.map((_, index) => ({ index, columnSpan: 1 }))
     }
-    setMax(m)
-    const length = props.attachments.length
-    setRemains(length - m)
-  }, [props.attachments, props.columnWidth])
+  })()
+
+  const columns = visibleAttachments.length > 1 ? 2 : 1
 
   return (
-    <>
-      <div style={{ display: 'flex' }}>
-        {props.attachments
-          .filter((_, index) => index < max)
-          .map((media, index) => (
-            <div key={index} style={{ margin: '4px' }}>
-              <Attachment
-                media={media}
-                changeSensitive={props.changeSensitive}
-                openMedia={() => props.openMedia(props.attachments, index)}
-              />
-            </div>
-          ))}
-        {remains > 0 && (
-          <div style={{ position: 'relative', margin: '4px', overflow: 'hidden' }}>
-            <div
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                fontSize: '1.4em',
-                cursor: 'pointer'
-              }}
-            >
-              +{remains}
-            </div>
-            <Image
-              width={62}
-              height={128}
-              src={emptyPreview}
-              alt="More attachments"
-              title="More attachments"
-              onClick={() => props.openMedia(props.attachments, max)}
-              style={{ objectFit: 'cover', cursor: 'pointer', borderRadius: '4px' }}
-            />
-          </div>
-        )}
-      </div>
-    </>
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: `repeat(${columns}, ${thumbnailSize}px)`,
+        gridAutoRows: `${thumbnailSize}px`,
+        gap: `${gap}px`,
+        marginTop: '4px'
+      }}
+    >
+      {layout.map(item => (
+        <div key={item.index} style={{ gridColumn: `span ${item.columnSpan}` }}>
+          <Attachment
+            media={visibleAttachments[item.index]}
+            remains={remains > 0 && item.index === visibleAttachments.length - 1 ? remains : 0}
+            openMedia={() => props.openMedia(props.attachments, item.index)}
+          />
+        </div>
+      ))}
+    </div>
   )
 }
 
 type AttachmentProps = {
   media: Entity.Attachment
+  remains: number
   openMedia: (media: Entity.Attachment) => void
-  changeSensitive: () => void
 }
 
 const Attachment: React.FC<AttachmentProps> = props => {
-  const { media, changeSensitive } = props
-
-  const externalWindow = async (url: string) => {
-    await invoke('open_media', { mediaUrl: url })
-  }
+  const { media, remains } = props
 
   return (
-    <div style={{ position: 'relative' }}>
-      <IconButton
-        icon={<Icon as={BsEyeSlash} />}
-        size="sm"
-        appearance="subtle"
-        onClick={changeSensitive}
-        style={{ position: 'absolute', top: '4px', left: '4px' }}
-      />
-      <IconButton
-        icon={<Icon as={BsBoxArrowUpRight} />}
-        size="sm"
-        appearance="subtle"
-        onClick={() => externalWindow(media.url)}
-        style={{ position: 'absolute', top: '4px', right: '4px' }}
-      />
+    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
       {(media.type === 'gifv' || media.type === 'video') && (
         <IconButton
           icon={<Icon as={BsCaretRightFill} />}
@@ -160,16 +124,48 @@ const Attachment: React.FC<AttachmentProps> = props => {
           style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
         />
       )}
-
-      <Image
-        width={128}
-        height={128}
-        src={previewImage(media)}
-        alt={media.description ? media.description : media.id}
-        title={media.description ? media.description : media.id}
-        onClick={() => props.openMedia(media)}
-        style={{ objectFit: 'cover', cursor: 'pointer', borderRadius: '4px' }}
-      />
+      {media.type === 'image' ? (
+        <ImageContextMenu imageUrl={media.url}>
+          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+            <Image
+              fill
+              src={previewImage(media)}
+              alt={media.description ? media.description : media.id}
+              title={media.description ? media.description : media.id}
+              onClick={() => props.openMedia(media)}
+              style={{ objectFit: 'cover', cursor: 'pointer', borderRadius: '4px' }}
+            />
+            {remains > 0 && (
+              <div
+                onClick={() => props.openMedia(media)}
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: 'rgba(0, 0, 0, 0.55)',
+                  color: '#fff',
+                  fontSize: '1.4em',
+                  cursor: 'pointer',
+                  borderRadius: '4px'
+                }}
+              >
+                +{remains}
+              </div>
+            )}
+          </div>
+        </ImageContextMenu>
+      ) : (
+        <Image
+          fill
+          src={previewImage(media)}
+          alt={media.description ? media.description : media.id}
+          title={media.description ? media.description : media.id}
+          onClick={() => props.openMedia(media)}
+          style={{ objectFit: 'cover', cursor: 'pointer', borderRadius: '4px' }}
+        />
+      )}
     </div>
   )
 }

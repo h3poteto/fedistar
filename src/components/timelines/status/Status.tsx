@@ -174,7 +174,7 @@ const Status: React.FC<Props> = props => {
                 style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
                 onClick={() => props.setAccountDetail(status.account.id, props.server.id, props.account?.id)}
               >
-                <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
+                <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis, status.account.acct) }} />
                 <span style={{ color: 'var(--rs-text-tertiary)' }}>@{status.account.acct}</span>
               </FlexboxGrid.Item>
               {/** timestamp **/}
@@ -189,7 +189,7 @@ const Status: React.FC<Props> = props => {
           <Body status={status} onClick={statusClicked} spoilered={spoilered} setSpoilered={setSpoilered} />
           {!spoilered && (
             <>
-              {status.poll && <Poll poll={status.poll} client={props.client} pollUpdated={refresh} emojis={status.emojis} />}
+              {status.poll && <Poll poll={status.poll} client={props.client} pollUpdated={refresh} emojis={status.emojis} originHint={status.account.acct} />}
               {status.media_attachments.length > 0 && (
                 <Attachments
                   attachments={status.media_attachments}
@@ -339,7 +339,7 @@ const rebloggedHeader = (status: Entity.Status) => {
               width: 'calc(100% - 32px)'
             }}
           >
-            <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
+            <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis, status.account.acct) }} />
           </div>
         </div>
       </div>

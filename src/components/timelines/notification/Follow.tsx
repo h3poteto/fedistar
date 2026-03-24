@@ -22,7 +22,8 @@ const actionText = (notification: Entity.Notification) => {
           dangerouslySetInnerHTML={{
             __html: emojify(
               formatMessage({ id: 'timeline.notification.follow.body' }, { user: notification.account.display_name }),
-              notification.account.emojis
+              notification.account.emojis,
+              notification.account.acct
             )
           }}
         />
@@ -34,7 +35,8 @@ const actionText = (notification: Entity.Notification) => {
           dangerouslySetInnerHTML={{
             __html: emojify(
               formatMessage({ id: 'timeline.notification.follow_request.body' }, { user: notification.account.display_name }),
-              notification.account.emojis
+              notification.account.emojis,
+              notification.account.acct
             )
           }}
         />
@@ -77,7 +79,13 @@ const Follow: React.FC<Props> = props => {
         <div style={{ paddingRight: '8px', overflowWrap: 'break-word' }}>
           <div>
             <span
-              dangerouslySetInnerHTML={{ __html: emojify(props.notification.account.display_name, props.notification.account.emojis) }}
+              dangerouslySetInnerHTML={{
+                __html: emojify(
+                  props.notification.account.display_name,
+                  props.notification.account.emojis,
+                  props.notification.account.acct
+                )
+              }}
             />
           </div>
           <div style={{ color: 'var(--rs-text-secondary)' }}>{props.notification.account.acct}</div>

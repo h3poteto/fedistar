@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, forwardRef, KeyboardEventHandler, Dispatch, SetStateAction } from 'react'
+import { useEffect, useRef, useState, forwardRef, KeyboardEventHandler, Dispatch, SetStateAction, ClipboardEventHandler } from 'react'
 import { Input, Popover, Whisper } from 'rsuite'
 import { init, SearchIndex } from 'emoji-mart'
 import { data } from 'src/utils/emojiData'
@@ -10,6 +10,7 @@ export type ArgProps = {
   client: MegalodonInterface
   emojis: Array<CustomEmojiCategory>
   onChange: (value: string) => void
+  onPaste?: ClipboardEventHandler<any>
 }
 
 type SuggestItem = {

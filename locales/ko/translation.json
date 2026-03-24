@@ -16,6 +16,9 @@
     "failed_bookmark": "북마크를 등록하는 것에 실패했습니다.",
     "failed_follow": "팔로우 하는 것에 실패했습니다.",
     "failed_unfollow": "팔로우 취소에 실패했습니다.",
+    "failed_delete_conversation": "대화를 삭제하는 것에 실패했습니다.",
+    "failed_download_image": "이미지를 다운로드하는 것에 실패했습니다.",
+    "failed_copy_image": "이미지를 복사하는 것에 실패했습니다.",
     "validation_error": "인증 오류",
     "validation_attachments_length": "{limit} 개 이상의 파일을 첨부할 수 없습니다.",
     "validation_attachments_type": "이미지 또는 비디오만 첨부할 수 있습니다.",
@@ -96,6 +99,8 @@
         "font_family": "글꼴",
         "language": "언어",
         "color_theme": "색상 테마",
+        "highlight_color": "하이라이트 색상",
+        "highlight_color_help": "비워두면 테마 기본값을 사용합니다. #RGB 또는 #RRGGBB 형식을 지원합니다.",
         "theme": {
           "light": "밝은 테마",
           "dark": "어두운 테마",
@@ -113,6 +118,9 @@
           "type": "올바른 숫자를 입력해 주세요.",
           "range": "{from} 부터 {to} 이내의 숫자를 입력해 주세요.",
           "required": "글꼴 크기를 입력해 주세요."
+        },
+        "highlight_color": {
+          "format": "#3498FF 같은 올바른 hex 색상을 입력해 주세요."
         },
         "language": {
           "required": "언어를 선택해 주세요."
@@ -165,6 +173,12 @@
       "title": "첨부파일 수정",
       "label": "대체 텍스트 추가",
       "submit": "적용"
+    }
+  },
+  "media": {
+    "menu": {
+      "download_image": "이미지 다운로드",
+      "copy_image": "이미지 복사"
     }
   },
   "search": {

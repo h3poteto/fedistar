@@ -22,7 +22,7 @@ const Body: React.FC<Props> = props => {
           <div
             className="spoiler-text"
             style={Object.assign({ overflowWrap: 'break-word', wordBreak: 'break-word' }, props.style)}
-            dangerouslySetInnerHTML={{ __html: emojify(props.status.spoiler_text, props.status.emojis) }}
+            dangerouslySetInnerHTML={{ __html: emojify(props.status.spoiler_text, props.status.emojis, props.status.account.acct) }}
             onClick={props.onClick}
           />
           <Button size="xs" onClick={() => setSpoilered(current => !current)}>
@@ -42,7 +42,7 @@ const Body: React.FC<Props> = props => {
         <div
           className="status-body"
           style={Object.assign({ oberflowWrap: 'break-word', wordBreak: 'break-word' }, props.style)}
-          dangerouslySetInnerHTML={{ __html: emojify(props.status.content, props.status.emojis) }}
+          dangerouslySetInnerHTML={{ __html: emojify(props.status.content, props.status.emojis, props.status.account.acct) }}
           onClick={props.onClick}
         />
       )}

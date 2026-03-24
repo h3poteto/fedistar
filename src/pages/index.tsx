@@ -54,7 +54,7 @@ function App() {
   const [servers, setServers] = useState<Array<ServerSet>>([])
   const [timelines, setTimelines] = useState<Array<[Timeline, Server]>>([])
   const [unreads, setUnreads] = useState<Array<Unread>>([])
-  const [composeOpened, setComposeOpened] = useState<boolean>(false)
+  const [composeOpened] = useState<boolean>(true)
   const [searchOpened, setSearchOpened] = useState<boolean>(false)
   const [style, setStyle] = useState<CSSProperties>({})
   const [highlighted, setHighlighted] = useState<Timeline | null>(null)
@@ -190,7 +190,6 @@ function App() {
   const toggleCompose = () => {
     if (servers.find(s => s.account !== null)) {
       setSearchOpened(false)
-      setComposeOpened(previous => !previous)
     } else {
       toaster.push(alert('info', formatMessage({ id: 'alert.need_auth' })), { placement: 'topStart' })
     }
@@ -198,7 +197,6 @@ function App() {
 
   const toggleSearch = () => {
     if (servers.find(s => s.account !== null)) {
-      setComposeOpened(false)
       setSearchOpened(previous => !previous)
     } else {
       toaster.push(alert('info', formatMessage({ id: 'alert.need_auth' })), { placement: 'topStart' })
@@ -296,7 +294,7 @@ function App() {
         />
 
         <div className={composeOpened ? 'compose-entered' : 'compose-exited'} style={{ overflow: 'hidden' }}>
-          <Compose setOpened={setComposeOpened} servers={servers} locale={locale} />
+          <Compose servers={servers} locale={locale} />
         </div>
         <div className={searchOpened ? 'compose-entered' : 'compose-exited'} style={{ overflow: 'hidden' }}>
           <Search

@@ -312,7 +312,7 @@ const Profile: React.FC<Props> = props => {
             <div className="username" style={{ margin: '16px 0' }}>
               <span
                 style={{ fontSize: '1.2em', fontWeight: 'bold', display: 'block' }}
-                dangerouslySetInnerHTML={{ __html: emojify(user.display_name, user.emojis) }}
+                dangerouslySetInnerHTML={{ __html: emojify(user.display_name, user.emojis, user.acct) }}
               ></span>
               <span style={{ display: 'block', color: 'var(--rs-text-secondary)' }}>@{user.acct}</span>
             </div>
@@ -337,7 +337,7 @@ const Profile: React.FC<Props> = props => {
               {user.fields.map((data, index) => (
                 <dl key={index} style={{ padding: '8px 16px', margin: 0, borderBottom: '1px solid var(--rs-bg-card)' }}>
                   <dt>{data.name}</dt>
-                  <dd dangerouslySetInnerHTML={{ __html: emojify(data.value, user.emojis) }} style={{ margin: 0 }} />
+                  <dd dangerouslySetInnerHTML={{ __html: emojify(data.value, user.emojis, user.acct) }} style={{ margin: 0 }} />
                 </dl>
               ))}
             </div>

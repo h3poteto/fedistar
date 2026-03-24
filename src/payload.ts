@@ -1,6 +1,5 @@
 import { Entity } from 'megalodon'
-import { ThemeType } from './entities/settings'
-import { localeType } from './i18n'
+import { Settings } from './entities/settings'
 
 export type ReceiveNotificationPayload = {
   server_id: number
@@ -50,9 +49,5 @@ export type ReceiveTimelineConversationPayload = {
 }
 
 export type UpdatedSettingsPayload = {
-  appearance: {
-    font_size: number
-    language: localeType
-    color_theme: ThemeType
-  }
+  settings: Settings
 }

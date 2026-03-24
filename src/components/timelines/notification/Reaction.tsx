@@ -77,7 +77,8 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
           dangerouslySetInnerHTML={{
             __html: emojify(
               formatMessage({ id: 'timeline.notification.favourite.body' }, { user: notification.account.display_name }),
-              notification.account.emojis
+              notification.account.emojis,
+              notification.account.acct
             )
           }}
           onClick={() => setAccountDetail(notification.account)}
@@ -90,7 +91,8 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
           dangerouslySetInnerHTML={{
             __html: emojify(
               formatMessage({ id: 'timeline.notification.reblog.body' }, { user: notification.account.display_name }),
-              notification.account.emojis
+              notification.account.emojis,
+              notification.account.acct
             )
           }}
           onClick={() => setAccountDetail(notification.account)}
@@ -103,7 +105,8 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
           dangerouslySetInnerHTML={{
             __html: emojify(
               formatMessage({ id: 'timeline.notification.poll_expired.body' }, { user: notification.account.display_name }),
-              notification.account.emojis
+              notification.account.emojis,
+              notification.account.acct
             )
           }}
           onClick={() => setAccountDetail(notification.account)}
@@ -116,7 +119,8 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
           dangerouslySetInnerHTML={{
             __html: emojify(
               formatMessage({ id: 'timeline.notification.poll_vote.body' }, { user: notification.account.display_name }),
-              notification.account.emojis
+              notification.account.emojis,
+              notification.account.acct
             )
           }}
           onClick={() => setAccountDetail(notification.account)}
@@ -129,7 +133,8 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
           dangerouslySetInnerHTML={{
             __html: emojify(
               formatMessage({ id: 'timeline.notification.quote.body' }, { user: notification.account.display_name }),
-              notification.account.emojis
+              notification.account.emojis,
+              notification.account.acct
             )
           }}
           onClick={() => setAccountDetail(notification.account)}
@@ -142,7 +147,8 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
           dangerouslySetInnerHTML={{
             __html: emojify(
               formatMessage({ id: 'timeline.notification.status.body' }, { user: notification.account.display_name }),
-              notification.account.emojis
+              notification.account.emojis,
+              notification.account.acct
             )
           }}
           onClick={() => setAccountDetail(notification.account)}
@@ -155,7 +161,8 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
           dangerouslySetInnerHTML={{
             __html: emojify(
               formatMessage({ id: 'timeline.notification.update.body' }, { user: notification.account.display_name }),
-              notification.account.emojis
+              notification.account.emojis,
+              notification.account.acct
             )
           }}
           onClick={() => setAccountDetail(notification.account)}
@@ -169,7 +176,8 @@ const actionText = (notification: Entity.Notification, setAccountDetail: (accoun
           dangerouslySetInnerHTML={{
             __html: emojify(
               formatMessage({ id: 'timeline.notification.emoji_reaction.body' }, { user: notification.account.display_name }),
-              notification.account.emojis
+              notification.account.emojis,
+              notification.account.acct
             )
           }}
           onClick={() => setAccountDetail(notification.account)}
@@ -283,7 +291,7 @@ const Reaction: React.FC<Props> = props => {
             <FlexboxGrid>
               {/** account name **/}
               <FlexboxGrid.Item colspan={18} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
+                <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis, status.account.acct) }} />
                 <span>@{status.account.acct}</span>
               </FlexboxGrid.Item>
               {/** timestamp **/}
@@ -295,7 +303,7 @@ const Reaction: React.FC<Props> = props => {
           <Body status={status} onClick={statusClicked} spoilered={spoilered} setSpoilered={setSpoilered} />
           {!spoilered && (
             <>
-              {status.poll && <Poll poll={status.poll} client={props.client} pollUpdated={refresh} emojis={status.emojis} />}
+              {status.poll && <Poll poll={status.poll} client={props.client} pollUpdated={refresh} emojis={status.emojis} originHint={status.account.acct} />}
               {status.media_attachments.map((media, index) => (
                 <div key={index}>
                   <Button appearance="subtle" size="sm" onClick={() => props.openMedia(status.media_attachments, index)}>
