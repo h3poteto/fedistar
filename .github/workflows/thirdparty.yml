@@ -18,7 +18,7 @@ jobs:
     - uses: actions/setup-node@v6
       with:
         node-version-file: '.tool-versions'
-    - uses: pnpm/action-setup@v4
+    - uses: pnpm/action-setup@v5
       with:
         version: 10.30.2
     - uses: dtolnay/rust-toolchain@stable
