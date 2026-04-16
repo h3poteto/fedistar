@@ -106,9 +106,9 @@ const New: React.FC<Props> = props => {
         {server === undefined && (
           <Form fluid formValue={{ domain: domain }} onChange={o => setDomain(o.domain)}>
             <Form.Group>
-              <Form.ControlLabel>
+              <Form.Label>
                 <FormattedMessage id="servers.new.domain" />
-              </Form.ControlLabel>
+              </Form.Label>
               <Form.Control name="domain" placeholder="mastodon.social" />
             </Form.Group>
             <Form.Group>
@@ -182,13 +182,13 @@ const New: React.FC<Props> = props => {
               </div>
             ) : (
               <Form.Group>
-                <Form.ControlLabel>
+                <Form.Label>
                   <FormattedMessage id="servers.new.authorization_code" />
-                </Form.ControlLabel>
+                </Form.Label>
                 <Form.Control name="code" />
-                <Form.HelpText>
+                <Form.Text>
                   <FormattedMessage id="servers.new.authorization_help" />
-                </Form.HelpText>
+                </Form.Text>
               </Form.Group>
             )}
             <Form.Group>

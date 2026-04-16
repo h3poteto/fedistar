@@ -74,9 +74,9 @@ export default function EditMedia(props: Props) {
           <FlexboxGrid.Item colspan={8}>
             <Form fluid model={model} onChange={setFormValue} formValue={formValue} ref={formRef}>
               <Form.Group controlId="description">
-                <Form.ControlLabel>
+                <Form.Label>
                   <FormattedMessage id="compose.edit_attachment.label" />
-                </Form.ControlLabel>
+                </Form.Label>
                 {/** @ts-ignore **/}
                 <Form.Control name="description" rows={5} accepter={Textarea} />
               </Form.Group>
