@@ -7,7 +7,7 @@
       "esnext"
     ],
     "allowJs": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "skipLibCheck": true,
     "strict": false,
     "forceConsistentCasingInFileNames": true,
