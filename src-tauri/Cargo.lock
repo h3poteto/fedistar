@@ -3002,9 +3002,9 @@ dependencies = [
 
 [[package]]
 name = "megalodon"
-version = "1.2.2"
+version = "1.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "83ec85299e22beebf5e865c48a9a9f3ca9cd28e69be5c4bc5ab039cd05ff5d66"
+checksum = "2c50c257e440e4e01e620f99d0298d8dcbe96fea73eb24add7e617e980ab8467"
 dependencies = [
  "async-trait",
  "chrono",
@@ -4119,7 +4119,7 @@ dependencies = [
  "quinn-udp",
  "rustc-hash 2.1.1",
  "rustls",
- "socket2 0.5.10",
+ "socket2 0.6.3",
  "thiserror 2.0.12",
  "tokio",
  "tracing",
@@ -4157,7 +4157,7 @@ dependencies = [
  "cfg_aliases 0.2.1",
  "libc",
  "once_cell",
- "socket2 0.5.10",
+ "socket2 0.6.3",
  "tracing",
  "windows-sys 0.60.2",
 ]
