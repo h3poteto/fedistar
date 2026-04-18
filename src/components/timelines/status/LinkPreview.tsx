@@ -1,7 +1,7 @@
 import { open } from '@tauri-apps/plugin-shell'
 import { Entity } from 'megalodon'
 import Image from 'next/image'
-import { FlexboxGrid, Panel } from 'rsuite'
+import { Panel } from 'rsuite'
 
 import FailoverImg from 'src/utils/failoverImg'
 
@@ -16,19 +16,19 @@ const LinkPreview: React.FC<Props> = props => {
 
   return (
     <Panel bordered bodyFill onClick={onClick} className="link-preview">
-      <FlexboxGrid style={{ overflow: 'hidden' }}>
-        <FlexboxGrid.Item style={{ width: '60px' }}>
+      <div style={{ display: 'flex', overflow: 'hidden' }}>
+        <div style={{ width: '60px' }}>
           <Image width={60} height={60} src={FailoverImg(props.card.image)} alt={props.card.title} />
-        </FlexboxGrid.Item>
-        <FlexboxGrid.Item style={{ height: '60px', width: 'calc(100% - 60px)', overflow: 'hidden', paddingLeft: '4px' }}>
+        </div>
+        <div style={{ height: '60px', width: 'calc(100% - 60px)', overflow: 'hidden', paddingLeft: '4px' }}>
           <p style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }} title={props.card.title}>
             <strong>{props.card.title}</strong>
           </p>
           <p style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }} title={props.card.description}>
             {props.card.description}
           </p>
-        </FlexboxGrid.Item>
-      </FlexboxGrid>
+        </div>
+      </div>
     </Panel>
   )
 }

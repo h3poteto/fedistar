@@ -1,4 +1,4 @@
-import { Header, FlexboxGrid, Button, Content, List } from 'rsuite'
+import { Header, Button, Content, List } from 'rsuite'
 import { BsX, BsChevronLeft, BsListUl, BsPencil } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 import { useRouter } from 'next/router'
@@ -53,39 +53,38 @@ export default function ListsDetail(props: Props) {
   return (
     <>
       <Header style={{ backgroundColor: 'var(--rs-border-secondary)' }}>
-        <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>
             <Button appearance="link" onClick={back}>
               <Icon as={BsChevronLeft} style={{ fontSize: '1.4em' }} />
               <FormattedMessage id="detail.back" />
             </Button>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item>
+          </div>
+          <div>
             <Button appearance="link" onClick={close} title={formatMessage({ id: 'detail.close' })}>
               <Icon as={BsX} style={{ fontSize: '1.4em' }} />
             </Button>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </div>
+        </div>
       </Header>
       <Content style={{ height: '100%', backgroundColor: 'var(--rs-bg-card)' }}>
         <List style={{ height: '100%' }}>
           {lists.map((list, index) => (
             <List.Item key={index}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <FlexboxGrid
-                  align="middle"
-                  style={{ cursor: 'pointer' }}
+                <div
+                  style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
                   onClick={() =>
                     router.push({ query: { list_id: list.id, server_id: router.query.server_id, account_id: router.query.account_id } })
                   }
                 >
-                  <FlexboxGrid.Item style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0 1em' }}>
+                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0 1em' }}>
                     <Icon as={BsListUl} />
-                  </FlexboxGrid.Item>
-                  <FlexboxGrid.Item>
+                  </div>
+                  <div>
                     <div>{list.title}</div>
-                  </FlexboxGrid.Item>
-                </FlexboxGrid>
+                  </div>
+                </div>
                 <div style={{ paddingRight: '1em', cursor: 'pointer' }}>
                   <Icon as={BsPencil} onClick={() => props.openListMemberships(list, client)} />
                 </div>

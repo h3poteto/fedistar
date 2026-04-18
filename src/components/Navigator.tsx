@@ -1,7 +1,7 @@
 import { invoke } from '@tauri-apps/api/core'
 import { Dispatch, ReactElement, SetStateAction, useEffect, useState } from 'react'
 import { Icon } from '@rsuite/icons'
-import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge, FlexboxGrid, useToaster } from 'rsuite'
+import { Popover, Dropdown, Sidebar, Sidenav, Whisper, Button, Avatar, Badge, useToaster } from 'rsuite'
 import { BsPlus, BsGear, BsPencilSquare, BsSearch } from 'react-icons/bs'
 import { Server, ServerSet } from 'src/entities/server'
 import { Account } from 'src/entities/account'
@@ -129,12 +129,14 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
       return {
         backgroundColor: 'var(--rs-border-secondary)',
         borderRadius: 0,
-        height: '53px'
+        height: '55px',
+        width: '55px'
       }
     } else {
       return {
         borderRadius: 0,
-        height: '53px'
+        height: '55px',
+        width: '55px'
       }
     }
   }
@@ -142,11 +144,11 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
   return (
     <Sidebar
       style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', backgroundColor: 'var(--rs-sidenav-default-bg)' }}
-      width="55"
+      width={55}
       collapsible
     >
       <Sidenav expanded={false}>
-        <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '55px' }}>
           <Button appearance="link" size="lg" onClick={props.toggleCompose} style={menuStyle(props.composeOpened)}>
             <Icon as={BsPencilSquare} style={{ fontSize: '1.4em' }} />
           </Button>
@@ -156,84 +158,84 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
         </Sidenav.Body>
       </Sidenav>
       <Sidenav expanded={false}>
-        <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Button appearance="link" size="lg" onClick={props.addNewServer} title={formatMessage({ id: 'navigator.add_server.title' })}>
-            <Icon as={BsPlus} style={{ fontSize: '1.4em' }} />
-          </Button>
-          {walkthrough && (
-            <div style={{ position: 'relative' }}>
-              <Popover arrow={false} visible={walkthrough} style={{ left: 12, top: 'auto', bottom: 0 }}>
-                <div style={{ width: '120px' }}>
-                  <h4 style={{ fontSize: '1.2em' }}>
-                    <FormattedMessage id="walkthrough.navigator.servers.title" />
-                  </h4>
-                  <p>
-                    <FormattedMessage id="walkthrough.navigator.servers.description" />
-                  </p>
-                </div>
-                <FlexboxGrid justify="end">
-                  <Button appearance="default" size="xs" onClick={closeWalkthrough}>
-                    <FormattedMessage id="walkthrough.navigator.servers.ok" />
-                  </Button>
-                </FlexboxGrid>
-              </Popover>
-            </div>
-          )}
-          {servers.map(server => (
-            <div key={server.server.id}>
-              <Whisper
-                placement="right"
-                controlId="control-id-context-menu"
-                trigger="contextMenu"
-                onOpen={closeWalkthrough}
-                preventOverflow={true}
-                speaker={({ className, left, top, onClose }, ref) =>
-                  serverMenu(
-                    {
-                      className,
-                      left,
-                      top,
-                      onClose,
-                      server,
-                      openAuthorize,
-                      openAnnouncements
-                    },
-                    ref
-                  )
-                }
-              >
-                <Button
-                  appearance="link"
-                  size="xs"
-                  style={{ padding: '8px' }}
-                  title={server.account ? server.account.username + '@' + server.server.domain : server.server.domain}
-                  onClick={() => openNotification(server)}
-                >
-                  <Badge content={props.unreads.find(u => u.server_id === server.server.id && u.count > 0) ? true : false}>
-                    <Avatar
-                      size="sm"
-                      src={FailoverImg(server.server.favicon)}
-                      className="server-icon"
-                      alt={server.server.domain}
-                      key={server.server.id}
-                    />
-                  </Badge>
-                </Button>
-              </Whisper>
-            </div>
-          ))}
-          <Whisper
-            placement="rightEnd"
-            controlId="control-id-settings-menu"
-            trigger="click"
-            speaker={({ className, left, top, onClose }, ref) =>
-              settingsMenu({ className, left, top, onClose, openThirdparty, openSettings }, ref)
-            }
-          >
-            <Button appearance="link" size="lg" title={formatMessage({ id: 'navigator.settings.title' })}>
-              <Icon as={BsGear} style={{ fontSize: '1.4em' }} />
+        <Sidenav.Body>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Button appearance="link" size="lg" onClick={props.addNewServer} title={formatMessage({ id: 'navigator.add_server.title' })}>
+              <Icon as={BsPlus} style={{ fontSize: '1.4em' }} />
             </Button>
-          </Whisper>
+            {walkthrough && (
+              <div style={{ position: 'relative' }}>
+                <Popover arrow={false} visible={walkthrough} style={{ left: 12, top: 'auto', bottom: 0 }}>
+                  <div style={{ width: '120px' }}>
+                    <h4 style={{ fontSize: '1.2em' }}>
+                      <FormattedMessage id="walkthrough.navigator.servers.title" />
+                    </h4>
+                    <p>
+                      <FormattedMessage id="walkthrough.navigator.servers.description" />
+                    </p>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Button appearance="default" size="xs" onClick={closeWalkthrough}>
+                      <FormattedMessage id="walkthrough.navigator.servers.ok" />
+                    </Button>
+                  </div>
+                </Popover>
+              </div>
+            )}
+            {servers.map(server => (
+              <div key={server.server.id} style={{ padding: '8px' }}>
+                <Whisper
+                  placement="right"
+                  controlId="control-id-context-menu"
+                  trigger="contextMenu"
+                  onOpen={closeWalkthrough}
+                  preventOverflow={true}
+                  speaker={({ className, left, top, onClose }, ref) =>
+                    serverMenu(
+                      {
+                        className,
+                        left,
+                        top,
+                        onClose,
+                        server,
+                        openAuthorize,
+                        openAnnouncements
+                      },
+                      ref
+                    )
+                  }
+                >
+                  <div
+                    style={{ padding: '0' }}
+                    title={server.account ? server.account.username + '@' + server.server.domain : server.server.domain}
+                    onClick={() => openNotification(server)}
+                  >
+                    <Badge invisible={props.unreads.find(u => u.server_id === server.server.id && u.count > 0) ? false : true}>
+                      <Avatar
+                        size="sm"
+                        src={FailoverImg(server.server.favicon)}
+                        className="server-icon"
+                        alt={server.server.domain}
+                        key={server.server.id}
+                      />
+                    </Badge>
+                  </div>
+                </Whisper>
+              </div>
+            ))}
+            <Whisper
+              placement="rightEnd"
+              controlId="control-id-settings-menu"
+              trigger="click"
+              speaker={({ className, left, top, onClose }, ref) =>
+                settingsMenu({ className, left, top, onClose, openThirdparty, openSettings }, ref)
+              }
+            >
+              <Button appearance="link" size="lg" title={formatMessage({ id: 'navigator.settings.title' })}>
+                <Icon as={BsGear} style={{ fontSize: '1.4em' }} />
+              </Button>
+            </Whisper>
+          </div>
         </Sidenav.Body>
       </Sidenav>
     </Sidebar>

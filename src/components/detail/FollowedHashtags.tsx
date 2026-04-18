@@ -1,4 +1,4 @@
-import { Header, FlexboxGrid, Button, Content, List } from 'rsuite'
+import { Header, Button, Content, List } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsX, BsChevronLeft } from 'react-icons/bs'
 import { useIntl, FormattedMessage } from 'react-intl'
@@ -53,19 +53,19 @@ export default function FollowedHashtags() {
   return (
     <>
       <Header style={{ backgroundColor: 'var(--rs-border-secondary)' }}>
-        <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>
             <Button appearance="link" onClick={back}>
               <Icon as={BsChevronLeft} style={{ fontSize: '1.4em' }} />
               <FormattedMessage id="detail.back" />
             </Button>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item>
+          </div>
+          <div>
             <Button appearance="link" onClick={close} title={formatMessage({ id: 'detail.close' })}>
               <Icon as={BsX} style={{ fontSize: '1.4em' }} />
             </Button>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </div>
+        </div>
       </Header>
       <Content style={{ height: '100%', backgroundColor: 'var(--rs-bg-card)' }}>
         <List style={{ height: '100%' }}>

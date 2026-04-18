@@ -1,6 +1,6 @@
 import { open } from '@tauri-apps/plugin-shell'
 import { writeText } from '@tauri-apps/plugin-clipboard-manager'
-import { FlexboxGrid, useToaster, Popover, Whisper, IconButton, Dropdown } from 'rsuite'
+import { useToaster, Popover, Whisper, IconButton, Dropdown } from 'rsuite'
 import {
   BsChat,
   BsEmojiSmile,
@@ -178,16 +178,16 @@ const Actions: React.FC<Props> = props => {
 
   return (
     <div className="toolbox">
-      <FlexboxGrid>
-        <FlexboxGrid.Item>
+      <div style={{ display: 'flex' }}>
+        <div>
           <ActionButton
             disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.reply}
             icon={<Icon as={BsChat} />}
             onClick={() => props.setShowReply(current => !current)}
             title={formatMessage({ id: 'timeline.actions.reply' })}
           />
-        </FlexboxGrid.Item>
-        <FlexboxGrid.Item>
+        </div>
+        <div>
           <ActionButton
             disabled={
               (typeof props.disabled === 'boolean' ? props.disabled : props.disabled.reblog) ||
@@ -203,8 +203,8 @@ const Actions: React.FC<Props> = props => {
             confirmText={formatMessage({ id: 'timeline.actions.confirm_reblog.text' })}
             title={formatMessage({ id: 'timeline.actions.reblog' })}
           />
-        </FlexboxGrid.Item>
-        <FlexboxGrid.Item>
+        </div>
+        <div>
           <ActionButton
             disabled={
               (typeof props.disabled === 'boolean' ? props.disabled : props.disabled.reblog) ||
@@ -217,8 +217,8 @@ const Actions: React.FC<Props> = props => {
             onClick={() => props.setShowQuote(current => !current)}
             title={formatMessage({ id: 'timeline.actions.quote' })}
           />
-        </FlexboxGrid.Item>
-        <FlexboxGrid.Item>
+        </div>
+        <div>
           <ActionButton
             disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.favourite}
             className="favourite-action"
@@ -228,16 +228,16 @@ const Actions: React.FC<Props> = props => {
             onClick={favourite}
             title={formatMessage({ id: 'timeline.actions.favourite' })}
           />
-        </FlexboxGrid.Item>
-        <FlexboxGrid.Item>
+        </div>
+        <div>
           <ActionButton
             disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.bookmark}
             icon={bookmarkIcon(props.status)}
             onClick={bookmark}
             title={formatMessage({ id: 'timeline.actions.bookmark' })}
           />
-        </FlexboxGrid.Item>
-        <FlexboxGrid.Item>
+        </div>
+        <div>
           {/** delay is required to fix popover position **/}
           <Whisper trigger="click" preventOverflow delay={100} ref={emojiPickerRef} speaker={<EmojiPicker />}>
             <IconButton
@@ -247,8 +247,8 @@ const Actions: React.FC<Props> = props => {
               title={formatMessage({ id: 'timeline.actions.emoji_reaction' })}
             />
           </Whisper>
-        </FlexboxGrid.Item>
-        <FlexboxGrid.Item>
+        </div>
+        <div>
           <Whisper
             trigger="click"
             preventOverflow
@@ -289,8 +289,8 @@ const Actions: React.FC<Props> = props => {
           >
             <IconButton appearance="link" icon={<Icon as={BsThreeDots} />} title={formatMessage({ id: 'timeline.actions.detail.title' })} />
           </Whisper>
-        </FlexboxGrid.Item>
-      </FlexboxGrid>
+        </div>
+      </div>
     </div>
   )
 }

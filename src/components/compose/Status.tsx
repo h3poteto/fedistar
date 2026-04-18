@@ -11,7 +11,6 @@ import {
   IconButton,
   Toggle,
   Checkbox,
-  FlexboxGrid,
   Radio,
   InputPicker,
   FormControlProps,
@@ -453,7 +452,7 @@ const Status: React.FC<Props> = props => {
     </div>
   ))
 
-  const VisibilityDropdown = ({ onClose, left, top, className }, ref: any) => {
+  const VisibilityDropdown = ({ onClose, left, top, className }: { onClose?: any; left?: any; top?: any; className?: any }, ref: any) => {
     const handleSelect = (key: string) => {
       onClose()
       if (key === 'public' || key === 'unlisted' || key === 'private' || key === 'direct' || key === 'local') {
@@ -483,7 +482,7 @@ const Status: React.FC<Props> = props => {
     )
   }
 
-  const LanguageDropdown = ({ onClose, left, top, className }, ref: any) => {
+  const LanguageDropdown = ({ onClose, left, top, className }: { onClose?: any; left?: any; top?: any; className?: any }, ref: any) => {
     const handleSelect = (key: string) => {
       setLanguage(key)
       localStorage.setItem('language', key)
@@ -696,7 +695,7 @@ const defaultPoll = () => ({
   multiple: false
 })
 
-const PollInputControl: FormControlProps<Poll, any> = ({ value, onChange, fieldError }) => {
+const PollInputControl: FormControlProps<Poll> = ({ value, onChange, fieldError }) => {
   const { formatMessage } = useIntl()
   const [poll, setPoll] = useState<Poll>(value)
   const errors = fieldError ? fieldError.object : {}
@@ -748,24 +747,24 @@ const PollInputControl: FormControlProps<Poll, any> = ({ value, onChange, fieldE
       <Form.Group controlId="poll">
         {poll.options.map((option, index) => (
           <div key={index}>
-            <FlexboxGrid align="middle">
-              <FlexboxGrid.Item>{poll.multiple ? <Checkbox disabled /> : <Radio />}</FlexboxGrid.Item>
-              <FlexboxGrid.Item>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div>{poll.multiple ? <Checkbox disabled /> : <Radio />}</div>
+              <div>
                 <Input value={option} onChange={value => setOption(value, index)} />
-              </FlexboxGrid.Item>
-              <FlexboxGrid.Item>
+              </div>
+              <div>
                 <Button appearance="link" onClick={() => removeOption(index)}>
                   <Icon as={BsX} />
                 </Button>
-              </FlexboxGrid.Item>
-            </FlexboxGrid>
+              </div>
+            </div>
             {errors.options?.array[index] ? <ErrorMessage>{errors.options?.array[index].errorMessage}</ErrorMessage> : null}
           </div>
         ))}
       </Form.Group>
       <Form.Group controlId="meta">
-        <FlexboxGrid align="middle" justify="space-between">
-          <FlexboxGrid.Item>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div>
             <Toggle
               checkedChildren={<FormattedMessage id="compose.poll.multiple" />}
               unCheckedChildren={<FormattedMessage id="compose.poll.simple" />}
@@ -777,13 +776,13 @@ const PollInputControl: FormControlProps<Poll, any> = ({ value, onChange, fieldE
                 )
               }
             />
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item>
+          </div>
+          <div>
             <Button appearance="ghost" onClick={addOption}>
               <FormattedMessage id="compose.poll.add_choice" />
             </Button>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item>
+          </div>
+          <div>
             <InputPicker
               data={expiresList}
               value={poll.expires_in}
@@ -791,8 +790,8 @@ const PollInputControl: FormControlProps<Poll, any> = ({ value, onChange, fieldE
               onChange={value => setPoll(current => Object.assign({}, current, { expires_in: value }))}
               style={{ width: '100px' }}
             />
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </div>
+        </div>
       </Form.Group>
     </>
   )
