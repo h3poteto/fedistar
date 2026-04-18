@@ -1,4 +1,4 @@
-import { Container, Header, Content, FlexboxGrid, Button, Dropdown, Avatar } from 'rsuite'
+import { Container, Header, Content, Button, Dropdown, Avatar } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsX } from 'react-icons/bs'
 import { useEffect, useState } from 'react'
@@ -15,23 +15,23 @@ import { FormattedMessage } from 'react-intl'
 export const renderAccountIcon = (props: any, ref: any, account: [Account, Server] | undefined) => {
   if (account && account.length > 0) {
     return (
-      <FlexboxGrid {...props} ref={ref} align="middle">
-        <FlexboxGrid.Item style={{ marginLeft: '12px' }}>
+      <div style={{ display: 'flex', alignItems: 'center' }} {...props} ref={ref}>
+        <div style={{ marginLeft: '12px' }}>
           <Avatar src={failoverImg(account[0].avatar)} alt={account[0].username} size="sm" circle />
-        </FlexboxGrid.Item>
-        <FlexboxGrid.Item style={{ paddingLeft: '12px' }}>
+        </div>
+        <div style={{ paddingLeft: '12px' }}>
           @{account[0].username}@{account[1].domain}
-        </FlexboxGrid.Item>
-      </FlexboxGrid>
+        </div>
+      </div>
     )
   } else {
     return (
-      <FlexboxGrid {...props} ref={ref} align="middle">
-        <FlexboxGrid.Item>
+      <div style={{ display: 'flex', alignItems: 'center' }} {...props} ref={ref}>
+        <div>
           <Avatar src={failoverImg('')} />
-        </FlexboxGrid.Item>
-        <FlexboxGrid.Item>undefined</FlexboxGrid.Item>
-      </FlexboxGrid>
+        </div>
+        <div>undefined</div>
+      </div>
     )
   }
 }
@@ -91,23 +91,23 @@ const Compose: React.FC<Props> = props => {
   return (
     <Container style={{ backgroundColor: 'var(--rs-border-secondary)', height: '100%', overflowY: 'auto' }}>
       <Header style={{ borderBottom: '1px solid var(--rs-divider-border)', backgroundColor: 'var(--rs-border-secondary)' }}>
-        <FlexboxGrid justify="space-between" align="middle">
-          <FlexboxGrid.Item style={{ lineHeight: '53px', paddingLeft: '12px', fontSize: '18px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ lineHeight: '53px', paddingLeft: '12px', fontSize: '18px' }}>
             <FormattedMessage id="compose.title" />
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item>
+          </div>
+          <div>
             <Button appearance="link" onClick={() => props.setOpened(false)}>
               <Icon as={BsX} style={{ fontSize: '1.4em' }} />
             </Button>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </div>
+        </div>
       </Header>
       <Content style={{ height: '100%', margin: '12px', backgroundColor: 'var(--rs-border-secondary)' }}>
         <div style={{ fontSize: '1.2em', padding: '12px 0' }}>
           <FormattedMessage id="compose.from" />
         </div>
-        <FlexboxGrid>
-          <FlexboxGrid.Item>
+        <div style={{ display: 'flex' }}>
+          <div>
             <Dropdown renderToggle={(props, ref) => renderAccountIcon(props, ref, fromAccount)} onSelect={selectAccount}>
               {accounts.map((account, index) => (
                 <Dropdown.Item eventKey={index} key={index}>
@@ -115,8 +115,8 @@ const Compose: React.FC<Props> = props => {
                 </Dropdown.Item>
               ))}
             </Dropdown>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </div>
+        </div>
         <div style={{ fontSize: '1.2em', padding: '12px 0' }}>
           <FormattedMessage id="compose.status.title" />
         </div>

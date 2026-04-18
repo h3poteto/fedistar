@@ -1,7 +1,7 @@
 import { Icon } from '@rsuite/icons'
 import { BsX } from 'react-icons/bs'
 import { FormattedMessage } from 'react-intl'
-import { Button, Container, Content, FlexboxGrid, Header, Dropdown } from 'rsuite'
+import { Button, Container, Content, Header, Dropdown } from 'rsuite'
 import { Server, ServerSet } from 'src/entities/server'
 import { renderAccountIcon } from '../compose/Compose'
 import { useState, useEffect } from 'react'
@@ -59,20 +59,20 @@ export default function Search(props: Props) {
   return (
     <Container style={{ backgroundColor: 'var(--rs-border-secondary)', height: '100%' }}>
       <Header style={{ borderBottom: '1px solid var(--rs-divider-border)', backgroundColor: 'var(--rs-border-secondary)' }}>
-        <FlexboxGrid justify="space-between" align="middle">
-          <FlexboxGrid.Item style={{ lineHeight: '53px', paddingLeft: '12px', fontSize: '18px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ lineHeight: '53px', paddingLeft: '12px', fontSize: '18px' }}>
             <FormattedMessage id="search.title" />
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item>
+          </div>
+          <div>
             <Button appearance="link" onClick={() => props.setOpened(false)}>
               <Icon as={BsX} style={{ fontSize: '1.4em' }} />
             </Button>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </div>
+        </div>
       </Header>
       <Content style={{ height: '100%', padding: '12px', backgroundColor: 'var(--rs-border-secondary)' }} className="sidepanel-scrollable">
-        <FlexboxGrid>
-          <FlexboxGrid.Item>
+        <div style={{ display: 'flex' }}>
+          <div>
             <Dropdown renderToggle={(props, ref) => renderAccountIcon(props, ref, fromAccount)} onSelect={selectAccount}>
               {accounts.map((account, index) => (
                 <Dropdown.Item eventKey={index} key={index}>
@@ -80,8 +80,8 @@ export default function Search(props: Props) {
                 </Dropdown.Item>
               ))}
             </Dropdown>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </div>
+        </div>
         {fromAccount && (
           <Results
             client={client}

@@ -2,7 +2,7 @@ import { open } from '@tauri-apps/plugin-shell'
 import { invoke } from '@tauri-apps/api/core'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { BsThreeDotsVertical, BsChevronLeft, BsX } from 'react-icons/bs'
-import { Button, Content, Dropdown, FlexboxGrid, IconButton, Nav, Popover, useToaster, Whisper, Header } from 'rsuite'
+import { Button, Content, Dropdown, IconButton, Nav, Popover, useToaster, Whisper, Header } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import Image from 'next/image'
 import emojify from 'src/utils/emojify'
@@ -193,19 +193,19 @@ const Profile: React.FC<Props> = props => {
   return (
     <>
       <Header style={{ backgroundColor: 'var(--rs-border-secondary)' }}>
-        <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>
             <Button appearance="link" onClick={back}>
               <Icon as={BsChevronLeft} style={{ fontSize: '1.4em' }} />
               <FormattedMessage id="detail.back" />
             </Button>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item>
+          </div>
+          <div>
             <Button appearance="link" onClick={close} title={formatMessage({ id: 'detail.close' })}>
               <Icon as={BsX} style={{ fontSize: '1.4em' }} />
             </Button>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </div>
+        </div>
       </Header>
 
       {user && (
@@ -269,16 +269,16 @@ const Profile: React.FC<Props> = props => {
             <img src={user.header} alt="header image" style={{ objectFit: 'cover', width: '100%', height: '146px' }} />
           </div>
           <div className="profile-header-body" style={{ padding: '0 20px' }}>
-            <FlexboxGrid justify="space-between" align="bottom" style={{ marginTop: '-50px' }}>
-              <FlexboxGrid.Item>
+            <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginTop: '-50px' }}>
+              <div>
                 <Image src={user.avatar} alt={user.acct} width={94} height={94} style={{ borderRadius: '4px' }} />
-              </FlexboxGrid.Item>
-              <FlexboxGrid.Item>
-                <FlexboxGrid style={{ gap: '8px' }}>
-                  <FlexboxGrid.Item>
+              </div>
+              <div>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <div>
                     <FollowButton relationship={relationship} follow={follow} unfollow={unfollow} myself={myself} user={user} />
-                  </FlexboxGrid.Item>
-                  <FlexboxGrid.Item>
+                  </div>
+                  <div>
                     <Whisper
                       placement="bottomEnd"
                       controlId="control-id-profile-detail"
@@ -305,10 +305,10 @@ const Profile: React.FC<Props> = props => {
                     >
                       <IconButton icon={<Icon as={BsThreeDotsVertical} />} />
                     </Whisper>
-                  </FlexboxGrid.Item>
-                </FlexboxGrid>
-              </FlexboxGrid.Item>
-            </FlexboxGrid>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className="username" style={{ margin: '16px 0' }}>
               <span
                 style={{ fontSize: '1.2em', fontWeight: 'bold', display: 'block' }}

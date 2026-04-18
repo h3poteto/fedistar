@@ -1,6 +1,6 @@
 import { open } from '@tauri-apps/plugin-shell'
 import { writeText } from '@tauri-apps/plugin-clipboard-manager'
-import { useToaster, Popover, Whisper, IconButton, Dropdown, Grid, Row, Col } from 'rsuite'
+import { useToaster, Popover, Whisper, IconButton, Dropdown } from 'rsuite'
 import {
   BsChat,
   BsEmojiSmile,
@@ -178,125 +178,119 @@ const Actions: React.FC<Props> = props => {
 
   return (
     <div className="toolbox">
-      <Grid fluid>
-        <Row>
-          <Col>
-            <ActionButton
-              disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.reply}
-              icon={<Icon as={BsChat} />}
-              onClick={() => props.setShowReply(current => !current)}
-              title={formatMessage({ id: 'timeline.actions.reply' })}
+      <div style={{ display: 'flex' }}>
+        <div>
+          <ActionButton
+            disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.reply}
+            icon={<Icon as={BsChat} />}
+            onClick={() => props.setShowReply(current => !current)}
+            title={formatMessage({ id: 'timeline.actions.reply' })}
+          />
+        </div>
+        <div>
+          <ActionButton
+            disabled={
+              (typeof props.disabled === 'boolean' ? props.disabled : props.disabled.reblog) ||
+              status.visibility === 'direct' ||
+              status.visibility === 'private'
+            }
+            className="reblog-action"
+            activating={reblogActivating}
+            deactivating={reblogDeactivating}
+            icon={reblogIcon(props.status)}
+            onClick={reblog}
+            confirm={props.confirmReblog && !status.reblogged}
+            confirmText={formatMessage({ id: 'timeline.actions.confirm_reblog.text' })}
+            title={formatMessage({ id: 'timeline.actions.reblog' })}
+          />
+        </div>
+        <div>
+          <ActionButton
+            disabled={
+              (typeof props.disabled === 'boolean' ? props.disabled : props.disabled.reblog) ||
+              status.visibility === 'direct' ||
+              status.visibility === 'private' ||
+              !quoteApproved(status)
+            }
+            className="quote-action"
+            icon={<Icon as={BsQuote} />}
+            onClick={() => props.setShowQuote(current => !current)}
+            title={formatMessage({ id: 'timeline.actions.quote' })}
+          />
+        </div>
+        <div>
+          <ActionButton
+            disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.favourite}
+            className="favourite-action"
+            activating={favouriteActivating}
+            deactivating={favouriteDeactivating}
+            icon={favouriteIcon(props.status)}
+            onClick={favourite}
+            title={formatMessage({ id: 'timeline.actions.favourite' })}
+          />
+        </div>
+        <div>
+          <ActionButton
+            disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.bookmark}
+            icon={bookmarkIcon(props.status)}
+            onClick={bookmark}
+            title={formatMessage({ id: 'timeline.actions.bookmark' })}
+          />
+        </div>
+        <div>
+          {/** delay is required to fix popover position **/}
+          <Whisper trigger="click" preventOverflow delay={100} ref={emojiPickerRef} speaker={<EmojiPicker />}>
+            <IconButton
+              appearance="link"
+              icon={<Icon as={BsEmojiSmile} />}
+              disabled={(typeof props.disabled === 'boolean' ? props.disabled : props.disabled.emoji) || props.server.sns === 'mastodon'}
+              title={formatMessage({ id: 'timeline.actions.emoji_reaction' })}
             />
-          </Col>
-          <Col>
-            <ActionButton
-              disabled={
-                (typeof props.disabled === 'boolean' ? props.disabled : props.disabled.reblog) ||
-                status.visibility === 'direct' ||
-                status.visibility === 'private'
-              }
-              className="reblog-action"
-              activating={reblogActivating}
-              deactivating={reblogDeactivating}
-              icon={reblogIcon(props.status)}
-              onClick={reblog}
-              confirm={props.confirmReblog && !status.reblogged}
-              confirmText={formatMessage({ id: 'timeline.actions.confirm_reblog.text' })}
-              title={formatMessage({ id: 'timeline.actions.reblog' })}
-            />
-          </Col>
-          <Col>
-            <ActionButton
-              disabled={
-                (typeof props.disabled === 'boolean' ? props.disabled : props.disabled.reblog) ||
-                status.visibility === 'direct' ||
-                status.visibility === 'private' ||
-                !quoteApproved(status)
-              }
-              className="quote-action"
-              icon={<Icon as={BsQuote} />}
-              onClick={() => props.setShowQuote(current => !current)}
-              title={formatMessage({ id: 'timeline.actions.quote' })}
-            />
-          </Col>
-          <Col>
-            <ActionButton
-              disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.favourite}
-              className="favourite-action"
-              activating={favouriteActivating}
-              deactivating={favouriteDeactivating}
-              icon={favouriteIcon(props.status)}
-              onClick={favourite}
-              title={formatMessage({ id: 'timeline.actions.favourite' })}
-            />
-          </Col>
-          <Col>
-            <ActionButton
-              disabled={typeof props.disabled === 'boolean' ? props.disabled : props.disabled.bookmark}
-              icon={bookmarkIcon(props.status)}
-              onClick={bookmark}
-              title={formatMessage({ id: 'timeline.actions.bookmark' })}
-            />
-          </Col>
-          <Col>
-            {/** delay is required to fix popover position **/}
-            <Whisper trigger="click" preventOverflow delay={100} ref={emojiPickerRef} speaker={<EmojiPicker />}>
-              <IconButton
-                appearance="link"
-                icon={<Icon as={BsEmojiSmile} />}
-                disabled={(typeof props.disabled === 'boolean' ? props.disabled : props.disabled.emoji) || props.server.sns === 'mastodon'}
-                title={formatMessage({ id: 'timeline.actions.emoji_reaction' })}
-              />
-            </Whisper>
-          </Col>
-          <Col>
-            <Whisper
-              trigger="click"
-              preventOverflow
-              speaker={({ className, left, top, onClose }, ref) =>
-                detailMenu(
-                  {
-                    className,
-                    left,
-                    top,
-                    onClose,
-                    own: props.account && props.account.account_id === props.status.account.id,
-                    status: props.status,
-                    disabled: typeof props.disabled === 'boolean' ? props.disabled : props.disabled.detail,
-                    openBrowser: () => {
-                      open(status.url)
-                    },
-                    copyLink: async () => {
-                      await writeText(status.url)
-                    },
-                    openEdit: () => {
-                      props.setShowEdit(current => !current)
-                    },
-                    onDelete: () => {
-                      // After after deleted, streaming will receive a delete event.
-                      // So we don't need update parent timelines, the delete event will be handled.
-                      client.deleteStatus(props.status.id)
-                    },
-                    onReport: () => {
-                      props.openReport()
-                    },
-                    onFromOtherAccount: () => {
-                      props.openFromOtherAccount()
-                    }
+          </Whisper>
+        </div>
+        <div>
+          <Whisper
+            trigger="click"
+            preventOverflow
+            speaker={({ className, left, top, onClose }, ref) =>
+              detailMenu(
+                {
+                  className,
+                  left,
+                  top,
+                  onClose,
+                  own: props.account && props.account.account_id === props.status.account.id,
+                  status: props.status,
+                  disabled: typeof props.disabled === 'boolean' ? props.disabled : props.disabled.detail,
+                  openBrowser: () => {
+                    open(status.url)
                   },
-                  ref
-                )
-              }
-            >
-              <IconButton
-                appearance="link"
-                icon={<Icon as={BsThreeDots} />}
-                title={formatMessage({ id: 'timeline.actions.detail.title' })}
-              />
-            </Whisper>
-          </Col>
-        </Row>
-      </Grid>
+                  copyLink: async () => {
+                    await writeText(status.url)
+                  },
+                  openEdit: () => {
+                    props.setShowEdit(current => !current)
+                  },
+                  onDelete: () => {
+                    // After after deleted, streaming will receive a delete event.
+                    // So we don't need update parent timelines, the delete event will be handled.
+                    client.deleteStatus(props.status.id)
+                  },
+                  onReport: () => {
+                    props.openReport()
+                  },
+                  onFromOtherAccount: () => {
+                    props.openFromOtherAccount()
+                  }
+                },
+                ref
+              )
+            }
+          >
+            <IconButton appearance="link" icon={<Icon as={BsThreeDots} />} title={formatMessage({ id: 'timeline.actions.detail.title' })} />
+          </Whisper>
+        </div>
+      </div>
     </div>
   )
 }
