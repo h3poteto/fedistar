@@ -129,12 +129,14 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
       return {
         backgroundColor: 'var(--rs-border-secondary)',
         borderRadius: 0,
-        height: '53px'
+        height: '55px',
+        width: '55px'
       }
     } else {
       return {
         borderRadius: 0,
-        height: '53px'
+        height: '55px',
+        width: '55px'
       }
     }
   }
@@ -142,11 +144,11 @@ const Navigator: React.FC<NavigatorProps> = (props): ReactElement => {
   return (
     <Sidebar
       style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', backgroundColor: 'var(--rs-sidenav-default-bg)' }}
-      width="55"
+      width={55}
       collapsible
     >
       <Sidenav expanded={false}>
-        <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Sidenav.Body style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '55px' }}>
           <Button appearance="link" size="lg" onClick={props.toggleCompose} style={menuStyle(props.composeOpened)}>
             <Icon as={BsPencilSquare} style={{ fontSize: '1.4em' }} />
           </Button>
