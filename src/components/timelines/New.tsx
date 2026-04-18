@@ -165,7 +165,7 @@ const New: React.FC<Props> = props => {
     f()
   }, [])
 
-  const addTimelineMenu = ({ onClose, left, top, className }, ref: any) => {
+  const addTimelineMenu = ({ onClose, left, top, className }: { onClose?: any; left?: any; top?: any; className?: any }, ref: any) => {
     const handleSelect = (eventKey: string) => {
       onClose()
       const target = props.servers.find(s => s.server.id === parseInt(eventKey))

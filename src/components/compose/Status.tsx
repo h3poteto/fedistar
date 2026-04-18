@@ -452,7 +452,7 @@ const Status: React.FC<Props> = props => {
     </div>
   ))
 
-  const VisibilityDropdown = ({ onClose, left, top, className }, ref: any) => {
+  const VisibilityDropdown = ({ onClose, left, top, className }: { onClose?: any; left?: any; top?: any; className?: any }, ref: any) => {
     const handleSelect = (key: string) => {
       onClose()
       if (key === 'public' || key === 'unlisted' || key === 'private' || key === 'direct' || key === 'local') {
@@ -482,7 +482,7 @@ const Status: React.FC<Props> = props => {
     )
   }
 
-  const LanguageDropdown = ({ onClose, left, top, className }, ref: any) => {
+  const LanguageDropdown = ({ onClose, left, top, className }: { onClose?: any; left?: any; top?: any; className?: any }, ref: any) => {
     const handleSelect = (key: string) => {
       setLanguage(key)
       localStorage.setItem('language', key)
@@ -695,7 +695,7 @@ const defaultPoll = () => ({
   multiple: false
 })
 
-const PollInputControl: FormControlProps<Poll, any> = ({ value, onChange, fieldError }) => {
+const PollInputControl: FormControlProps<Poll> = ({ value, onChange, fieldError }) => {
   const { formatMessage } = useIntl()
   const [poll, setPoll] = useState<Poll>(value)
   const errors = fieldError ? fieldError.object : {}
