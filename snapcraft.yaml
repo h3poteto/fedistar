@@ -3,7 +3,7 @@ base: core22
 version: '1.13.0'
 summary: Multi-column Fediverse client for desktop.
 description: |
-  Multi-column Fediverse client for desktop. Supporting Mastodon, Pleroma, Friendica, Gotosocial, Firefish, and Sharkey
+  Multi-column Fediverse client for desktop. Supporting Mastodon, Pleroma, Friendica, Gotosocial, and Firefish
 
 grade: stable
 confinement: strict
