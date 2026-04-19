@@ -1,7 +1,7 @@
 import { invoke } from '@tauri-apps/api/core'
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { NumberInput, Modal, Panel, Form, Schema, ButtonToolbar, Button, InputPicker, Checkbox } from 'rsuite'
+import { NumberInput, Modal, Panel, Form, Schema, ButtonToolbar, Button, InputPicker, Checkbox, Text } from 'rsuite'
 import { Settings as SettingsType, ThemeType } from 'src/entities/settings'
 import { localeType } from 'src/i18n'
 
@@ -158,45 +158,47 @@ export default function Settings(props: Props) {
       </Modal.Header>
       <Modal.Body>
         <Form layout="horizontal" formValue={formValue} onChange={setFormValue} model={model}>
-          <Panel header={<FormattedMessage id="settings.settings.appearance.title" />}>
-            <Form.Group controlId="language">
-              <Form.Label>
-                <FormattedMessage id="settings.settings.appearance.language" />
-              </Form.Label>
-              <Form.Control name="language" accepter={InputPicker} cleanable={false} data={languages} />
-            </Form.Group>
-            <Form.Group controlId="font_size">
-              <Form.Label>
-                <FormattedMessage id="settings.settings.appearance.font_size" />
-              </Form.Label>
-              <Form.Control name="font_size" accepter={NumberInput} postfix="px" />
-            </Form.Group>
-            <Form.Group controlId="font_family">
-              <Form.Label>
-                <FormattedMessage id="settings.settings.appearance.font_family" />
-              </Form.Label>
-              <Form.Control name="font_family" accepter={InputPicker} cleanable={true} data={fontList} />
-            </Form.Group>
-            <Form.Group controlId="color_theme">
-              <Form.Label>
-                <FormattedMessage id="settings.settings.appearance.color_theme" />
-              </Form.Label>
-              <Form.Control name="color_theme" accepter={InputPicker} cleanable={false} data={colorTheme} />
-            </Form.Group>
-          </Panel>
-          <Panel header={<FormattedMessage id="settings.settings.behavior.title" />}>
-            <Form.Group controlId="confirm_reblog">
-              <Form.Label>
-                <FormattedMessage id="settings.settings.behavior.confirm_reblog" />
-              </Form.Label>
-              <Form.Control
-                name="confirm_reblog"
-                accepter={Checkbox}
-                defaultChecked={formValue.confirm_reblog}
-                onChange={updateConfirmBoost}
-              />
-            </Form.Group>
-          </Panel>
+          <Text size="md" style={{ padding: '0 20px' }}>
+            <FormattedMessage id="settings.settings.appearance.title" />
+          </Text>
+          <Form.Group controlId="language">
+            <Form.Label>
+              <FormattedMessage id="settings.settings.appearance.language" />
+            </Form.Label>
+            <Form.Control name="language" accepter={InputPicker} cleanable={false} data={languages} />
+          </Form.Group>
+          <Form.Group controlId="font_size">
+            <Form.Label>
+              <FormattedMessage id="settings.settings.appearance.font_size" />
+            </Form.Label>
+            <Form.Control name="font_size" accepter={NumberInput} postfix="px" />
+          </Form.Group>
+          <Form.Group controlId="font_family">
+            <Form.Label>
+              <FormattedMessage id="settings.settings.appearance.font_family" />
+            </Form.Label>
+            <Form.Control name="font_family" accepter={InputPicker} cleanable={true} data={fontList} />
+          </Form.Group>
+          <Form.Group controlId="color_theme">
+            <Form.Label>
+              <FormattedMessage id="settings.settings.appearance.color_theme" />
+            </Form.Label>
+            <Form.Control name="color_theme" accepter={InputPicker} cleanable={false} data={colorTheme} />
+          </Form.Group>
+          <Text size="md" style={{ padding: '0 20px' }}>
+            <FormattedMessage id="settings.settings.behavior.title" />
+          </Text>
+          <Form.Group controlId="confirm_reblog">
+            <Form.Label>
+              <FormattedMessage id="settings.settings.behavior.confirm_reblog" />
+            </Form.Label>
+            <Form.Control
+              name="confirm_reblog"
+              accepter={Checkbox}
+              defaultChecked={formValue.confirm_reblog}
+              onChange={updateConfirmBoost}
+            />
+          </Form.Group>
           <Form.Group>
             <ButtonToolbar style={{ justifyContent: 'flex-end' }}>
               <Button appearance="primary" type="submit" onClick={handleSubmit}>
