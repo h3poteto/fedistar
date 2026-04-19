@@ -435,7 +435,7 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
   return (
     <Popover ref={ref} style={{ opacity: 1 }}>
       <div style={{ display: 'flex', flexDirection: 'column', width: '220px' }}>
-        <label>
+        <label style={{ padding: '8px 0' }}>
           <FormattedMessage id="timeline.settings.column_width" />
         </label>
         <RadioGroup inline value={props.timeline.column_width} onChange={value => updateColumnWidth(props.timeline, value.toString())}>

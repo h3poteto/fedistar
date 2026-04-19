@@ -595,7 +595,7 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
     <Popover ref={ref} style={{ opacity: 1 }}>
       <div style={{ display: 'flex', flexDirection: 'column', width: '220px' }}>
         {props.timeline.kind === 'home' && (
-          <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '16px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '16px', gap: '4px' }}>
             <Toggle size="sm" checked={props.timeline.show_boosts} onChange={value => updateShowBoosts(props.timeline, value)}>
               <FormattedMessage id="timeline.settings.show_boosts" />
             </Toggle>
@@ -605,7 +605,7 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
           </div>
         )}
 
-        <label>
+        <label style={{ padding: '8px 0' }}>
           <FormattedMessage id="timeline.settings.column_width" />
         </label>
         <RadioGroup inline value={props.timeline.column_width} onChange={value => updateColumnWidth(props.timeline, value.toString())}>
