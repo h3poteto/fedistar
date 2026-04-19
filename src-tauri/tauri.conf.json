@@ -17,7 +17,7 @@
       "digestAlgorithm": "sha256",
       "timestampUrl": ""
     },
-    "longDescription": "Multi-column Fediverse client for desktop. Supporting Mastodon, Pleroma, Friendica, Gotosocial, Firefish, and Sharkey.",
+    "longDescription": "Multi-column Fediverse client for desktop. Supporting Mastodon, Pleroma, Friendica, Gotosocial, and Firefish.",
     "macOS": {
       "entitlements": "../entitlements.plist",
       "exceptionDomain": "",
