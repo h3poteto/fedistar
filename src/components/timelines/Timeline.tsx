@@ -6,7 +6,6 @@ import {
   Avatar,
   Container,
   Content,
-  FlexboxGrid,
   Header,
   List,
   Whisper,
@@ -412,11 +411,11 @@ export default function TimelineColumn(props: Props) {
     <div style={{ width: columnWidth(props.timeline.column_width), minWidth: columnWidth(props.timeline.column_width), margin: '0 4px' }}>
       <Container style={{ height: '100%' }}>
         <Header style={{ backgroundColor: 'var(--rs-bg-card)' }}>
-          <FlexboxGrid align="middle" justify="space-between">
-            <FlexboxGrid.Item style={{ width: 'calc(100% - 80px)' }}>
-              <FlexboxGrid align="middle" onClick={backToTop} style={{ cursor: 'pointer' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ width: 'calc(100% - 80px)' }}>
+              <div onClick={backToTop} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
                 {/** icon **/}
-                <FlexboxGrid.Item
+                <div
                   style={{
                     lineHeight: '48px',
                     fontSize: '18px',
@@ -427,9 +426,9 @@ export default function TimelineColumn(props: Props) {
                   }}
                 >
                   {timelineIcon(props.timeline.kind)}
-                </FlexboxGrid.Item>
+                </div>
                 {/** name **/}
-                <FlexboxGrid.Item
+                <div
                   style={{
                     lineHeight: '48px',
                     fontSize: '18px',
@@ -443,18 +442,18 @@ export default function TimelineColumn(props: Props) {
                 >
                   {timelineName(props.timeline.kind, props.timeline.name, formatMessage)}
                   <span style={{ fontSize: '14px', color: 'var(--rs-text-secondary)' }}>@{props.server.domain}</span>
-                </FlexboxGrid.Item>
-              </FlexboxGrid>
-            </FlexboxGrid.Item>
-            <FlexboxGrid.Item style={{ width: '80px' }}>
-              <FlexboxGrid align="middle" justify="end">
-                <FlexboxGrid.Item>
+                </div>
+              </div>
+            </div>
+            <div style={{ width: '80px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                <div>
                   <Button appearance="link" onClick={reload} style={{ padding: '4px' }} title={formatMessage({ id: 'timeline.reload' })}>
                     <Icon as={BsArrowClockwise} />
                   </Button>
-                </FlexboxGrid.Item>
+                </div>
 
-                <FlexboxGrid.Item>
+                <div>
                   {walkthrough && (
                     <div style={{ position: 'relative' }}>
                       <Popover arrow={false} visible={walkthrough} style={{ left: 0, top: 30 }}>
@@ -466,11 +465,11 @@ export default function TimelineColumn(props: Props) {
                             <FormattedMessage id="walkthrough.timeline.settings.description" />
                           </p>
                         </div>
-                        <FlexboxGrid justify="end">
+                        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                           <Button appearance="default" size="xs" onClick={closeWalkthrough}>
                             <FormattedMessage id="walkthrough.timeline.settings.ok" />
                           </Button>
-                        </FlexboxGrid>
+                        </div>
                       </Popover>
                     </div>
                   )}
@@ -490,13 +489,13 @@ export default function TimelineColumn(props: Props) {
                       <Icon as={BsSliders} />
                     </Button>
                   </Whisper>
-                </FlexboxGrid.Item>
-                <FlexboxGrid.Item style={{ paddingRight: '8px', height: '20px' }}>
+                </div>
+                <div style={{ paddingRight: '8px', height: '20px' }}>
                   <Avatar circle src={FailoverImg(account ? account.avatar : null)} size="xs" title={account ? account.username : ''} />
-                </FlexboxGrid.Item>
-              </FlexboxGrid>
-            </FlexboxGrid.Item>
-          </FlexboxGrid>
+                </div>
+              </div>
+            </div>
+          </div>
         </Header>
 
         {loading ? (
@@ -596,7 +595,7 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
     <Popover ref={ref} style={{ opacity: 1 }}>
       <div style={{ display: 'flex', flexDirection: 'column', width: '220px' }}>
         {props.timeline.kind === 'home' && (
-          <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '16px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '16px', gap: '4px' }}>
             <Toggle size="sm" checked={props.timeline.show_boosts} onChange={value => updateShowBoosts(props.timeline, value)}>
               <FormattedMessage id="timeline.settings.show_boosts" />
             </Toggle>
@@ -606,7 +605,7 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
           </div>
         )}
 
-        <label>
+        <label style={{ padding: '8px 0' }}>
           <FormattedMessage id="timeline.settings.column_width" />
         </label>
         <RadioGroup inline value={props.timeline.column_width} onChange={value => updateColumnWidth(props.timeline, value.toString())}>
@@ -616,24 +615,24 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
           <Radio value="lg">lg</Radio>
         </RadioGroup>
         <Divider style={{ margin: '16px 0' }} />
-        <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>
             <Button appearance="link" size="xs" onClick={() => removeTimeline(props.timeline)}>
               <Icon as={BsX} style={{ paddingBottom: '2px', fontSize: '1.4em' }} />
               <span>
                 <FormattedMessage id="timeline.settings.unpin" />
               </span>
             </Button>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item>
+          </div>
+          <div>
             <Button appearance="link" size="xs" onClick={() => switchLeftTimeline(props.timeline)}>
               <Icon as={BsChevronLeft} />
             </Button>
             <Button appearance="link" size="xs" onClick={() => switchRightTimeline(props.timeline)}>
               <Icon as={BsChevronRight} />
             </Button>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </div>
+        </div>
       </div>
     </Popover>
   )

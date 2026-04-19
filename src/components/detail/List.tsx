@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { invoke } from '@tauri-apps/api/core'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
-import { Content, List, Header, FlexboxGrid, Button, Loader } from 'rsuite'
+import { Content, List, Header, Button, Loader } from 'rsuite'
 import { BsX, BsChevronLeft, BsPin } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 import { Virtuoso } from 'react-virtuoso'
@@ -130,22 +130,22 @@ export default function ListDetail(props: Props) {
   return (
     <>
       <Header style={{ backgroundColor: 'var(--rs-border-secondary)' }}>
-        <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>
             <Button appearance="link" onClick={back}>
               <Icon as={BsChevronLeft} style={{ fontSize: '1.4em' }} />
               <FormattedMessage id="detail.back" />
             </Button>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item>
+          </div>
+          <div>
             <Button appearance="link" onClick={addTimeline} title={formatMessage({ id: 'detail.pin' })}>
               <Icon as={BsPin} style={{ fontSize: '1.2em' }} />
             </Button>
             <Button appearance="link" onClick={close} title={formatMessage({ id: 'detail.close' })}>
               <Icon as={BsX} style={{ fontSize: '1.4em' }} />
             </Button>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </div>
+        </div>
       </Header>
       {statuses.length === 0 ? (
         <Loader style={{ margin: '10em auto' }} />

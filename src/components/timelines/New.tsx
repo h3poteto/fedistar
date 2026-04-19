@@ -165,7 +165,7 @@ const New: React.FC<Props> = props => {
     f()
   }, [])
 
-  const addTimelineMenu = ({ onClose, left, top, className }, ref: any) => {
+  const addTimelineMenu = ({ onClose, left, top, className }: { onClose?: any; left?: any; top?: any; className?: any }, ref: any) => {
     const handleSelect = (eventKey: string) => {
       onClose()
       const target = props.servers.find(s => s.server.id === parseInt(eventKey))
@@ -211,11 +211,11 @@ const New: React.FC<Props> = props => {
                 <FormattedMessage id="walkthrough.timeline.new.description" />
               </p>
             </div>
-            <FlexboxGrid justify="end">
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <Button appearance="default" size="xs" onClick={closeWalkthrough}>
                 <FormattedMessage id="walkthrough.timeline.new.ok" />
               </Button>
-            </FlexboxGrid>
+            </div>
           </Popover>
         </div>
       )}
@@ -240,15 +240,15 @@ const New: React.FC<Props> = props => {
     <div className="add-timeline" style={{ width: '240px', minWidth: '240px', display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Container style={{ height: '100%' }}>
         <Header style={{ backgroundColor: 'var(--rs-border-secondary)' }}>
-          <FlexboxGrid align="middle" justify="space-between">
-            <FlexboxGrid.Item style={{ paddingLeft: '8px', lineHeight: '52px' }}>@{server.domain}</FlexboxGrid.Item>
-            <FlexboxGrid.Item>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ paddingLeft: '8px', lineHeight: '52px' }}>@{server.domain}</div>
+            <div>
               <Button appearance="link" onClick={back} title={formatMessage({ id: 'timeline.back' })}>
                 <Icon as={BsChevronLeft} />
                 <FormattedMessage id="timeline.back" />
               </Button>
-            </FlexboxGrid.Item>
-          </FlexboxGrid>
+            </div>
+          </div>
         </Header>
         <Content className="timeline-scrollable" style={{ height: 'calc(100% - 54px)' }}>
           <List hover>

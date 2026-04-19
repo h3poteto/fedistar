@@ -2,7 +2,7 @@ import { invoke } from '@tauri-apps/api/core'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
-import { Content, List, Header, FlexboxGrid, Button } from 'rsuite'
+import { Content, List, Header, Button } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsX, BsChevronLeft } from 'react-icons/bs'
 
@@ -141,19 +141,19 @@ const StatusDetail: React.FC<Props> = props => {
   return (
     <>
       <Header style={{ backgroundColor: 'var(--rs-border-secondary)' }}>
-        <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>
             <Button appearance="link" onClick={back}>
               <Icon as={BsChevronLeft} style={{ fontSize: '1.4em' }} />
               <FormattedMessage id="detail.back" />
             </Button>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item>
+          </div>
+          <div>
             <Button appearance="link" onClick={close} title={formatMessage({ id: 'detail.close' })}>
               <Icon as={BsX} style={{ fontSize: '1.4em' }} />
             </Button>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </div>
+        </div>
       </Header>
       <Content
         style={{ height: '100%', backgroundColor: 'var(--rs-bg-card)', overflowY: 'auto' }}

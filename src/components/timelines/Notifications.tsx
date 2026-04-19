@@ -1,19 +1,4 @@
-import {
-  Avatar,
-  Container,
-  Content,
-  FlexboxGrid,
-  Header,
-  List,
-  Whisper,
-  Popover,
-  Radio,
-  RadioGroup,
-  Divider,
-  Button,
-  Loader,
-  useToaster
-} from 'rsuite'
+import { Avatar, Container, Content, Header, List, Whisper, Popover, Radio, RadioGroup, Divider, Button, Loader, useToaster } from 'rsuite'
 import { BsBell, BsSliders, BsX, BsChevronLeft, BsChevronRight, BsCheck2, BsArrowClockwise } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/core'
@@ -278,11 +263,11 @@ const Notifications: React.FC<Props> = props => {
     >
       <Container style={{ height: '100%' }}>
         <Header style={{ backgroundColor: 'var(--rs-bg-card)' }}>
-          <FlexboxGrid align="middle" justify="space-between">
-            <FlexboxGrid.Item style={{ width: 'calc(100% - 108px)' }}>
-              <FlexboxGrid align="middle" onClick={backToTop} style={{ cursor: 'pointer' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ width: 'calc(100% - 108px)' }}>
+              <div onClick={backToTop} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
                 {/** icon **/}
-                <FlexboxGrid.Item
+                <div
                   style={{
                     lineHeight: '48px',
                     fontSize: '18px',
@@ -293,9 +278,9 @@ const Notifications: React.FC<Props> = props => {
                   }}
                 >
                   <Icon as={BsBell} />
-                </FlexboxGrid.Item>
+                </div>
                 {/** name **/}
-                <FlexboxGrid.Item
+                <div
                   style={{
                     lineHeight: '48px',
                     fontSize: '18px',
@@ -309,12 +294,12 @@ const Notifications: React.FC<Props> = props => {
                 >
                   {timelineName(props.timeline.kind, props.timeline.name, formatMessage)}
                   <span style={{ fontSize: '14px', color: 'var(--rs-text-secondary)' }}>@{props.server.domain}</span>
-                </FlexboxGrid.Item>
-              </FlexboxGrid>
-            </FlexboxGrid.Item>
-            <FlexboxGrid.Item style={{ width: '108px' }}>
-              <FlexboxGrid align="middle" justify="end">
-                <FlexboxGrid.Item>
+                </div>
+              </div>
+            </div>
+            <div style={{ width: '108px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                <div>
                   <Button
                     appearance="link"
                     title={formatMessage({ id: 'timeline.mark_as_read' })}
@@ -324,13 +309,13 @@ const Notifications: React.FC<Props> = props => {
                   >
                     <Icon as={BsCheck2} />
                   </Button>
-                </FlexboxGrid.Item>
-                <FlexboxGrid.Item>
+                </div>
+                <div>
                   <Button appearance="link" onClick={reload} style={{ padding: '4px' }} title={formatMessage({ id: 'timeline.reload' })}>
                     <Icon as={BsArrowClockwise} />
                   </Button>
-                </FlexboxGrid.Item>
-                <FlexboxGrid.Item>
+                </div>
+                <div>
                   <Whisper
                     trigger="click"
                     placement="bottomEnd"
@@ -346,13 +331,13 @@ const Notifications: React.FC<Props> = props => {
                       <Icon as={BsSliders} />
                     </Button>
                   </Whisper>
-                </FlexboxGrid.Item>
-                <FlexboxGrid.Item style={{ paddingRight: '8px', height: '20px' }}>
+                </div>
+                <div style={{ paddingRight: '8px', height: '20px' }}>
                   <Avatar circle src={FailoverImg(account ? account.avatar : null)} size="xs" title={account ? account.username : ''} />
-                </FlexboxGrid.Item>
-              </FlexboxGrid>
-            </FlexboxGrid.Item>
-          </FlexboxGrid>
+                </div>
+              </div>
+            </div>
+          </div>
         </Header>
 
         {loading ? (
@@ -450,7 +435,7 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
   return (
     <Popover ref={ref} style={{ opacity: 1 }}>
       <div style={{ display: 'flex', flexDirection: 'column', width: '220px' }}>
-        <label>
+        <label style={{ padding: '8px 0' }}>
           <FormattedMessage id="timeline.settings.column_width" />
         </label>
         <RadioGroup inline value={props.timeline.column_width} onChange={value => updateColumnWidth(props.timeline, value.toString())}>
@@ -460,24 +445,24 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
           <Radio value="lg">lg</Radio>
         </RadioGroup>
         <Divider style={{ margin: '16px 0' }} />
-        <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>
             <Button appearance="link" size="xs" onClick={() => removeTimeline(props.timeline)}>
               <Icon as={BsX} style={{ paddingBottom: '2px', fontSize: '1.4em' }} />
               <span>
                 <FormattedMessage id="timeline.settings.unpin" />
               </span>
             </Button>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item>
+          </div>
+          <div>
             <Button appearance="link" size="xs" onClick={() => switchLeftTimeline(props.timeline)}>
               <Icon as={BsChevronLeft} />
             </Button>
             <Button appearance="link" size="xs" onClick={() => switchRightTimeline(props.timeline)}>
               <Icon as={BsChevronRight} />
             </Button>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </div>
+        </div>
       </div>
     </Popover>
   )

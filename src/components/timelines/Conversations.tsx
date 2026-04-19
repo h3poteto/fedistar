@@ -2,22 +2,7 @@ import { Icon } from '@rsuite/icons'
 import { invoke } from '@tauri-apps/api/core'
 import { useRef, forwardRef, useState, useEffect, useCallback } from 'react'
 import { BsEnvelope, BsSliders, BsX, BsChevronLeft, BsChevronRight } from 'react-icons/bs'
-import {
-  Avatar,
-  Container,
-  Content,
-  FlexboxGrid,
-  Header,
-  List,
-  Whisper,
-  Popover,
-  Button,
-  Loader,
-  Divider,
-  RadioGroup,
-  Radio,
-  useToaster
-} from 'rsuite'
+import { Avatar, Container, Content, Header, List, Whisper, Popover, Button, Loader, Divider, RadioGroup, Radio, useToaster } from 'rsuite'
 import generator, { MegalodonInterface, Entity } from 'megalodon'
 import parse from 'parse-link-header'
 
@@ -149,11 +134,11 @@ const Conversations: React.FC<Props> = props => {
     <div style={{ width: columnWidth(props.timeline.column_width), minWidth: columnWidth(props.timeline.column_width), margin: '0 4px' }}>
       <Container style={{ height: 'calc(100% - 8px)' }}>
         <Header style={{ backgroundColor: 'var(--rs-bg-card)' }}>
-          <FlexboxGrid align="middle" justify="space-between">
-            <FlexboxGrid.Item style={{ width: 'calc(100% - 80px)' }}>
-              <FlexboxGrid align="middle" onClick={backToTop} style={{ cursor: 'pointer' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ width: 'calc(100% - 80px)' }}>
+              <div onClick={backToTop} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
                 {/** icon **/}
-                <FlexboxGrid.Item
+                <div
                   style={{
                     lineHeight: '48px',
                     fontSize: '18px',
@@ -164,9 +149,9 @@ const Conversations: React.FC<Props> = props => {
                   }}
                 >
                   <Icon as={BsEnvelope} />
-                </FlexboxGrid.Item>
+                </div>
                 {/** name **/}
-                <FlexboxGrid.Item
+                <div
                   style={{
                     lineHeight: '48px',
                     fontSize: '18px',
@@ -180,12 +165,12 @@ const Conversations: React.FC<Props> = props => {
                 >
                   {timelineName(props.timeline.kind, props.timeline.name, formatMessage)}
                   <span style={{ fontSize: '14px', color: 'var(--rs-text-secondary)' }}>@{props.server.domain}</span>
-                </FlexboxGrid.Item>
-              </FlexboxGrid>
-            </FlexboxGrid.Item>
-            <FlexboxGrid.Item style={{ width: '80px' }}>
-              <FlexboxGrid align="middle" justify="end">
-                <FlexboxGrid.Item>
+                </div>
+              </div>
+            </div>
+            <div style={{ width: '80px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                <div>
                   <Whisper
                     trigger="click"
                     placement="bottomEnd"
@@ -201,13 +186,13 @@ const Conversations: React.FC<Props> = props => {
                       <Icon as={BsSliders} />
                     </Button>
                   </Whisper>
-                </FlexboxGrid.Item>
-                <FlexboxGrid.Item style={{ paddingRight: '8px', height: '20px' }}>
+                </div>
+                <div style={{ paddingRight: '8px', height: '20px' }}>
                   <Avatar circle src={FailoverImg(account ? account.avatar : null)} size="xs" title={account ? account.username : ''} />
-                </FlexboxGrid.Item>
-              </FlexboxGrid>
-            </FlexboxGrid.Item>
-          </FlexboxGrid>
+                </div>
+              </div>
+            </div>
+          </div>
         </Header>
 
         {loading ? (
@@ -266,7 +251,7 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
   return (
     <Popover ref={ref} style={{ opacity: 1 }}>
       <div style={{ display: 'flex', flexDirection: 'column', width: '220px' }}>
-        <label>
+        <label style={{ padding: '8xp 0' }}>
           <FormattedMessage id="timeline.settings.column_width" />
         </label>
         <RadioGroup inline value={props.timeline.column_width} onChange={value => updateColumnWidth(props.timeline, value.toString())}>
@@ -276,24 +261,24 @@ const OptionPopover = forwardRef<HTMLDivElement, { timeline: Timeline; close: ()
           <Radio value="lg">lg</Radio>
         </RadioGroup>
         <Divider style={{ margin: '16px 0' }} />
-        <FlexboxGrid justify="space-between">
-          <FlexboxGrid.Item>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>
             <Button appearance="link" size="xs" onClick={() => removeTimeline(props.timeline)}>
               <Icon as={BsX} style={{ paddingBottom: '2px', fontSize: '1.4em' }} />
               <span>
                 <FormattedMessage id="timeline.settings.unpin" />
               </span>
             </Button>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item>
+          </div>
+          <div>
             <Button appearance="link" size="xs" onClick={() => switchLeftTimeline(props.timeline)}>
               <Icon as={BsChevronLeft} />
             </Button>
             <Button appearance="link" size="xs" onClick={() => switchRightTimeline(props.timeline)}>
               <Icon as={BsChevronRight} />
             </Button>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </div>
+        </div>
       </div>
     </Popover>
   )
