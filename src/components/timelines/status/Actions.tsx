@@ -388,11 +388,11 @@ const detailMenu = (props: DetailMenuProps, ref: React.RefCallback<HTMLElement>)
             <FormattedMessage id="timeline.actions.detail.delete" />
           </Dropdown.Item>
         )}
-        <Dropdown.Separator />
+        <Dropdown.Separator style={{ backgroundColor: 'var(--rs-dropdown-header-text)' }} />
         <Dropdown.Item disabled={props.disabled} eventKey="report">
           <FormattedMessage id="timeline.actions.detail.report" values={{ user: `@${status.account.username}` }} />
         </Dropdown.Item>
-        <Dropdown.Separator />
+        <Dropdown.Separator style={{ backgroundColor: 'var(--rs-dropdown-header-text)' }} />
         <Dropdown.Item eventKey="from_other_account">
           <FormattedMessage id="timeline.actions.detail.from_other_account" />
         </Dropdown.Item>

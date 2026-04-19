@@ -427,7 +427,7 @@ const profileMenu = (
         </Dropdown.Item>
         {relationship && (
           <>
-            <Dropdown.Separator />
+            <Dropdown.Separator style={{ backgroundColor: 'var(--rs-dropdown-header-text)' }} />
             <Dropdown.Item eventKey="mute" disabled={myself.acct === user.acct}>
               {relationship.muting ? (
                 <FormattedMessage id="detail.profile.unmute" values={{ user: `@${user.username}` }} />
@@ -442,13 +442,13 @@ const profileMenu = (
                 <FormattedMessage id="detail.profile.block" values={{ user: `@${user.username}` }} />
               )}
             </Dropdown.Item>
-            <Dropdown.Separator />
+            <Dropdown.Separator style={{ backgroundColor: 'var(--rs-dropdown-header-text)' }} />
             <Dropdown.Item eventKey="list_management">
               <FormattedMessage id="detail.profile.list_management" />
             </Dropdown.Item>
             {domain && (
               <>
-                <Dropdown.Separator />
+                <Dropdown.Separator style={{ backgroundColor: 'var(--rs-dropdown-header-text)' }} />
                 <Dropdown.Item eventKey="domain_block" disabled={myself.acct === user.acct}>
                   {relationship.domain_blocking ? (
                     <FormattedMessage id="detail.profile.unblock_domain" values={{ server: domain }} />

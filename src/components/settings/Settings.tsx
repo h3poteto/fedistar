@@ -1,7 +1,7 @@
 import { invoke } from '@tauri-apps/api/core'
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { NumberInput, Modal, Panel, Form, Schema, ButtonToolbar, Button, InputPicker, Checkbox, Text } from 'rsuite'
+import { NumberInput, Modal, Form, Schema, ButtonToolbar, Button, InputPicker, Checkbox, Text } from 'rsuite'
 import { Settings as SettingsType, ThemeType } from 'src/entities/settings'
 import { localeType } from 'src/i18n'
 
