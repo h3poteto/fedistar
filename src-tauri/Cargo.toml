@@ -32,7 +32,7 @@ once_cell = "1.21.4"
 rust-i18n = "3.1.5"
 base64 = "0.22.1"
 tauri-plugin-window-state = { version = "2.4.1" }
-open = "5.3.3"
+open = "5.3.4"
 font-kit = "0.14.3"
 tauri-plugin-dialog = "2.6.0"
 tauri-plugin-fs = "2.4.5"
