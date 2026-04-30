@@ -143,7 +143,7 @@ const Actions: React.FC<Props> = props => {
   }
 
   const EmojiPicker = forwardRef<HTMLDivElement>((prop, ref) => (
-    <div ref={ref} {...prop} style={{ position: 'absolute' }}>
+    <Popover ref={ref} {...prop}>
       <Picker
         data={data}
         custom={props.customEmojis}
@@ -154,7 +154,7 @@ const Actions: React.FC<Props> = props => {
         theme={theme === 'high-contrast' ? 'dark' : theme}
         locale={simpleLocale}
       />
-    </div>
+    </Popover>
   ))
 
   const quoteApproved = (status: Entity.Status): boolean => {
