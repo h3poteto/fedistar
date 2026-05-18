@@ -1445,7 +1445,7 @@ dependencies = [
  "directories",
  "font-kit",
  "futures",
- "markup5ever 0.14.1",
+ "markup5ever 0.39.0",
  "megalodon",
  "once_cell",
  "open",
