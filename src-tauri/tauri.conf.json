@@ -31,11 +31,7 @@
     "shortDescription": "Multi-column Fediverse client for desktop",
     "linux": {
       "deb": {
-        "depends": [],
-        "recommends": ["xwayland"]
-      },
-      "rpm": {
-        "recommends": ["xorg-x11-server-Xwayland"]
+        "depends": []
       }
     }
   },
