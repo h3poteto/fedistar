@@ -255,6 +255,11 @@
         "text": "¿Seguro que quieres impulsar esta publicación?",
         "reblog": "Impulsar",
         "cancel": "Cancelar"
+      },
+      "confirm_delete": {
+        "text": "Are you sure you want to delete this post?",
+        "delete": "Delete",
+        "cancel": "Cancel"
       }
     },
     "status": {
@@ -273,7 +278,7 @@
       "left": "restante"
     },
     "quote": {
-      "shallow_quote": "Quoted post"
+      "shallow_quote": "Mensaje Citado"
     },
     "new": "Añadir una nueva línea de tiempo",
     "home": "Inicio",
