@@ -1,6 +1,6 @@
 import { open } from '@tauri-apps/plugin-shell'
 import { writeText } from '@tauri-apps/plugin-clipboard-manager'
-import { useToaster, Popover, Whisper, IconButton, Dropdown } from 'rsuite'
+import { useToaster, Popover, Whisper, IconButton, Dropdown, Modal, Button } from 'rsuite'
 import {
   BsChat,
   BsEmojiSmile,
@@ -63,6 +63,7 @@ const Actions: React.FC<Props> = props => {
   const [favouriteDeactivating, setFavouriteDeactivating] = useState<boolean>(false)
   const [reblogActivating, setReblogActivating] = useState<boolean>(false)
   const [reblogDeactivating, setReblogDeactivating] = useState<boolean>(false)
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState<boolean>(false)
 
   const toast = useToaster()
   const emojiPickerRef = useRef(null)
@@ -272,9 +273,7 @@ const Actions: React.FC<Props> = props => {
                     props.setShowEdit(current => !current)
                   },
                   onDelete: () => {
-                    // After after deleted, streaming will receive a delete event.
-                    // So we don't need update parent timelines, the delete event will be handled.
-                    client.deleteStatus(props.status.id)
+                    setDeleteConfirmOpen(true)
                   },
                   onReport: () => {
                     props.openReport()
@@ -290,6 +289,27 @@ const Actions: React.FC<Props> = props => {
             <IconButton appearance="link" icon={<Icon as={BsThreeDots} />} title={formatMessage({ id: 'timeline.actions.detail.title' })} />
           </Whisper>
         </div>
+        <Modal backdrop="static" role="alertdialog" open={deleteConfirmOpen} onClose={() => setDeleteConfirmOpen(false)} size="xs">
+          <Modal.Body>
+            <FormattedMessage id="timeline.actions.confirm_delete.text" />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              appearance="primary"
+              type="submit"
+              onClick={() => {
+                // After deleted, streaming will receive a delete event.
+                // So we don't need update parent timelines, the delete event will be handled.
+                client.deleteStatus(props.status.id)
+              }}
+            >
+              <FormattedMessage id="timeline.actions.confirm_delete.delete" />
+            </Button>
+            <Button onClick={() => setDeleteConfirmOpen(false)}>
+              <FormattedMessage id="timeline.actions.confirm_delete.cancel" />
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   )
