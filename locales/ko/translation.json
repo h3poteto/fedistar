@@ -255,6 +255,11 @@
         "text": "이 게시물을 부스트 하시겠습니까?",
         "reblog": "부스트",
         "cancel": "취소"
+      },
+      "confirm_delete": {
+        "text": "Are you sure you want to delete this post?",
+        "delete": "Delete",
+        "cancel": "Cancel"
       }
     },
     "status": {
