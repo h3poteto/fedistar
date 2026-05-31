@@ -103,8 +103,8 @@
         }
       },
       "behavior": {
-        "title": "Behavior",
-        "confirm_reblog": "Confirm before boosting"
+        "title": "行为",
+        "confirm_reblog": "转发前确认"
       },
       "save": "保存",
       "close": "关闭",
@@ -131,7 +131,7 @@
       "unlisted": "不公开",
       "private": "仅关注者",
       "direct": "私信",
-      "local": "Local"
+      "local": "本地"
     },
     "spoiler": {
       "placeholder": "在此写下您的警告"
@@ -158,9 +158,9 @@
     },
     "cancel": "取消",
     "post": "发布",
-    "edit": "Edit",
-    "reply": "Reply",
-    "quote": "Quote",
+    "edit": "编辑",
+    "reply": "回复",
+    "quote": "引用",
     "edit_attachment": {
       "title": "编辑媒体",
       "label": "为视障人士添加描述",
@@ -185,8 +185,8 @@
       "title": "设置",
       "unpin": "取消置顶",
       "column_width": "列宽",
-      "show_boosts": "Show boosts",
-      "show_replies": "Show replies"
+      "show_boosts": "显示转发",
+      "show_replies": "显示回复"
     },
     "mark_as_read": "标为已读",
     "notification": {
@@ -238,7 +238,7 @@
     "actions": {
       "reply": "回复",
       "reblog": "转发",
-      "quote": "Quote",
+      "quote": "引用",
       "favourite": "收藏",
       "emoji_reaction": "表情回应",
       "bookmark": "书签",
@@ -252,14 +252,14 @@
         "from_other_account": "用其它账号回应"
       },
       "confirm_reblog": {
-        "text": "Are you sure you want to boost this post?",
-        "reblog": "Boost",
-        "cancel": "Cancel"
+        "text": "确定要转发此帖子吗？",
+        "reblog": "转发",
+        "cancel": "取消"
       },
       "confirm_delete": {
-        "text": "Are you sure you want to delete this post?",
-        "delete": "Delete",
-        "cancel": "Cancel"
+        "text": "确定要删除此帖子吗？",
+        "delete": "删除",
+        "cancel": "取消"
       }
     },
     "status": {
@@ -278,7 +278,7 @@
       "left": "剩余"
     },
     "quote": {
-      "shallow_quote": "Quoted post"
+      "shallow_quote": "引用的帖子"
     },
     "new": "添加新的时间线",
     "home": "主页",
