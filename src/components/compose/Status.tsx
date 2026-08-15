@@ -438,7 +438,7 @@ const Status: React.FC<Props> = props => {
   const simpleLocale = props.locale ? props.locale.split('-')[0] : 'en'
 
   const EmojiPicker = forwardRef<HTMLDivElement>((props, ref) => (
-    <div ref={ref} {...props} style={{ position: 'absolute' }}>
+    <Popover ref={ref} {...props}>
       <Picker
         data={data}
         custom={customEmojis}
@@ -449,7 +449,7 @@ const Status: React.FC<Props> = props => {
         theme={theme === 'high-contrast' ? 'dark' : theme}
         locale={simpleLocale}
       />
-    </div>
+    </Popover>
   ))
 
   const VisibilityDropdown = ({ onClose, left, top, className }: { onClose?: any; left?: any; top?: any; className?: any }, ref: any) => {
