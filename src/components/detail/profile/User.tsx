@@ -1,6 +1,6 @@
 import { Icon } from '@rsuite/icons'
 import { Entity } from 'megalodon'
-import { Avatar, Button, FlexboxGrid } from 'rsuite'
+import { Avatar, Button, HStack } from 'rsuite'
 import { BsPersonPlus, BsPersonX } from 'react-icons/bs'
 import emojify from 'src/utils/emojify'
 
@@ -14,37 +14,33 @@ type Props = {
 const User: React.FC<Props> = props => {
   const { user, relationship } = props
   return (
-    <FlexboxGrid align="middle">
+    <HStack>
       {/** icon **/}
-      <FlexboxGrid.Item colspan={4}>
-        <div style={{ margin: '6px' }}>
-          <Avatar src={user.avatar} />
-        </div>
-      </FlexboxGrid.Item>
+      <div style={{ margin: '6px' }}>
+        <Avatar src={user.avatar} />
+      </div>
       {/** name **/}
-      <FlexboxGrid.Item colspan={16}>
+      <HStack.Item grow={1} style={{ overflow: 'hidden' }}>
         <div>
           <span dangerouslySetInnerHTML={{ __html: emojify(user.display_name, user.emojis) }} />
         </div>
         <div>
           <span style={{ color: 'var(--rs-text-tertiary)' }}>@{user.acct}</span>
         </div>
-      </FlexboxGrid.Item>
+      </HStack.Item>
       {/** follow/unfollow **/}
-      <FlexboxGrid.Item colspan={4}>
-        {relationship ? (
-          relationship.following ? (
-            <Button appearance="link" size="lg" onClick={() => props.unfollow(user)}>
-              <Icon as={BsPersonX} style={{ fontSize: '1.2em' }} />
-            </Button>
-          ) : (
-            <Button appearance="link" size="lg" onClick={() => props.follow(user)}>
-              <Icon as={BsPersonPlus} style={{ fontSize: '1.2em', color: 'var(--rs-text-tertiary)' }} />
-            </Button>
-          )
-        ) : null}
-      </FlexboxGrid.Item>
-    </FlexboxGrid>
+      {relationship ? (
+        relationship.following ? (
+          <Button appearance="link" size="lg" onClick={() => props.unfollow(user)}>
+            <Icon as={BsPersonX} style={{ fontSize: '1.2em' }} />
+          </Button>
+        ) : (
+          <Button appearance="link" size="lg" onClick={() => props.follow(user)}>
+            <Icon as={BsPersonPlus} style={{ fontSize: '1.2em', color: 'var(--rs-text-tertiary)' }} />
+          </Button>
+        )
+      ) : null}
+    </HStack>
   )
 }
 

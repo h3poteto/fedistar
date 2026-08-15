@@ -1,6 +1,6 @@
 import { MouseEventHandler, useState } from 'react'
 import { Entity, MegalodonInterface } from 'megalodon'
-import { Avatar, Button, FlexboxGrid, toaster, Notification } from 'rsuite'
+import { Avatar, Button, HStack, toaster, Notification } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsStar, BsArrowRepeat, BsMenuUp, BsHouseDoor, BsPaperclip, BsPencil } from 'react-icons/bs'
 import { open } from '@tauri-apps/plugin-shell'
@@ -249,22 +249,18 @@ const Reaction: React.FC<Props> = props => {
   return (
     <div>
       {/** action **/}
-      <FlexboxGrid align="middle" style={{ paddingRight: '8px' }}>
-        <FlexboxGrid.Item colspan={20}>
-          <div style={{ display: 'flex', alignItems: 'middle' }}>
-            {/** icon **/}
-            <div style={{ paddingRight: '4px', paddingLeft: '8px', width: '32px', boxSizing: 'border-box' }}>
-              {actionIcon(props.notification)}
-            </div>
-            <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: 'calc(100% - 32px)' }}>
-              {actionText(props.notification, props.setAccountDetail)}
-            </div>
-          </div>
-        </FlexboxGrid.Item>
-        <FlexboxGrid.Item colspan={4} style={{ textAlign: 'right', color: 'var(--rs-text-secondary)' }}>
+      <HStack style={{ paddingRight: '8px' }}>
+        {/** icon **/}
+        <div style={{ paddingRight: '4px', paddingLeft: '8px', width: '32px', boxSizing: 'border-box' }}>
+          {actionIcon(props.notification)}
+        </div>
+        <HStack.Item grow={1} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {actionText(props.notification, props.setAccountDetail)}
+        </HStack.Item>
+        <div style={{ whiteSpace: 'nowrap', color: 'var(--rs-text-secondary)' }}>
           <Time time={props.notification.created_at} />
-        </FlexboxGrid.Item>
-      </FlexboxGrid>
+        </div>
+      </HStack>
       {/** body **/}
       <div style={{ display: 'flex', color: 'var(--rs-text-tertiary)' }}>
         {/** icon **/}
@@ -280,17 +276,17 @@ const Reaction: React.FC<Props> = props => {
         {/** status **/}
         <div style={{ paddingRight: '8px', width: 'calc(100% - 56px)', boxSizing: 'border-box' }}>
           <div className="metadata">
-            <FlexboxGrid>
+            <HStack>
               {/** account name **/}
-              <FlexboxGrid.Item colspan={18} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <HStack.Item grow={1} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
                 <span>@{status.account.acct}</span>
-              </FlexboxGrid.Item>
+              </HStack.Item>
               {/** timestamp **/}
-              <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', cursor: 'pointer' }}>
+              <div style={{ whiteSpace: 'nowrap', cursor: 'pointer' }}>
                 <Time time={status.created_at} onClick={openStatus} />
-              </FlexboxGrid.Item>
-            </FlexboxGrid>
+              </div>
+            </HStack>
           </div>
           <Body status={status} onClick={statusClicked} spoilered={spoilered} setSpoilered={setSpoilered} />
           {!spoilered && (

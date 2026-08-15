@@ -3,7 +3,7 @@ import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
 import { BsCheck2, BsX } from 'react-icons/bs'
 import { FormattedMessage } from 'react-intl'
-import { Avatar, Button, FlexboxGrid, Input, List, Modal, InputPicker } from 'rsuite'
+import { Avatar, Button, HStack, Input, List, Modal, InputPicker } from 'rsuite'
 import emojify from 'src/utils/emojify'
 
 type Props = {
@@ -83,28 +83,24 @@ export default function ListMemberships(props: Props) {
           <List>
             {accounts.map((account, index) => (
               <List.Item key={index} style={{ padding: 0 }}>
-                <FlexboxGrid align="middle">
+                <HStack>
                   {/** icon **/}
-                  <FlexboxGrid.Item colspan={4}>
-                    <div style={{ margin: '6px' }}>
-                      <Avatar src={account.avatar} />
-                    </div>
-                  </FlexboxGrid.Item>
+                  <div style={{ margin: '6px' }}>
+                    <Avatar src={account.avatar} />
+                  </div>
                   {/** name **/}
-                  <FlexboxGrid.Item colspan={17}>
+                  <HStack.Item grow={1} style={{ overflow: 'hidden' }}>
                     <div>
                       <span dangerouslySetInnerHTML={{ __html: emojify(account.display_name, account.emojis) }} />
                     </div>
                     <div>
                       <span style={{ color: 'var(--rs-text-tertiary)' }}>@{account.acct}</span>
                     </div>
-                  </FlexboxGrid.Item>
-                  <FlexboxGrid.Item colspan={3}>
-                    <Button appearance="link" size="sm" onClick={() => remove(account)}>
-                      <Icon as={BsX} style={{ fontSize: '1.4em', color: 'var(--rs-text-tertiary)' }} />
-                    </Button>
-                  </FlexboxGrid.Item>
-                </FlexboxGrid>
+                  </HStack.Item>
+                  <Button appearance="link" size="sm" onClick={() => remove(account)}>
+                    <Icon as={BsX} style={{ fontSize: '1.4em', color: 'var(--rs-text-tertiary)' }} />
+                  </Button>
+                </HStack>
               </List.Item>
             ))}
           </List>

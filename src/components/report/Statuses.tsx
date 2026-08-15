@@ -1,6 +1,6 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
-import { Avatar, Button, Checkbox, CheckboxGroup, FlexboxGrid, Loader, Modal, Placeholder } from 'rsuite'
+import { Avatar, Button, Checkbox, CheckboxGroup, HStack, Loader, Modal, Placeholder } from 'rsuite'
 import emojify from 'src/utils/emojify'
 import Time from 'src/components/utils/Time'
 import { FormattedMessage } from 'react-intl'
@@ -79,15 +79,13 @@ const Status: React.FC<StatusProps> = props => {
   return (
     <>
       {/** account **/}
-      <FlexboxGrid align="middle">
+      <HStack>
         {/** icon **/}
-        <FlexboxGrid.Item colspan={3}>
-          <div style={{ margin: '6px' }}>
-            <Avatar src={status.account.avatar} title={status.account.acct} alt={status.account.acct} />
-          </div>
-        </FlexboxGrid.Item>
+        <div style={{ margin: '6px' }}>
+          <Avatar src={status.account.avatar} title={status.account.acct} alt={status.account.acct} />
+        </div>
         {/** account name **/}
-        <FlexboxGrid.Item colspan={19}>
+        <HStack.Item grow={1} style={{ overflow: 'hidden' }}>
           <div>
             <strong>
               <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
@@ -96,12 +94,12 @@ const Status: React.FC<StatusProps> = props => {
           <div>
             <span style={{ color: 'var(--rs-text-tertiary)' }}>@{status.account.acct}</span>
           </div>
-        </FlexboxGrid.Item>
+        </HStack.Item>
         {/** timestamp **/}
-        <FlexboxGrid.Item colspan={2}>
+        <div style={{ whiteSpace: 'nowrap' }}>
           <Time time={status.created_at} />
-        </FlexboxGrid.Item>
-      </FlexboxGrid>
+        </div>
+      </HStack>
       <div className="body" style={{ marginTop: '4px' }}>
         {status.spoiler_text.length > 0 && (
           <div

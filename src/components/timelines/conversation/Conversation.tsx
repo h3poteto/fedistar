@@ -1,5 +1,5 @@
 import { Entity } from 'megalodon'
-import { Avatar, FlexboxGrid, Button, Badge } from 'rsuite'
+import { Avatar, HStack, Button, Badge } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsPaperclip } from 'react-icons/bs'
 
@@ -30,18 +30,18 @@ const Conversation: React.FC<Props> = props => {
         {/** message **/}
         <div style={{ cursor: 'pointer', width: 'calc(100% - 56px)' }}>
           <div className="metadata" onClick={() => props.selectStatus(conversation.id, conversation.last_status)}>
-            <FlexboxGrid>
+            <HStack>
               {/** account name **/}
-              <FlexboxGrid.Item colspan={18} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <HStack.Item grow={1} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 <span style={{ color: 'var(--rs-text-tertiary)' }}>With </span>
                 <span dangerouslySetInnerHTML={{ __html: emojify(account.display_name, account.emojis) }} />
-              </FlexboxGrid.Item>
+              </HStack.Item>
               {/** timestamp **/}
-              <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', color: 'var(--rs-text-tertiary)' }}>
+              <div style={{ whiteSpace: 'nowrap', color: 'var(--rs-text-tertiary)' }}>
                 {conversation.unread && <Badge color="blue" style={{ marginRight: '4px' }} />}
                 {conversation.last_status && <Time time={conversation.last_status.created_at} />}
-              </FlexboxGrid.Item>
-            </FlexboxGrid>
+              </div>
+            </HStack>
           </div>
           {conversation.last_status && (
             <Body

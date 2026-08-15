@@ -1,6 +1,6 @@
 import { HTMLAttributes, MouseEventHandler, useEffect, useState } from 'react'
 import { Entity, MegalodonInterface } from 'megalodon'
-import { FlexboxGrid, Avatar, Button, useToaster, Notification } from 'rsuite'
+import { HStack, Avatar, Button, useToaster, Notification } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsArrowRepeat, BsPin } from 'react-icons/bs'
 import { open } from '@tauri-apps/plugin-shell'
@@ -167,24 +167,24 @@ const Status: React.FC<Props> = props => {
         {/** status **/}
         <div style={{ paddingRight: '8px', width: `calc(100% - 56px)`, boxSizing: 'border-box' }}>
           <div className="metadata">
-            <FlexboxGrid>
+            <HStack>
               {/** account name **/}
-              <FlexboxGrid.Item
-                colspan={18}
+              <HStack.Item
+                grow={1}
                 style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
                 onClick={() => props.setAccountDetail(status.account.id, props.server.id, props.account?.id)}
               >
                 <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
                 <span style={{ color: 'var(--rs-text-tertiary)' }}>@{status.account.acct}</span>
-              </FlexboxGrid.Item>
+              </HStack.Item>
               {/** timestamp **/}
-              <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', color: 'var(--rs-text-tertiary)' }}>
+              <div style={{ whiteSpace: 'nowrap', color: 'var(--rs-text-tertiary)' }}>
                 <Time
                   time={status.created_at}
                   onClick={() => props.setStatusDetail && props.setStatusDetail(props.status.id, props.server.id, props.account?.id)}
                 />
-              </FlexboxGrid.Item>
-            </FlexboxGrid>
+              </div>
+            </HStack>
           </div>
           <Body status={status} onClick={statusClicked} spoilered={spoilered} setSpoilered={setSpoilered} />
           {!spoilered && (

@@ -5,7 +5,8 @@ import {
   Whisper,
   IconButton,
   List,
-  FlexboxGrid,
+  Row,
+  Col,
   Loader,
   Container,
   Header,
@@ -52,64 +53,64 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
   return (
     <>
       <List.Item index={3} onClick={() => select('home', 'Home', null)} style={{ cursor: 'pointer' }}>
-        <FlexboxGrid align="middle">
-          <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Row align="middle" gutter="0px">
+          <Col span={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Icon as={BsHouseDoor} />
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={20}>
+          </Col>
+          <Col span={20}>
             <div>
               <FormattedMessage id="timeline.home" />
             </div>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </Col>
+        </Row>
       </List.Item>
       <List.Item index={4} onClick={() => select('notifications', 'Notifications', null)} style={{ cursor: 'pointer' }}>
-        <FlexboxGrid align="middle">
-          <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Row align="middle" gutter="0px">
+          <Col span={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Icon as={BsBell} />
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={20}>
+          </Col>
+          <Col span={20}>
             <div>
               <FormattedMessage id="timeline.notifications" />
             </div>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </Col>
+        </Row>
       </List.Item>
       <List.Item index={5} onClick={() => select('favourites', 'Favourites', null)} style={{ cursor: 'pointer' }}>
-        <FlexboxGrid align="middle">
-          <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Row align="middle" gutter="0px">
+          <Col span={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Icon as={BsStar} />
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={20}>
+          </Col>
+          <Col span={20}>
             <div>
               <FormattedMessage id="timeline.favourites" />
             </div>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </Col>
+        </Row>
       </List.Item>
       <List.Item index={6} onClick={() => select('bookmarks', 'Bookmarks', null)} style={{ cursor: 'pointer' }}>
-        <FlexboxGrid align="middle">
-          <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Row align="middle" gutter="0px">
+          <Col span={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Icon as={BsBookmark} />
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={20}>
+          </Col>
+          <Col span={20}>
             <div>
               <FormattedMessage id="timeline.bookmarks" />
             </div>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </Col>
+        </Row>
       </List.Item>
       <List.Item index={7} onClick={() => select('direct', 'Direct messages', null)} style={{ cursor: 'pointer' }}>
-        <FlexboxGrid align="middle">
-          <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Row align="middle" gutter="0px">
+          <Col span={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Icon as={BsEnvelope} />
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={20}>
+          </Col>
+          <Col span={20}>
             <div>
               <FormattedMessage id="timeline.direct" />
             </div>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </Col>
+        </Row>
       </List.Item>
       {loading && (
         <List.Item index={8}>
@@ -118,14 +119,14 @@ const AuthorizedTimelines: React.FC<AuthorizedProps> = props => {
       )}
       {lists.map((list, index) => (
         <List.Item key={index} index={8 + index} onClick={() => select('list', list.title, list.id)} style={{ cursor: 'pointer' }}>
-          <FlexboxGrid align="middle">
-            <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Row align="middle" gutter="0px">
+            <Col span={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <Icon as={BsListUl} />
-            </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={20}>
+            </Col>
+            <Col span={20}>
               <div>{list.title}</div>
-            </FlexboxGrid.Item>
-          </FlexboxGrid>
+            </Col>
+          </Row>
         </List.Item>
       ))}
     </>
@@ -253,28 +254,28 @@ const New: React.FC<Props> = props => {
         <Content className="timeline-scrollable" style={{ height: 'calc(100% - 54px)' }}>
           <List hover>
             <List.Item index={1} onClick={() => select('local', 'Local', null)} style={{ cursor: 'pointer' }}>
-              <FlexboxGrid align="middle">
-                <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <Row align="middle" gutter="0px">
+                <Col span={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                   <Icon as={BsPeople} />
-                </FlexboxGrid.Item>
-                <FlexboxGrid.Item colspan={20}>
+                </Col>
+                <Col span={20}>
                   <div>
                     <FormattedMessage id="timeline.local" />
                   </div>
-                </FlexboxGrid.Item>
-              </FlexboxGrid>
+                </Col>
+              </Row>
             </List.Item>
             <List.Item index={2} onClick={() => select('public', 'Federated', null)} style={{ cursor: 'pointer' }}>
-              <FlexboxGrid align="middle">
-                <FlexboxGrid.Item colspan={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <Row align="middle" gutter="0px">
+                <Col span={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                   <Icon as={BsGlobe2} />
-                </FlexboxGrid.Item>
-                <FlexboxGrid.Item colspan={20}>
+                </Col>
+                <Col span={20}>
                   <div>
                     <FormattedMessage id="timeline.public" />
                   </div>
-                </FlexboxGrid.Item>
-              </FlexboxGrid>
+                </Col>
+              </Row>
             </List.Item>
             {server.account_id && <AuthorizedTimelines server={server} select={select} />}
           </List>

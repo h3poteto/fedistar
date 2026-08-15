@@ -1,5 +1,5 @@
 import { Entity } from 'megalodon'
-import { Avatar, FlexboxGrid, Panel } from 'rsuite'
+import { Avatar, HStack, Panel } from 'rsuite'
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
 import FailoverImg from 'src/utils/failoverImg'
@@ -44,11 +44,11 @@ const Quote: React.FC<Props> = props => {
             />
           </div>
           <div style={{ width: `calc(100% - 38px)` }}>
-            <FlexboxGrid justify="space-between">
-              <FlexboxGrid.Item
-                colspan={18}
+            <HStack align="flex-start">
+              <HStack.Item
+                grow={1}
                 onClick={() => props.setAccountDetail(quote.quoted_status.account.id, props.server.id)}
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: 'pointer', overflow: 'hidden' }}
               >
                 <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   <span
@@ -60,12 +60,12 @@ const Quote: React.FC<Props> = props => {
                 <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   <span style={{ fontSize: '0.8rem', color: 'var(--rs-text-tertiary)' }}>@{quote.quoted_status.account.acct}</span>
                 </div>
-              </FlexboxGrid.Item>
+              </HStack.Item>
               {/** timestamp **/}
-              <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', color: 'var(--rs-text-tertiary)', paddingRight: '4px' }}>
+              <div style={{ whiteSpace: 'nowrap', color: 'var(--rs-text-tertiary)', paddingRight: '4px' }}>
                 <Time time={quote.quoted_status.created_at} onClick={statusClicked} />
-              </FlexboxGrid.Item>
-            </FlexboxGrid>
+              </div>
+            </HStack>
           </div>
         </div>
         <div style={{ padding: '0 4px 4px 4px' }}>

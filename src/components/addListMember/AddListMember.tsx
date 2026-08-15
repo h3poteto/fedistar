@@ -2,7 +2,7 @@ import { Icon } from '@rsuite/icons'
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useCallback, useEffect, useState } from 'react'
 import { BsListUl, BsPlusLg, BsXLg } from 'react-icons/bs'
-import { Modal, FlexboxGrid, Avatar, List, Button } from 'rsuite'
+import { Modal, HStack, Avatar, List, Button } from 'rsuite'
 import emojify from 'src/utils/emojify'
 
 type Props = {
@@ -61,23 +61,21 @@ export default function AddListMember(props: Props) {
       {user && (
         <Modal size="xs" open={props.opened} onClose={() => close()}>
           <Modal.Header>
-            <FlexboxGrid align="middle">
+            <HStack>
               {/** icon **/}
-              <FlexboxGrid.Item colspan={4}>
-                <div style={{ margin: '6px' }}>
-                  <Avatar src={user.avatar} />
-                </div>
-              </FlexboxGrid.Item>
+              <div style={{ margin: '6px' }}>
+                <Avatar src={user.avatar} />
+              </div>
               {/** name **/}
-              <FlexboxGrid.Item colspan={20}>
+              <HStack.Item grow={1} style={{ overflow: 'hidden' }}>
                 <div>
                   <span dangerouslySetInnerHTML={{ __html: emojify(user.display_name, user.emojis) }} />
                 </div>
                 <div>
                   <span style={{ color: 'var(--rs-text-tertiary)' }}>@{user.acct}</span>
                 </div>
-              </FlexboxGrid.Item>
-            </FlexboxGrid>
+              </HStack.Item>
+            </HStack>
           </Modal.Header>
           <Modal.Body>
             <List>

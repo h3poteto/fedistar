@@ -2,7 +2,7 @@ import { Entity, MegalodonInterface } from 'megalodon'
 import Image from 'next/image'
 import { forwardRef, useEffect, useRef, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Button, ButtonToolbar, FlexboxGrid, Form, Input, Modal, Schema } from 'rsuite'
+import { Button, ButtonToolbar, Col, Form, Input, Modal, Row, Schema } from 'rsuite'
 
 type Props = {
   attachment: Entity.Attachment | null
@@ -70,8 +70,8 @@ export default function EditMedia(props: Props) {
         <FormattedMessage id="compose.edit_attachment.title" />
       </Modal.Header>
       <Modal.Body>
-        <FlexboxGrid>
-          <FlexboxGrid.Item colspan={8}>
+        <Row gutter="0px">
+          <Col span={8}>
             <Form fluid model={model} onChange={setFormValue} formValue={formValue} ref={formRef}>
               <Form.Group controlId="description">
                 <Form.Label>
@@ -88,13 +88,13 @@ export default function EditMedia(props: Props) {
                 </ButtonToolbar>
               </Form.Group>
             </Form>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={16}>
+          </Col>
+          <Col span={16}>
             <div style={{ height: '320px', width: '320px' }}>
               {attachment && <Image src={attachment.preview_url} fill alt="" style={{ objectFit: 'contain' }} />}
             </div>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </Col>
+        </Row>
       </Modal.Body>
     </Modal>
   )
