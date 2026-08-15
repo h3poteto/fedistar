@@ -1,4 +1,4 @@
-import { Button, FlexboxGrid, Modal } from 'rsuite'
+import { Button, HStack, Modal } from 'rsuite'
 import Image from 'next/image'
 import { Entity } from 'megalodon'
 import { ReactElement, useCallback, useEffect, useState } from 'react'
@@ -68,21 +68,17 @@ const Media: React.FC<Props> = props => {
     >
       <Modal.Header></Modal.Header>
       <Modal.Body style={{ height: '100%' }}>
-        <FlexboxGrid style={{ height: '100%' }} align="middle">
-          <FlexboxGrid.Item colspan={2}>
-            <Button appearance="link" size="lg" disabled={index < 1} onClick={previous}>
-              <Icon as={BsChevronLeft} style={{ fontSize: '1.5em' }} />
-            </Button>
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={20} style={{ position: 'relative', height: '100%' }}>
+        <HStack style={{ height: '100%' }}>
+          <Button appearance="link" size="lg" disabled={index < 1} onClick={previous}>
+            <Icon as={BsChevronLeft} style={{ fontSize: '1.5em' }} />
+          </Button>
+          <HStack.Item grow={1} style={{ position: 'relative', height: '100%', overflow: 'hidden' }}>
             {props.media[index] && mediaComponent(props.media[index])}
-          </FlexboxGrid.Item>
-          <FlexboxGrid.Item colspan={2}>
-            <Button appearance="link" size="lg" disabled={index >= props.media.length - 1} onClick={next}>
-              <Icon as={BsChevronRight} style={{ fontSize: '1.5em' }} />
-            </Button>
-          </FlexboxGrid.Item>
-        </FlexboxGrid>
+          </HStack.Item>
+          <Button appearance="link" size="lg" disabled={index >= props.media.length - 1} onClick={next}>
+            <Icon as={BsChevronRight} style={{ fontSize: '1.5em' }} />
+          </Button>
+        </HStack>
       </Modal.Body>
     </Modal>
   )

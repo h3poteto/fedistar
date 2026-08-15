@@ -2,7 +2,7 @@ import { Icon } from '@rsuite/icons'
 import { Entity } from 'megalodon'
 import { BsBag } from 'react-icons/bs'
 import { useIntl } from 'react-intl'
-import { Avatar, FlexboxGrid } from 'rsuite'
+import { Avatar, HStack } from 'rsuite'
 import Time from 'src/components/utils/Time'
 import emojify from 'src/utils/emojify'
 
@@ -15,20 +15,18 @@ export default function Move(props: Props) {
   return (
     <div onClick={() => props.setAccountDetail(props.notification.target)} style={{ cursor: 'pointer' }}>
       {/** action **/}
-      <FlexboxGrid style={{ paddingRight: '8px' }}>
-        <FlexboxGrid.Item colspan={20} style={{ display: 'flex', alignItems: 'middle' }}>
-          {/** icon **/}
-          <div style={{ paddingRight: '4px', paddingLeft: '8px', width: '32px', boxSizing: 'border-box' }}>
-            <Icon as={BsBag} color="cyan" />
-          </div>
-          <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: 'calc(100% - 32px)' }}>
-            {actionText(props.notification)}
-          </div>
-        </FlexboxGrid.Item>
-        <FlexboxGrid.Item colspan={4} style={{ textAlign: 'right', color: 'var(--rs-text-tertiary)' }}>
+      <HStack style={{ paddingRight: '8px' }}>
+        {/** icon **/}
+        <div style={{ paddingRight: '4px', paddingLeft: '8px', width: '32px', boxSizing: 'border-box' }}>
+          <Icon as={BsBag} color="cyan" />
+        </div>
+        <HStack.Item grow={1} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {actionText(props.notification)}
+        </HStack.Item>
+        <div style={{ whiteSpace: 'nowrap', color: 'var(--rs-text-tertiary)' }}>
           <Time time={props.notification.created_at} />
-        </FlexboxGrid.Item>
-      </FlexboxGrid>
+        </div>
+      </HStack>
       {/** body **/}
       <div style={{ display: 'flex' }}>
         <div style={{ width: '56px' }}>

@@ -1,6 +1,6 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
-import { Avatar, Button, FlexboxGrid, Loader, Modal, Placeholder } from 'rsuite'
+import { Avatar, Button, HStack, Loader, Modal, Placeholder } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsPaperclip } from 'react-icons/bs'
 import { Server } from 'src/entities/server'
@@ -128,27 +128,25 @@ function Post(props: PostProps) {
 
   return (
     <>
-      <FlexboxGrid>
+      <HStack align="flex-start">
         {/** icon **/}
-        <FlexboxGrid.Item colspan={3}>
-          <div style={{ margin: '6px' }}>
-            <Avatar src={status.account.avatar} style={{ cursor: 'pointer' }} title={status.account.acct} alt={status.account.acct} />
-          </div>
-        </FlexboxGrid.Item>
+        <div style={{ margin: '6px' }}>
+          <Avatar src={status.account.avatar} style={{ cursor: 'pointer' }} title={status.account.acct} alt={status.account.acct} />
+        </div>
         {/** status **/}
-        <FlexboxGrid.Item colspan={21} style={{ paddingRight: '8px' }}>
+        <HStack.Item grow={1} style={{ paddingRight: '8px', overflow: 'hidden' }}>
           <div className="metadata">
-            <FlexboxGrid>
+            <HStack>
               {/** account name **/}
-              <FlexboxGrid.Item colspan={18} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <HStack.Item grow={1} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 <span dangerouslySetInnerHTML={{ __html: emojify(status.account.display_name, status.account.emojis) }} />
                 <span>@{status.account.acct}</span>
-              </FlexboxGrid.Item>
+              </HStack.Item>
               {/** timestamp **/}
-              <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right' }}>
+              <div style={{ whiteSpace: 'nowrap' }}>
                 <Time time={status.created_at} />
-              </FlexboxGrid.Item>
-            </FlexboxGrid>
+              </div>
+            </HStack>
           </div>
           <Body status={status} spoilered={spoilered} setSpoilered={setSpoilered} />
           {!spoilered &&
@@ -182,8 +180,8 @@ function Post(props: PostProps) {
               confirmReblog={false}
             />
           </div>
-        </FlexboxGrid.Item>
-      </FlexboxGrid>
+        </HStack.Item>
+      </HStack>
       {showReply && (
         <div style={{ padding: '8px 12px' }}>
           <Reply
