@@ -55,7 +55,7 @@ importers:
         version: 10.3.0(debug@4.4.3(supports-color@8.1.1))
       next:
         specifier: ^16.2.6
-        version: 16.2.11(@babel/core@7.28.0(supports-color@8.1.1))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.100.0)
+        version: 16.2.11(@babel/core@7.28.0(supports-color@8.1.1))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.102.0)
       parse-link-header:
         specifier: ^2.0.0
         version: 2.0.0
@@ -133,8 +133,8 @@ importers:
         specifier: ^26.1.0
         version: 26.1.0(supports-color@8.1.1)
       sass:
-        specifier: ^1.100.0
-        version: 1.100.0
+        specifier: ^1.102.0
+        version: 1.102.0
       ts-jest:
         specifier: ^29.4.11
         version: 29.4.11(@babel/core@7.28.0(supports-color@8.1.1))(@jest/transform@30.4.1(supports-color@8.1.1))(@jest/types@30.4.1)(babel-jest@30.4.1(@babel/core@7.28.0(supports-color@8.1.1))(supports-color@8.1.1))(jest-util@30.4.1)(jest@30.4.2(@types/node@24.12.4)(supports-color@8.1.1))(typescript@5.9.3)
@@ -2818,8 +2818,8 @@ packages:
   sanitize-html@2.17.5:
     resolution: {integrity: sha512-ZmU1joGRrvoyctKIiuwUxqR6moLoU2Wk+2bMccN6f7UwhAmwYDvWziqPxRDDN2Qip62NqnIrVrT9akbL6Wretg==}
 
-  sass@1.100.0:
-    resolution: {integrity: sha512-B5j0rYMlinhhOo9tjQebMVVn0TfyXAF+wB3b2ggZUuJ/is/Y+7+JGjirAMxHZ9Z3hIP98NPfamlAkBHa1lAaXQ==}
+  sass@1.102.0:
+    resolution: {integrity: sha512-NSOyTnaQF7rTAEOtI2fwb386vL+akyiQLBZu8Na7hXCb+umJy0GAqlcMIaqACZ6Z1VgTBS4K9PG6B3IdjHGJsw==}
     engines: {node: '>=20.19.0'}
     hasBin: true
 
@@ -5999,7 +5999,7 @@ snapshots:
 
   neo-async@2.6.2: {}
 
-  next@16.2.11(@babel/core@7.28.0(supports-color@8.1.1))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.100.0):
+  next@16.2.11(@babel/core@7.28.0(supports-color@8.1.1))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(sass@1.102.0):
     dependencies:
       '@next/env': 16.2.11
       '@swc/helpers': 0.5.15
@@ -6018,7 +6018,7 @@ snapshots:
       '@next/swc-linux-x64-musl': 16.2.11
       '@next/swc-win32-arm64-msvc': 16.2.11
       '@next/swc-win32-x64-msvc': 16.2.11
-      sass: 1.100.0
+      sass: 1.102.0
       sharp: 0.34.5
     transitivePeerDependencies:
       - '@babel/core'
@@ -6359,7 +6359,7 @@ snapshots:
       parse-srcset: 1.0.2
       postcss: 8.5.26
 
-  sass@1.100.0:
+  sass@1.102.0:
     dependencies:
       chokidar: 5.0.0
       immutable: 5.1.5
