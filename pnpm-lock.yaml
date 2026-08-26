@@ -45,8 +45,8 @@ importers:
         specifier: ~2.3.5
         version: 2.3.5
       dayjs:
-        specifier: ^1.11.20
-        version: 1.11.20
+        specifier: ^1.11.23
+        version: 1.11.23
       emoji-mart:
         specifier: ^5.6.0
         version: 5.6.0
@@ -1537,11 +1537,8 @@ packages:
   date-fns@4.1.0:
     resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
 
-  dayjs@1.11.20:
-    resolution: {integrity: sha512-YbwwqR/uYpeoP4pu043q+LTDLFBLApUP6VxRihdfNTqu4ubqMlGDLd6ErXhEgsyvY0K6nCs7nggYumAN+9uEuQ==}
-
-  dayjs@1.11.21:
-    resolution: {integrity: sha512-98IT+HOahAisibz/yjKbzuOBwYcjJ7BCLPzARyHiyEBmRz4fatF+KPJszEHXsGYjUG234aH/cOjW1wwTbKUZlA==}
+  dayjs@1.11.23:
+    resolution: {integrity: sha512-QDTCU0M0MxR3hQfnlDJfwekQiaanm1ubOD231u73WBckQ/fsamwRLiE2GBz6D3a/xF1NgfiDLJjXBa1hYOYTtQ==}
 
   debug@4.4.3:
     resolution: {integrity: sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==}
@@ -4739,9 +4736,7 @@ snapshots:
 
   date-fns@4.1.0: {}
 
-  dayjs@1.11.20: {}
-
-  dayjs@1.11.21: {}
+  dayjs@1.11.23: {}
 
   debug@4.4.3(supports-color@8.1.1):
     dependencies:
@@ -5916,7 +5911,7 @@ snapshots:
 
   launder@1.7.1:
     dependencies:
-      dayjs: 1.11.21
+      dayjs: 1.11.23
 
   leven@3.1.0: {}
 
@@ -5968,7 +5963,7 @@ snapshots:
       '@badgateway/oauth2-client': 2.4.2
       '@types/ws': 8.18.1
       axios: 1.15.0(debug@4.4.3(supports-color@8.1.1))
-      dayjs: 1.11.20
+      dayjs: 1.11.23
       events: 3.3.0
       form-data: 4.0.5
       isomorphic-ws: 5.0.0(ws@8.19.0)
