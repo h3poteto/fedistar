@@ -15,7 +15,7 @@ jobs:
           node-version-file: '.tool-versions'
       - uses: pnpm/action-setup@v6
         with:
-          version: 10.34.5
+          version: 11.25.0
       - name: Install
         run: |
           pnpm install --frozen-lockfile
@@ -37,7 +37,7 @@ jobs:
           node-version-file: '.tool-versions'
       - uses: pnpm/action-setup@v6
         with:
-          version: 10.34.5
+          version: 11.25.0
       - name: Install
         run: |
           pnpm install --frozen-lockfile
