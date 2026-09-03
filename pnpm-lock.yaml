@@ -69,8 +69,8 @@ importers:
         specifier: ^5.6.0
         version: 5.6.0(react@19.2.8)
       react-intl:
-        specifier: ^10.1.2
-        version: 10.1.2(@types/react@19.2.18)(react@19.2.8)
+        specifier: ^10.1.26
+        version: 10.1.26(@types/react@19.2.18)(react@19.2.8)
       react-virtuoso:
         specifier: 4.18.11
         version: 4.18.11(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -414,17 +414,17 @@ packages:
     resolution: {integrity: sha512-+CNAzxglkrpNf/kKywqQfk74QjtceuOE7Qm+AF8miRvPF/wmmK5+OJOgVh3AVTT3RP2mH3+FOaxlE5v72owk0A==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
-  '@formatjs/fast-memoize@3.1.2':
-    resolution: {integrity: sha512-vPnriihkfK0lzoQGaXq+qXH23VsYyansRTkTgo2aTG0k1NjLFyZimFVdfj4C9JkSE5dm7CEngcQ5TTc1yAyBfQ==}
+  '@formatjs/fast-memoize@3.1.7':
+    resolution: {integrity: sha512-zXfhLpvA6T7+efdt9JLbBwZ00tT7NsBMDVnDu8rpHeNNv8KfRZAMo2gkG0k9lK/Nzc//3kJ9pImsfuJxk3KhUA==}
 
-  '@formatjs/icu-messageformat-parser@3.5.4':
-    resolution: {integrity: sha512-JVY39ROgLt+pIYngo6piyj4OVfZmXs/2FkC4wLS+ql1Eig/sGJKB7YwDO/5bkJFkfwaFAeIpgEiJc8hiYxNalw==}
+  '@formatjs/icu-messageformat-parser@3.5.17':
+    resolution: {integrity: sha512-cN9jhVqT7u0K9tix43fhjoUwL0nazyW6zsNIXs2QdPADr+nurPfYyssUiMqcSCGlPcCiqnYVxgSn7zBSuI+5Bg==}
 
-  '@formatjs/icu-skeleton-parser@2.1.4':
-    resolution: {integrity: sha512-8bSFZbrlvGX11ywMZxtgkPBt5Q8/etyts7j7j+GWpOVK1g43zwMIH3LZxk43HAtEP7L/jtZ+OZaMiFTOiBj9CA==}
+  '@formatjs/icu-skeleton-parser@2.1.11':
+    resolution: {integrity: sha512-j8cUmOJzVgkHuS0QiQ6ga76UIoLOFSAMWhs7aZJztH3aAdCOAE6vpC8KVvFB4cU10ON0y2/5oOVmPJ43s2lTwA==}
 
-  '@formatjs/intl@4.1.6':
-    resolution: {integrity: sha512-eQuZCkG7kVBIjMhLhvsRZmYnVbTHBiiM+fNxIbDg7LZ9WXcpWUISuv58baq2dov7vz3qXYtDEgJ9AODZK6idaQ==}
+  '@formatjs/intl@4.1.20':
+    resolution: {integrity: sha512-q3gaFvc1mXrl0fcSY2QKSS+WzJxpbIXs48O+QLA3UsRtIwVhazvxtLrLGKEse5Mq4U8hAYyTB6Y9buU2ZRFz/w==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -2025,8 +2025,8 @@ packages:
     resolution: {integrity: sha512-4gd7VpWNQNB4UKKCFFVcp1AVv+FMOgs9NKzjHKusc8jTMhd5eL1NqQqOpE0KzMds804/yHlglp3uxgluOqAPLw==}
     engines: {node: '>= 0.4'}
 
-  intl-messageformat@11.2.1:
-    resolution: {integrity: sha512-1gAVEUt3wEPvTqML4Fsw9klZV5j0vszQxayP/fi6gUroAc8AUHiNaisBKLWxybL1AdWq1mP07YV1q8v4N92ilQ==}
+  intl-messageformat@11.2.14:
+    resolution: {integrity: sha512-9f2VD1HFuxUvMw0RxsaP8WmMns6JRTnsNB/zghTFrp11ZktiXWwVDeZBPQchBKEmo+Gx/ZhxI7Qht7YglFD4PA==}
 
   is-array-buffer@3.0.5:
     resolution: {integrity: sha512-DDfANUiiG2wC1qawP66qlTugJeL5HyzMpfr8lLK+jMQirGzNod0B12cFB/9q838Ru27sBwfw78/rdoU7RERz6A==}
@@ -2724,11 +2724,11 @@ packages:
     peerDependencies:
       react: '*'
 
-  react-intl@10.1.2:
-    resolution: {integrity: sha512-53iYLo+Sl6Qw1+/7VJ2v7mB2A8XHYeVFRujmoo8qVvvym4/WL9COKCcXKUyCYBwKgZNghKrgyQILx7qbrsdZ/w==}
+  react-intl@10.1.26:
+    resolution: {integrity: sha512-3Sf4enrUzJqyPpH/NxIJtlwrNzuR7Cu1qey/ZxKXs3XGUxmwyAV2OZUTL4cFY3L+ebUBtkB1mf0KzpvmQ6ZfFA==}
     peerDependencies:
-      '@types/react': '19'
-      react: '19'
+      '@types/react': '>=18.0.0'
+      react: '>=18.0.0'
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -3600,19 +3600,19 @@ snapshots:
       '@eslint/core': 1.2.1
       levn: 0.4.1
 
-  '@formatjs/fast-memoize@3.1.2': {}
+  '@formatjs/fast-memoize@3.1.7': {}
 
-  '@formatjs/icu-messageformat-parser@3.5.4':
+  '@formatjs/icu-messageformat-parser@3.5.17':
     dependencies:
-      '@formatjs/icu-skeleton-parser': 2.1.4
+      '@formatjs/icu-skeleton-parser': 2.1.11
 
-  '@formatjs/icu-skeleton-parser@2.1.4': {}
+  '@formatjs/icu-skeleton-parser@2.1.11': {}
 
-  '@formatjs/intl@4.1.6':
+  '@formatjs/intl@4.1.20':
     dependencies:
-      '@formatjs/fast-memoize': 3.1.2
-      '@formatjs/icu-messageformat-parser': 3.5.4
-      intl-messageformat: 11.2.1
+      '@formatjs/fast-memoize': 3.1.7
+      '@formatjs/icu-messageformat-parser': 3.5.17
+      intl-messageformat: 11.2.14
 
   '@humanfs/core@0.19.1': {}
 
@@ -5330,10 +5330,10 @@ snapshots:
       hasown: 2.0.2
       side-channel: 1.1.0
 
-  intl-messageformat@11.2.1:
+  intl-messageformat@11.2.14:
     dependencies:
-      '@formatjs/fast-memoize': 3.1.2
-      '@formatjs/icu-messageformat-parser': 3.5.4
+      '@formatjs/fast-memoize': 3.1.7
+      '@formatjs/icu-messageformat-parser': 3.5.17
 
   is-array-buffer@3.0.5:
     dependencies:
@@ -6249,12 +6249,12 @@ snapshots:
     dependencies:
       react: 19.2.8
 
-  react-intl@10.1.2(@types/react@19.2.18)(react@19.2.8):
+  react-intl@10.1.26(@types/react@19.2.18)(react@19.2.8):
     dependencies:
-      '@formatjs/icu-messageformat-parser': 3.5.4
-      '@formatjs/intl': 4.1.6
+      '@formatjs/icu-messageformat-parser': 3.5.17
+      '@formatjs/intl': 4.1.20
       '@types/react': 19.2.18
-      intl-messageformat: 11.2.1
+      intl-messageformat: 11.2.14
       react: 19.2.8
 
   react-is@16.13.1: {}
