@@ -1572,7 +1572,7 @@ dependencies = [
 name = "fedistar"
 version = "0.0.0"
 dependencies = [
- "base64 0.22.1",
+ "base64 0.23.1",
  "directories",
  "font-kit",
  "futures",
