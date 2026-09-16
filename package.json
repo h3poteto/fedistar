@@ -49,7 +49,7 @@
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-icons": "^5.7.0",
-    "react-intl": "^10.2.1",
+    "react-intl": "^10.2.2",
     "react-virtuoso": "4.18.13",
     "rsuite": "6.2.4",
     "sanitize-html": "^2.17.7",
