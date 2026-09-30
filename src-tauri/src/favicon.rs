@@ -71,7 +71,7 @@ mod tests {
         assert!(result.is_some());
         assert_eq!(
             result,
-            Some(String::from("https://fedibird.com/favicon.ico"))
+            Some(String::from("https://fedibird.com/icons/favicon-16x16.png"))
         );
     }
 
