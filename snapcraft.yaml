@@ -55,6 +55,6 @@ parts:
       rustup default stable
       npm install -g pnpm@10.34.5
       pnpm install
-      pnpm tauri build
+      pnpm tauri build --bundles deb --verbose
       dpkg -x src-tauri/target/release/bundle/deb/*.deb $SNAPCRAFT_PART_INSTALL/
       sed -i -e "s|Icon=fedistar|Icon=/usr/share/icons/hicolor/32x32/apps/fedistar.png|g" $SNAPCRAFT_PART_INSTALL/usr/share/applications/fedistar.desktop
