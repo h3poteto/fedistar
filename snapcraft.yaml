@@ -53,7 +53,7 @@ parts:
     override-build: |
       set -eu
       rustup default stable
-      npm install -g pnpm
+      npm install -g pnpm@10.34.5
       pnpm install
       pnpm tauri build
       dpkg -x src-tauri/target/release/bundle/deb/*.deb $SNAPCRAFT_PART_INSTALL/
