@@ -40,7 +40,7 @@ tauri-plugin-os = "2.4.0"
 tauri-plugin-process = "2.4.0"
 tauri-plugin-http = "2.8.0"
 tauri-plugin-notification = "2.5.0"
-tauri-plugin-clipboard-manager = "2.4.0"
+tauri-plugin-clipboard-manager = "2.4.1"
 tauri-plugin-shell = "2.4.0"
 # We can't compile with 0.14.0 with html5ever 0.29.1.
 # We don't refer to this library directly.
