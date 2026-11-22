@@ -17,7 +17,8 @@
     "paths": {
       "@src/*": ["./src/*"]
     },
-    "types": ["node", "jest"]
+    "types": ["node", "jest"],
+    "rootDir": "./"
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
