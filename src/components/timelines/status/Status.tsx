@@ -137,7 +137,7 @@ const Status: React.FC<Props> = props => {
 
   if (
     !ignoreFilter &&
-    props.filters?.map(f => f.phrase).filter(keyword => props.status.content.toLowerCase().includes(keyword.toLowerCase())).length > 0
+    props.filters?.map(f => f.phrase).filter(keyword => status.content.toLowerCase().includes(keyword.toLowerCase())).length > 0
   ) {
     return (
       <div className="status" style={{ textAlign: 'center', paddingTop: '0.5em', paddingBottom: '0.5em' }}>
