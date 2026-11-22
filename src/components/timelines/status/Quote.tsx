@@ -1,13 +1,13 @@
 import { Entity } from 'megalodon'
 import { Avatar, HStack, Panel } from 'rsuite'
-import Time from 'src/components/utils/Time'
-import emojify from 'src/utils/emojify'
-import FailoverImg from 'src/utils/failoverImg'
+import Time from '@src/components/utils/Time'
+import emojify from '@src/utils/emojify'
+import FailoverImg from '@src/utils/failoverImg'
 import Body from './Body'
-import { Server } from 'src/entities/server'
+import { Server } from '@src/entities/server'
 import { FormattedMessage } from 'react-intl'
 import { MouseEventHandler } from 'react'
-import { Account } from 'src/entities/account'
+import { Account } from '@src/entities/account'
 
 type Props = {
   quote: Entity.QuotedStatus

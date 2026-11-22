@@ -2,7 +2,7 @@ import { Icon } from '@rsuite/icons'
 import { Entity } from 'megalodon'
 import { Avatar, Button, HStack } from 'rsuite'
 import { BsPersonPlus, BsPersonX } from 'react-icons/bs'
-import emojify from 'src/utils/emojify'
+import emojify from '@src/utils/emojify'
 
 type Props = {
   user: Entity.Account

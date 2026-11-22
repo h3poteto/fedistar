@@ -2,8 +2,8 @@ import { invoke } from '@tauri-apps/api/core'
 import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Button, Modal, Radio, RadioGroup } from 'rsuite'
-import { Account } from 'src/entities/account'
-import { Server } from 'src/entities/server'
+import { Account } from '@src/entities/account'
+import { Server } from '@src/entities/server'
 
 type Props = {
   next: (server: Server, account: Account) => void

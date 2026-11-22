@@ -15,7 +15,7 @@
   "jest": {
     "moduleFileExtensions": ["ts", "js"],
     "moduleNameMapper": {
-      "^src/(.+)": "<rootDir>/src/$1"
+      "^@src/(.+)": "<rootDir>/src/$1"
     },
     "preset": "ts-jest/presets/default",
     "transform": {

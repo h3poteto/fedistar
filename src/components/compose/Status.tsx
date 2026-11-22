@@ -36,16 +36,16 @@ import { Entity, MegalodonInterface } from 'megalodon'
 import Picker from '@emoji-mart/react'
 import { invoke } from '@tauri-apps/api/core'
 
-import { data, mapCustomEmojiCategory } from 'src/utils/emojiData'
-import { Server } from 'src/entities/server'
-import { CustomEmojiCategory } from 'src/entities/emoji'
-import alert from 'src/components/utils/alert'
-import { Account } from 'src/entities/account'
+import { data, mapCustomEmojiCategory } from '@src/utils/emojiData'
+import { Server } from '@src/entities/server'
+import { CustomEmojiCategory } from '@src/entities/emoji'
+import alert from '@src/components/utils/alert'
+import { Account } from '@src/entities/account'
 import AutoCompleteTextarea, { ArgProps as AutoCompleteTextareaProps } from './AutoCompleteTextarea'
-import languages from 'src/utils/languages'
+import languages from '@src/utils/languages'
 import EditMedia from './EditMedia'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { Context } from 'src/theme'
+import { Context } from '@src/theme'
 
 type Props = {
   server: Server

@@ -5,9 +5,9 @@ import Category from './Category'
 import Rules from './Rules'
 import Statuses from './Statuses'
 import Comment from './Comment'
-import alert from 'src/components/utils/alert'
+import alert from '@src/components/utils/alert'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { Server } from 'src/entities/server'
+import { Server } from '@src/entities/server'
 
 type Props = {
   opened: boolean

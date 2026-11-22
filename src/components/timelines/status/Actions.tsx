@@ -20,13 +20,13 @@ import { Entity, MegalodonInterface, Response } from 'megalodon'
 import Picker from '@emoji-mart/react'
 
 import ActionButton from './ActionButton'
-import alert from 'src/components/utils/alert'
-import { Server } from 'src/entities/server'
-import { data } from 'src/utils/emojiData'
-import { Account } from 'src/entities/account'
+import alert from '@src/components/utils/alert'
+import { Server } from '@src/entities/server'
+import { data } from '@src/utils/emojiData'
+import { Account } from '@src/entities/account'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { Context } from 'src/theme'
-import { CustomEmojiCategory } from 'src/entities/emoji'
+import { Context } from '@src/theme'
+import { CustomEmojiCategory } from '@src/entities/emoji'
 
 type Props = {
   disabled:

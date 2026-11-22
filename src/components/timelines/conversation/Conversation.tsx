@@ -3,8 +3,8 @@ import { Avatar, HStack, Button, Badge } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsPaperclip } from 'react-icons/bs'
 
-import Time from 'src/components/utils/Time'
-import emojify from 'src/utils/emojify'
+import Time from '@src/components/utils/Time'
+import emojify from '@src/utils/emojify'
 import Body from '../status/Body'
 import { useState } from 'react'
 

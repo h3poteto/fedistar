@@ -1,5 +1,5 @@
 import { MessageDescriptor } from 'react-intl'
-import { TimelineKind } from 'src/entities/timeline'
+import { TimelineKind } from '@src/entities/timeline'
 
 const timelineName = (
   timelineKind: TimelineKind,

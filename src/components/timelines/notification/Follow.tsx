@@ -2,8 +2,8 @@ import { Entity } from 'megalodon'
 import { Avatar, HStack } from 'rsuite'
 import { BsPersonPlus } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
-import Time from 'src/components/utils/Time'
-import emojify from 'src/utils/emojify'
+import Time from '@src/components/utils/Time'
+import emojify from '@src/utils/emojify'
 import { useIntl } from 'react-intl'
 
 type Props = {

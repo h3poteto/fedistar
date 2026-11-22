@@ -2,12 +2,12 @@ import { Entity, MegalodonInterface } from 'megalodon'
 import Follow from './Follow'
 import Reaction from './Reaction'
 import Status from '../status/Status'
-import { Server } from 'src/entities/server'
-import { Account } from 'src/entities/account'
+import { Server } from '@src/entities/server'
+import { Account } from '@src/entities/account'
 import Move from './Move'
-import { ColumnWidth } from 'src/entities/timeline'
-import { CustomEmojiCategory } from 'src/entities/emoji'
-import { Behavior } from 'src/entities/behavior'
+import { ColumnWidth } from '@src/entities/timeline'
+import { CustomEmojiCategory } from '@src/entities/emoji'
+import { Behavior } from '@src/entities/behavior'
 
 type Props = {
   notification: Entity.Notification

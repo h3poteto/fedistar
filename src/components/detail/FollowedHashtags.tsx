@@ -7,8 +7,8 @@ import { useState, useEffect } from 'react'
 import generator, { Entity, MegalodonInterface } from 'megalodon'
 import { invoke } from '@tauri-apps/api/core'
 
-import { Server } from 'src/entities/server'
-import { Account } from 'src/entities/account'
+import { Server } from '@src/entities/server'
+import { Account } from '@src/entities/account'
 
 export default function FollowedHashtags() {
   const { formatMessage } = useIntl()

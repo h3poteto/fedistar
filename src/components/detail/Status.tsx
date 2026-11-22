@@ -6,13 +6,13 @@ import { Content, List, Header, Button } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsX, BsChevronLeft } from 'react-icons/bs'
 
-import { Server } from 'src/entities/server'
-import { Account } from 'src/entities/account'
+import { Server } from '@src/entities/server'
+import { Account } from '@src/entities/account'
 import Status from '../timelines/status/Status'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { CustomEmojiCategory } from 'src/entities/emoji'
-import { mapCustomEmojiCategory } from 'src/utils/emojiData'
-import { Behavior } from 'src/entities/behavior'
+import { CustomEmojiCategory } from '@src/entities/emoji'
+import { mapCustomEmojiCategory } from '@src/utils/emojiData'
+import { Behavior } from '@src/entities/behavior'
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void

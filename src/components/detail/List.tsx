@@ -7,13 +7,13 @@ import { BsX, BsChevronLeft, BsPin } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 import { Virtuoso } from 'react-virtuoso'
 
-import { Server } from 'src/entities/server'
-import { Account } from 'src/entities/account'
+import { Server } from '@src/entities/server'
+import { Account } from '@src/entities/account'
 import Status from '../timelines/status/Status'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { CustomEmojiCategory } from 'src/entities/emoji'
-import { mapCustomEmojiCategory } from 'src/utils/emojiData'
-import { Behavior } from 'src/entities/behavior'
+import { CustomEmojiCategory } from '@src/entities/emoji'
+import { mapCustomEmojiCategory } from '@src/utils/emojiData'
+import { Behavior } from '@src/entities/behavior'
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void

@@ -1,11 +1,11 @@
 import { Entity, MegalodonInterface } from 'megalodon'
-import { Server } from 'src/entities/server'
-import { Timeline } from 'src/entities/timeline'
-import ShowTimeline from 'src/components/timelines/Timeline'
-import ShowNotifications from 'src/components/timelines/Notifications'
-import ShowConversations from 'src/components/timelines/Conversations'
-import { Unread } from 'src/entities/unread'
-import { Behavior } from 'src/entities/behavior'
+import { Server } from '@src/entities/server'
+import { Timeline } from '@src/entities/timeline'
+import ShowTimeline from '@src/components/timelines/Timeline'
+import ShowNotifications from '@src/components/timelines/Notifications'
+import ShowConversations from '@src/components/timelines/Conversations'
+import { Unread } from '@src/entities/unread'
+import { Behavior } from '@src/entities/behavior'
 import React from 'react'
 
 type Props = {
