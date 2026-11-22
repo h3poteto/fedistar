@@ -2,8 +2,8 @@ import { Entity, MegalodonInterface } from 'megalodon'
 import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Button, Checkbox, CheckboxGroup, Progress, Radio, RadioGroup } from 'rsuite'
-import Time from 'src/components/utils/Time'
-import emojify from 'src/utils/emojify'
+import Time from '@src/components/utils/Time'
+import emojify from '@src/utils/emojify'
 
 type Props = {
   poll: Entity.Poll

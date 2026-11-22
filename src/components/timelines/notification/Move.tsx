@@ -3,8 +3,8 @@ import { Entity } from 'megalodon'
 import { BsBag } from 'react-icons/bs'
 import { useIntl } from 'react-intl'
 import { Avatar, HStack } from 'rsuite'
-import Time from 'src/components/utils/Time'
-import emojify from 'src/utils/emojify'
+import Time from '@src/components/utils/Time'
+import emojify from '@src/utils/emojify'
 
 type Props = {
   notification: Entity.Notification

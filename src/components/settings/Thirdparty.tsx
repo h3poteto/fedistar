@@ -1,6 +1,6 @@
 import { FormattedMessage } from 'react-intl'
 import { List, Modal } from 'rsuite'
-import licenses from 'src/thirdparty.json'
+import licenses from '@src/thirdparty.json'
 
 type Props = {
   open: boolean

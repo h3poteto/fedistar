@@ -36,11 +36,11 @@ import { listen } from '@tauri-apps/api/event'
 import { Virtuoso } from 'react-virtuoso'
 import parse from 'parse-link-header'
 
-import { Account } from 'src/entities/account'
-import { Server } from 'src/entities/server'
-import { columnWidth, Timeline, TimelineKind } from 'src/entities/timeline'
+import { Account } from '@src/entities/account'
+import { Server } from '@src/entities/server'
+import { columnWidth, Timeline, TimelineKind } from '@src/entities/timeline'
 import Status from './status/Status'
-import FailoverImg from 'src/utils/failoverImg'
+import FailoverImg from '@src/utils/failoverImg'
 import {
   DeleteHomeStatusPayload,
   DeleteTimelineStatusPayload,
@@ -48,16 +48,16 @@ import {
   ReceiveHomeStatusUpdatePayload,
   ReceiveTimelineStatusPayload,
   ReceiveTimelineStatusUpdatePayload
-} from 'src/payload'
-import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from 'src/defaults'
-import alert from 'src/components/utils/alert'
+} from '@src/payload'
+import { TIMELINE_STATUSES_COUNT, TIMELINE_MAX_STATUSES } from '@src/defaults'
+import alert from '@src/components/utils/alert'
 import { useRouter } from 'next/router'
-import { Instruction } from 'src/entities/instruction'
-import timelineName from 'src/utils/timelineName'
+import { Instruction } from '@src/entities/instruction'
+import timelineName from '@src/utils/timelineName'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { CustomEmojiCategory } from 'src/entities/emoji'
-import { mapCustomEmojiCategory } from 'src/utils/emojiData'
-import { Behavior } from 'src/entities/behavior'
+import { CustomEmojiCategory } from '@src/entities/emoji'
+import { mapCustomEmojiCategory } from '@src/utils/emojiData'
+import { Behavior } from '@src/entities/behavior'
 
 type Props = {
   timeline: Timeline

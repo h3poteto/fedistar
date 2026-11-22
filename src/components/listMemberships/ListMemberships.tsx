@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { BsCheck2, BsX } from 'react-icons/bs'
 import { FormattedMessage } from 'react-intl'
 import { Avatar, Button, HStack, Input, List, Modal, InputPicker } from 'rsuite'
-import emojify from 'src/utils/emojify'
+import emojify from '@src/utils/emojify'
 
 type Props = {
   opened: boolean

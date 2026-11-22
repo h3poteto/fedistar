@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom'
-import { findLink, findAccount } from 'src/utils/statusParser'
+import { findLink, findAccount } from '@src/utils/statusParser'
 
 describe('findLink', () => {
   describe('Pleroma', () => {

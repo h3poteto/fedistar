@@ -9,8 +9,8 @@ import TagDetail from './Tag'
 import ListsDetail from './Lists'
 import ListDetail from './List'
 import FollowedHashtags from './FollowedHashtags'
-import { Behavior } from 'src/entities/behavior'
-import { Server } from 'src/entities/server'
+import { Behavior } from '@src/entities/behavior'
+import { Server } from '@src/entities/server'
 
 type Props = {
   dispatch: Dispatch<{ target: string; value: boolean; object?: any; index?: number }>

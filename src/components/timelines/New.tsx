@@ -1,27 +1,13 @@
-import {
-  Popover,
-  Dropdown,
-  ButtonToolbar,
-  Whisper,
-  IconButton,
-  List,
-  Row,
-  Col,
-  Loader,
-  Container,
-  Header,
-  Content,
-  Button
-} from 'rsuite'
+import { Popover, Dropdown, ButtonToolbar, Whisper, IconButton, List, Row, Col, Loader, Container, Header, Content, Button } from 'rsuite'
 import { Icon } from '@rsuite/icons'
 import { BsPlus, BsHouseDoor, BsBell, BsPeople, BsGlobe2, BsStar, BsListUl, BsChevronLeft, BsBookmark, BsEnvelope } from 'react-icons/bs'
 import { Server, ServerSet } from '../../entities/server'
 import { useEffect, useState } from 'react'
 import { invoke } from '@tauri-apps/api/core'
 import generator, { Entity } from 'megalodon'
-import { Account } from 'src/entities/account'
-import { TimelineKind } from 'src/entities/timeline'
-import { Instruction } from 'src/entities/instruction'
+import { Account } from '@src/entities/account'
+import { TimelineKind } from '@src/entities/timeline'
+import { Instruction } from '@src/entities/instruction'
 import { listen } from '@tauri-apps/api/event'
 import { FormattedMessage, useIntl } from 'react-intl'
 

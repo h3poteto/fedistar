@@ -2,7 +2,7 @@ import { Entity } from 'megalodon'
 import { Dispatch, HTMLAttributes, SetStateAction } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Button } from 'rsuite'
-import emojify from 'src/utils/emojify'
+import emojify from '@src/utils/emojify'
 import LinkPreview from './LinkPreview'
 
 type Props = {

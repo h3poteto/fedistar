@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, forwardRef, KeyboardEventHandler, Dispatch, SetStateAction } from 'react'
 import { Input, Popover, Whisper } from 'rsuite'
 import { init, SearchIndex } from 'emoji-mart'
-import { data } from 'src/utils/emojiData'
-import { CustomEmojiCategory } from 'src/entities/emoji'
+import { data } from '@src/utils/emojiData'
+import { CustomEmojiCategory } from '@src/entities/emoji'
 import { MegalodonInterface } from 'megalodon'
 import { PrependParameters } from 'rsuite/esm/internals/types/utils'
 

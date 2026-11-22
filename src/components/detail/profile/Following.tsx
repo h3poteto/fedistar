@@ -2,9 +2,9 @@ import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useImperativeHandle, useState } from 'react'
 import { List, Loader } from 'rsuite'
 import parse from 'parse-link-header'
-import { TIMELINE_STATUSES_COUNT } from 'src/defaults'
+import { TIMELINE_STATUSES_COUNT } from '@src/defaults'
 import User from './User'
-import { Account } from 'src/entities/account'
+import { Account } from '@src/entities/account'
 
 export type FuncProps = {
   loadMore: () => Promise<void>

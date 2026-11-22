@@ -6,15 +6,15 @@ import { Content, List, Header, Button, Loader } from 'rsuite'
 import { BsX, BsChevronLeft, BsPin, BsPersonPlus, BsPersonX } from 'react-icons/bs'
 import { Icon } from '@rsuite/icons'
 
-import { Server } from 'src/entities/server'
-import { Account } from 'src/entities/account'
+import { Server } from '@src/entities/server'
+import { Account } from '@src/entities/account'
 import { Virtuoso } from 'react-virtuoso'
 import Status from '../timelines/status/Status'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { CustomEmojiCategory } from 'src/entities/emoji'
-import { mapCustomEmojiCategory } from 'src/utils/emojiData'
-import { Timeline } from 'src/entities/timeline'
-import { Behavior } from 'src/entities/behavior'
+import { CustomEmojiCategory } from '@src/entities/emoji'
+import { mapCustomEmojiCategory } from '@src/utils/emojiData'
+import { Timeline } from '@src/entities/timeline'
+import { Behavior } from '@src/entities/behavior'
 
 type Props = {
   openMedia: (media: Array<Entity.Attachment>, index: number) => void

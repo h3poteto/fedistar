@@ -5,8 +5,8 @@ import '../App.scss'
 
 import { invoke } from '@tauri-apps/api/core'
 import { useEffect } from 'react'
-import { IntlProviderWrapper } from 'src/i18n'
-import { RsuiteProviderWrapper } from 'src/theme'
+import { IntlProviderWrapper } from '@src/i18n'
+import { RsuiteProviderWrapper } from '@src/theme'
 
 // This default export is required in a new `pages/_app.js` file.
 export default function MyApp({ Component, pageProps }: AppProps) {

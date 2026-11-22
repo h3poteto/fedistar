@@ -1,4 +1,4 @@
-import { parseDomain } from 'src/utils/domainParser'
+import { parseDomain } from '@src/utils/domainParser'
 
 describe('domainParser', () => {
   describe('parseDomain', () => {

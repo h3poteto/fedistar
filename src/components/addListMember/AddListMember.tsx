@@ -3,7 +3,7 @@ import { Entity, MegalodonInterface } from 'megalodon'
 import { useCallback, useEffect, useState } from 'react'
 import { BsListUl, BsPlusLg, BsXLg } from 'react-icons/bs'
 import { Modal, HStack, Avatar, List, Button } from 'rsuite'
-import emojify from 'src/utils/emojify'
+import emojify from '@src/utils/emojify'
 
 type Props = {
   opened: boolean

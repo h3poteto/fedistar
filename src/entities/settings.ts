@@ -1,4 +1,4 @@
-import { localeType } from 'src/i18n'
+import { localeType } from '@src/i18n'
 
 export type Settings = {
   appearance: {

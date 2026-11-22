@@ -5,8 +5,8 @@ import { Icon } from '@rsuite/icons'
 import { BsEyeSlash, BsCaretRightFill, BsVolumeUp, BsBoxArrowUpRight } from 'react-icons/bs'
 import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import emptyPreview from 'src/black.png'
-import { ColumnWidth } from 'src/entities/timeline'
+import emptyPreview from '@src/black.png'
+import { ColumnWidth } from '@src/entities/timeline'
 import { invoke } from '@tauri-apps/api/core'
 
 type Props = {

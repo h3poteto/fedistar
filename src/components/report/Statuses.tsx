@@ -1,8 +1,8 @@
 import { Entity, MegalodonInterface } from 'megalodon'
 import { useEffect, useState } from 'react'
 import { Avatar, Button, Checkbox, CheckboxGroup, HStack, Loader, Modal, Placeholder } from 'rsuite'
-import emojify from 'src/utils/emojify'
-import Time from 'src/components/utils/Time'
+import emojify from '@src/utils/emojify'
+import Time from '@src/components/utils/Time'
 import { FormattedMessage } from 'react-intl'
 
 type Props = {

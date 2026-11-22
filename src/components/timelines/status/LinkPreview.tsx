@@ -3,7 +3,7 @@ import { Entity } from 'megalodon'
 import Image from 'next/image'
 import { Panel } from 'rsuite'
 
-import FailoverImg from 'src/utils/failoverImg'
+import FailoverImg from '@src/utils/failoverImg'
 
 type Props = {
   card: Entity.Card
