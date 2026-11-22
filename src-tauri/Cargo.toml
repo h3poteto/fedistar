@@ -35,7 +35,7 @@ tauri-plugin-window-state = { version = "2.5.0" }
 open = "5.3.5"
 font-kit = "0.14.3"
 tauri-plugin-dialog = "2.8.0"
-tauri-plugin-fs = "2.6.0"
+tauri-plugin-fs = "2.7.1"
 tauri-plugin-os = "2.4.0"
 tauri-plugin-process = "2.4.0"
 tauri-plugin-http = "2.8.0"
