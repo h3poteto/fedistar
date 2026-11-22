@@ -2,7 +2,8 @@ name: Thirdparty
 
 on:
   schedule:
-    - cron: '54 10 * * *'
+    - cron: '54 19 * * *'
+      timezone: "Asia/Tokyo"
 
 permissions:
   contents: write
