@@ -71,7 +71,7 @@
     "eslint-plugin-react": "^7.37.5",
     "globals": "^17.14.0",
     "jest": "^30.4.2",
-    "jsdom": "^26.1.0",
+    "jsdom": "^31.0.1",
     "sass": "^1.108.2",
     "ts-jest": "^29.4.15",
     "typescript": "^6.0.3"
